@@ -1,0 +1,343 @@
+package com.RogueBasic.beans;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
+import java.util.stream.Stream;
+
+import com.RogueBasic.util.RogueUtilities;
+
+public abstract class Character {
+	
+	private Long id;
+	private String name;
+	private int experience;
+	private int level;
+	private int currency;
+	private String[] abilities;
+	private Map<Long, Integer> inventory;
+	
+	//base primary stats
+	private int constitution;
+	private int strength;
+	private int dexterity;
+	private int intelligence;
+	
+	//primary stat bonuses
+	private int constitutionBonus;
+	private int strengthBonus;
+	private int dexterityBonus;
+	private int intelligenceBonus;
+	
+	//derived stat bonuses
+	private int powerBonus;
+	private int healthBonus;
+	private int healthRegenBonus;
+	private int encumberanceBonus;
+	private int carryCapacityBonus;
+	private int dodgeRatingBonus;
+	private int critRatingBonus;
+	private int energyBonus;
+	private int energyRegenBonus;
+	private int armorBonus;
+	
+	//temporary stats
+	private int currentHealth;
+	private int currentEnergy;
+	private int currentEncumberance;
+	private int currentCarryCapacity;
+	
+	public Character(String name, int constitution, int strength, int dexterity, int intelligence) {
+		super();
+		this.id = RogueUtilities.randIdCharacter();
+		this.name = name;
+		this.constitution = constitution;
+		this.strength = strength;
+		this.dexterity = dexterity;
+		this.intelligence = intelligence;
+		this.experience = 0;
+		this.level = 1;
+		this.inventory = new HashMap<>();
+		//ItemDAO.getItemIds().stream().forEach(l -> inventory.put(l, 0));
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getExperience() {
+		return experience;
+	}
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	public int getCurrency() {
+		return currency;
+	}
+	public void setCurrency(int currency) {
+		this.currency = currency;
+	}
+	public String[] getAbilities() {
+		return abilities;
+	}
+	public void setAbilities(String[] abilities) {
+		this.abilities = abilities;
+	}
+	public Map<Long,Integer> getInventory() {
+		return inventory;
+	}
+	public void setInventory(Map<Long,Integer> inventory) {
+		this.inventory = inventory;
+	}
+	public int getConstitution() {
+		return constitution;
+	}
+	public void setConstitution(int constitution) {
+		this.constitution = constitution;
+	}
+	public int getStrength() {
+		return strength;
+	}
+	public void setStrength(int strength) {
+		this.strength = strength;
+	}
+	public int getDexterity() {
+		return dexterity;
+	}
+	public void setDexterity(int dexterity) {
+		this.dexterity = dexterity;
+	}
+	public int getIntelligence() {
+		return intelligence;
+	}
+	public void setIntelligence(int intelligence) {
+		this.intelligence = intelligence;
+	}
+	public int getConstitutionBonus() {
+		return constitutionBonus;
+	}
+	public void setConstitutionBonus(int constitutionBonus) {
+		this.constitutionBonus = constitutionBonus;
+	}
+	public int getStrengthBonus() {
+		return strengthBonus;
+	}
+	public void setStrengthBonus(int strengthBonus) {
+		this.strengthBonus = strengthBonus;
+	}
+	public int getDexterityBonus() {
+		return dexterityBonus;
+	}
+	public void setDexterityBonus(int dexterityBonus) {
+		this.dexterityBonus = dexterityBonus;
+	}
+	public int getIntelligenceBonus() {
+		return intelligenceBonus;
+	}
+	public void setIntelligenceBonus(int intelligenceBonus) {
+		this.intelligenceBonus = intelligenceBonus;
+	}
+	public int getPowerBonus() {
+		return powerBonus;
+	}
+	public void setPowerBonus(int powerBonus) {
+		this.powerBonus = powerBonus;
+	}
+	public int getHealthBonus() {
+		return healthBonus;
+	}
+	public void setHealthBonus(int healthBonus) {
+		this.healthBonus = healthBonus;
+	}
+	public int getHealthRegenBonus() {
+		return healthRegenBonus;
+	}
+	public void setHealthRegenBonus(int healthRegenBonus) {
+		this.healthRegenBonus = healthRegenBonus;
+	}
+	public int getEncumberanceBonus() {
+		return encumberanceBonus;
+	}
+	public void setEncumberanceBonus(int encumberanceBonus) {
+		this.encumberanceBonus = encumberanceBonus;
+	}
+	public int getCarryCapacityBonus() {
+		return carryCapacityBonus;
+	}
+	public void setCarryCapacityBonus(int carryCapacityBonus) {
+		this.carryCapacityBonus = carryCapacityBonus;
+	}
+	public int getDodgeRatingBonus() {
+		return dodgeRatingBonus;
+	}
+	public void setDodgeRatingBonus(int dodgeRatingBonus) {
+		this.dodgeRatingBonus = dodgeRatingBonus;
+	}
+	public int getCritRatingBonus() {
+		return critRatingBonus;
+	}
+	public void setCritRatingBonus(int critRatingBonus) {
+		this.critRatingBonus = critRatingBonus;
+	}
+	public int getEnergyBonus() {
+		return energyBonus;
+	}
+	public void setEnergyBonus(int energyBonus) {
+		this.energyBonus = energyBonus;
+	}
+	public int getEnergyRegenBonus() {
+		return energyRegenBonus;
+	}
+	public void setEnergyRegenBonus(int energyRegenBonus) {
+		this.energyRegenBonus = energyRegenBonus;
+	}
+	public int getArmorBonus() {
+		return armorBonus;
+	}
+	public void setArmorBonus(int armorBonus) {
+		this.armorBonus = armorBonus;
+	}
+		public int getCurrentHealth() {
+		return currentHealth;
+	}
+	public void setCurrentHealth(int currentHealth) {
+		this.currentHealth = currentHealth;
+	}
+	public int getCurrentEnergy() {
+		return currentEnergy;
+	}
+	public void setCurrentEnergy(int currentEnergy) {
+		this.currentEnergy = currentEnergy;
+	}
+	public int getCurrentEncumberance() {
+		return currentEncumberance;
+	}
+	public void setCurrentEncumberance(int currentEncumberance) {
+		this.currentEncumberance = currentEncumberance;
+	}
+	public int getCurrentCarryCapacity() {
+		return currentCarryCapacity;
+	}
+	public void setCurrentCarryCapacity(int currentCarryCapacity) {
+		this.currentCarryCapacity = currentCarryCapacity;
+	}
+
+	//getters for stat totals (base + gear)
+	public int getTotalConstitution() {
+		return constitution + constitutionBonus;
+	}
+	public int getTotalStrength() {
+		return strength + strengthBonus;
+	}
+	public int getTotalDexterity() {
+		return dexterity + dexterityBonus;
+	}
+	public int getTotalIntelligence() {
+		return intelligence + intelligenceBonus;
+	}
+	
+	//getters for derived stats
+	public int getPower() {
+		return ((strength + strengthBonus + dexterity + dexterityBonus + intelligence + intelligenceBonus)/2 + powerBonus);
+	}
+	public int getHealth() {
+		return constitution*4 + healthBonus;
+	}
+	public int getHealthRegen() {
+		return constitution/3 + healthRegenBonus;
+	}
+	public int getEncumberance() {
+		return strength*3 + encumberanceBonus;
+	}
+	public int getCarryCapacity() {
+		return strength*15 + carryCapacityBonus;
+	}
+	public int getDodgeRating() {
+		return dexterity*2 + dodgeRatingBonus;
+	}
+	public int getCritRating() {
+		return dexterity*2 + critRatingBonus;
+	}
+	public int getEnergy() {
+		return intelligence*6 + energyBonus;
+	}
+	public int getEnergyRegen() {
+		return intelligence/2 + energyRegenBonus;
+	}
+	public int getArmor() {
+		return strength*2 + armorBonus;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(abilities);
+		result = prime * result + Objects.hash(inventory, armorBonus, carryCapacityBonus, constitution, constitutionBonus,
+				critRatingBonus, currency, currentCarryCapacity, currentEncumberance, currentEnergy, currentHealth,
+				dexterity, dexterityBonus, dodgeRatingBonus, encumberanceBonus, energyBonus, energyRegenBonus,
+				experience, healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, level, name, powerBonus,
+				strength, strengthBonus);
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Character other = (Character) obj;
+		return Arrays.equals(abilities, other.abilities) && armorBonus == other.armorBonus
+				&& carryCapacityBonus == other.carryCapacityBonus && constitution == other.constitution
+				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
+				&& currency == other.currency && currentCarryCapacity == other.currentCarryCapacity
+				&& currentEncumberance == other.currentEncumberance && currentEnergy == other.currentEnergy
+				&& currentHealth == other.currentHealth && dexterity == other.dexterity
+				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
+				&& encumberanceBonus == other.encumberanceBonus && energyBonus == other.energyBonus
+				&& energyRegenBonus == other.energyRegenBonus && experience == other.experience
+				&& healthBonus == other.healthBonus && healthRegenBonus == other.healthRegenBonus
+				&& Objects.equals(id, other.id) && intelligence == other.intelligence
+				&& intelligenceBonus == other.intelligenceBonus && level == other.level
+				&& Objects.equals(name, other.name) && powerBonus == other.powerBonus
+				&& Objects.equals(inventory, other.inventory) && strength == other.strength
+				&& strengthBonus == other.strengthBonus;
+	}
+	
+	@Override
+	public String toString() {
+		return "Character [id=" + id + ", name=" + name + ", experience=" + experience + ", level=" + level
+				+ ", currency=" + currency + ", abilities=" + Arrays.toString(abilities) + ", inventory="
+				+ inventory.toString() + ", constitution=" + constitution + ", strength=" + strength
+				+ ", dexterity=" + dexterity + ", intelligence=" + intelligence + ", constitutionBonus="
+				+ constitutionBonus + ", strengthBonus=" + strengthBonus + ", dexterityBonus=" + dexterityBonus
+				+ ", intelligenceBonus=" + intelligenceBonus + ", powerBonus=" + powerBonus + ", healthBonus="
+				+ healthBonus + ", healthRegenBonus=" + healthRegenBonus + ", encumberanceBonus=" + encumberanceBonus
+				+ ", carryCapacityBonus=" + carryCapacityBonus + ", dodgeRatingBonus=" + dodgeRatingBonus
+				+ ", critRatingBonus=" + critRatingBonus + ", energyBonus=" + energyBonus + ", energyRegenBonus="
+				+ energyRegenBonus + ", armorBonus=" + armorBonus + ", currentHealth=" + currentHealth
+				+ ", currentEnergy=" + currentEnergy + ", currentEncumberance=" + currentEncumberance
+				+ ", currentCarryCapacity=" + currentCarryCapacity + "]";
+	}
+}
