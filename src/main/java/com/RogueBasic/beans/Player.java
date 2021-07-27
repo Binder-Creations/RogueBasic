@@ -4,51 +4,122 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.UUID;
 
+import com.RogueBasic.data.PlayerDAOOld;
 import com.RogueBasic.util.RogueUtilities;
+import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.datastax.driver.mapping.annotations.Table;
 
+@Table(keyspace = "rogue_basic", name = "player")
 public class Player {
 
-	private long id;
+	@PartitionKey private UUID id;
 	private String userName;
 	private String password;
-	private List<Long> characterIds;
+	private List<UUID> characterIds;
+	private int metacurrency;
+	private int constitutionMetabonus;
+	private int strengthMetabonus;
+	private int intelligenceMetabonus;
+	private int dexterityMetabonus;
+	private int currencyMetabonus;
+	
+	public Player() {}
 	
 	public Player(String userName, String password) {
 		super();
-		this.id = RogueUtilities.randIdPlayer();
+		this.id = UUID.randomUUID();
 		this.userName = userName;
 		this.password = password;
+		this.metacurrency = 0;
+		this.constitutionMetabonus = 0;
+		this.strengthMetabonus = 0;
+		this.intelligenceMetabonus = 0;
+		this.dexterityMetabonus = 0;
+		this.currencyMetabonus = 0;
 	}
 	
-	public long getId() {
+	public UUID getId() {
 		return id;
 	}
-	public void setId(long id) {
-		this.id = id;
-	}
+	
 	public String getUserName() {
 		return userName;
 	}
+	
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
 	public String getPassword() {
 		return password;
 	}
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public List<Long> getCharacterIds() {
+	
+	public int getMetacurrency() {
+		return metacurrency;
+	}
+
+	public void setMetacurrency(int metacurrency) {
+		this.metacurrency = metacurrency;
+	}
+
+	public List<UUID> getCharacterIds() {
 		return characterIds;
 	}
-	public void setCharacterIds(List<Long> characterIds) {
+	
+	public void setCharacterIds(List<UUID> characterIds) {
 		this.characterIds = characterIds;
 	}
 	
+	public int getConstitutionMetabonus() {
+		return constitutionMetabonus;
+	}
+
+	public void setConstitutionMetabonus(int constitutionMetabonus) {
+		this.constitutionMetabonus = constitutionMetabonus;
+	}
+
+	public int getStrengthMetabonus() {
+		return strengthMetabonus;
+	}
+
+	public void setStrengthMetabonus(int strengthMetabonus) {
+		this.strengthMetabonus = strengthMetabonus;
+	}
+
+	public int getIntelligenceMetabonus() {
+		return intelligenceMetabonus;
+	}
+
+	public void setIntelligenceMetabonus(int intelligenceMetabonus) {
+		this.intelligenceMetabonus = intelligenceMetabonus;
+	}
+
+	public int getDexterityMetabonus() {
+		return dexterityMetabonus;
+	}
+
+	public void setDexterityMetabonus(int dexterityMetabonus) {
+		this.dexterityMetabonus = dexterityMetabonus;
+	}
+
+	public int getCurrencyMetabonus() {
+		return currencyMetabonus;
+	}
+
+	public void setCurrencyMetabonus(int currencyMetabonus) {
+		this.currencyMetabonus = currencyMetabonus;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(characterIds, id, password, userName);
+		return Objects.hash(characterIds, constitutionMetabonus, currencyMetabonus, dexterityMetabonus, id,
+				intelligenceMetabonus, metacurrency, password, strengthMetabonus, userName);
 	}
 	
 	@Override
@@ -60,14 +131,19 @@ public class Player {
 		if (getClass() != obj.getClass())
 			return false;
 		Player other = (Player) obj;
-		return Objects.equals(characterIds, other.characterIds) && id == other.id
-				&& Objects.equals(password, other.password) && Objects.equals(userName, other.userName);
+		return Objects.equals(characterIds, other.characterIds) && constitutionMetabonus == other.constitutionMetabonus
+				&& currencyMetabonus == other.currencyMetabonus && dexterityMetabonus == other.dexterityMetabonus
+				&& id == other.id && intelligenceMetabonus == other.intelligenceMetabonus
+				&& metacurrency == other.metacurrency && Objects.equals(password, other.password)
+				&& strengthMetabonus == other.strengthMetabonus && Objects.equals(userName, other.userName);
 	}
 	
 	@Override
 	public String toString() {
-		return "Player [id=" + id + ", userName=" + userName +", password=" + password
-				+ ", characters=" + characterIds + "]";
+		return "Player [id=" + id + ", userName=" + userName + ", password=" + password + ", metacurrency="
+				+ metacurrency + ", characterIds=" + characterIds + ", constitutionMetabonus=" + constitutionMetabonus
+				+ ", strengthMetabonus=" + strengthMetabonus + ", intelligenceMetabonus=" + intelligenceMetabonus
+				+ ", dexterityMetabonus=" + dexterityMetabonus + ", currencyMetabonus=" + currencyMetabonus + "]";
 	}
 	
 }

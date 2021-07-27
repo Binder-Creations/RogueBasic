@@ -4,19 +4,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Wizard extends Character{
+public class Wizard extends PlayerCharacter{
 
-	public Wizard(String name, int constitution, int strength, int dexterity, int intelligence) {
-		super(name, constitution, strength, dexterity, intelligence);
+	public Wizard(long playerId, String name, int constitution, int strength, int dexterity, int intelligence) {
+		super(playerId, name, constitution, strength, dexterity, intelligence);
 		
-		String[] abilities = {"1:Firebolt", "1:Burning_Hands", "1:Shield", "2:Magic_Missile", "2:Chromatic_Orb", "3:Fireball"};
+		long[] abilities = {7l, 8l, 9l, 10l, 11l, 12l};
 		Map<Long, Integer> inventory = this.getInventory();
 		inventory.put(9l, 1);
 		inventory.put(10l, 1);
 		inventory.put(11l, 1);
 		inventory.put(12l, 1);
 		this.setInventory(inventory);
-		this.setAbilities(abilities);
+		this.setAbilityIds(abilities);
 		this.setCurrency(100);
 		this.setPowerBonus(20);
 		this.setHealthBonus(10);
@@ -32,8 +32,8 @@ public class Wizard extends Character{
 	
 	@Override
 	public String toString() {
-		return "Wizard [id=" + getId() + ", name=" + getName() + ", experience=" + getExperience() + ", level=" + getLevel()
-				+ ", currency=" + getCurrency() + ", abilities=" + Arrays.toString(getAbilities()) + ", inventory="
+		return "Wizard [id=" + getId() + "playerId=" + getPlayerId() + ", name=" + getName() + ", experience=" + getExperience() + ", level=" + getLevel()
+				+ ", currency=" + getCurrency() + ", abilityIds=" + Arrays.toString(getAbilityIds()) + ", inventory="
 				+ getInventory().toString() + ", constitution=" + getConstitution() + ", strength=" + getStrength()
 				+ ", dexterity=" + getDexterity() + ", intelligence=" + getIntelligence() + ", constitutionBonus="
 				+ getConstitutionBonus() + ", strengthBonus=" + getStrengthBonus() + ", dexterityBonus=" + getDexterityBonus()

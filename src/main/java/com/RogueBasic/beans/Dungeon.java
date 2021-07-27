@@ -2,9 +2,13 @@ package com.RogueBasic.beans;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.UUID;
+
+import com.RogueBasic.data.DungeonDAO;
+import com.RogueBasic.util.RogueUtilities;
 
 public class Dungeon {
-	private long id;
+	private UUID id;
 	private String name;
 	private String description;
 	private String theme;
@@ -14,12 +18,10 @@ public class Dungeon {
 	private boolean miniboss;
 	private boolean boss;
 	
-	
-	
-	public Dungeon(long id, String name, String description, String theme, int floorCount, int challengeRating,
+	public Dungeon(String name, String description, String theme, int floorCount, int challengeRating,
 			boolean miniboss, boolean boss) {
 		super();
-		this.id = id;
+		this.id = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
 		this.theme = theme;
@@ -29,57 +31,70 @@ public class Dungeon {
 		this.boss = boss;
 	}
 	
-	public long getId() {
+	public UUID getId() {
 		return id;
 	}
-	public void setId(long id) {
-		this.id = id;
-	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public String getDescription() {
 		return description;
 	}
+	
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
 	public String getTheme() {
 		return theme;
 	}
+	
 	public void setTheme(String theme) {
 		this.theme = theme;
 	}
+	
 	public int getFloorCount() {
 		return floorCount;
 	}
+	
 	public void setFloorCount(int floorCount) {
 		this.floorCount = floorCount;
 	}
+	
 	public long[] getFloors() {
 		return floors;
 	}
+	
 	public void setFloors(long[] floors) {
 		this.floors = floors;
 	}
+	
 	public int getChallengeRating() {
 		return challengeRating;
 	}
+	
 	public void setChallengeRating(int challengeRating) {
 		this.challengeRating = challengeRating;
 	}
+	
 	public boolean isMiniboss() {
 		return miniboss;
 	}
+	
 	public void setMiniboss(boolean miniboss) {
 		this.miniboss = miniboss;
 	}
+	
 	public boolean isBoss() {
 		return boss;
 	}
+	
 	public void setBoss(boolean boss) {
 		this.boss = boss;
 	}

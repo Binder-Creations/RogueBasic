@@ -3,19 +3,19 @@ package com.RogueBasic.beans;
 import java.util.Arrays;
 import java.util.Map;
 
-public class Rogue extends Character{
+public class Rogue extends PlayerCharacter{
 
-	public Rogue(String name, int constitution, int strength, int dexterity, int intelligence) {
-		super(name, constitution, strength, dexterity, intelligence);
+	public Rogue(long playerId, String name, int constitution, int strength, int dexterity, int intelligence) {
+		super(playerId, name, constitution, strength, dexterity, intelligence);
 		
-		String[] abilities = {"1:Sneak_Attack", "1:Feint", "3:Vanish"};
+		long[] abilities = {4l, 5l, 6l};
 		Map<Long, Integer> inventory = this.getInventory();
 		inventory.put(5l, 1);
 		inventory.put(6l, 1);
 		inventory.put(7l, 1);
 		inventory.put(8l, 1);
 		this.setInventory(inventory);
-		this.setAbilities(abilities);
+		this.setAbilityIds(abilities);
 		this.setCurrency(150);
 		this.setPowerBonus(15);
 		this.setHealthBonus(20);
@@ -31,8 +31,8 @@ public class Rogue extends Character{
 	
 	@Override
 	public String toString() {
-		return "Rogue [id=" + getId() + ", name=" + getName() + ", experience=" + getExperience() + ", level=" + getLevel()
-				+ ", currency=" + getCurrency() + ", abilities=" + Arrays.toString(getAbilities()) + ", inventory="
+		return "Rogue [id=" + getId() + "playerId=" + getPlayerId() + ", name=" + getName() + ", experience=" + getExperience() + ", level=" + getLevel()
+				+ ", currency=" + getCurrency() + ", abilityIds=" + Arrays.toString(getAbilityIds()) + ", inventory="
 				+ getInventory().toString() + ", constitution=" + getConstitution() + ", strength=" + getStrength()
 				+ ", dexterity=" + getDexterity() + ", intelligence=" + getIntelligence() + ", constitutionBonus="
 				+ getConstitutionBonus() + ", strengthBonus=" + getStrengthBonus() + ", dexterityBonus=" + getDexterityBonus()
@@ -44,4 +44,5 @@ public class Rogue extends Character{
 				+ ", currentEnergy=" + getCurrentEnergy() + ", currentEncumberance=" + getCurrentEncumberance()
 				+ ", currentCarryCapacity=" + getCurrentCarryCapacity() + "]";
 	}
+	
 }

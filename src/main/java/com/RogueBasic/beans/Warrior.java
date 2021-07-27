@@ -3,19 +3,19 @@ package com.RogueBasic.beans;
 import java.util.Arrays;
 import java.util.Map;
 
-public class Warrior extends Character{
+public class Warrior extends PlayerCharacter{
 
-	public Warrior(String name, int constitution, int strength, int dexterity, int intelligence) {
-		super(name, constitution, strength, dexterity, intelligence);
+	public Warrior(long playerId, String name, int constitution, int strength, int dexterity, int intelligence) {
+		super(playerId, name, constitution, strength, dexterity, intelligence);
 		
-		String[] abilities = {"1:Power_Attack", "2:Cleave", "3:Stunning_Strike"};
+		long[] abilities = {1l, 2l, 3l};
 		Map<Long, Integer> inventory = this.getInventory();
 		inventory.put(1l, 1);
 		inventory.put(2l, 1);
 		inventory.put(3l, 1);
 		inventory.put(4l, 1);
 		this.setInventory(inventory);
-		this.setAbilities(abilities);
+		this.setAbilityIds(abilities);
 		this.setCurrency(50);
 		this.setPowerBonus(10);
 		this.setHealthBonus(30);
@@ -31,8 +31,8 @@ public class Warrior extends Character{
 	
 	@Override
 	public String toString() {
-		return "Warrior [id=" + getId() + ", name=" + getName() + ", experience=" + getExperience() + ", level=" + getLevel()
-				+ ", currency=" + getCurrency() + ", abilities=" + Arrays.toString(getAbilities()) + ", inventory="
+		return "Warrior [id=" + getId() + "playerId=" + getPlayerId() +", name=" + getName() + ", experience=" + getExperience() + ", level=" + getLevel()
+				+ ", currency=" + getCurrency() + ", abilityIds=" + Arrays.toString(getAbilityIds()) + ", inventory="
 				+ getInventory().toString() + ", constitution=" + getConstitution() + ", strength=" + getStrength()
 				+ ", dexterity=" + getDexterity() + ", intelligence=" + getIntelligence() + ", constitutionBonus="
 				+ getConstitutionBonus() + ", strengthBonus=" + getStrengthBonus() + ", dexterityBonus=" + getDexterityBonus()
