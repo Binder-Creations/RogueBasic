@@ -1,16 +1,21 @@
 package com.RogueBasic.beans;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.datastax.driver.mapping.annotations.Table;
+
+@Table(keyspace = "rogue_basic", name = "item")
 public class Item {
-	private UUID id;
+	
+	@PartitionKey private UUID id;
 	private String name;
 	private String description;
 	private int cost;
 	private double weight;
+	
+	public Item() {}
 	
 	public Item(String name, String description, int cost, double weight) {
 		super();

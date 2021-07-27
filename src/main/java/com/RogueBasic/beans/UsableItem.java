@@ -3,7 +3,9 @@ package com.RogueBasic.beans;
 import java.util.Objects;
 
 import com.RogueBasic.functions.Use;
+import com.datastax.driver.mapping.annotations.Table;
 
+@Table(keyspace = "rogue_basic", name = "usable")
 public class UsableItem extends Item{
 	private Use use;
 	

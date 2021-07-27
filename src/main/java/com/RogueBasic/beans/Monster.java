@@ -1,36 +1,37 @@
 package com.RogueBasic.beans;
 
-import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
+import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.datastax.driver.mapping.annotations.Table;
 
-import com.RogueBasic.data.MonsterDAO;
-import com.RogueBasic.util.RogueUtilities;
-
+@Table(keyspace = "rogue_basic", name = "monster")
 public class Monster {
-	private UUID id;
+	
+	@PartitionKey private UUID id;
 	private String name;
 	private String description;
-	private boolean isBoss;
-	private boolean isMiniBoss;
+	private boolean boss;
+	private boolean miniBoss;
 	private int level;
 	private int health;
 	private int power;
 	private int armor;
 	private int dodgeRating;
 	private int critRating;
-	private UUID[] abilityIds;
+	private Set<UUID> abilityIds;
 	
+	public Monster() {};
 	
-	
-	public Monster(String name, String description, boolean isBoss, boolean isMiniBoss, int level, int health,
-			int power, int armor, int dodgeRating, int critRating, UUID[] abilityIds) {
+	public Monster(String name, String description, boolean boss, boolean miniBoss, int level, int health,
+			int power, int armor, int dodgeRating, int critRating, Set<UUID> abilityIds) {
 		super();
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
-		this.isBoss = isBoss;
-		this.isMiniBoss = isMiniBoss;
+		this.boss = boss;
+		this.miniBoss = miniBoss;
 		this.level = level;
 		this.health = health;
 		this.power = power;
@@ -60,20 +61,20 @@ public class Monster {
 		this.description = description;
 	}
 	
-	public boolean isBoss() {
-		return isBoss;
+	public boolean boss() {
+		return boss;
 	}
 	
-	public void setBoss(boolean isBoss) {
-		this.isBoss = isBoss;
+	public void setBoss(boolean boss) {
+		this.boss = boss;
 	}
 	
-	public boolean isMiniBoss() {
-		return isMiniBoss;
+	public boolean miniBoss() {
+		return miniBoss;
 	}
 	
-	public void setMiniBoss(boolean isMiniBoss) {
-		this.isMiniBoss = isMiniBoss;
+	public void setMiniBoss(boolean miniBoss) {
+		this.miniBoss = miniBoss;
 	}
 	
 	public int getLevel() {
@@ -124,22 +125,18 @@ public class Monster {
 		this.critRating = critRating;
 	}
 	
-	public UUID[] getAbilityIds() {
+	public Set<UUID> getAbilityIds() {
 		return abilityIds;
 	}
 	
-	public void setAbilityIds(UUID[] abilityIds) {
+	public void setAbilityIds(Set<UUID> abilityIds) {
 		this.abilityIds = abilityIds;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(abilityIds);
-		result = prime * result + Objects.hash(armor, critRating, description, dodgeRating, health, id, isBoss,
-				isMiniBoss, level, name, power);
-		return result;
+		return Objects.hash(abilityIds, armor, critRating, description, dodgeRating, health, id, boss, miniBoss,
+				level, name, power);
 	}
 
 	@Override
@@ -151,18 +148,19 @@ public class Monster {
 		if (getClass() != obj.getClass())
 			return false;
 		Monster other = (Monster) obj;
-		return Arrays.equals(abilityIds, other.abilityIds) && armor == other.armor && critRating == other.critRating
+		return Objects.equals(abilityIds, other.abilityIds) && armor == other.armor && critRating == other.critRating
 				&& Objects.equals(description, other.description) && dodgeRating == other.dodgeRating
-				&& health == other.health && id == other.id && isBoss == other.isBoss && isMiniBoss == other.isMiniBoss
-				&& level == other.level && Objects.equals(name, other.name) && power == other.power;
+				&& health == other.health && Objects.equals(id, other.id) && boss == other.boss
+				&& miniBoss == other.miniBoss && level == other.level && Objects.equals(name, other.name)
+				&& power == other.power;
 	}
 
 	@Override
 	public String toString() {
-		return "Monster [id=" + id + ", name=" + name + ", description=" + description + ", isBoss=" + isBoss
-				+ ", isMiniBoss=" + isMiniBoss + ", level=" + level + ", health=" + health + ", power=" + power
+		return "Monster [id=" + id + ", name=" + name + ", description=" + description + ", boss=" + boss
+				+ ", miniBoss=" + miniBoss + ", level=" + level + ", health=" + health + ", power=" + power
 				+ ", armor=" + armor + ", dodgeRating=" + dodgeRating + ", critRating=" + critRating + ", abilityIds="
-				+ Arrays.toString(abilityIds) + "]";
+				+ abilityIds + "]";
 	}
 	
 	

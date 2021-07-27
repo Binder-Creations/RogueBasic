@@ -2,6 +2,7 @@ package com.RogueBasic.util;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Cluster.Builder;
+import com.datastax.driver.core.ProtocolVersion;
 import com.datastax.driver.core.Session;
 
 public class CassandraConnector {
@@ -15,6 +16,7 @@ public class CassandraConnector {
                 .addContactPoint("127.0.0.1")
                 .withPort(9042)
                 .withoutJMXReporting()
+               // .withProtocolVersion(ProtocolVersion.V3)
                 .build();
 
         session = cluster.connect("rogue_basic");

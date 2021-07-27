@@ -1,29 +1,25 @@
 package com.RogueBasic.beans;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Stream;
 
-import com.RogueBasic.data.CharacterDAO;
-import com.RogueBasic.data.DAO;
-import com.RogueBasic.data.PlayerDAOOld;
-import com.RogueBasic.util.RogueUtilities;
+import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.datastax.driver.mapping.annotations.Table;
 
+@Table(keyspace = "rogue_basic", name = "character")
 public abstract class PlayerCharacter {
 	
-	private UUID id;
+	@PartitionKey private UUID id;
 	private UUID playerId;
 	private String name;
+	private String characterClass;
 	private int experience;
 	private int level;
 	private int currency;
-	private UUID[] abilityIds;
+	private Set<UUID> abilityIds;
 	private Map<UUID, Integer> inventory;
 	
 	//base primary stats
@@ -56,17 +52,18 @@ public abstract class PlayerCharacter {
 	private int currentEncumberance;
 	private int currentCarryCapacity;
 	
+	public PlayerCharacter() {}
+	
 	public PlayerCharacter(UUID playerId, String name, int constitution, int strength, int dexterity, int intelligence) {
 		super();
 		this.playerId = playerId;
 		this.id = UUID.randomUUID();
 		this.name = name;
-		Player p = new PlayerDAOOld().getById(playerId);
-		this.constitution = constitution + p.getConstitutionMetabonus();
-		this.strength = strength + p.getStrengthMetabonus();
-		this.dexterity = dexterity + p.getDexterityMetabonus();
-		this.intelligence = intelligence + p.getIntelligenceMetabonus();
-		this.currency = p.getCurrencyMetabonus();
+		this.constitution = constitution;
+		this.strength = strength;
+		this.dexterity = dexterity;
+		this.intelligence = intelligence;
+		this.currency = 0;
 		this.experience = 0;
 		this.level = 1;
 		this.inventory = new HashMap<>();
@@ -93,6 +90,14 @@ public abstract class PlayerCharacter {
 		this.name = name;
 	}
 	
+	public String getCharacterClass() {
+		return characterClass;
+	}
+
+	public void setCharacterClass(String characterClass) {
+		this.characterClass = characterClass;
+	}
+
 	public int getExperience() {
 		return experience;
 	}
@@ -117,11 +122,11 @@ public abstract class PlayerCharacter {
 		this.currency = currency;
 	}
 	
-	public UUID[] getAbilityIds() {
+	public Set<UUID> getAbilityIds() {
 		return abilityIds;
 	}
 	
-	public void setAbilityIds(UUID[] abilityIds) {
+	public void setAbilityIds(Set<UUID> abilityIds) {
 		this.abilityIds = abilityIds;
 	}
 	
@@ -368,15 +373,11 @@ public abstract class PlayerCharacter {
 	
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(abilityIds);
-		result = prime * result + Objects.hash(playerId, inventory, armorBonus, carryCapacityBonus, constitution, constitutionBonus,
+		return Objects.hash(abilityIds, armorBonus, carryCapacityBonus, characterClass, constitution, constitutionBonus,
 				critRatingBonus, currency, currentCarryCapacity, currentEncumberance, currentEnergy, currentHealth,
 				dexterity, dexterityBonus, dodgeRatingBonus, encumberanceBonus, energyBonus, energyRegenBonus,
-				experience, healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, level, name, powerBonus,
-				strength, strengthBonus);
-		return result;
+				experience, healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, inventory, level, name,
+				playerId, powerBonus, strength, strengthBonus);
 	}
 	
 	@Override
@@ -388,8 +389,9 @@ public abstract class PlayerCharacter {
 		if (getClass() != obj.getClass())
 			return false;
 		PlayerCharacter other = (PlayerCharacter) obj;
-		return Arrays.equals(abilityIds, other.abilityIds) && playerId == other.playerId && armorBonus == other.armorBonus
-				&& carryCapacityBonus == other.carryCapacityBonus && constitution == other.constitution
+		return Objects.equals(abilityIds, other.abilityIds) && armorBonus == other.armorBonus
+				&& carryCapacityBonus == other.carryCapacityBonus
+				&& Objects.equals(characterClass, other.characterClass) && constitution == other.constitution
 				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
 				&& currency == other.currency && currentCarryCapacity == other.currentCarryCapacity
 				&& currentEncumberance == other.currentEncumberance && currentEnergy == other.currentEnergy
@@ -399,25 +401,24 @@ public abstract class PlayerCharacter {
 				&& energyRegenBonus == other.energyRegenBonus && experience == other.experience
 				&& healthBonus == other.healthBonus && healthRegenBonus == other.healthRegenBonus
 				&& Objects.equals(id, other.id) && intelligence == other.intelligence
-				&& intelligenceBonus == other.intelligenceBonus && level == other.level
-				&& Objects.equals(name, other.name) && powerBonus == other.powerBonus
-				&& Objects.equals(inventory, other.inventory) && strength == other.strength
-				&& strengthBonus == other.strengthBonus;
+				&& intelligenceBonus == other.intelligenceBonus && Objects.equals(inventory, other.inventory)
+				&& level == other.level && Objects.equals(name, other.name) && Objects.equals(playerId, other.playerId)
+				&& powerBonus == other.powerBonus && strength == other.strength && strengthBonus == other.strengthBonus;
 	}
 	
 	@Override
 	public String toString() {
-		return "PlayerCharacter [id=" + id + "playerId=" + playerId +", name=" + name + ", experience=" + experience + ", level=" + level
-				+ ", currency=" + currency + ", abilities=" + Arrays.toString(abilityIds) + ", inventory="
-				+ inventory.toString() + ", constitution=" + constitution + ", strength=" + strength
-				+ ", dexterity=" + dexterity + ", intelligence=" + intelligence + ", constitutionBonus="
-				+ constitutionBonus + ", strengthBonus=" + strengthBonus + ", dexterityBonus=" + dexterityBonus
-				+ ", intelligenceBonus=" + intelligenceBonus + ", powerBonus=" + powerBonus + ", healthBonus="
-				+ healthBonus + ", healthRegenBonus=" + healthRegenBonus + ", encumberanceBonus=" + encumberanceBonus
-				+ ", carryCapacityBonus=" + carryCapacityBonus + ", dodgeRatingBonus=" + dodgeRatingBonus
-				+ ", critRatingBonus=" + critRatingBonus + ", energyBonus=" + energyBonus + ", energyRegenBonus="
-				+ energyRegenBonus + ", armorBonus=" + armorBonus + ", currentHealth=" + currentHealth
-				+ ", currentEnergy=" + currentEnergy + ", currentEncumberance=" + currentEncumberance
+		return "PlayerCharacter [id=" + id + ", playerId=" + playerId + ", name=" + name + ", characterClass="
+				+ characterClass + ", experience=" + experience + ", level=" + level + ", currency=" + currency
+				+ ", abilityIds=" + abilityIds + ", inventory=" + inventory + ", constitution=" + constitution
+				+ ", strength=" + strength + ", dexterity=" + dexterity + ", intelligence=" + intelligence
+				+ ", constitutionBonus=" + constitutionBonus + ", strengthBonus=" + strengthBonus + ", dexterityBonus="
+				+ dexterityBonus + ", intelligenceBonus=" + intelligenceBonus + ", powerBonus=" + powerBonus
+				+ ", healthBonus=" + healthBonus + ", healthRegenBonus=" + healthRegenBonus + ", encumberanceBonus="
+				+ encumberanceBonus + ", carryCapacityBonus=" + carryCapacityBonus + ", dodgeRatingBonus="
+				+ dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus + ", energyBonus=" + energyBonus
+				+ ", energyRegenBonus=" + energyRegenBonus + ", armorBonus=" + armorBonus + ", currentHealth="
+				+ currentHealth + ", currentEnergy=" + currentEnergy + ", currentEncumberance=" + currentEncumberance
 				+ ", currentCarryCapacity=" + currentCarryCapacity + "]";
 	}
 }

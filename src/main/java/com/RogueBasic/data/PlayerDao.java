@@ -4,21 +4,30 @@ import java.util.List;
 import java.util.UUID;
 
 import com.RogueBasic.beans.Player;
-import com.RogueBasic.util.CassandraConnector;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 
 public class PlayerDao {
-	MappingManager manager = new MappingManager(new CassandraConnector().getSession());
-    Mapper<Player> mapper = manager.mapper(Player.class);
-    
-	public Player findById(UUID playerId) {
-		return mapper.get(playerId);
+	Session session;
+	MappingManager manager;
+	Mapper<Player> mapper;
+	PlayerAccessor accessor;
+	
+	public PlayerDao(Session session) {
+		super();
+		this.session = session;
+		this.manager = new MappingManager(session);
+		this.mapper = manager.mapper(Player.class);
+		this.accessor = manager.createAccessor(PlayerAccessor.class);
+	}
+	
+	public Player findById(UUID id) {
+		return mapper.get(id);
 	};
 	
 	public List<Player> getAll() {
-		return null;
+		return accessor.getAll().all();
 	}
 	
 	  
@@ -28,8 +37,8 @@ public class PlayerDao {
 	}
 	
 	 
-	public void deleteById(UUID playerId) {
-		mapper.delete(playerId);
+	public void deleteById(UUID id) {
+		mapper.delete(id);
 		return;
 	}
 }

@@ -1,22 +1,25 @@
 package com.RogueBasic.beans;
 
-import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
+import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.datastax.driver.mapping.annotations.Table;
 
-import com.RogueBasic.data.DungeonDAO;
-import com.RogueBasic.util.RogueUtilities;
-
+@Table(keyspace = "rogue_basic", name = "dungeon")
 public class Dungeon {
-	private UUID id;
+	
+	@PartitionKey private UUID id;
 	private String name;
 	private String description;
 	private String theme;
 	private int floorCount;
-	private long[] floors;
+	private Set<UUID> floors;
 	private int challengeRating;
 	private boolean miniboss;
 	private boolean boss;
+	
+	public Dungeon() {}
 	
 	public Dungeon(String name, String description, String theme, int floorCount, int challengeRating,
 			boolean miniboss, boolean boss) {
@@ -67,11 +70,11 @@ public class Dungeon {
 		this.floorCount = floorCount;
 	}
 	
-	public long[] getFloors() {
+	public Set<UUID> getFloors() {
 		return floors;
 	}
 	
-	public void setFloors(long[] floors) {
+	public void setFloors(Set<UUID> floors) {
 		this.floors = floors;
 	}
 	
@@ -101,12 +104,7 @@ public class Dungeon {
 	
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(floors);
-		result = prime * result
-				+ Objects.hash(boss, challengeRating, description, floorCount, id, miniboss, name, theme);
-		return result;
+		return Objects.hash(boss, challengeRating, description, floorCount, floors, id, miniboss, name, theme);
 	}
 	
 	@Override
@@ -120,15 +118,15 @@ public class Dungeon {
 		Dungeon other = (Dungeon) obj;
 		return boss == other.boss && challengeRating == other.challengeRating
 				&& Objects.equals(description, other.description) && floorCount == other.floorCount
-				&& Arrays.equals(floors, other.floors) && id == other.id && miniboss == other.miniboss
+				&& Objects.equals(floors, other.floors) && Objects.equals(id, other.id) && miniboss == other.miniboss
 				&& Objects.equals(name, other.name) && Objects.equals(theme, other.theme);
 	}
 	
 	@Override
 	public String toString() {
 		return "Dungeon [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme
-				+ ", floorCount=" + floorCount + ", floors=" + Arrays.toString(floors) + ", challengeRating="
-				+ challengeRating + ", miniboss=" + miniboss + ", boss=" + boss + "]";
+				+ ", floorCount=" + floorCount + ", floors=" + floors + ", challengeRating=" + challengeRating
+				+ ", miniboss=" + miniboss + ", boss=" + boss + "]";
 	}
 	
 	

@@ -4,9 +4,12 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.RogueBasic.functions.Use;
+import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.datastax.driver.mapping.annotations.Table;
 
+@Table(keyspace = "rogue_basic", name = "ability")
 public class Ability {
-	private UUID id;
+	@PartitionKey private UUID id;
 	private String name;
 	private String description;
 	private int level;
@@ -14,6 +17,7 @@ public class Ability {
 	private String area;
 	private Use use;
 	
+	public Ability() {}
 	
 	//constructor for monster abilities
 	public Ability(String name, String description, Use use) {

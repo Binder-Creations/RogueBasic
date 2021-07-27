@@ -1,14 +1,15 @@
 package com.RogueBasic.beans;
 
-import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
-import com.RogueBasic.data.RoomDAO;
-import com.RogueBasic.util.RogueUtilities;
+import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.datastax.driver.mapping.annotations.Table;
 
+@Table(keyspace = "rogue_basic", name = "room")
 public class Room {
-	private UUID id;
+	@PartitionKey private UUID id;
 	private UUID floorId;
 	private UUID dungeonId;
 	private int xCoord;
@@ -18,11 +19,13 @@ public class Room {
 	private UUID eastRoomId;
 	private UUID westRoomId;
 	private UUID trapId;
-	private UUID itemIds[];
-	private UUID monsterIds[];
+	private Set<UUID> itemIds;
+	private Set<UUID> monsterIds;
+	
+	public Room() {}
 	
 	public Room(UUID floorId, UUID dungeonId, int xCoord, int yCoord, UUID northRoomId, UUID southRoomId, UUID eastRoomId, UUID westRoomId,
-			UUID trapId, UUID[] itemIds, UUID[] monsterIds) {
+			UUID trapId, Set<UUID> itemIds, Set<UUID> monsterIds) {
 		super();
 		this.id = UUID.randomUUID();
 		this.floorId = floorId;
@@ -118,31 +121,26 @@ public class Room {
 		this.trapId = trapId;
 	}
 	
-	public UUID[] getItemIds() {
+	public Set<UUID> getItemIds() {
 		return itemIds;
 	}
 	
-	public void setItemIds(UUID[] itemIds) {
+	public void setItemIds(Set<UUID> itemIds) {
 		this.itemIds = itemIds;
 	}
 	
-	public UUID[] getMonsterIds() {
+	public Set<UUID> getMonsterIds() {
 		return monsterIds;
 	}
 	
-	public void setMonsterIds(UUID[] monsterIds) {
+	public void setMonsterIds(Set<UUID> monsterIds) {
 		this.monsterIds = monsterIds;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(itemIds);
-		result = prime * result + Arrays.hashCode(monsterIds);
-		result = prime * result + Objects.hash(dungeonId, eastRoomId, floorId, id, northRoomId, southRoomId, trapId,
+		return Objects.hash(dungeonId, eastRoomId, floorId, id, itemIds, monsterIds, northRoomId, southRoomId, trapId,
 				westRoomId, xCoord, yCoord);
-		return result;
 	}
 
 	@Override
@@ -154,10 +152,11 @@ public class Room {
 		if (getClass() != obj.getClass())
 			return false;
 		Room other = (Room) obj;
-		return dungeonId == other.dungeonId && eastRoomId == other.eastRoomId && floorId == other.floorId
-				&& id == other.id && Arrays.equals(itemIds, other.itemIds)
-				&& Arrays.equals(monsterIds, other.monsterIds) && northRoomId == other.northRoomId
-				&& southRoomId == other.southRoomId && trapId == other.trapId && westRoomId == other.westRoomId
+		return Objects.equals(dungeonId, other.dungeonId) && Objects.equals(eastRoomId, other.eastRoomId)
+				&& Objects.equals(floorId, other.floorId) && Objects.equals(id, other.id)
+				&& Objects.equals(itemIds, other.itemIds) && Objects.equals(monsterIds, other.monsterIds)
+				&& Objects.equals(northRoomId, other.northRoomId) && Objects.equals(southRoomId, other.southRoomId)
+				&& Objects.equals(trapId, other.trapId) && Objects.equals(westRoomId, other.westRoomId)
 				&& xCoord == other.xCoord && yCoord == other.yCoord;
 	}
 
@@ -166,7 +165,7 @@ public class Room {
 		return "Room [id=" + id + ", floorId=" + floorId + ", dungeonId=" + dungeonId + ", xCoord=" + xCoord
 				+ ", yCoord=" + yCoord + ", northRoomId=" + northRoomId + ", southRoomId=" + southRoomId
 				+ ", eastRoomId=" + eastRoomId + ", westRoomId=" + westRoomId + ", trapId=" + trapId + ", itemIds="
-				+ Arrays.toString(itemIds) + ", monsterIds=" + Arrays.toString(monsterIds) + "]";
+				+ itemIds + ", monsterIds=" + monsterIds + "]";
 	}
 	
 }

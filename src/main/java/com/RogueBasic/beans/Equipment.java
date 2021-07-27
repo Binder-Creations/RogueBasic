@@ -2,6 +2,9 @@ package com.RogueBasic.beans;
 
 import java.util.Objects;
 
+import com.datastax.driver.mapping.annotations.Table;
+
+@Table(keyspace = "rogue_basic", name = "equipment")
 public class Equipment extends Item {
 	
 	private int constitutionBonus;
@@ -18,6 +21,8 @@ public class Equipment extends Item {
 	private int energyBonus;
 	private int energyRegenBonus;
 	private int armorBonus;
+	
+	public Equipment() {}
 	
 	public Equipment(String name, String description, int cost, double weight) {
 		super(name, description, cost, weight);
@@ -199,7 +204,7 @@ public class Equipment extends Item {
 	@Override
 	public String toString() {
 		return "Equipment [id=" + getId() + ", name=" + getName() + ", description=" + getDescription() + ", cost=" + getCost() + ", weight="
-				+ getWeight() + "constitutionBonus=" + constitutionBonus + ", strengthBonus=" + strengthBonus
+				+ getWeight() + ", constitutionBonus=" + constitutionBonus + ", strengthBonus=" + strengthBonus
 				+ ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus=" + intelligenceBonus + ", powerBonus="
 				+ powerBonus + ", healthBonus=" + healthBonus + ", healthRegenBonus=" + healthRegenBonus
 				+ ", encumberanceBonus=" + encumberanceBonus + ", carryCapacityBonus=" + carryCapacityBonus

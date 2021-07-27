@@ -1,13 +1,8 @@
 package com.RogueBasic.beans;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 import java.util.Objects;
-import java.util.Random;
 import java.util.UUID;
-
-import com.RogueBasic.data.PlayerDAOOld;
-import com.RogueBasic.util.RogueUtilities;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
@@ -17,7 +12,7 @@ public class Player {
 	@PartitionKey private UUID id;
 	private String userName;
 	private String password;
-	private List<UUID> characterIds;
+	private Set<UUID> characterIds;
 	private int metacurrency;
 	private int constitutionMetabonus;
 	private int strengthMetabonus;
@@ -68,11 +63,11 @@ public class Player {
 		this.metacurrency = metacurrency;
 	}
 
-	public List<UUID> getCharacterIds() {
+	public Set<UUID> getCharacterIds() {
 		return characterIds;
 	}
 	
-	public void setCharacterIds(List<UUID> characterIds) {
+	public void setCharacterIds(Set<UUID> characterIds) {
 		this.characterIds = characterIds;
 	}
 	

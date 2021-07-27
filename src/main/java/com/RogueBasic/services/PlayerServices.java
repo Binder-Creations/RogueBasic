@@ -7,11 +7,17 @@ import org.apache.logging.log4j.Logger;
 
 import com.RogueBasic.beans.Player;
 import com.RogueBasic.data.PlayerDao;
+import com.datastax.driver.core.Session;
 
 public class PlayerServices {
-	public PlayerDao dao = new PlayerDao();
-	private Logger log = LogManager.getLogger(PlayerServices.class);
+	public PlayerDao dao;
+	private static final Logger log = LogManager.getLogger(PlayerServices.class);
 
+	public PlayerServices(Session session) {
+		super();
+		dao = new PlayerDao(session);
+	}
+	
 	public UUID login(String userName, String password) {
 		
 		//finds the Player matching the userName and password of the login attempt
