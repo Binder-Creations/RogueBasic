@@ -1,6 +1,5 @@
 package com.RogueBasic.beans;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -9,8 +8,8 @@ import java.util.UUID;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
-@Table(keyspace = "rogue_basic", name = "character")
-public abstract class PlayerCharacter {
+@Table(keyspace = "rogue", name = "character")
+public class PlayerCharacter {
 	
 	@PartitionKey private UUID id;
 	private UUID playerId;
@@ -66,8 +65,6 @@ public abstract class PlayerCharacter {
 		this.currency = 0;
 		this.experience = 0;
 		this.level = 1;
-		this.inventory = new HashMap<>();
-		//ItemDAO.getItemIds().stream().forEach(l -> inventory.put(l, 0));
 	}
 	
 	public UUID getId() {
@@ -313,61 +310,61 @@ public abstract class PlayerCharacter {
 		this.currentCarryCapacity = currentCarryCapacity;
 	}
 
-	//getters for stat totals (base + gear)
-	public int getTotalConstitution() {
+	//calculations for stat totals (base + gear)
+	public int calcTotalConstitution() {
 		return constitution + constitutionBonus;
 	}
 	
-	public int getTotalStrength() {
+	public int calcTotalStrength() {
 		return strength + strengthBonus;
 	}
 	
-	public int getTotalDexterity() {
+	public int calcTotalDexterity() {
 		return dexterity + dexterityBonus;
 	}
 	
-	public int getTotalIntelligence() {
+	public int calcTotalIntelligence() {
 		return intelligence + intelligenceBonus;
 	}
 	
-	//getters for derived stats
-	public int getPower() {
+	//calculations for derived stats
+	public int calcPower() {
 		return ((strength + strengthBonus + dexterity + dexterityBonus + intelligence + intelligenceBonus)/2 + powerBonus);
 	}
 	
-	public int getHealth() {
+	public int calcHealth() {
 		return constitution*4 + healthBonus;
 	}
 	
-	public int getHealthRegen() {
+	public int calcHealthRegen() {
 		return constitution/3 + healthRegenBonus;
 	}
 	
-	public int getEncumberance() {
+	public int calcEncumberance() {
 		return strength*3 + encumberanceBonus;
 	}
 	
-	public int getCarryCapacity() {
+	public int calcCarryCapacity() {
 		return strength*15 + carryCapacityBonus;
 	}
 	
-	public int getDodgeRating() {
+	public int calcDodgeRating() {
 		return dexterity*2 + dodgeRatingBonus;
 	}
 	
-	public int getCritRating() {
+	public int calcCritRating() {
 		return dexterity*2 + critRatingBonus;
 	}
 	
-	public int getEnergy() {
+	public int calcEnergy() {
 		return intelligence*6 + energyBonus;
 	}
 	
-	public int getEnergyRegen() {
+	public int calcEnergyRegen() {
 		return intelligence/2 + energyRegenBonus;
 	}
 	
-	public int getArmor() {
+	public int calcArmor() {
 		return strength*2 + armorBonus;
 	}
 	

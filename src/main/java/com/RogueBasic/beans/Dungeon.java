@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
-@Table(keyspace = "rogue_basic", name = "dungeon")
+@Table(keyspace = "rogue", name = "dungeon")
 public class Dungeon {
 	
 	@PartitionKey private UUID id;

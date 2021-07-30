@@ -6,11 +6,11 @@ import java.util.UUID;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
-@Table(keyspace = "rogue_basic", name = "player")
+@Table(keyspace = "rogue", name = "player")
 public class Player {
 
 	@PartitionKey private UUID id;
-	private String userName;
+	private String name;
 	private String password;
 	private Set<UUID> characterIds;
 	private int metacurrency;
@@ -22,10 +22,10 @@ public class Player {
 	
 	public Player() {}
 	
-	public Player(String userName, String password) {
+	public Player(String name, String password) {
 		super();
 		this.id = UUID.randomUUID();
-		this.userName = userName;
+		this.name = name;
 		this.password = password;
 		this.metacurrency = 0;
 		this.constitutionMetabonus = 0;
@@ -39,12 +39,12 @@ public class Player {
 		return id;
 	}
 	
-	public String getUserName() {
-		return userName;
+	public String getName() {
+		return name;
 	}
 	
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public String getPassword() {
@@ -114,7 +114,7 @@ public class Player {
 	@Override
 	public int hashCode() {
 		return Objects.hash(characterIds, constitutionMetabonus, currencyMetabonus, dexterityMetabonus, id,
-				intelligenceMetabonus, metacurrency, password, strengthMetabonus, userName);
+				intelligenceMetabonus, metacurrency, password, strengthMetabonus, name);
 	}
 	
 	@Override
@@ -128,14 +128,14 @@ public class Player {
 		Player other = (Player) obj;
 		return Objects.equals(characterIds, other.characterIds) && constitutionMetabonus == other.constitutionMetabonus
 				&& currencyMetabonus == other.currencyMetabonus && dexterityMetabonus == other.dexterityMetabonus
-				&& id == other.id && intelligenceMetabonus == other.intelligenceMetabonus
+				&& Objects.equals(id,other.id) && intelligenceMetabonus == other.intelligenceMetabonus
 				&& metacurrency == other.metacurrency && Objects.equals(password, other.password)
-				&& strengthMetabonus == other.strengthMetabonus && Objects.equals(userName, other.userName);
+				&& strengthMetabonus == other.strengthMetabonus && Objects.equals(name, other.name);
 	}
 	
 	@Override
 	public String toString() {
-		return "Player [id=" + id + ", userName=" + userName + ", password=" + password + ", metacurrency="
+		return "Player [id=" + id + ", name=" + name + ", password=" + password + ", metacurrency="
 				+ metacurrency + ", characterIds=" + characterIds + ", constitutionMetabonus=" + constitutionMetabonus
 				+ ", strengthMetabonus=" + strengthMetabonus + ", intelligenceMetabonus=" + intelligenceMetabonus
 				+ ", dexterityMetabonus=" + dexterityMetabonus + ", currencyMetabonus=" + currencyMetabonus + "]";

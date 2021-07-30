@@ -20,20 +20,4 @@ public class Rogue extends PlayerCharacter{
 		this.setArmorBonus(5);
 	}
 	
-//	@Override
-//	public String toString() {
-//		return "Rogue [id=" + getId() + "playerId=" + getPlayerId() + ", name=" + getName() + ", experience=" + getExperience() + ", level=" + getLevel()
-//				+ ", currency=" + getCurrency() + ", abilityIds=" + Arrays.toString(getAbilityIds()) + ", inventory="
-//				+ getInventory().toString() + ", constitution=" + getConstitution() + ", strength=" + getStrength()
-//				+ ", dexterity=" + getDexterity() + ", intelligence=" + getIntelligence() + ", constitutionBonus="
-//				+ getConstitutionBonus() + ", strengthBonus=" + getStrengthBonus() + ", dexterityBonus=" + getDexterityBonus()
-//				+ ", intelligenceBonus=" + getIntelligenceBonus() + ", powerBonus=" + getPowerBonus() + ", healthBonus="
-//				+ getHealthBonus() + ", healthRegenBonus=" + getHealthRegenBonus() + ", encumberanceBonus=" + getEncumberanceBonus()
-//				+ ", carryCapacityBonus=" + getCarryCapacityBonus() + ", dodgeRatingBonus=" + getDodgeRatingBonus()
-//				+ ", critRatingBonus=" + getCritRatingBonus() + ", energyBonus=" + getEnergyBonus() + ", energyRegenBonus="
-//				+ getEnergyRegenBonus() + ", armorBonus=" + getArmorBonus() + ", currentHealth=" + getCurrentHealth()
-//				+ ", currentEnergy=" + getCurrentEnergy() + ", currentEncumberance=" + getCurrentEncumberance()
-//				+ ", currentCarryCapacity=" + getCurrentCarryCapacity() + "]";
-//	}
-	
 }

@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
-@Table(keyspace = "rogue_basic", name = "monster")
+@Table(keyspace = "rogue", name = "monster")
 public class Monster {
 	
 	@PartitionKey private UUID id;
@@ -135,8 +135,8 @@ public class Monster {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(abilityIds, armor, critRating, description, dodgeRating, health, id, boss, miniBoss,
-				level, name, power);
+		return Objects.hash(abilityIds, armor, boss, critRating, description, dodgeRating, health, id, level, miniBoss,
+				name, power);
 	}
 
 	@Override
@@ -148,10 +148,10 @@ public class Monster {
 		if (getClass() != obj.getClass())
 			return false;
 		Monster other = (Monster) obj;
-		return Objects.equals(abilityIds, other.abilityIds) && armor == other.armor && critRating == other.critRating
-				&& Objects.equals(description, other.description) && dodgeRating == other.dodgeRating
-				&& health == other.health && Objects.equals(id, other.id) && boss == other.boss
-				&& miniBoss == other.miniBoss && level == other.level && Objects.equals(name, other.name)
+		return Objects.equals(abilityIds, other.abilityIds) && armor == other.armor && boss == other.boss
+				&& critRating == other.critRating && Objects.equals(description, other.description)
+				&& dodgeRating == other.dodgeRating && health == other.health && Objects.equals(id, other.id)
+				&& level == other.level && miniBoss == other.miniBoss && Objects.equals(name, other.name)
 				&& power == other.power;
 	}
 

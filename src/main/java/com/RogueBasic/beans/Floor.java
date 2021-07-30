@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
-@Table(keyspace = "rogue_basic", name = "floor")
+@Table(keyspace = "rogue", name = "floor")
 public class Floor {
 	
 	@PartitionKey private UUID id;
@@ -20,8 +20,7 @@ public class Floor {
 	
 	public Floor() {}
 	
-	public Floor(int level, int xLength, int yLength, UUID previousFloorId, UUID nextFloorId, UUID dungeonId,
-			Set<UUID> roomIds) {
+	public Floor(int level, int xLength, int yLength, UUID previousFloorId, UUID nextFloorId, UUID dungeonId) {
 		super();
 		this.id = UUID.randomUUID();
 		this.level = level;
@@ -30,7 +29,6 @@ public class Floor {
 		this.previousFloorId = previousFloorId;
 		this.nextFloorId = nextFloorId;
 		this.dungeonId = dungeonId;
-		this.roomIds = roomIds;
 	}
 
 	public UUID getId() {

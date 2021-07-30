@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.datastax.driver.mapping.annotations.Table;
 
-@Table(keyspace = "rogue_basic", name = "equipment")
+@Table(keyspace = "rogue", name = "equipment")
 public class Equipment extends Item {
 	
 	private int constitutionBonus;
@@ -191,7 +191,8 @@ public class Equipment extends Item {
 		if (getClass() != obj.getClass())
 			return false;
 		Equipment other = (Equipment) obj;
-		return getId() == other.getId() && getCost() == other.getCost() && getDescription() == other.getDescription() && getName() == other.getName() && getWeight() == other.getWeight() 
+		return Objects.equals(getId(), other.getId()) && getCost() == other.getCost() && getDescription() == other.getDescription() 
+				&& getName() == other.getName() && getWeight() == other.getWeight() 
 				&& armorBonus == other.armorBonus && carryCapacityBonus == other.carryCapacityBonus
 				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
 				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
@@ -200,6 +201,7 @@ public class Equipment extends Item {
 				&& healthRegenBonus == other.healthRegenBonus && intelligenceBonus == other.intelligenceBonus
 				&& powerBonus == other.powerBonus && strengthBonus == other.strengthBonus;
 	}
+	
 
 	@Override
 	public String toString() {

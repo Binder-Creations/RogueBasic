@@ -2,12 +2,10 @@ package com.RogueBasic.beans;
 
 import java.util.Objects;
 import java.util.UUID;
-
-import com.RogueBasic.functions.Use;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
-@Table(keyspace = "rogue_basic", name = "ability")
+@Table(keyspace = "rogue", name = "ability")
 public class Ability {
 	@PartitionKey private UUID id;
 	private String name;
@@ -15,21 +13,21 @@ public class Ability {
 	private int level;
 	private int energyCost;
 	private String area;
-	private Use use;
+	private String action;
 	
 	public Ability() {}
 	
 	//constructor for monster abilities
-	public Ability(String name, String description, Use use) {
+	public Ability(String name, String description, String action) {
 		super();
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
-		this.use = use;
+		this.action = action;
 	}
 	
 	//constructor for character abilities
-	public Ability(String name, String description, int level, int energyCost, String area, Use use) {
+	public Ability(String name, String description, int level, int energyCost, String area, String action) {
 		super();
 		this.id = UUID.randomUUID();
 		this.name = name;
@@ -37,7 +35,7 @@ public class Ability {
 		this.level = level;
 		this.energyCost = energyCost;
 		this.area = area;
-		this.use = use;
+		this.action = action;
 	}
 
 	public UUID getId() {
@@ -84,17 +82,17 @@ public class Ability {
 		this.area = area;
 	}
 	
-	public Use getUse() {
-		return use;
+	public String getAction() {
+		return action;
 	}
 	
-	public void setUse(Use use) {
-		this.use = use;
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(area, description, energyCost, id, level, name);
+		return Objects.hash(action, area, description, energyCost, id, level, name);
 	}
 
 	@Override
@@ -106,9 +104,9 @@ public class Ability {
 		if (getClass() != obj.getClass())
 			return false;
 		Ability other = (Ability) obj;
-		return Objects.equals(area, other.area) && Objects.equals(description, other.description)
-				&& energyCost == other.energyCost && id == other.id && level == other.level
-				&& Objects.equals(name, other.name);
+		return Objects.equals(action, other.action) && Objects.equals(area, other.area)
+				&& Objects.equals(description, other.description) && energyCost == other.energyCost
+				&& Objects.equals(id, other.id) && level == other.level && Objects.equals(name, other.name);
 	}
 
 	@Override

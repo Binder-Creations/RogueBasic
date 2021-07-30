@@ -3,42 +3,70 @@ package com.RogueBasic.data;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.RogueBasic.beans.Room;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 
 public class RoomDao {
-	Session session;
-	MappingManager manager;
-	Mapper<Room> mapper;
-	RoomAccessor accessor;
+	private MappingManager manager;
+	private Mapper<Room> mapper;
+	private RoomAccessor accessor;
+	private static final Logger log = LogManager.getLogger(RoomDao.class);	
 	
 	public RoomDao(Session session) {
 		super();
-		this.session = session;
-		this.manager = new MappingManager(session);
-		this.mapper = manager.mapper(Room.class);
-		this.accessor = manager.createAccessor(RoomAccessor.class);
+		try {
+			this.manager = new MappingManager(session);
+			this.mapper = manager.mapper(Room.class);
+			this.accessor = manager.createAccessor(RoomAccessor.class);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Room findById(UUID id) {
-		return mapper.get(id);
-	};
+		log.trace("RoomDao.findById() calling Mapper.get() and returning Room");
+		try {
+			return mapper.get(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public List<Room> getAll() {
-		return accessor.getAll().all();
+		log.trace("RoomDao.findById() calling RoomAccessor.getAll() and returning List<Room>");
+		try {
+			return accessor.getAll().all();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
 	  
-	public void save(Room room) {
-		mapper.save(room);
-		return;
+	public void save(Room player) {
+		log.trace("RoomDao.findById() calling Mapper.save()");
+		try {
+			mapper.save(player);
+			return;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
 	}
-	
 	 
 	public void deleteById(UUID id) {
-		mapper.delete(id);
-		return;
+		log.trace("RoomDao.findById() calling Mapper.delete()");
+		try {
+			mapper.delete(id);
+			return;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
 	}
 }
