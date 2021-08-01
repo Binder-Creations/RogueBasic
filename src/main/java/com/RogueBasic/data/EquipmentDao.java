@@ -48,25 +48,25 @@ public class EquipmentDao {
 		}
 	}
 	  
-	public void save(Equipment player) {
+	public boolean save(Equipment player) {
 		log.trace("EquipmentDao.findById() calling Mapper.save()");
 		try {
 			mapper.save(player);
-			return;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
+			return false;
 		}
 	}
 	 
-	public void deleteById(UUID id) {
+	public boolean deleteById(UUID id) {
 		log.trace("EquipmentDao.findById() calling Mapper.delete()");
 		try {
 			mapper.delete(id);
-			return;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
+			return false;
 		}
 	}
 }

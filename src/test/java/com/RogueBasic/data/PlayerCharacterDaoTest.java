@@ -20,10 +20,10 @@ import com.RogueBasic.util.CassandraConnector;
 import com.RogueBasic.util.CassandraUtilities;
 import com.datastax.driver.core.Session;
 
-public class CharacterDaoTest {
+public class PlayerCharacterDaoTest {
 	
 	private static CassandraUtilities cu;
-	private static CharacterDao dao;
+	private static PlayerCharacterDao dao;
 	private static PlayerCharacter tester;
 	private static PlayerCharacter tester2;
 	private static Session session;
@@ -39,7 +39,7 @@ public class CharacterDaoTest {
 		
 		//Initialized tables are required to construct our dao
 		cu.initialize();
-		dao = new CharacterDao(session);	
+		dao = new PlayerCharacterDao(session);	
 	}
 	
 	@BeforeEach

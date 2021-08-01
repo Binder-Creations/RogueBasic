@@ -24,8 +24,8 @@ public class Equipment extends Item {
 	
 	public Equipment() {}
 	
-	public Equipment(String name, String description, int cost, double weight) {
-		super(name, description, cost, weight);
+	public Equipment(String name, String description, int cost, double weight, String action) {
+		super(name, description, cost, weight, action);
 		this.constitutionBonus = 0;
 		this.strengthBonus = 0;
 		this.dexterityBonus = 0;
@@ -42,8 +42,8 @@ public class Equipment extends Item {
 		this.armorBonus = 0;
 	}
 	
-	public Equipment(String name, String description, int cost, double weight, int constitutionBonus, int strengthBonus, int dexterityBonus, int intelligenceBonus, int powerBonus, int healthBonus, int healthRegenBonus, int encumberanceBonus, int carryCapacityBonus, int dodgeRatingBonus, int critRatingBonus, int energyBonus, int energyRegenBonus, int armorBonus) {
-		super(name, description, cost, weight);	
+	public Equipment(String name, String description, int cost, double weight, String action, int constitutionBonus, int strengthBonus, int dexterityBonus, int intelligenceBonus, int powerBonus, int healthBonus, int healthRegenBonus, int encumberanceBonus, int carryCapacityBonus, int dodgeRatingBonus, int critRatingBonus, int energyBonus, int energyRegenBonus, int armorBonus) {
+		super(name, description, cost, weight, action);	
 		this.constitutionBonus = constitutionBonus;
 		this.strengthBonus = strengthBonus;
 		this.dexterityBonus = dexterityBonus;
@@ -192,7 +192,7 @@ public class Equipment extends Item {
 			return false;
 		Equipment other = (Equipment) obj;
 		return Objects.equals(getId(), other.getId()) && getCost() == other.getCost() && getDescription() == other.getDescription() 
-				&& getName() == other.getName() && getWeight() == other.getWeight() 
+				&& getName() == other.getName() && getWeight() == other.getWeight() && getAction() == other.getAction()
 				&& armorBonus == other.armorBonus && carryCapacityBonus == other.carryCapacityBonus
 				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
 				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
@@ -206,7 +206,7 @@ public class Equipment extends Item {
 	@Override
 	public String toString() {
 		return "Equipment [id=" + getId() + ", name=" + getName() + ", description=" + getDescription() + ", cost=" + getCost() + ", weight="
-				+ getWeight() + ", constitutionBonus=" + constitutionBonus + ", strengthBonus=" + strengthBonus
+				+ getWeight() + ", action=" + getAction() + ", constitutionBonus=" + constitutionBonus + ", strengthBonus=" + strengthBonus
 				+ ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus=" + intelligenceBonus + ", powerBonus="
 				+ powerBonus + ", healthBonus=" + healthBonus + ", healthRegenBonus=" + healthRegenBonus
 				+ ", encumberanceBonus=" + encumberanceBonus + ", carryCapacityBonus=" + carryCapacityBonus

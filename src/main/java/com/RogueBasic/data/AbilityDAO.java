@@ -48,25 +48,25 @@ public class AbilityDao {
 		}
 	}
 	  
-	public void save(Ability player) {
+	public boolean save(Ability player) {
 		log.trace("AbilityDao.findById() calling Mapper.save()");
 		try {
 			mapper.save(player);
-			return;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
+			return false;
 		}
 	}
 	 
-	public void deleteById(UUID id) {
+	public boolean deleteById(UUID id) {
 		log.trace("AbilityDao.findById() calling Mapper.delete()");
 		try {
 			mapper.delete(id);
-			return;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
+			return false;
 		}
 	}
 }

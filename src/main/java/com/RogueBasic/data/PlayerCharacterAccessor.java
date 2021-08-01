@@ -6,7 +6,7 @@ import com.datastax.driver.mapping.annotations.Accessor;
 import com.datastax.driver.mapping.annotations.Query;
 
 @Accessor
-public interface CharacterAccessor {
-	@Query("SELECT * FROM character")
+public interface PlayerCharacterAccessor {
+	@Query("SELECT * FROM player_character")
 	Result<PlayerCharacter> getAll();
 }

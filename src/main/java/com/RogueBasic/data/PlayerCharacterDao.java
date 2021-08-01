@@ -11,25 +11,25 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 
-public class CharacterDao {
+public class PlayerCharacterDao {
 	private MappingManager manager;
 	private Mapper<PlayerCharacter> mapper;
-	private CharacterAccessor accessor;
-	private static final Logger log = LogManager.getLogger(CharacterDao.class);	
+	private PlayerCharacterAccessor accessor;
+	private static final Logger log = LogManager.getLogger(PlayerCharacterDao.class);	
 	
-	public CharacterDao(Session session) {
+	public PlayerCharacterDao(Session session) {
 		super();
 		try {
 			this.manager = new MappingManager(session);
 			this.mapper = manager.mapper(PlayerCharacter.class);
-			this.accessor = manager.createAccessor(CharacterAccessor.class);
+			this.accessor = manager.createAccessor(PlayerCharacterAccessor.class);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public PlayerCharacter findById(UUID id) {
-		log.trace("CharacterDao.findById() calling Mapper.get() and returning Character");
+		log.trace("PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter");
 		try {
 			return mapper.get(id);
 		} catch (Exception e) {
@@ -39,7 +39,7 @@ public class CharacterDao {
 	}
 	
 	public List<PlayerCharacter> getAll() {
-		log.trace("CharacterDao.findById() calling CharacterAccessor.getAll() and returning List<Character>");
+		log.trace("PlayerCharacterDao.findById() calling PlayerCharacterAccessor.getAll() and returning List<PlayerCharacter>");
 		try {
 			return accessor.getAll().all();
 		} catch (Exception e) {
@@ -48,25 +48,25 @@ public class CharacterDao {
 		}
 	}
 	  
-	public void save(PlayerCharacter player) {
-		log.trace("CharacterDao.findById() calling Mapper.save()");
+	public boolean save(PlayerCharacter player) {
+		log.trace("PlayerCharacterDao.findById() calling Mapper.save()");
 		try {
 			mapper.save(player);
-			return;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
+			return false;
 		}
 	}
 	 
-	public void deleteById(UUID id) {
-		log.trace("CharacterDao.findById() calling Mapper.delete()");
+	public boolean deleteById(UUID id) {
+		log.trace("PlayerCharacterDao.findById() calling Mapper.delete()");
 		try {
 			mapper.delete(id);
-			return;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
+			return false;
 		}
 	}
 }

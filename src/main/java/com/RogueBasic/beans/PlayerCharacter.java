@@ -8,7 +8,7 @@ import java.util.UUID;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
-@Table(keyspace = "rogue", name = "character")
+@Table(keyspace = "rogue", name = "player_character")
 public class PlayerCharacter {
 	
 	@PartitionKey private UUID id;

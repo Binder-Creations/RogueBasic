@@ -27,8 +27,8 @@ public class ItemDaoTest {
 	@BeforeAll
 	private static void setUp() {
 		
-		tester = new Item("test", "test", 1, 1.0);
-		tester2 = new Item("test2", "test2", 2, 2.0);
+		tester = new Item("test", "test", 1, 1.0, "test");
+		tester2 = new Item("test2", "test2", 2, 2.0, "test2");
 	
 		session = new CassandraConnector().connect();
 		cu = new CassandraUtilities(session);
@@ -75,7 +75,7 @@ public class ItemDaoTest {
 	
 	@Test
 	public void saveTest() {
-		Item tester3 = new Item("test3", "test3", 3, 3.0);
+		Item tester3 = new Item("test3", "test3", 3, 3.0, "test3");
 		dao.save(tester3);
 		assertEquals(tester3.toString(), dao.findById(tester3.getId()).toString());
 	}

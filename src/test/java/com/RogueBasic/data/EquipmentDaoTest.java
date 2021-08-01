@@ -27,8 +27,8 @@ public class EquipmentDaoTest {
 	@BeforeAll
 	private static void setUp() {
 		
-		tester = new Equipment("test", "test", 1, 1.0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-		tester2 = new Equipment("test2", "test2", 2, 2.0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
+		tester = new Equipment("test", "test", 1, 1.0, "test", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+		tester2 = new Equipment("test2", "test2", 2, 2.0, "test2", 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
 	
 		session = new CassandraConnector().connect();
 		cu = new CassandraUtilities(session);
@@ -77,7 +77,7 @@ public class EquipmentDaoTest {
 	
 	@Test
 	public void saveTest() {
-		Equipment tester3 = new Equipment("test3", "test3", 3, 3.0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3);
+		Equipment tester3 = new Equipment("test3", "test3", 3, 3.0, "test3", 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3);
 		dao.save(tester3);
 		assertEquals(tester3.toString(), dao.findById(tester3.getId()).toString());
 	}

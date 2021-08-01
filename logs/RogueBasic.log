@@ -10749,3 +10749,265 @@
 2021-07-30 18:21:46 TRACE CharacterDao:52 - CharacterDao.findById() calling Mapper.save()
 2021-07-30 18:21:46 TRACE CharacterDao:52 - CharacterDao.findById() calling Mapper.save()
 2021-07-30 18:21:46 TRACE CharacterDao:32 - CharacterDao.findById() calling Mapper.get() and returning Character
+2021-07-31 12:31:09 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-07-31 12:31:10 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-07-31 12:31:16 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:31:16 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:31:16 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:31:16 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-07-31 12:31:21 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:31:21 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:31:21 TRACE ItemDao:63 - ItemDao.findById() calling Mapper.delete()
+2021-07-31 12:31:21 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-07-31 12:31:21 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-07-31 12:31:25 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:31:25 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:31:25 TRACE ItemDao:42 - ItemDao.findById() calling ItemAccessor.getAll() and returning List<Item>
+2021-07-31 12:31:30 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:31:30 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:31:30 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-07-31 12:34:42 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-07-31 12:34:43 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-07-31 12:34:48 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:34:48 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:34:48 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:34:48 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-07-31 12:34:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:34:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:34:52 TRACE ItemDao:63 - ItemDao.findById() calling Mapper.delete()
+2021-07-31 12:34:52 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-07-31 12:34:52 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-07-31 12:34:57 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:34:57 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:34:57 TRACE ItemDao:42 - ItemDao.findById() calling ItemAccessor.getAll() and returning List<Item>
+2021-07-31 12:35:01 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:35:01 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-07-31 12:35:01 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-08-01 12:48:40 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 12:48:41 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 12:48:41 TRACE AbilityDao:52 - AbilityDao.findById() calling Mapper.save()
+2021-08-01 12:48:41 TRACE AbilityDao:32 - AbilityDao.findById() calling Mapper.get() and returning Ability
+2021-08-01 12:48:41 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 12:48:41 TRACE DungeonDao:32 - DungeonDao.findById() calling Mapper.get() and returning Dungeon
+2021-08-01 12:48:41 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-01 12:48:41 TRACE EquipmentDao:32 - EquipmentDao.findById() calling Mapper.get() and returning Equipment
+2021-08-01 12:49:25 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 12:49:26 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 12:49:26 TRACE AbilityDao:52 - AbilityDao.findById() calling Mapper.save()
+2021-08-01 12:49:26 TRACE AbilityDao:32 - AbilityDao.findById() calling Mapper.get() and returning Ability
+2021-08-01 12:49:26 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 12:49:26 TRACE DungeonDao:32 - DungeonDao.findById() calling Mapper.get() and returning Dungeon
+2021-08-01 12:49:26 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-01 12:49:26 TRACE EquipmentDao:32 - EquipmentDao.findById() calling Mapper.get() and returning Equipment
+2021-08-01 12:49:26 TRACE FloorDao:52 - FloorDao.findById() calling Mapper.save()
+2021-08-01 12:49:26 TRACE FloorDao:32 - FloorDao.findById() calling Mapper.get() and returning Floor
+2021-08-01 12:49:26 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-01 12:49:26 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-08-01 12:49:26 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-01 12:49:26 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-01 12:49:26 TRACE PlayerDao:52 - PlayerDao.findById() calling Mapper.save()
+2021-08-01 12:49:26 TRACE PlayerDao:32 - PlayerDao.findById() calling Mapper.get() and returning Player
+2021-08-01 12:49:26 TRACE PlayerCharacterDao:52 - CharacterDao.findById() calling Mapper.save()
+2021-08-01 12:49:26 TRACE PlayerCharacterDao:32 - CharacterDao.findById() calling Mapper.get() and returning Character
+2021-08-01 12:49:26 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-01 12:49:26 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-01 12:50:28 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 12:50:29 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 12:50:29 DEBUG CassandraConnector:39 - Closing active Cassandra session.
+2021-08-01 12:50:29 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-01 12:50:29 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 12:50:29 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 12:53:01 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 12:53:02 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 12:53:02 DEBUG CassandraConnector:39 - Closing active Cassandra session.
+2021-08-01 12:53:02 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-01 12:53:02 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 12:53:02 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:08:51 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:08:52 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:08:52 DEBUG CassandraConnector:39 - Closing active Cassandra session.
+2021-08-01 13:08:52 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-01 13:08:52 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:08:52 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:09:50 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:09:51 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:09:51 DEBUG CassandraConnector:39 - Closing active Cassandra session.
+2021-08-01 13:09:51 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-01 13:09:51 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:09:51 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:19:09 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:19:10 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:19:11 DEBUG CassandraConnector:39 - Closing active Cassandra session.
+2021-08-01 13:19:11 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-01 13:19:11 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:19:11 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:19:55 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:19:55 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:19:56 DEBUG CassandraConnector:39 - Closing active Cassandra session.
+2021-08-01 13:19:56 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-01 13:19:56 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:19:56 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:24:59 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:25:00 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:25:03 TRACE AbilityDao:32 - AbilityDao.findById() calling Mapper.get() and returning Ability
+2021-08-01 13:25:05 TRACE AbilityDao:52 - AbilityDao.findById() calling Mapper.save()
+2021-08-01 13:25:05 TRACE AbilityDao:32 - AbilityDao.findById() calling Mapper.get() and returning Ability
+2021-08-01 13:25:05 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:25:05 TRACE DungeonDao:32 - DungeonDao.findById() calling Mapper.get() and returning Dungeon
+2021-08-01 13:25:05 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-01 13:25:05 TRACE EquipmentDao:32 - EquipmentDao.findById() calling Mapper.get() and returning Equipment
+2021-08-01 13:25:05 TRACE FloorDao:52 - FloorDao.findById() calling Mapper.save()
+2021-08-01 13:25:05 TRACE FloorDao:32 - FloorDao.findById() calling Mapper.get() and returning Floor
+2021-08-01 13:25:05 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-01 13:25:05 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-08-01 13:25:05 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-01 13:25:05 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-01 13:25:05 TRACE PlayerDao:52 - PlayerDao.findById() calling Mapper.save()
+2021-08-01 13:25:05 TRACE PlayerDao:32 - PlayerDao.findById() calling Mapper.get() and returning Player
+2021-08-01 13:25:05 TRACE PlayerCharacterDao:52 - CharacterDao.findById() calling Mapper.save()
+2021-08-01 13:25:05 TRACE PlayerCharacterDao:32 - CharacterDao.findById() calling Mapper.get() and returning Character
+2021-08-01 13:25:05 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-01 13:25:05 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-01 13:25:45 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:25:45 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:25:49 TRACE AbilityDao:52 - AbilityDao.findById() calling Mapper.save()
+2021-08-01 13:25:51 TRACE AbilityDao:52 - AbilityDao.findById() calling Mapper.save()
+2021-08-01 13:25:51 TRACE AbilityDao:32 - AbilityDao.findById() calling Mapper.get() and returning Ability
+2021-08-01 13:25:51 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:25:51 TRACE DungeonDao:32 - DungeonDao.findById() calling Mapper.get() and returning Dungeon
+2021-08-01 13:25:51 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-01 13:25:51 TRACE EquipmentDao:32 - EquipmentDao.findById() calling Mapper.get() and returning Equipment
+2021-08-01 13:25:51 TRACE FloorDao:52 - FloorDao.findById() calling Mapper.save()
+2021-08-01 13:25:51 TRACE FloorDao:32 - FloorDao.findById() calling Mapper.get() and returning Floor
+2021-08-01 13:25:51 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-01 13:25:51 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-08-01 13:25:51 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-01 13:25:51 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-01 13:25:51 TRACE PlayerDao:52 - PlayerDao.findById() calling Mapper.save()
+2021-08-01 13:25:51 TRACE PlayerDao:32 - PlayerDao.findById() calling Mapper.get() and returning Player
+2021-08-01 13:25:51 TRACE PlayerCharacterDao:52 - CharacterDao.findById() calling Mapper.save()
+2021-08-01 13:25:51 TRACE PlayerCharacterDao:32 - CharacterDao.findById() calling Mapper.get() and returning Character
+2021-08-01 13:25:51 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-01 13:25:51 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-01 13:31:55 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:31:56 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:32:01 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:32:01 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:32:01 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:32:01 TRACE DungeonDao:32 - DungeonDao.findById() calling Mapper.get() and returning Dungeon
+2021-08-01 13:32:05 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:32:05 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:32:05 TRACE DungeonDao:63 - DungeonDao.findById() calling Mapper.delete()
+2021-08-01 13:32:05 TRACE DungeonDao:32 - DungeonDao.findById() calling Mapper.get() and returning Dungeon
+2021-08-01 13:32:05 TRACE DungeonDao:32 - DungeonDao.findById() calling Mapper.get() and returning Dungeon
+2021-08-01 13:32:09 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:32:09 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:32:09 TRACE DungeonDao:42 - DungeonDao.findById() calling DungeonAccessor.getAll() and returning List<Dungeon>
+2021-08-01 13:32:14 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:32:14 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:32:14 TRACE DungeonDao:32 - DungeonDao.findById() calling Mapper.get() and returning Dungeon
+2021-08-01 13:36:07 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:36:08 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:36:12 TRACE PlayerCharacterDao:52 - CharacterDao.findById() calling Mapper.save()
+2021-08-01 13:36:12 TRACE PlayerCharacterDao:52 - CharacterDao.findById() calling Mapper.save()
+2021-08-01 13:36:12 TRACE PlayerCharacterDao:52 - CharacterDao.findById() calling Mapper.save()
+2021-08-01 13:36:12 TRACE PlayerCharacterDao:32 - CharacterDao.findById() calling Mapper.get() and returning Character
+2021-08-01 13:36:16 TRACE PlayerCharacterDao:52 - CharacterDao.findById() calling Mapper.save()
+2021-08-01 13:36:16 TRACE PlayerCharacterDao:52 - CharacterDao.findById() calling Mapper.save()
+2021-08-01 13:36:16 TRACE PlayerCharacterDao:63 - CharacterDao.findById() calling Mapper.delete()
+2021-08-01 13:36:16 TRACE PlayerCharacterDao:32 - CharacterDao.findById() calling Mapper.get() and returning Character
+2021-08-01 13:36:16 TRACE PlayerCharacterDao:32 - CharacterDao.findById() calling Mapper.get() and returning Character
+2021-08-01 13:36:20 TRACE PlayerCharacterDao:52 - CharacterDao.findById() calling Mapper.save()
+2021-08-01 13:36:20 TRACE PlayerCharacterDao:52 - CharacterDao.findById() calling Mapper.save()
+2021-08-01 13:36:20 TRACE PlayerCharacterDao:42 - CharacterDao.findById() calling CharacterAccessor.getAll() and returning List<Character>
+2021-08-01 13:36:23 TRACE PlayerCharacterDao:52 - CharacterDao.findById() calling Mapper.save()
+2021-08-01 13:36:23 TRACE PlayerCharacterDao:52 - CharacterDao.findById() calling Mapper.save()
+2021-08-01 13:36:23 TRACE PlayerCharacterDao:32 - CharacterDao.findById() calling Mapper.get() and returning Character
+2021-08-01 13:41:13 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:41:14 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:41:16 TRACE AbilityDao:52 - AbilityDao.findById() calling Mapper.save()
+2021-08-01 13:41:18 TRACE AbilityDao:52 - AbilityDao.findById() calling Mapper.save()
+2021-08-01 13:41:18 TRACE AbilityDao:32 - AbilityDao.findById() calling Mapper.get() and returning Ability
+2021-08-01 13:41:18 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:41:18 TRACE DungeonDao:32 - DungeonDao.findById() calling Mapper.get() and returning Dungeon
+2021-08-01 13:41:18 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-01 13:41:18 TRACE EquipmentDao:32 - EquipmentDao.findById() calling Mapper.get() and returning Equipment
+2021-08-01 13:41:18 TRACE FloorDao:52 - FloorDao.findById() calling Mapper.save()
+2021-08-01 13:41:18 TRACE FloorDao:32 - FloorDao.findById() calling Mapper.get() and returning Floor
+2021-08-01 13:41:18 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-01 13:41:18 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-08-01 13:41:18 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-01 13:41:18 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-01 13:41:18 TRACE PlayerDao:52 - PlayerDao.findById() calling Mapper.save()
+2021-08-01 13:41:18 TRACE PlayerDao:32 - PlayerDao.findById() calling Mapper.get() and returning Player
+2021-08-01 13:41:18 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-01 13:41:18 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-01 13:41:18 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-01 13:41:18 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-01 13:42:42 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:42:43 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:42:46 TRACE AbilityDao:52 - AbilityDao.findById() calling Mapper.save()
+2021-08-01 13:42:46 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:42:46 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-01 13:42:46 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-01 13:42:46 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-01 13:42:46 TRACE PlayerDao:52 - PlayerDao.findById() calling Mapper.save()
+2021-08-01 13:42:46 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-01 13:42:48 TRACE AbilityDao:52 - AbilityDao.findById() calling Mapper.save()
+2021-08-01 13:42:48 TRACE AbilityDao:32 - AbilityDao.findById() calling Mapper.get() and returning Ability
+2021-08-01 13:42:48 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:42:48 TRACE DungeonDao:32 - DungeonDao.findById() calling Mapper.get() and returning Dungeon
+2021-08-01 13:42:48 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-01 13:42:48 TRACE EquipmentDao:32 - EquipmentDao.findById() calling Mapper.get() and returning Equipment
+2021-08-01 13:42:48 TRACE FloorDao:52 - FloorDao.findById() calling Mapper.save()
+2021-08-01 13:42:48 TRACE FloorDao:32 - FloorDao.findById() calling Mapper.get() and returning Floor
+2021-08-01 13:42:48 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-01 13:42:48 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-08-01 13:42:48 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-01 13:42:48 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-01 13:42:48 TRACE PlayerDao:52 - PlayerDao.findById() calling Mapper.save()
+2021-08-01 13:42:48 TRACE PlayerDao:32 - PlayerDao.findById() calling Mapper.get() and returning Player
+2021-08-01 13:42:48 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-01 13:42:48 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-01 13:42:48 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-01 13:42:48 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-01 13:43:48 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 13:43:48 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 13:43:52 TRACE AbilityDao:52 - AbilityDao.findById() calling Mapper.save()
+2021-08-01 13:43:52 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:43:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-01 13:43:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-01 13:43:52 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-01 13:43:52 TRACE PlayerDao:52 - PlayerDao.findById() calling Mapper.save()
+2021-08-01 13:43:52 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-01 13:43:52 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-01 13:43:53 TRACE AbilityDao:52 - AbilityDao.findById() calling Mapper.save()
+2021-08-01 13:43:53 TRACE AbilityDao:32 - AbilityDao.findById() calling Mapper.get() and returning Ability
+2021-08-01 13:43:53 TRACE DungeonDao:52 - DungeonDao.findById() calling Mapper.save()
+2021-08-01 13:43:53 TRACE DungeonDao:32 - DungeonDao.findById() calling Mapper.get() and returning Dungeon
+2021-08-01 13:43:53 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-01 13:43:53 TRACE EquipmentDao:32 - EquipmentDao.findById() calling Mapper.get() and returning Equipment
+2021-08-01 13:43:53 TRACE FloorDao:52 - FloorDao.findById() calling Mapper.save()
+2021-08-01 13:43:53 TRACE FloorDao:32 - FloorDao.findById() calling Mapper.get() and returning Floor
+2021-08-01 13:43:53 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-01 13:43:53 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-08-01 13:43:53 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-01 13:43:53 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-01 13:43:54 TRACE PlayerDao:52 - PlayerDao.findById() calling Mapper.save()
+2021-08-01 13:43:54 TRACE PlayerDao:32 - PlayerDao.findById() calling Mapper.get() and returning Player
+2021-08-01 13:43:54 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-01 13:43:54 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-01 13:43:54 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-01 13:43:54 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-01 18:50:09 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-01 18:50:09 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-01 18:50:09 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 18:50:10 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 18:50:21 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-01 18:50:21 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-01 18:50:22 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 18:50:23 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-01 19:06:10 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-01 19:06:10 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-01 19:06:10 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-01 19:06:11 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue

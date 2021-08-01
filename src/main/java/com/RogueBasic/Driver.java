@@ -6,8 +6,10 @@ import java.util.UUID;
 
 import com.RogueBasic.beans.*;
 import com.RogueBasic.data.*;
+import com.RogueBasic.services.DungeonServices;
 import com.RogueBasic.util.CassandraConnector;
 import com.RogueBasic.util.CassandraUtilities;
+import com.RogueBasic.util.RogueUtilities;
 import com.datastax.driver.core.*;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
@@ -60,18 +62,22 @@ public class Driver {
 //  }
 	
 	public static void main(String[] args) {
-			CassandraConnector cc = new CassandraConnector();
-			cc.close();
-			cc.connect();
-			Session session = cc.getSession();
-			CassandraUtilities cu = new CassandraUtilities(session);
-			cu.dropAllTables();
-			cu.initialize();
-			long startTime = System.nanoTime();
-			PlayerDao dao = new PlayerDao(null);
-			Player a = new Player("taco", "pass123");
-			dao.save(a);
-			System.out.println(a.equals(dao.findById(a.getId())));
+		
+//			CassandraConnector cc = new CassandraConnector();
+//			cc.close();
+//			cc.connect();
+//			Session session = cc.getSession();
+//			RogueUtilities ru = new RogueUtilities();
+//			DungeonServices ds = new DungeonServices(session);
+//			System.out.println(ds.genName("Castle"));
+//			CassandraUtilities cu = new CassandraUtilities(session);
+//			cu.dropAllTables();
+//			cu.initialize();
+//			long startTime = System.nanoTime();
+//			PlayerDao dao = new PlayerDao(null);
+//			Player a = new Player("taco", "pass123");
+//			dao.save(a);
+//			System.out.println(a.equals(dao.findById(a.getId())));
 //			Player b = new Player("Waffle", "admin");
 //			dao.mapper.getManager().getConfiguration().getPropertyMapper().mapTable(Player.class).;
 //			System.out.println(dao.mapper.getTableMetadata().toString());
@@ -105,8 +111,8 @@ public class Driver {
 //			dao.save(a);
 //			dao.save(b);
 //			dao.getAll().stream().forEach(p -> System.out.println(p.toString()));
-			long endTime = System.nanoTime();
-			System.out.println((endTime-startTime)/1000000);	
+//			long endTime = System.nanoTime();
+//			System.out.println((endTime-startTime)/1000000);	
 		System.out.println("taco");
 	}
 }

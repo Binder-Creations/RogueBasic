@@ -48,25 +48,25 @@ public class MonsterDao {
 		}
 	}
 	  
-	public void save(Monster player) {
+	public boolean save(Monster player) {
 		log.trace("MonsterDao.findById() calling Mapper.save()");
 		try {
 			mapper.save(player);
-			return;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
+			return false;
 		}
 	}
 	 
-	public void deleteById(UUID id) {
+	public boolean deleteById(UUID id) {
 		log.trace("MonsterDao.findById() calling Mapper.delete()");
 		try {
 			mapper.delete(id);
-			return;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
+			return false;
 		}
 	}
 }

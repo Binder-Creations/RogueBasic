@@ -48,25 +48,25 @@ public class RoomDao {
 		}
 	}
 	  
-	public void save(Room player) {
+	public boolean save(Room player) {
 		log.trace("RoomDao.findById() calling Mapper.save()");
 		try {
 			mapper.save(player);
-			return;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
+			return false;
 		}
 	}
 	 
-	public void deleteById(UUID id) {
+	public boolean deleteById(UUID id) {
 		log.trace("RoomDao.findById() calling Mapper.delete()");
 		try {
 			mapper.delete(id);
-			return;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
+			return false;
 		}
 	}
 }
