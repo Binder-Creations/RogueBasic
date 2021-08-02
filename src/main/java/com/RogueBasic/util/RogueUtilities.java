@@ -18,7 +18,7 @@ public class RogueUtilities {
 		try{
 			StringBuilder sb = new StringBuilder();
 			Files.readAllLines(Paths.get("src/main/resources/" + name + type))
-									.forEach((s)->sb.append(s + "\n"));
+				 .forEach((s)->sb.append(s + "\n"));
 			return sb.toString().substring(0, sb.length()-1);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -29,8 +29,10 @@ public class RogueUtilities {
 	public List<String[]> readFileToArrays(String name, String type){
 		try {
 			List<String[]> components = new ArrayList<>();
-			Stream.of(readFileToString(name, type).split("\n"))
-		      .forEach((s)->components.add(s.split(", ")));
+			Files.readAllLines(Paths.get("src/main/resources/" + name + type))
+				 .forEach((s)->components.add(s.split("~")));
+//			Stream.of(readFileToString(name, type).split("\n"))
+//		      .forEach((s)->components.add(s.split(", ")));
 			return components;
 		} catch (Exception e){
 			e.printStackTrace();

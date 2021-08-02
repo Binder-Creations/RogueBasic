@@ -58,7 +58,7 @@ public class CassandraUtilitiesTest {
 		su.add(u);
 		su.add(u);
 		a = new Ability(t, t, 1, 1, t, t);
-		d = new Dungeon(t, t, t, 1, 1, true, true);
+		d = new Dungeon();
 		e = new Equipment(t, t, 1, 1, t, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 		f = new Floor(1, 1, 1, u, u, u);
 		i = new Item(t, t, 1, 1, t);

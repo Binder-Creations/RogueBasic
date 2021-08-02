@@ -63,13 +63,16 @@ public class Driver {
 	
 	public static void main(String[] args) {
 		
-//			CassandraConnector cc = new CassandraConnector();
-//			cc.close();
-//			cc.connect();
-//			Session session = cc.getSession();
-//			RogueUtilities ru = new RogueUtilities();
-//			DungeonServices ds = new DungeonServices(session);
-//			System.out.println(ds.genName("Castle"));
+			CassandraConnector cc = new CassandraConnector();
+			cc.close();
+			cc.connect();
+			Session session = cc.getSession();
+			RogueUtilities ru = new RogueUtilities();
+			DungeonServices ds = new DungeonServices(session);
+			for(int i = 0; i < 100; i++) {
+				Dungeon d = ds.generate(UUID.randomUUID());
+				System.out.println(d.getName() + ": " + d.getDescription());
+			}
 //			CassandraUtilities cu = new CassandraUtilities(session);
 //			cu.dropAllTables();
 //			cu.initialize();

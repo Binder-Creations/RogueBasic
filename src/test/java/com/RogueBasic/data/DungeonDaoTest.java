@@ -5,13 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import com.RogueBasic.beans.Dungeon;
+import com.RogueBasic.services.DungeonServices;
 import com.RogueBasic.util.CassandraConnector;
 import com.RogueBasic.util.CassandraUtilities;
 import com.datastax.driver.core.Session;
@@ -20,19 +23,19 @@ public class DungeonDaoTest {
 	
 	private static CassandraUtilities cu;
 	private static DungeonDao dao;
+	private static DungeonServices ds;
 	private static Dungeon tester;
 	private static Dungeon tester2;
 	private static Session session;
 	
 	@BeforeAll
 	private static void setUp() {
-		
-		tester = new Dungeon("test", "test", "test", 1, 1, true, true);
-		tester2 = new Dungeon("test2", "test2", "test2", 2, 2, true, true);
-	
 		session = new CassandraConnector().connect();
 		cu = new CassandraUtilities(session);
-		
+		ds = new DungeonServices(session);
+		tester = ds.generate(UUID.randomUUID());
+		tester2 = ds.generate(UUID.randomUUID());
+
 		//Initialized tables are required to construct our dao
 		cu.initialize();
 		dao = new DungeonDao(session);	
@@ -75,7 +78,7 @@ public class DungeonDaoTest {
 	
 	@Test
 	public void saveTest() {
-		Dungeon tester3 = new Dungeon("test3", "test3", "test3", 3, 3, true, true);
+		Dungeon tester3 = ds.generate(UUID.randomUUID());
 		dao.save(tester3);
 		assertEquals(tester3, dao.findById(tester3.getId()));
 	}
