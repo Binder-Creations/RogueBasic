@@ -22,13 +22,13 @@ public class CassandraUtilities {
                 + "rogue.ABILITY (id uuid PRIMARY KEY, name text, description text, level int, energyCost int, area text, action text)");
 		
 		session.execute("CREATE TABLE IF NOT EXISTS "
-                + "rogue.DUNGEON (id uuid PRIMARY KEY, name text, description text, theme text, floorCount int, floors set<UUID>, challengeRating int, miniboss boolean, boss boolean, treasureBonus1 boolean, treasureBonus2 boolean, treasureBonus3 boolean, trapBonus1 boolean, trapBonus2 boolean, trapBonus3 boolean, enemyHealth1 boolean, enemyHealth2 boolean, enemyHealth3 boolean, enemyDamage1 boolean, enemyDamage2 boolean, enemyDamage3 boolean)");
+                + "rogue.DUNGEON (id uuid PRIMARY KEY, name text, description text, theme text, floorCount int, floorIds set<UUID>, challengeRating int, miniboss boolean, boss boolean, treasureBonus1 boolean, treasureBonus2 boolean, treasureBonus3 boolean, trapBonus1 boolean, trapBonus2 boolean, trapBonus3 boolean, enemyHealth1 boolean, enemyHealth2 boolean, enemyHealth3 boolean, enemyDamage1 boolean, enemyDamage2 boolean, enemyDamage3 boolean)");
 		
 		session.execute("CREATE TABLE IF NOT EXISTS "
                 + "rogue.FLOOR (id uuid PRIMARY KEY, level int, xLength int, yLength int, previousFloorId uuid, nextFloorId uuid, dungeonId uuid, roomIds set<UUID>)");
 		
 		session.execute("CREATE TABLE IF NOT EXISTS "
-                + "rogue.ROOM (id uuid PRIMARY KEY, floorID uuid, dungeonId uuid, xCoord int, yCoord int, northRoomId uuid, southRoomId uuid, eastRoomId uuid, westRoomId uuid, trapId uuid, itemIds set<UUID>, monsterIds set<UUID>)");
+                + "rogue.ROOM (id uuid PRIMARY KEY, floorID uuid, dungeonId uuid, xCoord int, yCoord int, stairsPrevious boolean, stairsNext boolean, northRoomId uuid, southRoomId uuid, eastRoomId uuid, westRoomId uuid, trapId uuid, itemIds set<UUID>, monsterIds set<UUID>)");
 		
 		session.execute("CREATE TABLE IF NOT EXISTS "
                 + "rogue.ITEM (id uuid PRIMARY KEY, name text, description text, cost int, weight double, action text)");

@@ -14,7 +14,7 @@ public class Dungeon {
 	private String description;
 	private String theme;
 	private int floorCount;
-	private Set<UUID> floors;
+	private Set<UUID> floorIds;
 	private int challengeRating;
 	private boolean miniboss;
 	private boolean boss;
@@ -86,12 +86,12 @@ public class Dungeon {
 		this.floorCount = floorCount;
 	}
 	
-	public Set<UUID> getFloors() {
-		return floors;
+	public Set<UUID> getFloorIds() {
+		return floorIds;
 	}
 	
-	public void setFloors(Set<UUID> floors) {
-		this.floors = floors;
+	public void setFloorIds(Set<UUID> floorIds) {
+		this.floorIds = floorIds;
 	}
 	
 	public int getChallengeRating() {
@@ -217,7 +217,7 @@ public class Dungeon {
 	@Override
 	public int hashCode() {
 		return Objects.hash(boss, challengeRating, description, enemyDamage1, enemyDamage2, enemyDamage3, enemyHealth1,
-				enemyHealth2, enemyHealth3, floorCount, floors, id, miniboss, name, theme, trapBonus1, trapBonus2,
+				enemyHealth2, enemyHealth3, floorCount, floorIds, id, miniboss, name, theme, trapBonus1, trapBonus2,
 				trapBonus3, treasureBonus1, treasureBonus2, treasureBonus3);
 	}
 	
@@ -235,7 +235,7 @@ public class Dungeon {
 				&& enemyDamage2 == other.enemyDamage2 && enemyDamage3 == other.enemyDamage3
 				&& enemyHealth1 == other.enemyHealth1 && enemyHealth2 == other.enemyHealth2
 				&& enemyHealth3 == other.enemyHealth3 && floorCount == other.floorCount
-				&& Objects.equals(floors, other.floors) && Objects.equals(id, other.id) && miniboss == other.miniboss
+				&& Objects.equals(floorIds, other.floorIds) && Objects.equals(id, other.id) && miniboss == other.miniboss
 				&& Objects.equals(name, other.name) && Objects.equals(theme, other.theme)
 				&& trapBonus1 == other.trapBonus1 && trapBonus2 == other.trapBonus2 && trapBonus3 == other.trapBonus3
 				&& treasureBonus1 == other.treasureBonus1 && treasureBonus2 == other.treasureBonus2
@@ -245,7 +245,7 @@ public class Dungeon {
 	@Override
 	public String toString() {
 		return "Dungeon [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme
-				+ ", floorCount=" + floorCount + ", floors=" + floors + ", challengeRating=" + challengeRating
+				+ ", floorCount=" + floorCount + ", floorIds=" + floorIds + ", challengeRating=" + challengeRating
 				+ ", miniboss=" + miniboss + ", boss=" + boss + ", treasureBonus1=" + treasureBonus1
 				+ ", treasureBonus2=" + treasureBonus2 + ", treasureBonus3=" + treasureBonus3 + ", trapBonus1="
 				+ trapBonus1 + ", trapBonus2=" + trapBonus2 + ", trapBonus3=" + trapBonus3 + ", enemyHealth1="

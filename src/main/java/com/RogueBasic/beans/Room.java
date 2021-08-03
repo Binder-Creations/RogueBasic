@@ -14,6 +14,8 @@ public class Room {
 	private UUID dungeonId;
 	private int xCoord;
 	private int yCoord;
+	private boolean stairsPrevious;
+	private boolean stairsNext;
 	private UUID northRoomId;
 	private UUID southRoomId;
 	private UUID eastRoomId;
@@ -81,6 +83,22 @@ public class Room {
 		this.yCoord = yCoord;
 	}
 	
+	public boolean isStairsPrevious() {
+		return stairsPrevious;
+	}
+
+	public void setStairsPrevious(boolean stairsPrevious) {
+		this.stairsPrevious = stairsPrevious;
+	}
+
+	public boolean isStairsNext() {
+		return stairsNext;
+	}
+
+	public void setStairsNext(boolean stairsNext) {
+		this.stairsNext = stairsNext;
+	}
+
 	public UUID getNorthRoomId() {
 		return northRoomId;
 	}
@@ -139,8 +157,8 @@ public class Room {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dungeonId, eastRoomId, floorId, id, itemIds, monsterIds, northRoomId, southRoomId, trapId,
-				westRoomId, xCoord, yCoord);
+		return Objects.hash(dungeonId, eastRoomId, floorId, id, itemIds, monsterIds, northRoomId, southRoomId,
+				stairsNext, stairsPrevious, trapId, westRoomId, xCoord, yCoord);
 	}
 
 	@Override
@@ -156,6 +174,7 @@ public class Room {
 				&& Objects.equals(floorId, other.floorId) && Objects.equals(id, other.id)
 				&& Objects.equals(itemIds, other.itemIds) && Objects.equals(monsterIds, other.monsterIds)
 				&& Objects.equals(northRoomId, other.northRoomId) && Objects.equals(southRoomId, other.southRoomId)
+				&& stairsNext == other.stairsNext && stairsPrevious == other.stairsPrevious
 				&& Objects.equals(trapId, other.trapId) && Objects.equals(westRoomId, other.westRoomId)
 				&& xCoord == other.xCoord && yCoord == other.yCoord;
 	}
@@ -163,9 +182,10 @@ public class Room {
 	@Override
 	public String toString() {
 		return "Room [id=" + id + ", floorId=" + floorId + ", dungeonId=" + dungeonId + ", xCoord=" + xCoord
-				+ ", yCoord=" + yCoord + ", northRoomId=" + northRoomId + ", southRoomId=" + southRoomId
-				+ ", eastRoomId=" + eastRoomId + ", westRoomId=" + westRoomId + ", trapId=" + trapId + ", itemIds="
-				+ itemIds + ", monsterIds=" + monsterIds + "]";
+				+ ", yCoord=" + yCoord + ", stairsPrevious=" + stairsPrevious + ", stairsNext=" + stairsNext
+				+ ", northRoomId=" + northRoomId + ", southRoomId=" + southRoomId + ", eastRoomId=" + eastRoomId
+				+ ", westRoomId=" + westRoomId + ", trapId=" + trapId + ", itemIds=" + itemIds + ", monsterIds="
+				+ monsterIds + "]";
 	}
 	
 }

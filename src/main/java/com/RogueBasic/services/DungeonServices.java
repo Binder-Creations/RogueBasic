@@ -51,28 +51,26 @@ public class DungeonServices {
 			return null;
 		}
 		
-		Set<UUID> floors = new HashSet<>();
-		for(int i = 1; i < dungeon.getFloorCount() + 1; i++)
-			floors.add(fs.generate(dungeon, i));
-		dungeon.setFloors(floors);
+		dungeon.setFloorIds(fs.generate(dungeon));
+
 		
 		return dungeon;
 	}
 	
 	public int genChallengeRating(int level) {
-		int modifier = 2*level/5;
+		int modifier = 1+2*level/5;
 		modifier = modifier > 0 ? modifier : 1;
-		modifier = modifier > 4 ? 4 : modifier;
-		int challengeRating = level - modifier + ThreadLocalRandom.current().nextInt(2*modifier);
+		modifier = modifier > 3 ? 3 : modifier;
+		int challengeRating = level - modifier + ThreadLocalRandom.current().nextInt(3*modifier);
 		challengeRating = challengeRating > 0 ? challengeRating : 0;
 		return challengeRating;
 	}
 	
 	public int genFloorCount(int challengeRating) {
 		int modifier = 1+(challengeRating/4);
-		modifier = modifier > 3 ? 3 : modifier;
+		modifier = modifier > 4 ? 4 : modifier;
 		int base = 1+(challengeRating/8);
-		int floorCount = base - modifier + ThreadLocalRandom.current().nextInt(2*modifier);
+		int floorCount = base - modifier + ThreadLocalRandom.current().nextInt(3*modifier);
 		floorCount = floorCount > 0 ? floorCount : 1;
 		return floorCount;
 	}
