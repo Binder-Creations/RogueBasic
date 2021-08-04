@@ -19,17 +19,6 @@ public class Floor {
 	private Set<UUID> roomIds;
 	
 	public Floor() {}
-	
-	public Floor(int level, int xLength, int yLength, UUID previousFloorId, UUID nextFloorId, UUID dungeonId) {
-		super();
-		this.id = UUID.randomUUID();
-		this.level = level;
-		this.xLength = xLength;
-		this.yLength = yLength;
-		this.previousFloorId = previousFloorId;
-		this.nextFloorId = nextFloorId;
-		this.dungeonId = dungeonId;
-	}
 
 	public UUID getId() {
 		return id;

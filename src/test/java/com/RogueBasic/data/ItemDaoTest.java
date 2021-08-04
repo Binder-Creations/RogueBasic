@@ -34,6 +34,7 @@ public class ItemDaoTest {
 		cu = new CassandraUtilities(session);
 		
 		//Initialized tables are required to construct our dao
+		cu.dropAllTables();
 		cu.initialize();
 		dao = new ItemDao(session);	
 

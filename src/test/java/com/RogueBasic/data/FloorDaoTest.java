@@ -28,13 +28,16 @@ public class FloorDaoTest {
 	@BeforeAll
 	private static void setUp() {
 		
-		tester = new Floor(1, 1, 1, UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
-		tester2 = new Floor(2, 2, 2, UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
-	
+		tester = new Floor();
+		tester.setId(UUID.randomUUID());
+		tester2 = new Floor();
+		tester2.setId(UUID.randomUUID());
+		
 		session = new CassandraConnector().connect();
 		cu = new CassandraUtilities(session);
 		
 		//Initialized tables are required to construct our dao
+		cu.dropAllTables();
 		cu.initialize();
 		dao = new FloorDao(session);	
 
@@ -76,7 +79,9 @@ public class FloorDaoTest {
 	
 	@Test
 	public void saveTest() {
-		Floor tester3 = new Floor(3, 3, 3, UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+		Floor tester3 = new Floor();
+		tester3.setId(UUID.randomUUID());
+		
 		dao.save(tester3);
 		assertEquals(tester3, dao.findById(tester3.getId()));
 	}

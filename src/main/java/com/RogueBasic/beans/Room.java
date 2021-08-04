@@ -23,25 +23,10 @@ public class Room {
 	private UUID trapId;
 	private Set<UUID> itemIds;
 	private Set<UUID> monsterIds;
+	private boolean miniboss;
+	private boolean boss;
 	
 	public Room() {}
-	
-	public Room(UUID floorId, UUID dungeonId, int xCoord, int yCoord, UUID northRoomId, UUID southRoomId, UUID eastRoomId, UUID westRoomId,
-			UUID trapId, Set<UUID> itemIds, Set<UUID> monsterIds) {
-		super();
-		this.id = UUID.randomUUID();
-		this.floorId = floorId;
-		this.dungeonId = dungeonId;
-		this.xCoord = xCoord;
-		this.yCoord = yCoord;
-		this.northRoomId = northRoomId;
-		this.southRoomId = southRoomId;
-		this.eastRoomId = eastRoomId;
-		this.westRoomId = westRoomId;
-		this.trapId = trapId;
-		this.itemIds = itemIds;
-		this.monsterIds = monsterIds;
-	}
 
 	public UUID getId() {
 		return id;
@@ -155,10 +140,26 @@ public class Room {
 		this.monsterIds = monsterIds;
 	}
 
+	public boolean isMiniboss() {
+		return miniboss;
+	}
+
+	public void setMiniboss(boolean miniboss) {
+		this.miniboss = miniboss;
+	}
+
+	public boolean isBoss() {
+		return boss;
+	}
+
+	public void setBoss(boolean boss) {
+		this.boss = boss;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(dungeonId, eastRoomId, floorId, id, itemIds, monsterIds, northRoomId, southRoomId,
-				stairsNext, stairsPrevious, trapId, westRoomId, xCoord, yCoord);
+		return Objects.hash(boss, dungeonId, eastRoomId, floorId, id, itemIds, miniboss, monsterIds, northRoomId,
+				southRoomId, stairsNext, stairsPrevious, trapId, westRoomId, xCoord, yCoord);
 	}
 
 	@Override
@@ -170,13 +171,13 @@ public class Room {
 		if (getClass() != obj.getClass())
 			return false;
 		Room other = (Room) obj;
-		return Objects.equals(dungeonId, other.dungeonId) && Objects.equals(eastRoomId, other.eastRoomId)
-				&& Objects.equals(floorId, other.floorId) && Objects.equals(id, other.id)
-				&& Objects.equals(itemIds, other.itemIds) && Objects.equals(monsterIds, other.monsterIds)
-				&& Objects.equals(northRoomId, other.northRoomId) && Objects.equals(southRoomId, other.southRoomId)
-				&& stairsNext == other.stairsNext && stairsPrevious == other.stairsPrevious
-				&& Objects.equals(trapId, other.trapId) && Objects.equals(westRoomId, other.westRoomId)
-				&& xCoord == other.xCoord && yCoord == other.yCoord;
+		return boss == other.boss && Objects.equals(dungeonId, other.dungeonId)
+				&& Objects.equals(eastRoomId, other.eastRoomId) && Objects.equals(floorId, other.floorId)
+				&& Objects.equals(id, other.id) && Objects.equals(itemIds, other.itemIds) && miniboss == other.miniboss
+				&& Objects.equals(monsterIds, other.monsterIds) && Objects.equals(northRoomId, other.northRoomId)
+				&& Objects.equals(southRoomId, other.southRoomId) && stairsNext == other.stairsNext
+				&& stairsPrevious == other.stairsPrevious && Objects.equals(trapId, other.trapId)
+				&& Objects.equals(westRoomId, other.westRoomId) && xCoord == other.xCoord && yCoord == other.yCoord;
 	}
 
 	@Override
@@ -185,7 +186,7 @@ public class Room {
 				+ ", yCoord=" + yCoord + ", stairsPrevious=" + stairsPrevious + ", stairsNext=" + stairsNext
 				+ ", northRoomId=" + northRoomId + ", southRoomId=" + southRoomId + ", eastRoomId=" + eastRoomId
 				+ ", westRoomId=" + westRoomId + ", trapId=" + trapId + ", itemIds=" + itemIds + ", monsterIds="
-				+ monsterIds + "]";
+				+ monsterIds + ", miniboss=" + miniboss + ", boss=" + boss + "]";
 	}
 	
 }

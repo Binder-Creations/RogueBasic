@@ -33,13 +33,14 @@ public class MonsterDaoTest {
 		testSet = new HashSet<UUID>();
 		testSet.add(UUID.randomUUID());
 		testSet.add(UUID.randomUUID());
-		tester = new Monster("test", "test", true, true, 1, 1, 1, 1, 1, 1, testSet);
-		tester2 = new Monster("test2", "test2", false, false, 2, 2, 2, 2, 2, 2, testSet);
+		tester = new Monster("test", "test", "test", true, true, 1, 1, 1, 1, 1, 1, testSet);
+		tester2 = new Monster("test2", "test2","test2", false, false, 2, 2, 2, 2, 2, 2, testSet);
 	
 		session = new CassandraConnector().connect();
 		cu = new CassandraUtilities(session);
 		
 		//Initialized tables are required to construct our dao
+		cu.dropAllTables();
 		cu.initialize();
 		dao = new MonsterDao(session);	
 
@@ -81,7 +82,7 @@ public class MonsterDaoTest {
 	
 	@Test
 	public void saveTest() {
-		Monster tester3 = new Monster("test3", "test3", true, true, 3, 3, 3, 3, 3, 3, testSet);
+		Monster tester3 = new Monster("test3", "test3", "test3", true, true, 3, 3, 3, 3, 3, 3, testSet);
 		dao.save(tester3);
 		assertEquals(tester3, dao.findById(tester3.getId()));
 	}

@@ -59,13 +59,16 @@ public class CassandraUtilitiesTest {
 		su.add(u);
 		a = new Ability(t, t, 1, 1, t, t);
 		d = new Dungeon();
+		d.setId(UUID.randomUUID());
 		e = new Equipment(t, t, 1, 1, t, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-		f = new Floor(1, 1, 1, u, u, u);
+		f = new Floor();
+		f.setId(UUID.randomUUID());
 		i = new Item(t, t, 1, 1, t);
-		m = new Monster(t, t, true, true, 1, 1, 1, 1, 1, 1, su);
+		m = new Monster(t, t, t, true, true, 1, 1, 1, 1, 1, 1, su);
 		p = new Player(t, t);
 		pc = new PlayerCharacter(u, t, 1, 1, 1, 1);
-		r = new Room(u, u, 1, 1, u, u, u, u, u, su, su);
+		r = new Room();
+		r.setId(UUID.randomUUID());
 		
 	}
 	

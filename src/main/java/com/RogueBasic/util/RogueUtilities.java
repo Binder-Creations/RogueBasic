@@ -28,12 +28,22 @@ public class RogueUtilities {
 		
 	public List<String[]> readFileToArrays(String name, String type){
 		try {
-			List<String[]> components = new ArrayList<>();
+			List<String[]> result = new ArrayList<>();
 			Files.readAllLines(Paths.get("src/main/resources/" + name + type))
-				 .forEach((s)->components.add(s.split("~")));
-//			Stream.of(readFileToString(name, type).split("\n"))
-//		      .forEach((s)->components.add(s.split(", ")));
-			return components;
+				 .forEach((s)->result.add(s.split("~")));
+			return result;
+		} catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<String> readFileToList(String name, String type){
+		try {
+			List<String> result = new ArrayList<>();
+			Files.readAllLines(Paths.get("src/main/resources/" + name + type))
+				 .forEach((s)->result.add(s));
+			return result;
 		} catch (Exception e){
 			e.printStackTrace();
 			return null;

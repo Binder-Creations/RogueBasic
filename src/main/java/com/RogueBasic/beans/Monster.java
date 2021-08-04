@@ -12,8 +12,9 @@ public class Monster {
 	@PartitionKey private UUID id;
 	private String name;
 	private String description;
+	private String theme;
 	private boolean boss;
-	private boolean miniBoss;
+	private boolean miniboss;
 	private int level;
 	private int health;
 	private int power;
@@ -24,14 +25,15 @@ public class Monster {
 	
 	public Monster() {};
 	
-	public Monster(String name, String description, boolean boss, boolean miniBoss, int level, int health,
+	public Monster(String name, String description, String theme, boolean boss, boolean miniboss, int level, int health,
 			int power, int armor, int dodgeRating, int critRating, Set<UUID> abilityIds) {
 		super();
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
+		this.theme = theme;
 		this.boss = boss;
-		this.miniBoss = miniBoss;
+		this.miniboss = miniboss;
 		this.level = level;
 		this.health = health;
 		this.power = power;
@@ -61,22 +63,30 @@ public class Monster {
 		this.description = description;
 	}
 	
-	public boolean boss() {
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+
+	public boolean isBoss() {
 		return boss;
 	}
-	
+
 	public void setBoss(boolean boss) {
 		this.boss = boss;
 	}
-	
-	public boolean miniBoss() {
-		return miniBoss;
+
+	public boolean isMiniboss() {
+		return miniboss;
 	}
-	
-	public void setMiniBoss(boolean miniBoss) {
-		this.miniBoss = miniBoss;
+
+	public void setMiniboss(boolean miniboss) {
+		this.miniboss = miniboss;
 	}
-	
+
 	public int getLevel() {
 		return level;
 	}
@@ -135,8 +145,8 @@ public class Monster {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(abilityIds, armor, boss, critRating, description, dodgeRating, health, id, level, miniBoss,
-				name, power);
+		return Objects.hash(abilityIds, armor, boss, critRating, description, dodgeRating, health, id, level, miniboss,
+				name, power, theme);
 	}
 
 	@Override
@@ -151,14 +161,14 @@ public class Monster {
 		return Objects.equals(abilityIds, other.abilityIds) && armor == other.armor && boss == other.boss
 				&& critRating == other.critRating && Objects.equals(description, other.description)
 				&& dodgeRating == other.dodgeRating && health == other.health && Objects.equals(id, other.id)
-				&& level == other.level && miniBoss == other.miniBoss && Objects.equals(name, other.name)
-				&& power == other.power;
+				&& level == other.level && miniboss == other.miniboss && Objects.equals(name, other.name)
+				&& power == other.power && Objects.equals(theme, other.theme);
 	}
 
 	@Override
 	public String toString() {
-		return "Monster [id=" + id + ", name=" + name + ", description=" + description + ", boss=" + boss
-				+ ", miniBoss=" + miniBoss + ", level=" + level + ", health=" + health + ", power=" + power
+		return "Monster [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme + ", boss="
+				+ boss + ", miniboss=" + miniboss + ", level=" + level + ", health=" + health + ", power=" + power
 				+ ", armor=" + armor + ", dodgeRating=" + dodgeRating + ", critRating=" + critRating + ", abilityIds="
 				+ abilityIds + "]";
 	}

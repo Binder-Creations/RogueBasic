@@ -48,10 +48,10 @@ public class RoomDao {
 		}
 	}
 	  
-	public boolean save(Room player) {
+	public boolean save(Room room) {
 		log.trace("RoomDao.findById() calling Mapper.save()");
 		try {
-			mapper.save(player);
+			mapper.save(room);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

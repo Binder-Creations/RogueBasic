@@ -33,13 +33,16 @@ public class RoomDaoTest {
 		testSet = new HashSet<UUID>();
 		testSet.add(UUID.randomUUID());
 		testSet.add(UUID.randomUUID());
-		tester = new Room(UUID.randomUUID(), UUID.randomUUID(), 2, 2, UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), testSet, testSet);
-		tester2 = new Room(UUID.randomUUID(), UUID.randomUUID(), 2, 2, UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), testSet, testSet);
-	
+		tester = new Room();
+		tester.setId(UUID.randomUUID());
+		tester2 = new Room();
+		tester2.setId(UUID.randomUUID());
+		
 		session = new CassandraConnector().connect();
 		cu = new CassandraUtilities(session);
 		
 		//Initialized tables are required to construct our dao
+		cu.dropAllTables();
 		cu.initialize();
 		dao = new RoomDao(session);	
 
@@ -81,7 +84,8 @@ public class RoomDaoTest {
 	
 	@Test
 	public void saveTest() {
-		Room tester3 = new Room(UUID.randomUUID(), UUID.randomUUID(), 3, 3, UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), testSet, testSet);
+		Room tester3 = new Room();
+		tester3.setId(UUID.randomUUID());
 		dao.save(tester3);
 		assertEquals(tester3, dao.findById(tester3.getId()));
 	}

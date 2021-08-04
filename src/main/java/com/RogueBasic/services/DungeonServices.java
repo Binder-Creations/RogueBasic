@@ -81,19 +81,19 @@ public class DungeonServices {
 	}
 	
 	public void genBossMinibossFlags(Dungeon dungeon) {
-		int factor = dungeon.getChallengeRating() + ThreadLocalRandom.current().nextInt(11);
+		int modifier = dungeon.getChallengeRating() + ThreadLocalRandom.current().nextInt(11);
 		
-		if(factor < 6) {
+		if(modifier < 6)
 			return;
-		}
 		
-		if(ThreadLocalRandom.current().nextInt(99)<34+factor) {
-			dungeon.setMiniboss(true);
-		}
-		
-		if(factor > 15 && ThreadLocalRandom.current().nextInt(99)<14+factor) {
+		if(modifier > 15 && ThreadLocalRandom.current().nextInt(99)<14+modifier)
 			dungeon.setBoss(true);
-		}
+		
+		dungeon.setMiniboss(ThreadLocalRandom.current().nextInt(99)<34+modifier
+							  ? dungeon.getFloorCount() == 1 && dungeon.isBoss()
+							     ? false
+							     : true
+							  : false);
 	}
 	
 	public boolean genNameDescriptionFlags (Dungeon dungeon) {	
@@ -111,32 +111,32 @@ public class DungeonServices {
 		if(roll < 6) {
 			switch(roll) {
 				case 0:
-					dungeon.setTrapBonus1(true);
+					dungeon.setPrefixMod("trap-10");
 					name.append(components.get(0)[ThreadLocalRandom.current().nextInt(components.get(0).length)]);
 					description.append(components.get(6)[ThreadLocalRandom.current().nextInt(components.get(6).length)]);
 					break;
 				case 1:
-					dungeon.setTrapBonus2(true);
+					dungeon.setPrefixMod("trap-20");
 					name.append(components.get(0)[ThreadLocalRandom.current().nextInt(components.get(0).length)]);
 					description.append(components.get(6)[ThreadLocalRandom.current().nextInt(components.get(6).length)]);
 					break;
 				case 2:
-					dungeon.setTrapBonus3(true);
+					dungeon.setPrefixMod("trap-30");
 					name.append(components.get(0)[ThreadLocalRandom.current().nextInt(components.get(0).length)]);
 					description.append(components.get(6)[ThreadLocalRandom.current().nextInt(components.get(6).length)]);
 					break;
 				case 3:
-					dungeon.setTreasureBonus1(true);
+					dungeon.setPrefixMod("loot-10");
 					name.append(components.get(1)[ThreadLocalRandom.current().nextInt(components.get(1).length)]);
 					description.append(components.get(7)[ThreadLocalRandom.current().nextInt(components.get(7).length)]);
 					break;
 				case 4:
-					dungeon.setTreasureBonus2(true);
+					dungeon.setPrefixMod("loot-20");
 					name.append(components.get(1)[ThreadLocalRandom.current().nextInt(components.get(1).length)]);
 					description.append(components.get(7)[ThreadLocalRandom.current().nextInt(components.get(7).length)]);
 					break;
 				case 5:
-					dungeon.setTreasureBonus3(true);
+					dungeon.setPrefixMod("loot-30");
 					name.append(components.get(1)[ThreadLocalRandom.current().nextInt(components.get(1).length)]);
 					description.append(components.get(7)[ThreadLocalRandom.current().nextInt(components.get(7).length)]);
 					break;
@@ -158,32 +158,32 @@ public class DungeonServices {
 		if(roll < 6) {
 			switch(roll) {
 				case 0:
-					dungeon.setEnemyHealth1(true);
+					dungeon.setPostfixMod("health-10");
 					name.append(components.get(4)[ThreadLocalRandom.current().nextInt(components.get(4).length)]);
 					description.append(components.get(9)[ThreadLocalRandom.current().nextInt(components.get(9).length)]);
 					break;
 				case 1:
-					dungeon.setEnemyHealth2(true);
+					dungeon.setPostfixMod("health-20");
 					name.append(components.get(4)[ThreadLocalRandom.current().nextInt(components.get(4).length)]);
 					description.append(components.get(9)[ThreadLocalRandom.current().nextInt(components.get(9).length)]);
 					break;
 				case 2:
-					dungeon.setEnemyHealth3(true);
+					dungeon.setPostfixMod("health-30");
 					name.append(components.get(4)[ThreadLocalRandom.current().nextInt(components.get(4).length)]);
 					description.append(components.get(9)[ThreadLocalRandom.current().nextInt(components.get(9).length)]);
 					break;
 				case 3:
-					dungeon.setEnemyDamage1(true);
+					dungeon.setPostfixMod("damage-10");
 					name.append(components.get(5)[ThreadLocalRandom.current().nextInt(components.get(5).length)]);
 					description.append(components.get(10)[ThreadLocalRandom.current().nextInt(components.get(10).length)]);
 					break;
 				case 4:
-					dungeon.setEnemyDamage2(true);
+					dungeon.setPostfixMod("damage-20");
 					name.append(components.get(5)[ThreadLocalRandom.current().nextInt(components.get(5).length)]);
 					description.append(components.get(10)[ThreadLocalRandom.current().nextInt(components.get(10).length)]);
 					break;
 				case 5:
-					dungeon.setEnemyDamage3(true);
+					dungeon.setPostfixMod("damage-30");
 					name.append(components.get(5)[ThreadLocalRandom.current().nextInt(components.get(5).length)]);
 					description.append(components.get(10)[ThreadLocalRandom.current().nextInt(components.get(10).length)]);
 					break;

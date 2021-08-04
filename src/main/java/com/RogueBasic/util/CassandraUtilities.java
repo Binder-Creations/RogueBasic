@@ -3,41 +3,18 @@ package com.RogueBasic.util;
 import com.datastax.driver.core.Session;
 
 public class CassandraUtilities {
-	private Session session; 
+	private Session session;
+	private RogueUtilities ru;
 	
 	public CassandraUtilities (Session session){
 		super();
 		this.session = session;
+		this.ru = new RogueUtilities();
 	}
 	
 	public void initialize() {
-		
-		session.execute("CREATE TABLE IF NOT EXISTS "
-                + "rogue.PLAYER (id uuid PRIMARY KEY, name text, password text, characterIds set<UUID>, metacurrency int, constitutionMetabonus int, strengthMetabonus int, intelligenceMetabonus int, dexterityMetabonus int, currencyMetabonus int)");
-	
-		session.execute("CREATE TABLE IF NOT EXISTS "
-                + "rogue.PLAYER_CHARACTER (id uuid PRIMARY KEY, playerId uuid, name text, characterClass text, experience int, level int, currency int,  abilityIds set<UUID>, inventory map<uuid, int>, constitution int, strength int, dexterity int, intelligence int, constitutionBonus int, strengthBonus int, dexterityBonus int, intelligenceBonus int, powerBonus int, healthBonus int, healthRegenBonus int, encumberanceBonus int, carryCapacityBonus int, dodgeRatingBonus int, critRatingBonus int, energyBonus int, energyRegenBonus int, armorBonus int, currentHealth int, currentEnergy int, currentEncumberance int, currentCarryCapacity int)");
-		
-		session.execute("CREATE TABLE IF NOT EXISTS "
-                + "rogue.ABILITY (id uuid PRIMARY KEY, name text, description text, level int, energyCost int, area text, action text)");
-		
-		session.execute("CREATE TABLE IF NOT EXISTS "
-                + "rogue.DUNGEON (id uuid PRIMARY KEY, name text, description text, theme text, floorCount int, floorIds set<UUID>, challengeRating int, miniboss boolean, boss boolean, treasureBonus1 boolean, treasureBonus2 boolean, treasureBonus3 boolean, trapBonus1 boolean, trapBonus2 boolean, trapBonus3 boolean, enemyHealth1 boolean, enemyHealth2 boolean, enemyHealth3 boolean, enemyDamage1 boolean, enemyDamage2 boolean, enemyDamage3 boolean)");
-		
-		session.execute("CREATE TABLE IF NOT EXISTS "
-                + "rogue.FLOOR (id uuid PRIMARY KEY, level int, xLength int, yLength int, previousFloorId uuid, nextFloorId uuid, dungeonId uuid, roomIds set<UUID>)");
-		
-		session.execute("CREATE TABLE IF NOT EXISTS "
-                + "rogue.ROOM (id uuid PRIMARY KEY, floorID uuid, dungeonId uuid, xCoord int, yCoord int, stairsPrevious boolean, stairsNext boolean, northRoomId uuid, southRoomId uuid, eastRoomId uuid, westRoomId uuid, trapId uuid, itemIds set<UUID>, monsterIds set<UUID>)");
-		
-		session.execute("CREATE TABLE IF NOT EXISTS "
-                + "rogue.ITEM (id uuid PRIMARY KEY, name text, description text, cost int, weight double, action text)");
-		
-		session.execute("CREATE TABLE IF NOT EXISTS "
-                + "rogue.EQUIPMENT (id uuid PRIMARY KEY, name text, description text, cost int, weight double, action text, constitutionBonus int, strengthBonus int, dexterityBonus int, intelligenceBonus int, powerBonus int, healthBonus int, healthRegenBonus int, encumberanceBonus int, carryCapacityBonus int, dodgeRatingBonus int, critRatingBonus int, energyBonus int, energyRegenBonus int, armorBonus int)");
-		
-		session.execute("CREATE TABLE IF NOT EXISTS "
-                + "rogue.MONSTER (id uuid PRIMARY KEY, name text, description text, boss boolean, miniBoss boolean, level int, health int, power int, armor int, dodgeRating int, critRating int, abilityIds set<UUID>)");
+		ru.readFileToList("Initialize", ".rbt")
+		  .forEach((s)->session.execute("CREATE TABLE IF NOT EXISTS " + s));
 	}
 	
 	public void populate() {
@@ -45,16 +22,8 @@ public class CassandraUtilities {
 	}
 	
 	public void dropAllTables() {
-		session.execute("DROP TABLE IF EXISTS rogue.PLAYER");
-		session.execute("DROP TABLE IF EXISTS rogue.PLAYER_CHARACTER");
-		session.execute("DROP TABLE IF EXISTS rogue.ABILITY");
-		session.execute("DROP TABLE IF EXISTS rogue.DUNGEON");
-		session.execute("DROP TABLE IF EXISTS rogue.FLOOR");
-		session.execute("DROP TABLE IF EXISTS rogue.ROOM");
-		session.execute("DROP TABLE IF EXISTS rogue.ITEM");
-		session.execute("DROP TABLE IF EXISTS rogue.USABLE");
-		session.execute("DROP TABLE IF EXISTS rogue.EQUIPMENT");
-		session.execute("DROP TABLE IF EXISTS rogue.MONSTER");
+		ru.readFileToList("TableList", ".rbt")
+		  .forEach((s)->session.execute("DROP TABLE IF EXISTS " + s));
 	}
 	
 }

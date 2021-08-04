@@ -33,10 +33,13 @@ public class DungeonDaoTest {
 		session = new CassandraConnector().connect();
 		cu = new CassandraUtilities(session);
 		ds = new DungeonServices(session);
-		tester = ds.generate(UUID.randomUUID());
-		tester2 = ds.generate(UUID.randomUUID());
+		tester = new Dungeon();
+		tester.setId(UUID.randomUUID());
+		tester2 = new Dungeon();
+		tester2.setId(UUID.randomUUID());
 
 		//Initialized tables are required to construct our dao
+		cu.dropAllTables();
 		cu.initialize();
 		dao = new DungeonDao(session);	
 
@@ -78,7 +81,8 @@ public class DungeonDaoTest {
 	
 	@Test
 	public void saveTest() {
-		Dungeon tester3 = ds.generate(UUID.randomUUID());
+		Dungeon tester3 = new Dungeon();
+		tester3.setId(UUID.randomUUID());
 		dao.save(tester3);
 		assertEquals(tester3, dao.findById(tester3.getId()));
 	}
