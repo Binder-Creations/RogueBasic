@@ -13,6 +13,9 @@ import com.RogueBasic.util.RogueUtilities;
 import com.datastax.driver.core.*;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
+
+import junit.framework.Assert;
+
 import java.util.List;
 
 public class Driver {
@@ -71,24 +74,42 @@ public class Driver {
 			CassandraUtilities cu = new CassandraUtilities(session);
 			cu.dropAllTables();
 			cu.initialize();
-//			RogueUtilities ru = new RogueUtilities();
-//			DungeonServices ds = new DungeonServices(session);
-//			PlayerCharacter pc = new Warrior(UUID.randomUUID(), "taco", 1, 1, 1, 1);
-//			pc.setLevel(20);
-//			PlayerCharacterDao pcd = new PlayerCharacterDao(session);
-//			FloorDao fd = new FloorDao(session);
-//			RoomDao rd = new RoomDao(session);
-//			pcd.save(pc);
-//			Dungeon d = ds.generate(pc.getId());
-//			System.out.println(d.toString());
-//			for(UUID id: d.getFloorIds()) {
-//				Floor f = fd.findById(id);
-//				System.out.println(f.toString());
-//				for(UUID rid: f.getRoomIds()) {
-//					Room r = rd.findById(rid);
-//					System.out.println(r.toString());
-//				}
-//			}
+			cu.populate();
+			RogueUtilities ru = new RogueUtilities();
+			DungeonServices ds = new DungeonServices(session);
+			PlayerCharacter pc = new Warrior(UUID.randomUUID(), "taco", 1, 1, 1, 1);
+			PlayerCharacterDao pcd = new PlayerCharacterDao(session);
+			FloorDao fd = new FloorDao(session);
+			RoomDao rd = new RoomDao(session);
+			MonsterDao md = new MonsterDao(session);
+			ItemDao itd = new ItemDao(session);
+			EquipmentDao ed = new EquipmentDao(session);
+			pcd.save(pc);
+			Dungeon d = ds.generate(pc.getId());
+			System.out.println(d.toString());
+			for(UUID id: d.getFloorIds()) {
+				Floor f = fd.findById(id);
+				System.out.println(f.toString());
+				for(UUID rid: f.getRoomIds()) {
+					Room r = rd.findById(rid);
+					System.out.println(r.toString());
+					if(r.getMonsterIds()!=null)
+						for(UUID u : r.getMonsterIds()) {
+							System.out.println(md.findById(u).toString());
+						}
+					if(r.getItemIds()!=null)
+						for(UUID u : r.getItemIds()) {
+							Item i = itd.findById(u);
+							if(i instanceof Equipment) {
+								System.out.println(ed.findById(u).toString());
+							} else {
+								if (i != null)
+									System.out.println(i.toString());
+							}
+						}
+					
+				}
+			}
 //			for(int i = 0; i < 100; i++) {
 //				Dungeon d = ds.generate(UUID.randomUUID());
 //				System.out.println(d.getName() + ": " + d.getDescription());

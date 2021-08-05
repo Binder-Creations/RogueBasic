@@ -60,7 +60,7 @@ public class PlayerDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("PlayerDao.findById() calling Mapper.delete()");
+		log.trace("PlayerDao.save() calling Mapper.delete()");
 		try {
 			mapper.delete(id);
 			return true;

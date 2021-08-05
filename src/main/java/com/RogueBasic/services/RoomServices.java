@@ -51,8 +51,12 @@ public class RoomServices {
 				genConnectedRooms(room, connections, newConnections);
 				stairsGenerated = stairsCheck(room, rooms, xLength, yLength);			
 				genBossMiniboss(room, dungeon, floor.getLevel());
-				room.setMonsterIds(ms.generate(dungeon, floor.getLevel()));
-				room.setItemIds(is.generate(dungeon, floor.getLevel(), room.isMiniboss(), room.isBoss(), room.getMonsterIds() != null, room.getTrapId() != null));
+				if(containsMonsters(room.isBoss(), room.isMiniboss(), dungeon.getChallengeRating()))
+					room.setMonsterIds(ms.generate(dungeon, floor.getLevel()));
+				if(containsTrap(room.getMonsterIds() != null, dungeon.getChallengeRating()))
+					room.setTrapId(null);
+				if(containsItems(room.isBoss(), room.isMiniboss(), room.getMonsterIds() != null, room.getTrapId() != null, dungeon.getChallengeRating()))
+					room.setItemIds(is.generate(dungeon, floor.getLevel(), room.isMiniboss(), room.isBoss(), room.getMonsterIds() != null, room.getTrapId() != null));
 				rooms.add(room);
 				ids.add(room.getId());
 			}
@@ -61,7 +65,7 @@ public class RoomServices {
 		rooms.forEach((r)->dao.save(r));
 		return ids;
 	}
-	
+
 	private void genStart(int xLength, int yLength) {
 		Room room = new Room();
 		room.setId(UUID.randomUUID());
@@ -227,4 +231,41 @@ public class RoomServices {
 			  : false);
 	}
 	
+	private boolean containsMonsters(boolean boss, boolean miniboss, int challengeRating) {
+		return boss
+				? true
+				: miniboss
+					? true
+					: ThreadLocalRandom.current().nextInt(100) < 37 + challengeRating/2
+						? true
+						: false;
+	}
+	
+	private boolean containsTrap(boolean monsters, int challengeRating) {
+		return monsters
+				? false
+				: ThreadLocalRandom.current().nextInt(100) < 14 + challengeRating/2
+					? true
+					: false;
+	}
+	
+	private boolean containsItems(boolean boss, boolean miniboss, boolean monsters, boolean trap, int challengeRating) {
+		return boss
+				? true
+				: miniboss
+					? true
+					: monsters
+						? ThreadLocalRandom.current().nextInt(100) < 49 + challengeRating/2
+							? true
+							: false
+						: trap
+							? ThreadLocalRandom.current().nextInt(100) < 34 + challengeRating/2
+								? true
+								: false
+							: ThreadLocalRandom.current().nextInt(100) < 19 + challengeRating/2
+								? true
+								: false;
+	}
+
+
 }

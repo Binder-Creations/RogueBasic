@@ -39,7 +39,7 @@ public class FloorDao {
 	}
 	
 	public List<Floor> getAll() {
-		log.trace("FloorDao.findById() calling FloorAccessor.getAll() and returning List<Floor>");
+		log.trace("FloorDao.getAll() calling FloorAccessor.getAll() and returning List<Floor>");
 		try {
 			return accessor.getAll().all();
 		} catch (Exception e) {
@@ -60,7 +60,7 @@ public class FloorDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("FloorDao.findById() calling Mapper.delete()");
+		log.trace("FloorDao.save() calling Mapper.delete()");
 		try {
 			mapper.delete(id);
 			return true;

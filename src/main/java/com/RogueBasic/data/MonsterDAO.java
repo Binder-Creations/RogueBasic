@@ -39,7 +39,7 @@ public class MonsterDao {
 	}
 	
 	public List<Monster> getAll() {
-		log.trace("MonsterDao.findById() calling MonsterAccessor.getAll() and returning List<Monster>");
+		log.trace("MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>");
 		try {
 			return accessor.getAll().all();
 		} catch (Exception e) {
@@ -49,7 +49,7 @@ public class MonsterDao {
 	}
 	  
 	public boolean save(Monster player) {
-		log.trace("MonsterDao.findById() calling Mapper.save()");
+		log.trace("MonsterDao.save() calling Mapper.save()");
 		try {
 			mapper.save(player);
 			return true;
@@ -60,7 +60,7 @@ public class MonsterDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("MonsterDao.findById() calling Mapper.delete()");
+		log.trace("MonsterDao.save() calling Mapper.delete()");
 		try {
 			mapper.delete(id);
 			return true;

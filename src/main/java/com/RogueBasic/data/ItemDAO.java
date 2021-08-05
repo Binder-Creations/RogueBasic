@@ -39,7 +39,7 @@ public class ItemDao {
 	}
 	
 	public List<Item> getAll() {
-		log.trace("ItemDao.findById() calling ItemAccessor.getAll() and returning List<Item>");
+		log.trace("ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>");
 		try {
 			return accessor.getAll().all();
 		} catch (Exception e) {
@@ -60,7 +60,7 @@ public class ItemDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("ItemDao.findById() calling Mapper.delete()");
+		log.trace("ItemDao.save() calling Mapper.delete()");
 		try {
 			mapper.delete(id);
 			return true;

@@ -39,7 +39,7 @@ public class RoomDao {
 	}
 	
 	public List<Room> getAll() {
-		log.trace("RoomDao.findById() calling RoomAccessor.getAll() and returning List<Room>");
+		log.trace("RoomDao.getAll() calling RoomAccessor.getAll() and returning List<Room>");
 		try {
 			return accessor.getAll().all();
 		} catch (Exception e) {
@@ -60,7 +60,7 @@ public class RoomDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("RoomDao.findById() calling Mapper.delete()");
+		log.trace("RoomDao.save() calling Mapper.delete()");
 		try {
 			mapper.delete(id);
 			return true;

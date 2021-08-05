@@ -6,67 +6,67 @@ import java.util.UUID;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
-@Table(keyspace = "rogue", name = "item")
-public class Item {
-	
+@Table(keyspace = "rogue", name = "trap")
+public class Trap {
 	@PartitionKey private UUID id;
 	private String name;
 	private String description;
-	private int cost;
-	private double weight;
+	private String theme;
+	private int level;
 	private String action;
 	
-	public Item() {}
-	
-	public Item(String name, String description, int cost, double weight, String action) {
+	public Trap() {}
+
+	public Trap(String name, String description, String theme, int level, String action) {
 		super();
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
-		this.cost = cost;
-		this.weight = weight;
+		this.theme = theme;
+		this.level = level;
 		this.action = action;
 	}
-	
+
 	public UUID getId() {
 		return id;
 	}
-	
+
 	public void setId(UUID id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public int getCost() {
-		return cost;
+
+	public String getTheme() {
+		return theme;
 	}
-	
-	public void setCost(int cost) {
-		this.cost = cost;
+
+	public void setTheme(String theme) {
+		this.theme = theme;
 	}
-	
-	public double getWeight() {
-		return weight;
+
+	public int getLevel() {
+		return level;
 	}
-	
-	public void setWeight(double weight) {
-		this.weight = weight;
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
-	
+
 	public String getAction() {
 		return action;
 	}
@@ -74,11 +74,12 @@ public class Item {
 	public void setAction(String action) {
 		this.action = action;
 	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(action, cost, description, id, name, weight);
+		return Objects.hash(action, description, id, level, name, theme);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -87,18 +88,18 @@ public class Item {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Item other = (Item) obj;
-		return Objects.equals(action, other.action) && cost == other.cost
-				&& Objects.equals(description, other.description) && Objects.equals(id, other.id)
-				&& Objects.equals(name, other.name)
-				&& Double.doubleToLongBits(weight) == Double.doubleToLongBits(other.weight);
+		Trap other = (Trap) obj;
+		return Objects.equals(action, other.action) && Objects.equals(description, other.description)
+				&& Objects.equals(id, other.id) && level == other.level && Objects.equals(name, other.name)
+				&& Objects.equals(theme, other.theme);
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", cost=" + cost + ", weight="
-				+ weight + ", action=" + action + "]";
+		return "Trap [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme + ", level="
+				+ level + ", action=" + action + "]";
 	}
+
 	
-	
+		
 }

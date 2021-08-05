@@ -7,3 +7,4 @@ rogue.ROOM (id uuid PRIMARY KEY, floorID uuid, dungeonId uuid, xCoord int, yCoor
 rogue.ITEM (id uuid PRIMARY KEY, name text, description text, cost int, weight double, action text)
 rogue.EQUIPMENT (id uuid PRIMARY KEY, name text, description text, cost int, weight double, action text, constitutionBonus int, strengthBonus int, dexterityBonus int, intelligenceBonus int, powerBonus int, healthBonus int, healthRegenBonus int, encumberanceBonus int, carryCapacityBonus int, dodgeRatingBonus int, critRatingBonus int, energyBonus int, energyRegenBonus int, armorBonus int)
 rogue.MONSTER (id uuid PRIMARY KEY, name text, description text, theme text, boss boolean, miniboss boolean, level int, health int, power int, armor int, dodgeRating int, critRating int, abilityIds set<UUID>)
+rogue.TRAP (id uuid PRIMARY KEY, name text, description text, theme text, level int, action text)

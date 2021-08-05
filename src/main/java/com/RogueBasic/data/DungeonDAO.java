@@ -39,7 +39,7 @@ public class DungeonDao {
 	}
 	
 	public List<Dungeon> getAll() {
-		log.trace("DungeonDao.findById() calling DungeonAccessor.getAll() and returning List<Dungeon>");
+		log.trace("DungeonDao.getAll() calling DungeonAccessor.getAll() and returning List<Dungeon>");
 		try {
 			return accessor.getAll().all();
 		} catch (Exception e) {
@@ -60,7 +60,7 @@ public class DungeonDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("DungeonDao.findById() calling Mapper.delete()");
+		log.trace("DungeonDao.save() calling Mapper.delete()");
 		try {
 			mapper.delete(id);
 			return true;

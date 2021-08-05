@@ -12606,3 +12606,1254 @@
 2021-08-04 16:22:57 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
 2021-08-04 16:22:57 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
 2021-08-04 16:22:57 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 15:45:26 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 15:45:26 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 15:45:26 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 15:46:25 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 15:46:25 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 15:46:26 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 15:46:55 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 15:46:55 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 15:46:55 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 15:46:56 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 15:47:02 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE MonsterDao:52 - MonsterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 15:47:02 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 15:47:02 TRACE MonsterDao:42 - MonsterDao.findById() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 15:53:13 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 15:53:13 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 15:53:13 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 15:53:14 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 15:53:19 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:53:19 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:53:19 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:53:19 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:53:19 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:53:20 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:53:20 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:53:20 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:53:20 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:53:20 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:53:20 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:53:20 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:53:20 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:53:20 TRACE MonsterDao:42 - MonsterDao.findById() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 15:53:54 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 15:53:54 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 15:53:55 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 15:53:55 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 15:54:01 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:54:01 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:54:01 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:54:01 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:54:01 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:54:01 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:54:01 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:54:01 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:54:01 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:54:01 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:54:01 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:54:01 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:54:01 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 15:54:01 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 15:54:01 TRACE MonsterDao:42 - MonsterDao.findById() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 15:55:45 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 15:55:45 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 15:55:46 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 15:55:47 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 15:55:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:55:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:55:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:55:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:55:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:55:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:55:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:55:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:55:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:55:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:55:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:55:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 15:55:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE TrapDao:52 - TrapDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 15:55:52 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 15:55:52 TRACE MonsterDao:42 - MonsterDao.findById() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:12:45 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 16:12:45 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 16:12:45 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 16:12:46 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 16:12:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:12:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:12:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:12:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:12:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:12:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:12:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:12:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:12:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:12:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:12:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:12:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:12:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:12:52 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:12:52 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:12:52 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:12:52 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:12:52 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:12:52 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 16:12:52 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 16:12:52 TRACE MonsterServices:35 - MonsterServices.generate() calling genMV()
+2021-08-05 16:12:52 TRACE MonsterServices:59 - MonsterServices.genMV() returning int
+2021-08-05 16:12:52 TRACE MonsterServices:45 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:12:52 TRACE MonsterServices:100 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:12:52 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:12:52 TRACE MonsterServices:105 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:12:52 TRACE MonsterServices:47 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:15:07 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 16:15:07 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 16:15:08 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 16:15:09 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 16:15:14 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:15:14 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:15:14 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:15:14 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:15:14 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:15:14 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:15:14 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:15:14 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:15:14 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:15:14 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:15:14 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:15:14 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:15:14 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:15:14 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:15:14 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:15:14 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:15:14 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:15:14 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:15:14 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 16:15:14 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 16:15:14 TRACE MonsterServices:35 - MonsterServices.generate() calling genMV()
+2021-08-05 16:15:14 TRACE MonsterServices:60 - MonsterServices.genMV() returning int
+2021-08-05 16:15:14 TRACE MonsterServices:45 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:15:14 TRACE MonsterServices:101 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:15:14 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:15:14 TRACE MonsterServices:106 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:15:14 TRACE MonsterServices:48 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:16:31 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 16:16:31 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 16:16:32 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 16:16:33 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 16:16:38 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:16:38 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:16:38 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:16:38 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:16:38 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:16:38 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:16:38 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:16:38 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:16:38 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:16:38 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:16:38 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:16:38 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:16:38 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:16:38 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:16:38 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:16:38 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:16:38 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:16:38 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:16:38 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 16:16:38 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 16:16:38 TRACE MonsterServices:35 - MonsterServices.generate() calling genMV()
+2021-08-05 16:16:38 TRACE MonsterServices:60 - MonsterServices.genMV() returning int
+2021-08-05 16:16:38 TRACE MonsterServices:45 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:16:38 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:16:38 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:16:38 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:16:38 TRACE MonsterServices:48 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:24:00 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 16:24:00 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 16:24:00 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 16:24:01 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 16:24:07 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:24:07 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:24:07 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:24:07 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:24:07 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:24:07 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:24:07 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:24:07 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:24:07 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:24:07 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:24:07 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:24:07 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:24:07 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:24:07 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:24:07 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:24:07 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:24:07 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:24:07 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:24:07 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 16:24:07 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 16:24:07 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 16:24:07 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 16:24:07 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:24:07 TRACE MonsterServices:105 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:24:07 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:24:07 TRACE MonsterServices:110 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:24:07 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:24:07 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:29:45 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 16:29:45 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 16:29:45 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 16:29:46 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 16:29:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:29:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:29:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:29:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:29:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:29:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:29:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:29:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:29:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:29:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:29:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:29:52 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:29:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:29:52 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:29:52 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:29:52 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:29:52 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:29:52 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:29:52 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 16:29:52 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 16:29:52 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 16:29:52 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 16:29:52 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:29:52 TRACE MonsterServices:105 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:29:52 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:29:52 TRACE MonsterServices:111 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:29:52 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:29:52 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:31:44 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 16:31:44 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 16:31:44 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 16:31:45 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 16:31:50 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:31:50 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:31:50 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:31:50 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:31:50 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:31:50 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:31:50 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:31:50 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:31:50 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:31:50 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:31:50 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:31:50 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:31:50 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:31:50 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:31:50 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:31:50 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:31:50 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:31:50 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:31:50 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 16:31:50 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 16:31:50 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 16:31:50 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 16:31:50 TRACE MonsterServices:40 - MonsterServices.generate() calling genMinibossPool()
+2021-08-05 16:31:50 TRACE MonsterServices:69 - MonsterServices.genMinibossPool calling MonsterDao.getAll()
+2021-08-05 16:31:50 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:31:50 TRACE MonsterServices:74 - MonsterServices.genMinibossPool() returning List<Monster>
+2021-08-05 16:31:50 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:31:50 TRACE MonsterServices:105 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:31:50 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:31:50 TRACE MonsterServices:112 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:31:50 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:31:50 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:33:31 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 16:33:31 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 16:33:32 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 16:33:33 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 16:34:02 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 16:34:02 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 16:34:02 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 16:34:03 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 16:34:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:34:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:34:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:34:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:34:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:34:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:34:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:34:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:34:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:34:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:34:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:34:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:34:06 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:34:06 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:34:06 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:34:06 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:34:06 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:34:06 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:34:06 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 16:34:06 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 16:34:06 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 16:34:06 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 16:34:06 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:34:06 TRACE MonsterServices:105 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:34:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:34:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:34:06 TRACE MonsterServices:114 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:34:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:34:06 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:35:34 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 16:35:34 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 16:35:35 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 16:35:35 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 16:35:40 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:35:40 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:35:40 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:35:40 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:35:41 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:35:41 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:35:41 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:35:41 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:35:41 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:35:41 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:35:41 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:35:41 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:35:41 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:35:41 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:35:41 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:35:41 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:35:41 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:35:41 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:35:41 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 16:35:41 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 16:35:41 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 16:35:41 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 16:35:41 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:35:41 TRACE MonsterServices:105 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:35:41 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:35:41 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:35:41 TRACE MonsterServices:114 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:35:41 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:35:41 TRACE MonsterServices:156 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 16:35:41 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 16:35:41 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 16:35:41 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 16:40:42 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 16:40:42 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 16:40:43 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 16:40:44 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 16:40:49 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:40:49 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:40:49 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:40:49 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:40:49 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:40:49 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:40:49 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:40:49 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:40:49 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:40:49 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:40:49 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:40:49 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 16:40:49 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:40:49 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:40:49 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:40:49 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:40:49 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:40:49 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 16:40:49 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 16:40:49 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 16:40:49 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 16:40:49 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:40:49 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:40:49 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 16:40:49 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 16:40:49 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 16:40:49 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 16:40:49 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 16:40:49 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:40:49 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:40:49 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 16:40:49 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 16:40:49 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 16:40:49 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 16:40:49 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 16:40:49 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:40:49 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:40:49 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 16:40:49 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 16:40:49 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 16:40:49 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:40:49 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:40:49 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 16:40:49 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 16:40:49 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 16:40:49 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 16:40:49 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 16:40:49 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:40:49 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:40:49 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 16:40:49 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 16:40:49 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 16:40:49 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:40:49 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:40:49 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 16:40:49 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 16:40:49 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 16:40:49 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 16:40:49 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 16:40:49 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 16:40:49 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 16:40:49 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 16:40:49 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 16:40:49 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 16:40:49 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 16:40:49 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE FloorDao:52 - FloorDao.findById() calling Mapper.save()
+2021-08-05 16:40:49 TRACE FloorDao:32 - FloorDao.findById() calling Mapper.get() and returning Floor
+2021-08-05 16:40:49 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 16:40:49 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 16:40:49 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 16:40:49 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 16:40:49 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 16:40:49 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 16:40:49 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 17:59:37 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 17:59:37 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 17:59:38 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 17:59:39 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 17:59:44 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 17:59:44 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 17:59:44 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 17:59:44 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 17:59:44 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 17:59:44 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 17:59:44 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 17:59:44 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 17:59:44 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 17:59:44 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 17:59:44 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 17:59:44 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 17:59:44 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 17:59:44 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 17:59:44 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 17:59:44 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 17:59:44 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 17:59:44 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 17:59:44 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 17:59:44 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 17:59:44 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 17:59:44 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 17:59:44 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 17:59:44 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 17:59:44 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 17:59:44 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 17:59:44 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 17:59:44 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 17:59:44 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 17:59:44 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 17:59:44 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 17:59:44 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 17:59:44 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 17:59:44 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 17:59:44 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 17:59:44 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 17:59:44 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 17:59:44 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 17:59:44 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 17:59:44 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 17:59:44 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 17:59:44 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 17:59:44 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 17:59:44 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 17:59:44 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 17:59:44 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 17:59:44 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 17:59:44 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 17:59:44 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 17:59:44 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 17:59:44 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 17:59:44 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 17:59:44 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 17:59:44 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 17:59:44 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 17:59:44 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 17:59:44 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 17:59:44 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 17:59:44 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 17:59:45 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 17:59:45 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 17:59:45 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 17:59:45 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 17:59:45 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 17:59:45 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 17:59:45 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 17:59:45 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 17:59:45 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 17:59:45 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 17:59:45 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 17:59:45 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 17:59:45 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 17:59:45 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 17:59:45 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 17:59:45 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 17:59:45 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 17:59:45 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 17:59:45 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 17:59:45 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 17:59:45 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 17:59:45 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 17:59:45 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 17:59:45 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 17:59:45 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 17:59:45 TRACE FloorDao:52 - FloorDao.findById() calling Mapper.save()
+2021-08-05 17:59:45 TRACE FloorDao:32 - FloorDao.findById() calling Mapper.get() and returning Floor
+2021-08-05 17:59:45 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 17:59:45 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 17:59:45 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:01:30 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 18:01:30 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 18:01:31 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 18:01:32 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 18:01:37 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:01:37 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:01:37 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:01:37 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:01:37 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:01:37 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:01:37 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:01:37 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:01:37 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:01:37 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:01:37 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:01:37 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:01:37 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:01:37 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:01:37 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:01:37 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:01:37 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:01:37 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:01:37 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 18:01:37 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 18:01:37 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:01:37 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 18:01:37 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:01:37 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:01:37 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:01:37 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:01:37 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:01:37 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 18:01:37 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:01:37 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:01:37 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:01:37 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:01:37 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:01:37 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 18:01:37 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:01:37 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:01:37 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:01:37 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterServices:54 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:01:37 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:01:37 TRACE MonsterServices:62 - MonsterServices.genMV() returning int
+2021-08-05 18:01:37 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:01:37 TRACE MonsterServices:103 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:01:37 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterServices:109 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:01:37 TRACE MonsterServices:50 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:04:44 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 18:04:44 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 18:04:45 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 18:04:46 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 18:04:51 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:04:51 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:04:51 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:04:51 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:04:51 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:04:51 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:04:51 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:04:51 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:04:51 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:04:51 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:04:51 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:04:51 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:04:51 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:04:51 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:04:51 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:04:51 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:04:51 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:04:51 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:04:51 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 18:04:51 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:04:51 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:04:51 TRACE MonsterServices:40 - MonsterServices.generate() calling genMinibossPool()
+2021-08-05 18:04:51 TRACE MonsterServices:68 - MonsterServices.genMinibossPool calling MonsterDao.getAll()
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:73 - MonsterServices.genMinibossPool() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:04:51 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:04:51 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:04:51 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 18:04:51 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 18:04:51 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:04:51 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:04:51 TRACE MonsterServices:40 - MonsterServices.generate() calling genMinibossPool()
+2021-08-05 18:04:51 TRACE MonsterServices:68 - MonsterServices.genMinibossPool calling MonsterDao.getAll()
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:73 - MonsterServices.genMinibossPool() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:04:51 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:04:51 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:04:51 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE FloorDao:52 - FloorDao.findById() calling Mapper.save()
+2021-08-05 18:04:51 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 18:04:51 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 18:04:51 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:04:51 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:04:51 TRACE MonsterServices:40 - MonsterServices.generate() calling genMinibossPool()
+2021-08-05 18:04:51 TRACE MonsterServices:68 - MonsterServices.genMinibossPool calling MonsterDao.getAll()
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:73 - MonsterServices.genMinibossPool() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:04:51 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:04:51 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:04:51 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 18:04:51 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 18:04:51 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:04:51 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:04:51 TRACE MonsterServices:40 - MonsterServices.generate() calling genMinibossPool()
+2021-08-05 18:04:51 TRACE MonsterServices:68 - MonsterServices.genMinibossPool calling MonsterDao.getAll()
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:73 - MonsterServices.genMinibossPool() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:04:51 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:04:51 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:04:51 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 18:04:51 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 18:04:51 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:04:51 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:04:51 TRACE MonsterServices:40 - MonsterServices.generate() calling genMinibossPool()
+2021-08-05 18:04:51 TRACE MonsterServices:68 - MonsterServices.genMinibossPool calling MonsterDao.getAll()
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:73 - MonsterServices.genMinibossPool() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:04:51 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:04:51 TRACE MonsterServices:151 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:04:51 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 18:04:51 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 18:04:51 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:04:51 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:04:51 TRACE MonsterServices:40 - MonsterServices.generate() calling genMinibossPool()
+2021-08-05 18:04:51 TRACE MonsterServices:68 - MonsterServices.genMinibossPool calling MonsterDao.getAll()
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:73 - MonsterServices.genMinibossPool() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:04:51 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:04:51 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:07:48 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 18:07:48 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 18:07:49 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 18:07:50 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 18:07:55 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:07:55 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:07:55 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:07:55 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:07:55 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:07:55 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:07:55 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:07:55 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:07:55 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:07:55 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:07:55 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:07:55 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:07:55 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:07:55 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:07:55 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:07:55 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:07:55 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:07:55 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:07:55 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 18:07:55 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 18:07:55 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:07:55 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:07:55 TRACE MonsterServices:40 - MonsterServices.generate() calling genMinibossPool()
+2021-08-05 18:07:55 TRACE MonsterServices:68 - MonsterServices.genMinibossPool calling MonsterDao.getAll()
+2021-08-05 18:07:55 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:07:55 TRACE MonsterServices:73 - MonsterServices.genMinibossPool() returning List<Monster>
+2021-08-05 18:07:55 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:07:55 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:07:55 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:07:55 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:07:55 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:07:55 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:09:39 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 18:09:39 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 18:09:39 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 18:09:40 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 18:09:45 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:09:45 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:09:45 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:09:45 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:09:45 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:09:45 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:09:45 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:09:45 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:09:45 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:09:45 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:09:45 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:09:45 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:09:45 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:09:45 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:09:45 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:09:45 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:09:45 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:09:45 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:09:45 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 18:09:45 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 18:09:46 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 18:09:46 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 18:11:00 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 18:11:00 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 18:11:00 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 18:11:01 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 18:11:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:11:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:11:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:11:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:11:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:11:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:11:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:11:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:11:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:11:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:11:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:11:06 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:11:06 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:11:06 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:11:06 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:11:06 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:11:06 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:11:06 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:11:06 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 18:11:06 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:11:06 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:11:06 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:11:06 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:11:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:11:06 TRACE MonsterServices:154 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:11:06 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 18:11:06 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 18:11:06 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:11:06 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:11:06 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:11:06 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:11:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:11:06 TRACE MonsterServices:154 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:11:06 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:11:06 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:11:06 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:11:06 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:11:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:11:06 TRACE MonsterServices:154 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:11:06 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:11:06 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:11:06 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:11:06 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:11:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:11:06 TRACE MonsterServices:154 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:11:06 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:11:06 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:11:06 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:11:06 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:11:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:11:06 TRACE MonsterServices:154 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:11:06 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:11:06 TRACE ItemDao:42 - ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>
+2021-08-05 18:11:06 TRACE EquipmentDao:42 - EquipmentDao.getAll() calling EquipmentAccessor.getAll() and returning List<Equipment>
+2021-08-05 18:11:06 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE FloorDao:52 - FloorDao.findById() calling Mapper.save()
+2021-08-05 18:11:06 TRACE FloorDao:32 - FloorDao.findById() calling Mapper.get() and returning Floor
+2021-08-05 18:11:06 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:11:06 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:11:06 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:11:06 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:11:06 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:11:06 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:11:06 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:11:06 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:11:06 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:11:06 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:11:06 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:11:06 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:11:06 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:11:06 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:11:06 TRACE ItemDao:32 - ItemDao.findById() calling Mapper.get() and returning Item
+2021-08-05 18:12:50 DEBUG CassandraConnector:42 - Cannot find an active Cassandra session to close.
+2021-08-05 18:12:50 DEBUG CassandraConnector:48 - Cannot find an active Cassandra cluster to close.
+2021-08-05 18:12:51 DEBUG CassandraConnector:22 - Cassandra cluster created.
+2021-08-05 18:12:51 DEBUG CassandraConnector:25 - Cassandra session created, keyspace: rogue
+2021-08-05 18:12:57 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:12:57 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:12:57 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:12:57 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:12:57 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:12:57 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:12:57 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:12:57 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:12:57 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:12:57 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:12:57 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:12:57 TRACE MonsterDao:52 - MonsterDao.save() calling Mapper.save()
+2021-08-05 18:12:57 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE ItemDao:52 - ItemDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE EquipmentDao:52 - EquipmentDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:12:57 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:12:57 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:12:57 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:12:57 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:12:57 TRACE TrapDao:52 - TrapDao.getAll() calling Mapper.save()
+2021-08-05 18:12:57 TRACE PlayerCharacterDao:52 - PlayerCharacterDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE PlayerCharacterDao:32 - PlayerCharacterDao.findById() calling Mapper.get() and returning PlayerCharacter
+2021-08-05 18:12:57 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:12:57 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:12:57 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:12:57 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:12:57 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:12:57 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:12:57 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:12:57 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:12:57 TRACE MonsterServices:154 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:12:57 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:12:57 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:12:57 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:12:57 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:12:57 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:12:57 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:12:57 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:12:57 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:12:57 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:12:57 TRACE MonsterServices:154 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:12:57 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:12:57 TRACE MonsterServices:37 - MonsterServices.generate() calling genMV()
+2021-08-05 18:12:57 TRACE MonsterServices:61 - MonsterServices.genMV() returning int
+2021-08-05 18:12:57 TRACE MonsterServices:47 - MonsterServices.generate() calling genMonsterPool()
+2021-08-05 18:12:57 TRACE MonsterServices:102 - MonsterServices.genMonsterPool() calling MonsterDao.getAll()
+2021-08-05 18:12:57 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:12:57 TRACE MonsterServices:108 - MonsterServices.genMonsterPool() returning List<Monster>
+2021-08-05 18:12:57 TRACE MonsterDao:42 - MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>
+2021-08-05 18:12:57 TRACE MonsterServices:49 - MonsterServices.generate() calling genEncounter()
+2021-08-05 18:12:57 TRACE MonsterServices:154 - MonsterServices.genEncounter() returning List<Monster>
+2021-08-05 18:12:57 TRACE MonsterServices:53 - MonsterServices.generate() returning Set<UUID>
+2021-08-05 18:12:57 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE RoomDao:52 - RoomDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE FloorDao:52 - FloorDao.findById() calling Mapper.save()
+2021-08-05 18:12:57 TRACE FloorDao:32 - FloorDao.findById() calling Mapper.get() and returning Floor
+2021-08-05 18:12:57 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:12:57 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:12:57 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:12:57 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:12:57 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:12:57 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:12:57 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:12:57 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:12:57 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:12:57 TRACE RoomDao:32 - RoomDao.findById() calling Mapper.get() and returning Room
+2021-08-05 18:12:57 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster
+2021-08-05 18:12:57 TRACE MonsterDao:32 - MonsterDao.findById() calling Mapper.get() and returning Monster

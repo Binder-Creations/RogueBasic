@@ -39,7 +39,7 @@ public class AbilityDao {
 	}
 	
 	public List<Ability> getAll() {
-		log.trace("AbilityDao.findById() calling AbilityAccessor.getAll() and returning List<Ability>");
+		log.trace("AbilityDao.getAll() calling AbilityAccessor.getAll() and returning List<Ability>");
 		try {
 			return accessor.getAll().all();
 		} catch (Exception e) {
@@ -60,7 +60,7 @@ public class AbilityDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("AbilityDao.findById() calling Mapper.delete()");
+		log.trace("AbilityDao.save() calling Mapper.delete()");
 		try {
 			mapper.delete(id);
 			return true;
