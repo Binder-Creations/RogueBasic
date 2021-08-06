@@ -75,41 +75,47 @@ public class Driver {
 			cu.dropAllTables();
 			cu.initialize();
 			cu.populate();
-			RogueUtilities ru = new RogueUtilities();
+//			ItemDao itd = new ItemDao(session);
+//			RogueUtilities ru = new RogueUtilities();
 			DungeonServices ds = new DungeonServices(session);
 			PlayerCharacter pc = new Warrior(UUID.randomUUID(), "taco", 1, 1, 1, 1);
 			PlayerCharacterDao pcd = new PlayerCharacterDao(session);
-			FloorDao fd = new FloorDao(session);
-			RoomDao rd = new RoomDao(session);
-			MonsterDao md = new MonsterDao(session);
-			ItemDao itd = new ItemDao(session);
-			EquipmentDao ed = new EquipmentDao(session);
+//			FloorDao fd = new FloorDao(session);
+//			RoomDao rd = new RoomDao(session);
+//			MonsterDao md = new MonsterDao(session);
+//			EquipmentDao ed = new EquipmentDao(session);
+//			TrapDao td = new TrapDao(session);
+			DungeonDao dd = new DungeonDao(session);
 			pcd.save(pc);
-			Dungeon d = ds.generate(pc.getId());
-			System.out.println(d.toString());
-			for(UUID id: d.getFloorIds()) {
-				Floor f = fd.findById(id);
-				System.out.println(f.toString());
-				for(UUID rid: f.getRoomIds()) {
-					Room r = rd.findById(rid);
-					System.out.println(r.toString());
-					if(r.getMonsterIds()!=null)
-						for(UUID u : r.getMonsterIds()) {
-							System.out.println(md.findById(u).toString());
-						}
-					if(r.getItemIds()!=null)
-						for(UUID u : r.getItemIds()) {
-							Item i = itd.findById(u);
-							if(i instanceof Equipment) {
-								System.out.println(ed.findById(u).toString());
-							} else {
-								if (i != null)
-									System.out.println(i.toString());
-							}
-						}
-					
-				}
-			}
+			long startTime = System.nanoTime();
+			Dungeon d = dd.findById(ds.generate(pc.getId()));
+//			System.out.println(d.toString());
+//			for(UUID id: d.getFloorIds()) {
+//				Floor f = fd.findById(id);
+//				System.out.println(f.toString());
+//				for(UUID rid: f.getRoomIds()) {
+//					Room r = rd.findById(rid);
+//					System.out.println(r.toString());
+//					if(r.getMonsterIds()!=null) {
+//						for(UUID u : r.getMonsterIds()) {
+//							System.out.println(md.findById(u).toString());
+//						}
+//					}
+//					if(r.getItemIds()!=null) {
+//						for(UUID u : r.getItemIds()) {
+//							Item i = itd.findById(u);
+//							if(i==null) {
+//								System.out.println(ed.findById(u).toString());
+//								continue;
+//							}
+//							System.out.println(i.toString());
+//						}
+//					}
+//					if(r.getTrapId()!=null) {
+//						System.out.println(td.findById(r.getTrapId()).toString());
+//					}
+//				}
+//			}
 //			for(int i = 0; i < 100; i++) {
 //				Dungeon d = ds.generate(UUID.randomUUID());
 //				System.out.println(d.getName() + ": " + d.getDescription());
@@ -155,8 +161,8 @@ public class Driver {
 //			dao.save(a);
 //			dao.save(b);
 //			dao.getAll().stream().forEach(p -> System.out.println(p.toString()));
-//			long endTime = System.nanoTime();
-//			System.out.println((endTime-startTime)/1000000);	
-		System.out.println("taco");
+			long endTime = System.nanoTime();
+			System.out.println((endTime-startTime)/1000000);	
+//		System.out.println("taco");
 	}
 }

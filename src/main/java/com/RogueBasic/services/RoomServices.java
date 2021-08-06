@@ -34,6 +34,7 @@ public class RoomServices {
 	public Set<UUID> generate (Dungeon dungeon, Floor floor) {
 		MonsterServices ms = new MonsterServices(session);
 		ItemServices is = new ItemServices(session);
+		TrapServices ts = new TrapServices(session);
 		
 		List<Room> rooms = new ArrayList<>();
 		Set<UUID> ids = new HashSet<>();
@@ -52,11 +53,11 @@ public class RoomServices {
 				stairsGenerated = stairsCheck(room, rooms, xLength, yLength);			
 				genBossMiniboss(room, dungeon, floor.getLevel());
 				if(containsMonsters(room.isBoss(), room.isMiniboss(), dungeon.getChallengeRating()))
-					room.setMonsterIds(ms.generate(dungeon, floor.getLevel()));
+					room.setMonsterIds(ms.generate(dungeon, floor.getLevel(), room.isBoss(), room.isMiniboss()));
 				if(containsTrap(room.getMonsterIds() != null, dungeon.getChallengeRating()))
-					room.setTrapId(null);
+					room.setTrapId(ts.generate(dungeon, floor.getLevel()));
 				if(containsItems(room.isBoss(), room.isMiniboss(), room.getMonsterIds() != null, room.getTrapId() != null, dungeon.getChallengeRating()))
-					room.setItemIds(is.generate(dungeon, floor.getLevel(), room.isMiniboss(), room.isBoss(), room.getMonsterIds() != null, room.getTrapId() != null));
+					is.generate(dungeon, room, floor.getLevel());
 				rooms.add(room);
 				ids.add(room.getId());
 			}

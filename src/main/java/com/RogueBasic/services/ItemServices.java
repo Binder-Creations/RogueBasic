@@ -12,7 +12,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.RogueBasic.beans.Dungeon;
+import com.RogueBasic.beans.Equipment;
 import com.RogueBasic.beans.Item;
+import com.RogueBasic.beans.Room;
 import com.RogueBasic.data.EquipmentDao;
 import com.RogueBasic.data.ItemDao;
 import com.datastax.driver.core.Session;
@@ -28,22 +30,31 @@ public class ItemServices {
 		edao = new EquipmentDao(session);
 	}
 
-	public Set<UUID> generate(Dungeon dungeon, int level, boolean miniboss, boolean boss, boolean monsters, boolean trapped){
-		Set<UUID> ids = new HashSet<>();
+	public void generate(Dungeon dungeon, Room room, int level){
 		List<Item> lootPool;
 		List<Item> loot;
+		Set<UUID> itemIds = new HashSet<>();
+		Set<UUID> equipmentIds = new HashSet<>();
 		
-		int lootValue = genLV(dungeon.getChallengeRating(), level, miniboss, boss, monsters, trapped);	
+		int lootValue = genLV(dungeon.getChallengeRating(), level, room.isMiniboss(), room.isBoss(), room.getMonsterIds() != null, room.getTrapId() != null);	
 		if (lootValue == 0)
-			return null;
+			return;
 		
 		lootPool = genLootPool(lootValue);
 		loot = genLoot(lootValue, lootPool);
-		loot.forEach((i)->ids.add(i.getId()));
 		
-		return ids.size() > 0 ? ids : null;
+		for (Item i : loot) {
+			if (i instanceof Equipment) {
+				equipmentIds.add(i.getId());
+			} else {
+				itemIds.add(i.getId());
+			}
+		}
+		
+		room.setItemIds(itemIds);
+		room.setEquipmentIds(equipmentIds);
 	}
-
+	
 	private int genLV(int challengeRating, int level, boolean miniboss, boolean boss, boolean monsters,
 			boolean trapped) {
 		int modifier = 10*(2+(challengeRating/2)+(level));
@@ -81,21 +92,18 @@ public class ItemServices {
 				smallestCost = i.getCost();
 		}
 		
-		genloop: while(lootValue >= smallestCost) {
+		while(lootValue >= smallestCost) {
 			List<Item> newPool = new ArrayList<>();
 			for(Item i: lootPool) {
 				if(i.getCost()<=lootValue)
 					newPool.add(i);
+			}
 			lootPool = newPool;
-			if(lootPool.size()>0) {
-				Item selection = lootPool.get(ThreadLocalRandom.current().nextInt(lootPool.size()));
-				loot.add(selection);
-				lootValue -= selection.getCost();
-			} else {
-				break genloop;
-			}
-			}
+			Item selection = lootPool.get(ThreadLocalRandom.current().nextInt(lootPool.size()));
+			loot.add(selection);
+			lootValue -= selection.getCost();
 		}
+
 		
 		return loot;
 	}

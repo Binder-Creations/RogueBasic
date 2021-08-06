@@ -1,6 +1,8 @@
 package com.RogueBasic.util;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class RogueUtilities {
 	
 	public String readFileToString(String name, String type){
 		try{
-			StringBuilder sb = new StringBuilder();
+			StringBuffer sb = new StringBuffer();
 			Files.readAllLines(Paths.get("src/main/resources/" + name + type))
 				 .forEach((s)->sb.append(s + "\n"));
 			return sb.toString().substring(0, sb.length()-1);
@@ -25,7 +27,7 @@ public class RogueUtilities {
 			return null;
 		}
 	}
-		
+	
 	public List<String[]> readFileToArrays(String name, String type){
 		try {
 			List<String[]> result = new ArrayList<>();
@@ -38,6 +40,17 @@ public class RogueUtilities {
 		}
 	}
 	
+//	public static boolean writeStringToFile(String string, String name, String type) {
+//		Charset charset = Charset.forName("US-ASCII");
+//		try(BufferedWriter writer = Files.newBufferedWriter(Paths.get("src/main/resources/" + name + type), charset)){
+//			writer.write(string, 0, string.length());
+//			return true;
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//			return false;
+//		}
+//	}
+	
 	public List<String> readFileToList(String name, String type){
 		try {
 			List<String> result = new ArrayList<>();
@@ -49,4 +62,6 @@ public class RogueUtilities {
 			return null;
 		}
 	}
+	
+	
 }

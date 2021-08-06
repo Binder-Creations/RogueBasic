@@ -22,6 +22,7 @@ public class Room {
 	private UUID westRoomId;
 	private UUID trapId;
 	private Set<UUID> itemIds;
+	private Set<UUID> equipmentIds;
 	private Set<UUID> monsterIds;
 	private boolean miniboss;
 	private boolean boss;
@@ -132,6 +133,14 @@ public class Room {
 		this.itemIds = itemIds;
 	}
 	
+	public Set<UUID> getEquipmentIds() {
+		return equipmentIds;
+	}
+
+	public void setEquipmentIds(Set<UUID> equipmentIds) {
+		this.equipmentIds = equipmentIds;
+	}
+
 	public Set<UUID> getMonsterIds() {
 		return monsterIds;
 	}
@@ -158,8 +167,8 @@ public class Room {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(boss, dungeonId, eastRoomId, floorId, id, itemIds, miniboss, monsterIds, northRoomId,
-				southRoomId, stairsNext, stairsPrevious, trapId, westRoomId, xCoord, yCoord);
+		return Objects.hash(boss, dungeonId, eastRoomId, equipmentIds, floorId, id, itemIds, miniboss, monsterIds,
+				northRoomId, southRoomId, stairsNext, stairsPrevious, trapId, westRoomId, xCoord, yCoord);
 	}
 
 	@Override
@@ -172,8 +181,9 @@ public class Room {
 			return false;
 		Room other = (Room) obj;
 		return boss == other.boss && Objects.equals(dungeonId, other.dungeonId)
-				&& Objects.equals(eastRoomId, other.eastRoomId) && Objects.equals(floorId, other.floorId)
-				&& Objects.equals(id, other.id) && Objects.equals(itemIds, other.itemIds) && miniboss == other.miniboss
+				&& Objects.equals(eastRoomId, other.eastRoomId) && Objects.equals(equipmentIds, other.equipmentIds)
+				&& Objects.equals(floorId, other.floorId) && Objects.equals(id, other.id)
+				&& Objects.equals(itemIds, other.itemIds) && miniboss == other.miniboss
 				&& Objects.equals(monsterIds, other.monsterIds) && Objects.equals(northRoomId, other.northRoomId)
 				&& Objects.equals(southRoomId, other.southRoomId) && stairsNext == other.stairsNext
 				&& stairsPrevious == other.stairsPrevious && Objects.equals(trapId, other.trapId)
@@ -185,8 +195,8 @@ public class Room {
 		return "Room [id=" + id + ", floorId=" + floorId + ", dungeonId=" + dungeonId + ", xCoord=" + xCoord
 				+ ", yCoord=" + yCoord + ", stairsPrevious=" + stairsPrevious + ", stairsNext=" + stairsNext
 				+ ", northRoomId=" + northRoomId + ", southRoomId=" + southRoomId + ", eastRoomId=" + eastRoomId
-				+ ", westRoomId=" + westRoomId + ", trapId=" + trapId + ", itemIds=" + itemIds + ", monsterIds="
-				+ monsterIds + ", miniboss=" + miniboss + ", boss=" + boss + "]";
+				+ ", westRoomId=" + westRoomId + ", trapId=" + trapId + ", itemIds=" + itemIds + ", equipmentIds="
+				+ equipmentIds + ", monsterIds=" + monsterIds + ", miniboss=" + miniboss + ", boss=" + boss + "]";
 	}
 	
 }

@@ -2,6 +2,9 @@ package com.RogueBasic.util;
 
 import java.util.UUID;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.RogueBasic.beans.Equipment;
 import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.Monster;
@@ -16,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CassandraUtilities {
 	private Session session;
 	private RogueUtilities ru;
+	private static final Logger log = LogManager.getLogger(CassandraUtilities.class);
 	
 	public CassandraUtilities (Session session){
 		super();
@@ -24,8 +28,11 @@ public class CassandraUtilities {
 	}
 	
 	public void initialize() {
-		ru.readFileToList("Initialize", ".rbt")
+		//creates the tables required for our database, from the Tables.rbt document
+		log.trace("CassandraUtilities.initialize() calling RogueUtilities.readFileToList() for Tables.rbt");
+		ru.readFileToList("Tables", ".rbt")
 		  .forEach((s)->session.execute("CREATE TABLE IF NOT EXISTS " + s));
+		log.debug("Database tables created");
 	}
 	
 	public void populate() {
@@ -35,50 +42,65 @@ public class CassandraUtilities {
 		EquipmentDao edao = new EquipmentDao(session);
 		TrapDao tdao = new TrapDao(session);
 		
+		//populates our tables with predefined game objects:
+		//Monsters, Items, Equipment, Traps
+		//Each from their respectively named document
+		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Monsters.rbt");
 		for(String s : ru.readFileToList("Monsters", ".rbt")) {
 			try {
 				Monster m = mapper.readValue(s, Monster.class);
 				m.setId(UUID.randomUUID());
+				log.trace("CassandraUtilities.populate() calling MonsterDao.save()");
 				mdao.save(m);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		
+		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Items.rbt");
 		for(String s : ru.readFileToList("Items", ".rbt")) {
 			try {
 				Item i = mapper.readValue(s, Item.class);
 				i.setId(UUID.randomUUID());
+				log.trace("CassandraUtilities.populate() calling ItemDao.save()");
 				idao.save(i);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		
+		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Equipment.rbt");
 		for(String s : ru.readFileToList("Equipment", ".rbt")) {
 			try {
 				Equipment eq = mapper.readValue(s, Equipment.class);
 				eq.setId(UUID.randomUUID());
+				log.trace("CassandraUtilities.populate() calling EquipmentDao.save()");
 				edao.save(eq);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		
+		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Traps.rbt");
 		for(String s : ru.readFileToList("Traps", ".rbt")) {
 			try {
 				Trap t = mapper.readValue(s, Trap.class);
 				t.setId(UUID.randomUUID());
+				log.trace("CassandraUtilities.populate() calling TrapDao.save()");
 				tdao.save(t);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		log.debug("Database tables populated");
 	}
-	
+
 	public void dropAllTables() {
+		//drops all of our database's tables, as listed in TableList.rbt
+		log.trace("CassandraUtilities.dropAllTables() calling RogueUtilities.readFileToList()");
 		ru.readFileToList("TableList", ".rbt")
 		  .forEach((s)->session.execute("DROP TABLE IF EXISTS " + s));
+		log.debug("Database tables dropped");
 	}
 	
 }

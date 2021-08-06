@@ -12,26 +12,35 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.RogueBasic.beans.Dungeon;
+import com.RogueBasic.beans.Floor;
+import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.PlayerCharacter;
+import com.RogueBasic.beans.Room;
 import com.RogueBasic.data.DungeonDao;
+import com.RogueBasic.data.EquipmentDao;
+import com.RogueBasic.data.FloorDao;
+import com.RogueBasic.data.ItemDao;
+import com.RogueBasic.data.MonsterDao;
 import com.RogueBasic.data.PlayerCharacterDao;
+import com.RogueBasic.data.RoomDao;
+import com.RogueBasic.data.TrapDao;
 import com.RogueBasic.util.RogueUtilities;
 import com.datastax.driver.core.Session;
 
 public class DungeonServices {
 	private Session session;
-	private DungeonDao dDao;
+	private DungeonDao dao;
 	private RogueUtilities ru;
 	private static final Logger log = LogManager.getLogger(DungeonServices.class);
 	
 	public DungeonServices(Session session) {
 		super();
 		this.session = session;
-		this.dDao = new DungeonDao(session);
+		this.dao = new DungeonDao(session);
 		this.ru = new RogueUtilities();
 	}
 	
-	public Dungeon generate(UUID pcId) {
+	public UUID generate(UUID pcId) {
 		if(pcId == null) {
 			log.debug("passed null pcId; returning null");
 			return null;
@@ -41,46 +50,108 @@ public class DungeonServices {
 		PlayerCharacterDao pcDao = new PlayerCharacterDao(session);
 		PlayerCharacter pc = pcDao.findById(pcId);
 		Dungeon dungeon = new Dungeon();
-		
 		dungeon.setId(UUID.randomUUID());
+		
+		//Calls various private methods in this class to:
+		//Calculate a challenge rating from a range based on PC level;
+		//Calculate a floor count from a range based on challenge rating;
+		//Select a random dungeon theme;
+		log.trace("DungeonServices.generate() calling genChallengeRating()");
 		dungeon.setChallengeRating(genChallengeRating(pc.getLevel()));
+		log.trace("DungeonServices.generate() calling genFloorCount()");
 		dungeon.setFloorCount(genFloorCount(dungeon.getChallengeRating()));
+		log.trace("DungeonServices.generate() calling genTheme()");
 		dungeon.setTheme(genTheme());
-		genBossMinibossFlags(dungeon);
-		if(genNameDescriptionFlags(dungeon) == false) {
+		log.trace("DungeonServices.generate() calling genBossMiniboss()");
+		genBossMiniboss(dungeon);
+		log.trace("DungeonServices.generate() calling genNameModsDescription()");
+		if(genNameModsDescription(dungeon) == false) {
 			return null;
 		}
 		
+		//Calls FloorServices->RoomServices->Monster/Item/Equipment/TrapServices
+		//to generate the contents of the dungeon, before saving it to our database
+		//and returning the id
+		log.trace("DungeonServices.generate() calling FloorServices.generate()");
 		dungeon.setFloorIds(fs.generate(dungeon));
-
+		log.trace("DungeonServices.generate() calling DungeonDao.save()");
+		dao.save(dungeon);
 		
-		return dungeon;
+		//log our dungeon and all of its enumerated objects
+		if(log.isDebugEnabled()) {
+			log.debug(dungeon.toString());
+			FloorDao fdao = new FloorDao(session);
+			RoomDao rdao = new RoomDao(session);
+			MonsterDao mdao = new MonsterDao(session);
+			ItemDao idao = new ItemDao(session);
+			EquipmentDao edao = new EquipmentDao(session);
+			TrapDao tdao = new TrapDao(session);
+			
+			for(UUID id: dungeon.getFloorIds()) {
+				Floor floor = fdao.findById(id);
+				log.debug(floor.toString());
+				for(UUID rid: floor.getRoomIds()) {
+					Room room = rdao.findById(rid);
+					log.debug(room.toString());
+					if(room.getMonsterIds()!=null) {
+						for(UUID u : room.getMonsterIds()) {
+							log.debug(mdao.findById(u).toString());
+						}
+					}
+					if(room.getItemIds()!=null) {
+						for(UUID u : room.getItemIds()) {
+							log.debug(idao.findById(u).toString());
+						}
+					}
+					if(room.getEquipmentIds()!=null) {
+						for(UUID u : room.getEquipmentIds()) {
+							log.debug(edao.findById(u).toString());
+						}
+					}
+					if(room.getTrapId()!=null) {
+						log.debug(tdao.findById(room.getTrapId()).toString());
+					}
+				}
+			}
+		}
+		
+		log.trace("DungeonServices.generate() returning UUID" );
+		return dungeon.getId();
 	}
 	
 	public int genChallengeRating(int level) {
+		//Calculating a pseudorandom challengeRating based on PC level, which should be 0 or greater
 		int modifier = 1+2*level/5;
 		modifier = modifier > 0 ? modifier : 1;
 		modifier = modifier > 3 ? 3 : modifier;
 		int challengeRating = level - modifier + ThreadLocalRandom.current().nextInt(3*modifier);
-		challengeRating = challengeRating > 0 ? challengeRating : 0;
-		return challengeRating;
+		log.trace("DungeonServices.genChallengeRating() returning int");
+		return challengeRating > 0 ? challengeRating :0;
 	}
 	
 	public int genFloorCount(int challengeRating) {
+		//Calculating a pseudorandom floorCount based on challengeRating, which should be between 1 and 6
 		int modifier = 1+(challengeRating/4);
 		modifier = modifier > 4 ? 4 : modifier;
 		int base = 1+(challengeRating/8);
 		int floorCount = base - modifier + ThreadLocalRandom.current().nextInt(3*modifier);
-		floorCount = floorCount > 0 ? floorCount : 1;
-		return floorCount;
+		log.trace("DungeonServices.genFloorCount() returning int");
+		return floorCount > 0
+				? floorCount < 7
+					? floorCount
+						: 6
+				: 1;
 	}
 	
 	private String genTheme() {
-		String[] themes = {"Cave", "Castle", "Arcane"};
-		return themes[ThreadLocalRandom.current().nextInt(themes.length)];
+		//Selects a pseudoranom theme from our ThemeList document
+		log.trace("DungeonServices.genTheme calling RogueUtilities.readFileToList() for ThemeList.rbt");
+		List<String> themes = ru.readFileToList("ThemeList", ".rbt");
+		log.trace("DungeonServices.genTheme returning String");
+		return themes.get(ThreadLocalRandom.current().nextInt(themes.size()));
 	}
 	
-	public void genBossMinibossFlags(Dungeon dungeon) {
+	public void genBossMiniboss(Dungeon dungeon) {
 		int modifier = dungeon.getChallengeRating() + ThreadLocalRandom.current().nextInt(11);
 		
 		if(modifier < 6)
@@ -96,7 +167,7 @@ public class DungeonServices {
 							  : false);
 	}
 	
-	public boolean genNameDescriptionFlags (Dungeon dungeon) {	
+	public boolean genNameModsDescription(Dungeon dungeon) {	
 		List<String[]> components = ru.readFileToArrays(dungeon.getTheme(), ".rbt");
 		
 		if(components == null) {

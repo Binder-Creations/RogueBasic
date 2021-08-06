@@ -27,7 +27,7 @@ public class MonsterServices {
 		this.dao = new MonsterDao(session);
 	}
 	
-	public Set<UUID> generate(Dungeon dungeon, int level){
+	public Set<UUID> generate(Dungeon dungeon, int level, boolean boss, boolean miniboss){
 		Set<UUID> ids = new HashSet<>();
 		List<Monster> minibossPool = null;
 		List<Monster> bossPool = null;
@@ -36,11 +36,11 @@ public class MonsterServices {
 		
 		log.trace("MonsterServices.generate() calling genMV()");
 		int monsterValue = genMV(dungeon.getChallengeRating(), level);	
-		if(dungeon.isMiniboss()) {
+		if(boss) {
 			log.trace("MonsterServices.generate() calling genMinibossPool()");
 			minibossPool = genMinibossPool(monsterValue, dungeon.getTheme());
 		}
-		if(dungeon.isBoss()) { 
+		if(miniboss) { 
 			log.trace("MonsterServices.generate() calling genBossPool()");
 			bossPool = genBossPool(monsterValue, dungeon.getTheme());
 		}
@@ -97,8 +97,8 @@ public class MonsterServices {
 	}
 	
 	private List<Monster> genMonsterPool(int monsterValue, String theme){
-		int lowerBound = monsterValue > 60 ? 15 : monsterValue/4;
-		int upperBound = (2*monsterValue)/3;
+		int lowerBound = monsterValue > 60 ? 10 : monsterValue/6;
+		int upperBound = monsterValue;
 		log.trace("MonsterServices.genMonsterPool() calling MonsterDao.getAll()");
 		List<Monster> pool = new ArrayList<>();
 			   dao.getAll()
@@ -117,12 +117,13 @@ public class MonsterServices {
 	private List<Monster> genEncounter(int monsterValue, List<Monster> minibossPool, List<Monster> bossPool,
 			List<Monster> monsterPool) {
 		List<Monster> encounter = new ArrayList<>();
+		System.out.println(monsterValue);
 		int smallestLevel = monsterValue;
 		for(Monster m: monsterPool) {
 			if(m.getLevel()<smallestLevel)
 				smallestLevel = m.getLevel();
 		}
-		
+		System.out.println(smallestLevel);
 		if (minibossPool != null) {
 			Monster miniboss = minibossPool.get(ThreadLocalRandom.current().nextInt(minibossPool.size()));
 			encounter.add(miniboss);
@@ -130,25 +131,21 @@ public class MonsterServices {
 		}
 		
 		if (bossPool != null) {
-			Monster boss = minibossPool.get(ThreadLocalRandom.current().nextInt(bossPool.size()));
+			Monster boss = bossPool.get(ThreadLocalRandom.current().nextInt(bossPool.size()));
 			encounter.add(boss);
 			monsterValue -= boss.getLevel();
 		}
 		
-		genloop: while(monsterValue >= smallestLevel) {
+		while(monsterValue >= smallestLevel && encounter.size()<4) {
 			List<Monster> newPool = new ArrayList<>();
 			for(Monster m: monsterPool) {
 				if(m.getLevel()<=monsterValue)
 					newPool.add(m);
+			}
 			monsterPool = newPool;
-			if(monsterPool.size()>0) {
-				Monster selection = monsterPool.get(ThreadLocalRandom.current().nextInt(monsterPool.size()));
-				encounter.add(selection);
-				monsterValue -= selection.getLevel();
-			} else {
-				break genloop;
-			}
-			}
+			Monster selection = monsterPool.get(ThreadLocalRandom.current().nextInt(monsterPool.size()));
+			encounter.add(selection);
+			monsterValue -= selection.getLevel();
 		}
 		
 		log.trace("MonsterServices.genEncounter() returning List<Monster>");
