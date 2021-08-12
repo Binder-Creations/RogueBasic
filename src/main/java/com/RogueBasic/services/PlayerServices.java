@@ -4,16 +4,17 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import com.RogueBasic.beans.Player;
 import com.RogueBasic.data.PlayerDao;
-import com.datastax.driver.core.Session;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 public class PlayerServices {
 	public PlayerDao dao;
 	private static final Logger log = LogManager.getLogger(PlayerServices.class);
 
-	public PlayerServices(Session session) {
+	public PlayerServices(CqlSession session) {
 		super();
 		dao = new PlayerDao(session);
 	}

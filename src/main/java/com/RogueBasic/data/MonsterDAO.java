@@ -5,33 +5,31 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.cassandra.core.CassandraOperations;
+import org.springframework.data.cassandra.core.CassandraTemplate;
+import org.springframework.data.cassandra.core.query.Criteria;
+import org.springframework.data.cassandra.core.query.Query;
 
 import com.RogueBasic.beans.Monster;
-import com.datastax.driver.core.Session;
-import com.datastax.driver.mapping.Mapper;
-import com.datastax.driver.mapping.MappingManager;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 public class MonsterDao {
-	private MappingManager manager;
-	private Mapper<Monster> mapper;
-	private MonsterAccessor accessor;
+	private CassandraOperations template;
 	private static final Logger log = LogManager.getLogger(MonsterDao.class);	
 	
-	public MonsterDao(Session session) {
+	public MonsterDao(CqlSession session) {
 		super();
 		try {
-			this.manager = new MappingManager(session);
-			this.mapper = manager.mapper(Monster.class);
-			this.accessor = manager.createAccessor(MonsterAccessor.class);
+			this.template = new CassandraTemplate(session);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public Monster findById(UUID id) {
-		log.trace("MonsterDao.findById() calling Mapper.get() and returning Monster");
+		log.trace("MonsterDao.findById() calling CassandraOperations.selectOne() and returning Monster");
 		try {
-			return mapper.get(id);
+			return template.selectOne(Query.query(Criteria.where("id").is(id)), Monster.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -39,19 +37,19 @@ public class MonsterDao {
 	}
 	
 	public List<Monster> getAll() {
-		log.trace("MonsterDao.getAll() calling MonsterAccessor.getAll() and returning List<Monster>");
+		log.trace("MonsterDao.findById() calling CassandraOperations.select() and returning List<Monster>");
 		try {
-			return accessor.getAll().all();
+			return template.select("select * from monster", Monster.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	  
-	public boolean save(Monster player) {
-		log.trace("MonsterDao.save() calling Mapper.save()");
+	public boolean save(Monster monster) {
+		log.trace("MonsterDao.findById() calling CassandraOperations.insert()");
 		try {
-			mapper.save(player);
+			template.insert(monster);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,9 +58,9 @@ public class MonsterDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("MonsterDao.save() calling Mapper.delete()");
+		log.trace("MonsterDao.save() calling CassandraOperations.delete()");
 		try {
-			mapper.delete(id);
+			template.delete(Query.query(Criteria.where("id").is(id)), Monster.class);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

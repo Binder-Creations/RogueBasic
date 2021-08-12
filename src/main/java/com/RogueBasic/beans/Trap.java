@@ -3,12 +3,12 @@ package com.RogueBasic.beans;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
-@Table(keyspace = "rogue", name = "trap")
+@Table
 public class Trap {
-	@PartitionKey private UUID id;
+	@PrimaryKey private UUID id;
 	private String name;
 	private String description;
 	private String theme;

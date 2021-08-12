@@ -2,9 +2,9 @@ package com.RogueBasic.beans;
 
 import java.util.Objects;
 
-import com.datastax.driver.mapping.annotations.Table;
+import org.springframework.data.cassandra.core.mapping.Table;
 
-@Table(keyspace = "rogue", name = "equipment")
+@Table
 public class Equipment extends Item {
 	
 	private int constitutionBonus;

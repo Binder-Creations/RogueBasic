@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title th:text="'Prepare for Adventure, ' + ${player.name}" ></title>
+    <link th:href="@{/styles/home.css}" rel="stylesheet" />
+     <style th:inline="text">
+        .body{
+    	    background-image: url([[@{images/RogueBackground.webp}]]);
+    	}
+     
+      	.buttonbig {
+      		background-image: url([[@{images/ButtonWide.png}]]);
+      	}
+      	
+      	.buttonbig:hover {
+      		background-image: url([[@{images/ButtonWideHover.png}]]);
+      	}
+   	</style>
+</head>
+<body class=body>
+   	<div class="titlecontainer">
+   		<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
+  	</div>
+  	<div class=buttoncontainer>
+	 	<div class="buttonbig">
+	 	<p class="buttontext">Character Select</p></div>
+	 	<div class="buttonspacer"></div>
+	 	<div class="buttonbig">
+	 	<p class="buttontext">Create New Character</p></div>
+	 	<div class="buttonspacer"></div>
+	 	<div class="buttonbig">
+	 	<p class="buttontext">Spend Souls</p></div>
+	 	<div class="buttonspacer"></div>
+	 	<div class="buttonbig">
+	 	<p class="buttontext">Logout</p></div>
+	 </div>
+</body>
+</html>

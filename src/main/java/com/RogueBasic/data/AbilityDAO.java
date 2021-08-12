@@ -5,33 +5,31 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.cassandra.core.CassandraOperations;
+import org.springframework.data.cassandra.core.CassandraTemplate;
+import org.springframework.data.cassandra.core.query.Criteria;
+import org.springframework.data.cassandra.core.query.Query;
 
 import com.RogueBasic.beans.Ability;
-import com.datastax.driver.core.Session;
-import com.datastax.driver.mapping.Mapper;
-import com.datastax.driver.mapping.MappingManager;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 public class AbilityDao {
-	private MappingManager manager;
-	private Mapper<Ability> mapper;
-	private AbilityAccessor accessor;
+	private CassandraOperations template;
 	private static final Logger log = LogManager.getLogger(AbilityDao.class);	
 	
-	public AbilityDao(Session session) {
+	public AbilityDao(CqlSession session) {
 		super();
 		try {
-			this.manager = new MappingManager(session);
-			this.mapper = manager.mapper(Ability.class);
-			this.accessor = manager.createAccessor(AbilityAccessor.class);
+			this.template = new CassandraTemplate(session);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public Ability findById(UUID id) {
-		log.trace("AbilityDao.findById() calling Mapper.get() and returning Ability");
+		log.trace("AbilityDao.findById() calling CassandraOperations.selectOne() and returning Ability");
 		try {
-			return mapper.get(id);
+			return template.selectOne(Query.query(Criteria.where("id").is(id)), Ability.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -39,9 +37,9 @@ public class AbilityDao {
 	}
 	
 	public List<Ability> getAll() {
-		log.trace("AbilityDao.getAll() calling AbilityAccessor.getAll() and returning List<Ability>");
+		log.trace("AbilityDao.findById() calling CassandraOperations.select() and returning List<Ability>");
 		try {
-			return accessor.getAll().all();
+			return template.select("select * from player", Ability.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -49,9 +47,9 @@ public class AbilityDao {
 	}
 	  
 	public boolean save(Ability player) {
-		log.trace("AbilityDao.findById() calling Mapper.save()");
+		log.trace("AbilityDao.findById() calling CassandraOperations.insert()");
 		try {
-			mapper.save(player);
+			template.insert(player);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,9 +58,9 @@ public class AbilityDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("AbilityDao.save() calling Mapper.delete()");
+		log.trace("AbilityDao.save() calling CassandraOperations.delete()");
 		try {
-			mapper.delete(id);
+			template.delete(Query.query(Criteria.where("id").is(id)), Ability.class);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

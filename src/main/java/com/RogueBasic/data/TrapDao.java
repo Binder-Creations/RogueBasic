@@ -5,33 +5,31 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.cassandra.core.CassandraOperations;
+import org.springframework.data.cassandra.core.CassandraTemplate;
+import org.springframework.data.cassandra.core.query.Criteria;
+import org.springframework.data.cassandra.core.query.Query;
 
 import com.RogueBasic.beans.Trap;
-import com.datastax.driver.core.Session;
-import com.datastax.driver.mapping.Mapper;
-import com.datastax.driver.mapping.MappingManager;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 public class TrapDao {
-	private MappingManager manager;
-	private Mapper<Trap> mapper;
-	private TrapAccessor accessor;
+	private CassandraOperations template;
 	private static final Logger log = LogManager.getLogger(TrapDao.class);	
 	
-	public TrapDao(Session session) {
+	public TrapDao(CqlSession session) {
 		super();
 		try {
-			this.manager = new MappingManager(session);
-			this.mapper = manager.mapper(Trap.class);
-			this.accessor = manager.createAccessor(TrapAccessor.class);
+			this.template = new CassandraTemplate(session);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public Trap findById(UUID id) {
-		log.trace("TrapDao.findById() calling Mapper.get() and returning Trap");
+		log.trace("TrapDao.findById() calling CassandraOperations.selectOne() and returning Trap");
 		try {
-			return mapper.get(id);
+			return template.selectOne(Query.query(Criteria.where("id").is(id)), Trap.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -39,9 +37,9 @@ public class TrapDao {
 	}
 	
 	public List<Trap> getAll() {
-		log.trace("TrapDao.findById() calling TrapAccessor.getAll() and returning List<Trap>");
+		log.trace("TrapDao.findById() calling CassandraOperations.select() and returning List<Trap>");
 		try {
-			return accessor.getAll().all();
+			return template.select("select * from trap", Trap.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -49,9 +47,9 @@ public class TrapDao {
 	}
 	  
 	public boolean save(Trap trap) {
-		log.trace("TrapDao.getAll() calling Mapper.save()");
+		log.trace("TrapDao.findById() calling CassandraOperations.insert()");
 		try {
-			mapper.save(trap);
+			template.insert(trap);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,9 +58,9 @@ public class TrapDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("TrapDao.save() calling Mapper.delete()");
+		log.trace("TrapDao.save() calling CassandraOperations.delete()");
 		try {
-			mapper.delete(id);
+			template.delete(Query.query(Criteria.where("id").is(id)), Trap.class);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

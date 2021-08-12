@@ -5,13 +5,14 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
-@Table(keyspace = "rogue", name = "player_character")
+
+@Table
 public class PlayerCharacter {
 	
-	@PartitionKey private UUID id;
+	@PrimaryKey private UUID id;
 	private UUID playerId;
 	private String name;
 	private String characterClass;
@@ -53,18 +54,60 @@ public class PlayerCharacter {
 	
 	public PlayerCharacter() {}
 	
-	public PlayerCharacter(UUID playerId, String name, int constitution, int strength, int dexterity, int intelligence) {
+	public PlayerCharacter(UUID playerId, String name, String characterClass, int constitution, int strength, int dexterity, int intelligence) {
 		super();
-		this.playerId = playerId;
 		this.id = UUID.randomUUID();
+		this.playerId = playerId;
 		this.name = name;
+		this.characterClass = characterClass;
 		this.constitution = constitution;
 		this.strength = strength;
 		this.dexterity = dexterity;
 		this.intelligence = intelligence;
-		this.currency = 0;
 		this.experience = 0;
 		this.level = 1;
+		switch(characterClass) {
+			case "Rogue":
+				this.currency = 150;
+				this.powerBonus = 15;
+				this.healthBonus = 20;
+				this.healthRegenBonus = 2;
+				this.encumberanceBonus = 12;
+				this.carryCapacityBonus = 30;
+				this.dodgeRatingBonus = 15;
+				this.critRatingBonus = 20;
+				this.energyBonus = 30;
+				this.energyRegenBonus = 4;
+				this.armorBonus = 5;
+				break;
+			case "Warrior":
+				this.currency = 50;
+				this.powerBonus = 10;
+				this.healthBonus = 30;
+				this.healthRegenBonus = 4;
+				this.encumberanceBonus = 18;
+				this.carryCapacityBonus = 50;
+				this.dodgeRatingBonus = 5;
+				this.critRatingBonus = 10;
+				this.energyBonus = 20;
+				this.energyRegenBonus = 3;
+				this.armorBonus = 10;
+				break;
+			case "Wizard":
+				this.currency = 100;
+				this.powerBonus = 20;
+				this.healthBonus = 10;
+				this.healthRegenBonus = 1;
+				this.encumberanceBonus = 8;
+				this.carryCapacityBonus = 20;
+				this.dodgeRatingBonus = 10;
+				this.critRatingBonus = 5;
+				this.energyBonus = 40;
+				this.energyRegenBonus = 5;
+				this.armorBonus = 0;
+				break;
+		}
+		
 	}
 	
 	public UUID getId() {

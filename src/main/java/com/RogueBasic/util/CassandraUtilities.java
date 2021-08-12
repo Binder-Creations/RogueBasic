@@ -13,15 +13,15 @@ import com.RogueBasic.data.EquipmentDao;
 import com.RogueBasic.data.ItemDao;
 import com.RogueBasic.data.MonsterDao;
 import com.RogueBasic.data.TrapDao;
-import com.datastax.driver.core.Session;
+import com.datastax.oss.driver.api.core.CqlSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CassandraUtilities {
-	private Session session;
+	private CqlSession session;
 	private RogueUtilities ru;
 	private static final Logger log = LogManager.getLogger(CassandraUtilities.class);
 	
-	public CassandraUtilities (Session session){
+	public CassandraUtilities (CqlSession session){
 		super();
 		this.session = session;
 		this.ru = new RogueUtilities();

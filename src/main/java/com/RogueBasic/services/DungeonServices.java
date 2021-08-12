@@ -25,15 +25,15 @@ import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.data.RoomDao;
 import com.RogueBasic.data.TrapDao;
 import com.RogueBasic.util.RogueUtilities;
-import com.datastax.driver.core.Session;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 public class DungeonServices {
-	private Session session;
+	private CqlSession session;
 	private DungeonDao dao;
 	private RogueUtilities ru;
 	private static final Logger log = LogManager.getLogger(DungeonServices.class);
 	
-	public DungeonServices(Session session) {
+	public DungeonServices(CqlSession session) {
 		super();
 		this.session = session;
 		this.dao = new DungeonDao(session);
@@ -152,15 +152,15 @@ public class DungeonServices {
 	}
 	
 	public void genBossMiniboss(Dungeon dungeon) {
-		int modifier = dungeon.getChallengeRating() + ThreadLocalRandom.current().nextInt(11);
+		int modifier = dungeon.getChallengeRating() + ThreadLocalRandom.current().nextInt(12);
 		
-		if(modifier < 6)
-			return;
-		
+		//We only generate a boss if modifier > 15 to avoid boss encounters at the lowest levels
 		if(modifier > 15 && ThreadLocalRandom.current().nextInt(99)<14+modifier)
 			dungeon.setBoss(true);
 		
-		dungeon.setMiniboss(ThreadLocalRandom.current().nextInt(99)<34+modifier
+		//If we have set the boss flag and the dungeon only has one floor, the boss takes precedent
+		//and miniboss is not flagged
+		dungeon.setMiniboss(ThreadLocalRandom.current().nextInt(99)<26+(2*modifier)
 							  ? dungeon.getFloorCount() == 1 && dungeon.isBoss()
 							     ? false
 							     : true
@@ -168,6 +168,9 @@ public class DungeonServices {
 	}
 	
 	public boolean genNameModsDescription(Dungeon dungeon) {	
+		//Reads our theme document for the arrays of potential name and description components
+		//which our name and description will be pseudorandomly assembled from
+		log.trace("DungeonServices.genNameModsDescription() calling RogueUtilities.readFileToArrays()");
 		List<String[]> components = ru.readFileToArrays(dungeon.getTheme(), ".rbt");
 		
 		if(components == null) {
@@ -175,11 +178,12 @@ public class DungeonServices {
 			return false;
 		}
 		
-		StringBuilder name = new StringBuilder();
-		StringBuilder description = new StringBuilder();
+		StringBuffer name = new StringBuffer();
+		StringBuffer description = new StringBuffer();
 		
+		//the first roll determines the prefix cluster (name, modifier, description)
+		//which are applied to the dungeon, if any
 		int roll = ThreadLocalRandom.current().nextInt(11);
-		if(roll < 6) {
 			switch(roll) {
 				case 0:
 					dungeon.setPrefixMod("trap-10");
@@ -211,20 +215,27 @@ public class DungeonServices {
 					name.append(components.get(1)[ThreadLocalRandom.current().nextInt(components.get(1).length)]);
 					description.append(components.get(7)[ThreadLocalRandom.current().nextInt(components.get(7).length)]);
 					break;
+				default:
+					break;
 			}
-		}
 		
-		String adjective = components.get(2)[ThreadLocalRandom.current().nextInt(components.get(2).length)];
+		//An adjective and noun are selected for the name, as well as a corresponding
+		//description section which has the noun inserted into a placeholder
+		name.append(components.get(2)[ThreadLocalRandom.current().nextInt(components.get(2).length)]);
 		String noun = components.get(3)[ThreadLocalRandom.current().nextInt(components.get(3).length)];	
-		name.append(adjective).append(noun);
+		name.append(noun);
 		description.append(String.format(components.get(8)[ThreadLocalRandom.current().nextInt(components.get(8).length)], noun.toLowerCase()));
 		
-		char c = description.charAt(1);
-		String initial = c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U'
-				         ? "An"
-				         : "A";
-		description.insert(0, initial);
 		
+		//If the first letter of the first word of our description is a vowel,
+		//insert "An" to start the description; otherwise, "A"
+		char c = description.charAt(1);
+		description.insert(0, c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U'
+				         ? "An"
+				         : "A");
+		
+		//the second roll determines the postfix cluster (name, modifier, description)
+		//which are applied to the dungeon, if any
 		roll = ThreadLocalRandom.current().nextInt(23);
 		if(roll < 6) {
 			switch(roll) {
@@ -264,6 +275,7 @@ public class DungeonServices {
 		dungeon.setName(name.toString());
 		dungeon.setDescription(description.toString());
 		
+		log.trace("DungeonServices.genNameModsDescription() returning boolean");
 		return true;
 	}
 	

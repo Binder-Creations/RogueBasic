@@ -13,14 +13,14 @@ import org.apache.logging.log4j.Logger;
 import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.Floor;
 import com.RogueBasic.data.FloorDao;
-import com.datastax.driver.core.Session;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 public class FloorServices {
-	public Session session;
+	public CqlSession session;
 	public FloorDao dao;
 	private static final Logger log = LogManager.getLogger(FloorServices.class);
 
-	public FloorServices(Session session) {
+	public FloorServices(CqlSession session) {
 		super();
 		this.session = session;
 		this.dao = new FloorDao(session);

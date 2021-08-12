@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.Trap;
 import com.RogueBasic.data.TrapDao;
-import com.datastax.driver.core.Session;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
@@ -22,7 +22,7 @@ public class TrapServices {
 	public TrapDao dao;
 	private static final Logger log = LogManager.getLogger(TrapServices.class);
 	
-	public TrapServices(Session session) {
+	public TrapServices(CqlSession session) {
 		super();
 		this.dao = new TrapDao(session);
 	}

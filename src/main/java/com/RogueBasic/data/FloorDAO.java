@@ -5,33 +5,31 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.cassandra.core.CassandraOperations;
+import org.springframework.data.cassandra.core.CassandraTemplate;
+import org.springframework.data.cassandra.core.query.Criteria;
+import org.springframework.data.cassandra.core.query.Query;
 
 import com.RogueBasic.beans.Floor;
-import com.datastax.driver.core.Session;
-import com.datastax.driver.mapping.Mapper;
-import com.datastax.driver.mapping.MappingManager;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 public class FloorDao {
-	private MappingManager manager;
-	private Mapper<Floor> mapper;
-	private FloorAccessor accessor;
+	private CassandraOperations template;
 	private static final Logger log = LogManager.getLogger(FloorDao.class);	
 	
-	public FloorDao(Session session) {
+	public FloorDao(CqlSession session) {
 		super();
 		try {
-			this.manager = new MappingManager(session);
-			this.mapper = manager.mapper(Floor.class);
-			this.accessor = manager.createAccessor(FloorAccessor.class);
+			this.template = new CassandraTemplate(session);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public Floor findById(UUID id) {
-		log.trace("FloorDao.findById() calling Mapper.get() and returning Floor");
+		log.trace("FloorDao.findById() calling CassandraOperations.selectOne() and returning Floor");
 		try {
-			return mapper.get(id);
+			return template.selectOne(Query.query(Criteria.where("id").is(id)), Floor.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -39,19 +37,19 @@ public class FloorDao {
 	}
 	
 	public List<Floor> getAll() {
-		log.trace("FloorDao.getAll() calling FloorAccessor.getAll() and returning List<Floor>");
+		log.trace("FloorDao.findById() calling CassandraOperations.select() and returning List<Floor>");
 		try {
-			return accessor.getAll().all();
+			return template.select("select * from floor", Floor.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	  
-	public boolean save(Floor player) {
-		log.trace("FloorDao.findById() calling Mapper.save()");
+	public boolean save(Floor floor) {
+		log.trace("FloorDao.findById() calling CassandraOperations.insert()");
 		try {
-			mapper.save(player);
+			template.insert(floor);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,9 +58,9 @@ public class FloorDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("FloorDao.save() calling Mapper.delete()");
+		log.trace("FloorDao.save() calling CassandraOperations.delete()");
 		try {
-			mapper.delete(id);
+			template.delete(Query.query(Criteria.where("id").is(id)), Floor.class);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

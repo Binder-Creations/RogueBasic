@@ -5,33 +5,31 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.cassandra.core.CassandraOperations;
+import org.springframework.data.cassandra.core.CassandraTemplate;
+import org.springframework.data.cassandra.core.query.Criteria;
+import org.springframework.data.cassandra.core.query.Query;
 
 import com.RogueBasic.beans.Item;
-import com.datastax.driver.core.Session;
-import com.datastax.driver.mapping.Mapper;
-import com.datastax.driver.mapping.MappingManager;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 public class ItemDao {
-	private MappingManager manager;
-	private Mapper<Item> mapper;
-	private ItemAccessor accessor;
+	private CassandraOperations template;
 	private static final Logger log = LogManager.getLogger(ItemDao.class);	
 	
-	public ItemDao(Session session) {
+	public ItemDao(CqlSession session) {
 		super();
 		try {
-			this.manager = new MappingManager(session);
-			this.mapper = manager.mapper(Item.class);
-			this.accessor = manager.createAccessor(ItemAccessor.class);
+			this.template = new CassandraTemplate(session);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public Item findById(UUID id) {
-		log.trace("ItemDao.findById() calling Mapper.get() and returning Item");
+		log.trace("ItemDao.findById() calling CassandraOperations.selectOne() and returning Item");
 		try {
-			return mapper.get(id);
+			return template.selectOne(Query.query(Criteria.where("id").is(id)), Item.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -39,19 +37,19 @@ public class ItemDao {
 	}
 	
 	public List<Item> getAll() {
-		log.trace("ItemDao.getAll() calling ItemAccessor.getAll() and returning List<Item>");
+		log.trace("ItemDao.findById() calling CassandraOperations.select() and returning List<Item>");
 		try {
-			return accessor.getAll().all();
+			return template.select("select * from item", Item.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	  
-	public boolean save(Item player) {
-		log.trace("ItemDao.findById() calling Mapper.save()");
+	public boolean save(Item item) {
+		log.trace("ItemDao.findById() calling CassandraOperations.insert()");
 		try {
-			mapper.save(player);
+			template.insert(item);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,9 +58,9 @@ public class ItemDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("ItemDao.save() calling Mapper.delete()");
+		log.trace("ItemDao.save() calling CassandraOperations.delete()");
 		try {
-			mapper.delete(id);
+			template.delete(Query.query(Criteria.where("id").is(id)), Item.class);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

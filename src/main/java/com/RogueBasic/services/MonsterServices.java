@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.Monster;
 import com.RogueBasic.data.MonsterDao;
-import com.datastax.driver.core.Session;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
@@ -22,7 +22,7 @@ public class MonsterServices {
 	public MonsterDao dao;
 	private static final Logger log = LogManager.getLogger(MonsterServices.class);
 	
-	public MonsterServices(Session session) {
+	public MonsterServices(CqlSession session) {
 		super();
 		this.dao = new MonsterDao(session);
 	}

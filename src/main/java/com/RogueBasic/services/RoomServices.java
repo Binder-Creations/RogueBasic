@@ -16,15 +16,15 @@ import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.Floor;
 import com.RogueBasic.beans.Room;
 import com.RogueBasic.data.RoomDao;
-import com.datastax.driver.core.Session;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 public class RoomServices {
 	public RoomDao dao;
 	private static final Logger log = LogManager.getLogger(RoomServices.class);
-	private Session session;
+	private CqlSession session;
 	private Queue<Room> queue;
 	
-	public RoomServices(Session session) {
+	public RoomServices(CqlSession session) {
 		super();
 		this.session = session;
 		this.dao = new RoomDao(session);

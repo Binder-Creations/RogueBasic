@@ -5,33 +5,31 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.cassandra.core.CassandraOperations;
+import org.springframework.data.cassandra.core.CassandraTemplate;
+import org.springframework.data.cassandra.core.query.Criteria;
+import org.springframework.data.cassandra.core.query.Query;
 
 import com.RogueBasic.beans.Room;
-import com.datastax.driver.core.Session;
-import com.datastax.driver.mapping.Mapper;
-import com.datastax.driver.mapping.MappingManager;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 public class RoomDao {
-	private MappingManager manager;
-	private Mapper<Room> mapper;
-	private RoomAccessor accessor;
+	private CassandraOperations template;
 	private static final Logger log = LogManager.getLogger(RoomDao.class);	
 	
-	public RoomDao(Session session) {
+	public RoomDao(CqlSession session) {
 		super();
 		try {
-			this.manager = new MappingManager(session);
-			this.mapper = manager.mapper(Room.class);
-			this.accessor = manager.createAccessor(RoomAccessor.class);
+			this.template = new CassandraTemplate(session);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public Room findById(UUID id) {
-		log.trace("RoomDao.findById() calling Mapper.get() and returning Room");
+		log.trace("RoomDao.findById() calling CassandraOperations.selectOne() and returning Room");
 		try {
-			return mapper.get(id);
+			return template.selectOne(Query.query(Criteria.where("id").is(id)), Room.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -39,9 +37,9 @@ public class RoomDao {
 	}
 	
 	public List<Room> getAll() {
-		log.trace("RoomDao.getAll() calling RoomAccessor.getAll() and returning List<Room>");
+		log.trace("RoomDao.findById() calling CassandraOperations.select() and returning List<Room>");
 		try {
-			return accessor.getAll().all();
+			return template.select("select * from room", Room.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -49,9 +47,9 @@ public class RoomDao {
 	}
 	  
 	public boolean save(Room room) {
-		log.trace("RoomDao.findById() calling Mapper.save()");
+		log.trace("RoomDao.findById() calling CassandraOperations.insert()");
 		try {
-			mapper.save(room);
+			template.insert(room);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,9 +58,9 @@ public class RoomDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("RoomDao.save() calling Mapper.delete()");
+		log.trace("RoomDao.save() calling CassandraOperations.delete()");
 		try {
-			mapper.delete(id);
+			template.delete(Query.query(Criteria.where("id").is(id)), Room.class);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

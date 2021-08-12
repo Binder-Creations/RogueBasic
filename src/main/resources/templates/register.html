@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>Create a New Rogue Basic Account</title>
+    <link th:href="@{/styles/register.css}" rel="stylesheet" />
+    <style>
+    	.body{
+    	    background-image: url([[@{images/RogueBackground.webp}]]);
+    	}
+    </style>
+</head>
+<body class=body>
+   	<div class="titlecontainer">
+   		<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
+  	</div>
+ 	<div>
+  		<form class="formcontainer" action="#" th:action="@{/register}" th:object="${register}" method="post">
+		    <p th:unless="${failure}" class=formtextsmall>Create a new account!</p>
+		    <p th:if="${failure}" class=failtext>That Username is taken.</p>
+  			<p th:if="${failure}" class=failtext>Please try again.</p>
+		    <div class=formbox>
+			    <label class=formtext for="uname"><b>Username</b></label>
+			    <input type="text" placeholder="Enter Username" name="uname" th:field="*{name}" required>
+			</div>
+			<div>
+			    <label class= formtext for="psw"><b>Password</b></label>
+			    <input type="password" placeholder="Enter Password" name="psw" th:field="*{password}" required>
+			</div>
+		    <div>
+		    	<button type="submit">Register</button>
+		    </div>
+		    <div>
+			    <span class="formtextsmall"><a th:href="@{/login}">Already have an account? Login.</a></span>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -10,11 +10,8 @@ import com.RogueBasic.services.DungeonServices;
 import com.RogueBasic.util.CassandraConnector;
 import com.RogueBasic.util.CassandraUtilities;
 import com.RogueBasic.util.RogueUtilities;
-import com.datastax.driver.core.*;
-import com.datastax.driver.mapping.Mapper;
-import com.datastax.driver.mapping.MappingManager;
 
-import junit.framework.Assert;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 import java.util.List;
 
@@ -67,19 +64,20 @@ public class Driver {
 	public static void main(String[] args) {
 		
 			CassandraConnector cc = new CassandraConnector();
-			cc.close();
 			cc.connect();
 			
-			Session session = cc.getSession();
+			CqlSession session = cc.getSession();
 			CassandraUtilities cu = new CassandraUtilities(session);
-			cu.dropAllTables();
-			cu.initialize();
-			cu.populate();
+//			cu.dropAllTables();
+//			cu.initialize();
+//			cu.populate();
 //			ItemDao itd = new ItemDao(session);
 //			RogueUtilities ru = new RogueUtilities();
 			DungeonServices ds = new DungeonServices(session);
-			PlayerCharacter pc = new Warrior(UUID.randomUUID(), "taco", 1, 1, 1, 1);
+			PlayerCharacter pc = new PlayerCharacter(UUID.randomUUID(), "taco", "Warrior", 1, 1, 1, 1);
+			Player p = new Player("Taco Johnson", "Taco");
 			PlayerCharacterDao pcd = new PlayerCharacterDao(session);
+			PlayerDao pd = new PlayerDao(session);
 //			FloorDao fd = new FloorDao(session);
 //			RoomDao rd = new RoomDao(session);
 //			MonsterDao md = new MonsterDao(session);
@@ -87,6 +85,9 @@ public class Driver {
 //			TrapDao td = new TrapDao(session);
 			DungeonDao dd = new DungeonDao(session);
 			pcd.save(pc);
+			pd.save(p);
+//			System.out.println(pd.findById(p.getId()).toString());
+//			System.out.println(pcd.findById(pc.getId()).toString());
 			long startTime = System.nanoTime();
 			Dungeon d = dd.findById(ds.generate(pc.getId()));
 //			System.out.println(d.toString());
@@ -162,7 +163,8 @@ public class Driver {
 //			dao.save(b);
 //			dao.getAll().stream().forEach(p -> System.out.println(p.toString()));
 			long endTime = System.nanoTime();
-			System.out.println((endTime-startTime)/1000000);	
+			System.out.println((endTime-startTime)/1000000);
+			cc.close();
 //		System.out.println("taco");
 	}
 }

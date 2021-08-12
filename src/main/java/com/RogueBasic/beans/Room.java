@@ -4,12 +4,12 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
-@Table(keyspace = "rogue", name = "room")
+@Table
 public class Room {
-	@PartitionKey private UUID id;
+	@PrimaryKey private UUID id;
 	private UUID floorId;
 	private UUID dungeonId;
 	private int xCoord;

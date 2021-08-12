@@ -17,14 +17,14 @@ import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.Room;
 import com.RogueBasic.data.EquipmentDao;
 import com.RogueBasic.data.ItemDao;
-import com.datastax.driver.core.Session;
+import com.datastax.oss.driver.api.core.CqlSession;
 
 public class ItemServices {
 	private ItemDao dao;
 	private EquipmentDao edao;
 	private static final Logger log = LogManager.getLogger(ItemServices.class);
 
-	public ItemServices(Session session) {
+	public ItemServices(CqlSession session) {
 		super();
 		dao = new ItemDao(session);
 		edao = new EquipmentDao(session);
@@ -99,6 +99,9 @@ public class ItemServices {
 					newPool.add(i);
 			}
 			lootPool = newPool;
+			if (lootPool.size()==0) {
+				break;
+			}
 			Item selection = lootPool.get(ThreadLocalRandom.current().nextInt(lootPool.size()));
 			loot.add(selection);
 			lootValue -= selection.getCost();
