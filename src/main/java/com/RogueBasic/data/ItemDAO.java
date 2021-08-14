@@ -67,4 +67,8 @@ public class ItemDao {
 			return false;
 		}
 	}
+	
+	public void truncate() {
+		template.truncate(Item.class);
+	}
 }

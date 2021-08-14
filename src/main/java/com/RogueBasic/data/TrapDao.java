@@ -67,4 +67,8 @@ public class TrapDao {
 			return false;
 		}
 	}
+	
+	public void truncate() {
+		template.truncate(Trap.class);
+	}
 }

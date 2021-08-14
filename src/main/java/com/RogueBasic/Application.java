@@ -28,7 +28,9 @@ public class Application {
 			System.out.println("Application started.");
 			try {
 				CqlSession service = CassandraConnector.connect();
-				
+				PlayerDao pdao = new PlayerDao(service);
+				Player p = new Player("test", "test");
+				pdao.save(p);
 				System.out.println("Connected to Cassandra.");
 			}catch(Exception e) {
 				e.printStackTrace();

@@ -67,4 +67,8 @@ public class MonsterDao {
 			return false;
 		}
 	}
+	
+	public void truncate() {
+		template.truncate(Monster.class);
+	}
 }

@@ -67,4 +67,8 @@ public class DungeonDao {
 			return false;
 		}
 	}
+	
+	public void truncate() {
+		template.truncate(Dungeon.class);
+	}
 }

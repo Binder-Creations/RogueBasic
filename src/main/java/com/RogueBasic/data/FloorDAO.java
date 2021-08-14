@@ -67,4 +67,8 @@ public class FloorDao {
 			return false;
 		}
 	}
+	
+	public void truncate() {
+		template.truncate(Floor.class);
+	}
 }

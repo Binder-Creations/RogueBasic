@@ -11,6 +11,7 @@ import org.springframework.data.cassandra.core.query.Criteria;
 import org.springframework.data.cassandra.core.query.Query;
 
 import com.RogueBasic.beans.Player;
+import com.RogueBasic.beans.PlayerByName;
 import com.datastax.oss.driver.api.core.CqlSession;
 
 public class PlayerDao {
@@ -36,6 +37,19 @@ public class PlayerDao {
 		}
 	}
 	
+	public Player findByName(String name) {
+		log.trace("PlayerDao.findByName() calling CassandraOperations.selectOne() and returning Player");
+		try {
+			PlayerByName playerBN = template.selectOne(Query.query(Criteria.where("name").is(name)), PlayerByName.class);
+			return playerBN != null
+					? new Player(playerBN)
+					: null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public List<Player> getAll() {
 		log.trace("PlayerDao.findById() calling CassandraOperations.select() and returning List<Player>");
 		try {
@@ -50,6 +64,8 @@ public class PlayerDao {
 		log.trace("PlayerDao.findById() calling CassandraOperations.insert()");
 		try {
 			template.insert(player);
+			if(player != null)
+				template.insert(new PlayerByName(player));
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,5 +82,9 @@ public class PlayerDao {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public void truncate() {
+		template.truncate(Player.class);
 	}
 }

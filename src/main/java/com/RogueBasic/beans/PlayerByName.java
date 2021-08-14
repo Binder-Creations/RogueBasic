@@ -1,16 +1,16 @@
 package com.RogueBasic.beans;
 
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
+
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 @Table
-public class Player {
-
-	@PrimaryKey private UUID id;
-	private String name;
+public class PlayerByName{
+	@PrimaryKey private String name;
+	private UUID id;
 	private String password;
 	private Set<UUID> characterIds;
 	private int metacurrency;
@@ -20,11 +20,11 @@ public class Player {
 	private int dexterityMetabonus;
 	private int currencyMetabonus;
 	
-	public Player() {}
+	public PlayerByName() {}
 	
-	public Player(PlayerByName player) {
-		this.id = player.getId();
+	public PlayerByName(Player player) {
 		this.name = player.getName();
+		this.id = player.getId();
 		this.password = player.getPassword();
 		this.characterIds = player.getCharacterIds();
 		this.metacurrency = player.getMetacurrency();
@@ -35,44 +35,38 @@ public class Player {
 		this.currencyMetabonus = player.getCurrencyMetabonus();
 	}
 	
-	public Player(String name, String password) {
-		super();
-		
-		this.id = UUID.randomUUID();
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
 		this.name = name;
-		this.password = password;
-		this.metacurrency = 0;
-		this.constitutionMetabonus = 0;
-		this.strengthMetabonus = 0;
-		this.intelligenceMetabonus = 0;
-		this.dexterityMetabonus = 0;
-		this.currencyMetabonus = 0;
 	}
 
 	public UUID getId() {
 		return id;
 	}
-	
+
 	public void setId(UUID id) {
 		this.id = id;
 	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public Set<UUID> getCharacterIds() {
+		return characterIds;
+	}
+
+	public void setCharacterIds(Set<UUID> characterIds) {
+		this.characterIds = characterIds;
+	}
+
 	public int getMetacurrency() {
 		return metacurrency;
 	}
@@ -81,14 +75,6 @@ public class Player {
 		this.metacurrency = metacurrency;
 	}
 
-	public Set<UUID> getCharacterIds() {
-		return characterIds;
-	}
-	
-	public void setCharacterIds(Set<UUID> characterIds) {
-		this.characterIds = characterIds;
-	}
-	
 	public int getConstitutionMetabonus() {
 		return constitutionMetabonus;
 	}
@@ -132,9 +118,9 @@ public class Player {
 	@Override
 	public int hashCode() {
 		return Objects.hash(characterIds, constitutionMetabonus, currencyMetabonus, dexterityMetabonus, id,
-				intelligenceMetabonus, metacurrency, password, strengthMetabonus, name);
+				intelligenceMetabonus, metacurrency, name, password, strengthMetabonus);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -143,20 +129,21 @@ public class Player {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Player other = (Player) obj;
+		PlayerByName other = (PlayerByName) obj;
 		return Objects.equals(characterIds, other.characterIds) && constitutionMetabonus == other.constitutionMetabonus
 				&& currencyMetabonus == other.currencyMetabonus && dexterityMetabonus == other.dexterityMetabonus
-				&& Objects.equals(id,other.id) && intelligenceMetabonus == other.intelligenceMetabonus
-				&& metacurrency == other.metacurrency && Objects.equals(password, other.password)
-				&& strengthMetabonus == other.strengthMetabonus && Objects.equals(name, other.name);
+				&& Objects.equals(id, other.id) && intelligenceMetabonus == other.intelligenceMetabonus
+				&& metacurrency == other.metacurrency && Objects.equals(name, other.name)
+				&& Objects.equals(password, other.password) && strengthMetabonus == other.strengthMetabonus;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Player [id=" + id + ", name=" + name + ", password=" + password + ", metacurrency="
-				+ metacurrency + ", characterIds=" + characterIds + ", constitutionMetabonus=" + constitutionMetabonus
+		return "PlayerByName [name=" + name + ", id=" + id + ", password=" + password + ", characterIds=" + characterIds
+				+ ", metacurrency=" + metacurrency + ", constitutionMetabonus=" + constitutionMetabonus
 				+ ", strengthMetabonus=" + strengthMetabonus + ", intelligenceMetabonus=" + intelligenceMetabonus
 				+ ", dexterityMetabonus=" + dexterityMetabonus + ", currencyMetabonus=" + currencyMetabonus + "]";
 	}
+	
 	
 }

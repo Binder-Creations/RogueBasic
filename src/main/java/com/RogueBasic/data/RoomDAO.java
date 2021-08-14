@@ -67,4 +67,8 @@ public class RoomDao {
 			return false;
 		}
 	}
+	
+	public void truncate() {
+		template.truncate(Room.class);
+	}
 }

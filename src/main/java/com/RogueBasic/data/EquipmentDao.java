@@ -67,4 +67,8 @@ public class EquipmentDao {
 			return false;
 		}
 	}
+	
+	public void truncate() {
+		template.truncate(Equipment.class);
+	}
 }

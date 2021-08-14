@@ -39,7 +39,7 @@ public class AbilityDao {
 	public List<Ability> getAll() {
 		log.trace("AbilityDao.findById() calling CassandraOperations.select() and returning List<Ability>");
 		try {
-			return template.select("select * from player", Ability.class);
+			return template.select("select * from ability", Ability.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -66,5 +66,9 @@ public class AbilityDao {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public void truncate() {
+		template.truncate(Ability.class);
 	}
 }

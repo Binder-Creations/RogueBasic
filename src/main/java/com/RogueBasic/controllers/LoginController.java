@@ -25,12 +25,8 @@ public class LoginController {
 	public String loginSubmit(@ModelAttribute Login login, Model model, final RedirectAttributes redirectAttributes) {
 		CqlSession session = CassandraConnector.getSession();
 		PlayerDao pdao = new PlayerDao(session);
-		Player player = pdao.getAll().stream()
-							.filter((p)->p.getName().equals(login.getName())
-							&& p.getPassword().equals(login.getPassword()))
-							.findFirst()
-							.orElse(null);
-		if(player != null) {
+		Player player = pdao.findByName(login.getName());
+		if(player != null && player.getPassword().equals(login.getPassword())) {
 			redirectAttributes.addFlashAttribute("player", player);
 			return "redirect:/home";
 		} else {

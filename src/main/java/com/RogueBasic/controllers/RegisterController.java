@@ -25,12 +25,9 @@ public class RegisterController {
 	public String registerSubmit(@ModelAttribute Register register, Model model, final RedirectAttributes redirectAttributes) {
 		CqlSession session = CassandraConnector.getSession();
 		PlayerDao pdao = new PlayerDao(session);
-		Player p = pdao.getAll().stream()
-							.filter((u)->u.getName().equals(register.getName()))
-							.findFirst()
-							.orElse(null);
-		if(p == null) {
-			Player player = new Player(register.getName(), register.getPassword());
+		Player player = pdao.findByName(register.getName());
+		if(player == null) {
+			player = new Player(register.getName(), register.getPassword());
 			pdao.save(player);
 		    redirectAttributes.addFlashAttribute("player", player);
 			return "redirect:/home";
