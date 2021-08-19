@@ -2,20 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title th:text="'Prepare for Adventure, ' + ${player.name}" ></title>
-    <link th:href="@{/styles/home.css}" rel="stylesheet" />
+	<title th:text="'Prepare for Adventure, ' + ${name}" ></title>
+    <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
      <style th:inline="text">
         .body{
     	    background-image: url([[@{images/RogueBackground.webp}]]);
     	}
-     
-      	.buttonbig {
-      		background-image: url([[@{images/ButtonWide.png}]]);
-      	}
-      	
-      	.buttonbig:hover {
-      		background-image: url([[@{images/ButtonWideHover.png}]]);
-      	}
    	</style>
 </head>
 <body class=body>
@@ -23,17 +15,13 @@
    		<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
   	</div>
   	<div class=buttoncontainer>
-	 	<div class="buttonbig">
-	 	<p class="buttontext">Character Select</p></div>
+	 	<button class="buttonbig" th:if="${has_characters}" type="button" onclick="location.href='/character_select'">Character Select</button>
+	 	<div class="buttonspacer" th:if="${has_characters}"></div>
+	 	<button class="buttonbig" type="button" onclick="location.href='/new_character'">Create New Character</button>
 	 	<div class="buttonspacer"></div>
-	 	<div class="buttonbig">
-	 	<p class="buttontext">Create New Character</p></div>
+	 	<button class="buttonbig" type="button">Spend Souls</button>
 	 	<div class="buttonspacer"></div>
-	 	<div class="buttonbig">
-	 	<p class="buttontext">Spend Souls</p></div>
-	 	<div class="buttonspacer"></div>
-	 	<div class="buttonbig">
-	 	<p class="buttontext">Logout</p></div>
+	 	<button class="buttonbig" type="button" onclick="location.href='/login?logout=true'">Logout</button>
 	 </div>
 </body>
 </html>

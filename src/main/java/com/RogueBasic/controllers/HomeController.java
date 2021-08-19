@@ -1,24 +1,26 @@
 package com.RogueBasic.controllers;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import com.RogueBasic.beans.Player;
 import com.RogueBasic.data.PlayerDao;
 import com.RogueBasic.util.CassandraConnector;
-import com.datastax.oss.driver.api.core.CqlSession;
 
 @Controller
 public class HomeController {
 	
 	@GetMapping("/home")
-	public String home(@ModelAttribute("player") Player player, Model model) {
-		return player.getName() != null 
-				? "home"
-				: "redirect:/login";
+	public String home(@CookieValue(value="player_id", defaultValue="0") String playerId, @CookieValue(value="player_name", defaultValue="null") String playerName, Model model) {
+		PlayerDao pdao = new PlayerDao(CassandraConnector.getSession());
+		model.addAttribute("name", playerName);
+		model.addAttribute("has_characters", pdao.findById(UUID.fromString(playerId)).getCharacterIds() != null);
+		return playerId.equals("0") 
+				? "redirect:/login"
+				: "home";
 	}
-	
+
 }

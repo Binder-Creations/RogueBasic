@@ -36,8 +36,6 @@ public class Application {
 				e.printStackTrace();
 				System.out.println("Unable to connect to Cassandra.");
 			}
-			
-
 
 		};
 	}

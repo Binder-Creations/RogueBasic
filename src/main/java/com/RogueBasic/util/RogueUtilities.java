@@ -1,13 +1,10 @@
 package com.RogueBasic.util;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,10 +25,10 @@ public class RogueUtilities {
 		}
 	}
 	
-	public List<String[]> readFileToArrays(String name, String type){
+	public List<String[]> readFileToArrays(String path){
 		try {
 			List<String[]> result = new ArrayList<>();
-			Files.readAllLines(Paths.get("src/main/resources/" + name + type))
+			Files.readAllLines(Paths.get("src/main/resources/" + path))
 				 .forEach((s)->result.add(s.split("~")));
 			return result;
 		} catch (Exception e){
@@ -51,10 +48,10 @@ public class RogueUtilities {
 //		}
 //	}
 	
-	public List<String> readFileToList(String name, String type){
+	public List<String> readFileToList(String path){
 		try {
 			List<String> result = new ArrayList<>();
-			Files.readAllLines(Paths.get("src/main/resources/" + name + type))
+			Files.readAllLines(Paths.get("src/main/resources/" + path))
 				 .forEach((s)->result.add(s));
 			return result;
 		} catch (Exception e){

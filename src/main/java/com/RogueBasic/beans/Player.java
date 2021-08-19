@@ -22,19 +22,6 @@ public class Player {
 	
 	public Player() {}
 	
-	public Player(PlayerByName player) {
-		this.id = player.getId();
-		this.name = player.getName();
-		this.password = player.getPassword();
-		this.characterIds = player.getCharacterIds();
-		this.metacurrency = player.getMetacurrency();
-		this.constitutionMetabonus = player.getConstitutionMetabonus();
-		this.strengthMetabonus = player.getStrengthMetabonus();
-		this.intelligenceMetabonus = player.getIntelligenceMetabonus();
-		this.dexterityMetabonus = player.getDexterityMetabonus();
-		this.currencyMetabonus = player.getCurrencyMetabonus();
-	}
-	
 	public Player(String name, String password) {
 		super();
 		

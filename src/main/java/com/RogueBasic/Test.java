@@ -1,6 +1,9 @@
 package com.RogueBasic;
 
+import java.util.UUID;
+
 import com.RogueBasic.beans.Player;
+import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.data.PlayerDao;
 import com.RogueBasic.util.CassandraConnector;
 import com.RogueBasic.util.CassandraUtilities;
@@ -10,12 +13,11 @@ public class Test {
 	public static void main(String[] args) {
 		CqlSession session = CassandraConnector.connect();
 		CassandraUtilities cu = new CassandraUtilities(session);
-		cu.dropAllTables();
-		cu.initialize();
+//		cu.dropAllTables();
+//		cu.initialize();
 		PlayerDao pd = new PlayerDao(session);
 		Player p = new Player("testing", "hotsauce");
-		pd.save(p);
-		pd.save(p);
-		System.out.println(pd.findByName("testing").toString());
+		PlayerCharacterDao pcd = new PlayerCharacterDao(session);
+		pd.findByName("flomp").getCharacterIds().forEach((pc)->System.out.println(pcd.findById(pc)));
 	}
 }

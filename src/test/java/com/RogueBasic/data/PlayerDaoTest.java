@@ -39,8 +39,8 @@ public class PlayerDaoTest {
 	@BeforeEach
 	private void before() {
 		dao.truncate();
-		dao.save(tester);
-		dao.save(tester2);
+		dao.firstSave(tester);
+		dao.firstSave(tester2);
 	}
 	
 	@Test

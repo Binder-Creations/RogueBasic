@@ -40,9 +40,9 @@ public class PlayerDao {
 	public Player findByName(String name) {
 		log.trace("PlayerDao.findByName() calling CassandraOperations.selectOne() and returning Player");
 		try {
-			PlayerByName playerBN = template.selectOne(Query.query(Criteria.where("name").is(name)), PlayerByName.class);
-			return playerBN != null
-					? new Player(playerBN)
+			PlayerByName player = template.selectOne(Query.query(Criteria.where("name").is(name)), PlayerByName.class);
+			return player != null
+					? template.selectOne(Query.query(Criteria.where("id").is(player.getId())), Player.class)
 					: null;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,7 +51,7 @@ public class PlayerDao {
 	}
 	
 	public List<Player> getAll() {
-		log.trace("PlayerDao.findById() calling CassandraOperations.select() and returning List<Player>");
+		log.trace("PlayerDao.getAll() calling CassandraOperations.select() and returning List<Player>");
 		try {
 			return template.select("select * from player", Player.class);
 		} catch (Exception e) {
@@ -61,11 +61,21 @@ public class PlayerDao {
 	}
 	  
 	public boolean save(Player player) {
-		log.trace("PlayerDao.findById() calling CassandraOperations.insert()");
+		log.trace("PlayerDao.save() calling CassandraOperations.insert()");
 		try {
 			template.insert(player);
-			if(player != null)
-				template.insert(new PlayerByName(player));
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean firstSave(Player player ) {
+		log.trace("PlayerDao.firstSave() calling CassandraOperations.insert()");
+		try {
+			template.insert(player);
+			template.insert(new PlayerByName(player.getName(), player.getId()));
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,6 +95,7 @@ public class PlayerDao {
 	}
 	
 	public void truncate() {
+		log.trace("PlayerDao.truncate() calling CassandraOperations.truncate()");
 		template.truncate(Player.class);
 	}
 }

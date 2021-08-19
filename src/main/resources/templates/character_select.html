@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>Select Your Adventurer</title>
+    <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
+     <style th:inline="text">
+        .body-uncentered{
+    	    background-image: url([[@{images/RogueBackground.webp}]]);
+    	}
+   	</style>
+</head>
+<body class=body-uncentered>
+	<div class=righting-box>
+		<button class="home-button" type="button" onclick="location.href='/home'"><p style="position:relative; bottom:.2em;">🏘</p></button>
+	</div>
+	<div class=centering-box>   	
+	   	<div class="titlecontainer">
+	   		<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
+	  	</div>
+	  	<div class=buttoncontainer>
+			<div th:each="playercharacter: ${characters}">
+			 	<button class="button-character" type="button" onclick="location.href='/new_character'">
+			 		<table>
+			 			<tr>
+			 				<td>
+			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Warrior'" th:src="@{/images/RogueWarriorIcon.png}"/>
+			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Rogue'" th:src="@{/images/RogueRogueIcon.png}"/>
+			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Wizard'" th:src="@{/images/RogueWizardIcon.png}"/>
+			 				</td>
+			 				<td style="width: .5em;"/>
+			 				<td th:text="'lv.'+${playercharacter.level}"/>
+			 				<td style="width: .5em;"/>
+			 				<td th:text="${playercharacter.name}"/>
+			 			</tr>
+			 		</table>
+			 	</button>
+			 	<div class="buttonspacer"></div>
+			</div>	
+		 </div>
+	</div>
+</body>
+</html>

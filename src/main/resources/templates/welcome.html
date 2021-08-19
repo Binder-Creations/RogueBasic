@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>Rogue Basic Account Created!</title>
+    <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/scripts/autoRedirect.js}"></script>
+    <style>
+    	.body{
+    	    background-image: url([[@{images/RogueBackground.webp}]]);
+    	}
+    </style>
+</head>
+<body class=body>
+   	<div class="titlecontainer">
+   		<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
+  	</div>
+ 	<div class="formcontainer">
+		<p class="formtext" th:text="'Your Rogue Basic account has successfully been created, ' + ${name}"></p>  		
+		<p class="formtext">You will be redirected to the login screen in...</p> 
+		<p class ="failtext" id="counter">5</p>
+	</div>
+</body>
+</html>

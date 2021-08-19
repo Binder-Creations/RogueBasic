@@ -146,7 +146,7 @@ public class DungeonServices {
 	private String genTheme() {
 		//Selects a pseudoranom theme from our ThemeList document
 		log.trace("DungeonServices.genTheme calling RogueUtilities.readFileToList() for ThemeList.rbt");
-		List<String> themes = ru.readFileToList("ThemeList", ".rbt");
+		List<String> themes = ru.readFileToList("source/themes/themeList.rbt");
 		log.trace("DungeonServices.genTheme returning String");
 		return themes.get(ThreadLocalRandom.current().nextInt(themes.size()));
 	}
@@ -171,7 +171,7 @@ public class DungeonServices {
 		//Reads our theme document for the arrays of potential name and description components
 		//which our name and description will be pseudorandomly assembled from
 		log.trace("DungeonServices.genNameModsDescription() calling RogueUtilities.readFileToArrays()");
-		List<String[]> components = ru.readFileToArrays(dungeon.getTheme(), ".rbt");
+		List<String[]> components = ru.readFileToArrays("source/themes/"+dungeon.getTheme() + ".rbt");
 		
 		if(components == null) {
 			log.debug("failed to read theme file; returning null");

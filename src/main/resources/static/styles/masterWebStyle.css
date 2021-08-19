@@ -1,0 +1,322 @@
+@charset "UTF-8";
+		
+      	*, *:before, *:after {
+          	margin: 0;
+          	padding: 0;
+          	box-sizing: border-box;
+      	}
+      	.body {
+      		background-repeat:no-repeat;
+    		background-attachment: fixed;
+  			background-position: center;
+  			background-size: cover;
+      		text-align: center;
+      	}
+      	.body-uncentered{
+      	    background-repeat:no-repeat;
+    		background-attachment: fixed;
+  			background-position: center;
+  			background-size: cover;
+      	}
+      	.centering-box{
+	      	height:100%;
+	      	width:100%;
+	      	text-align:center;
+      	}
+      	.righting-box{
+	      	height:100%;
+	      	width:100%;
+	      	text-align:right;
+      	}
+      	.titlecontainer {
+      	   	position: absolute;
+      	   	display: block;
+      	   	top: 3em;
+      	   	width: 100%;
+      	   	z-index: 1;
+      	   	text-align: center;
+      	}
+	   .title {
+			width: 60%;
+      	}	
+       input[type=text], input[type=password]{
+       		padding:.15em;
+       		padding-left:.4em;
+       		margin:.5em;
+       		border:.2em solid #ffcc66;
+       		background-color:  #555555;
+       		border-radius: .2em;
+       		color:#ffcc66;
+       }
+       
+       br {
+			display: block;
+			content: " ";
+			margin: 0;
+	   }
+       .formcontainer {
+      	   	display: block;
+      	   	position: absolute;
+      	   	top: 17em;
+      	   	z-index: 2;
+      	   	left: 50%;
+      	   	text-align: center;
+      	}
+      	.formwrapper{
+      		position: relative;
+      		left: -50%;
+      		padding: 1em;
+    		background-color: rgb(34, 35, 36, 0.8);
+    		border: .3em solid rgb(12, 13, 13, 0.8);
+      	}
+      	.formtextlarge {
+       		color:#ffcc66;
+       		font-family: "Copperplate", fantasy;
+       		font-size: 165%;
+   		}
+		.formtext {
+       		color:#ffcc66;
+       		font-family: "Copperplate", fantasy;
+       		font-size: 140%;
+   		}
+   		.formtextsmall {
+       		color:#ffcc66;
+     	  	font-family: "Copperplate", fantasy;
+    	   	font-size: 115%;
+   		}
+   		.formtexttiny {
+       		color:#ffcc66;
+     	  	font-family: "Copperplate", fantasy;
+    	   	font-size: 90%;
+   		}
+   		.labeladjust{
+   			position:relative;
+   			top:.12em;
+   		}
+   		.failtext {
+       		color:#ff0000;
+       		font-family: "Copperplate", fantasy;
+       		font-size: 115%;
+   		}
+		.formbox {
+	   		display:inline-block;
+   		}
+   	    .buttoncontainer {
+      		display: block;
+      		position: absolute;
+      		width: 100%;
+      	   	top: 11em;
+      	   	z-index: 3;
+      	   	text-align: center;
+      	}
+      	.buttonnormal {
+      		width: 9em;
+      		height: 1.5em;
+      		background-color: #555555;
+      		border: .15em solid #696969;
+      		border-radius: .5em;
+      		transition-duration: 0.4s;
+	       	font-family: "Copperplate", fantasy;
+	       	font-size: 130%;
+	       	color:#ffcc66;
+	       	position: absolute;
+      		display:inline-block;
+      		text-align: center;
+      		position:relative;
+      	}
+      	.buttonnormal:hover {
+      		background-color: #696969;
+      		border: .15em solid #555555;
+      	}
+      	.home-button {
+      	   	position: absolute;
+      	   	display: block;
+      	   	top: 1.5em;
+      	   	right: 1.5em;
+      	   	z-index: 5;
+      	   	text-align: center;
+      	   	width: 2em;
+      		height: 2em;
+      		background-color: #555555;
+      		border: .15em solid #696969;
+      		border-radius: 2em;
+      		transition-duration: 0.4s;
+	       	font-family: "Copperplate", fantasy;
+	       	font-size: 130%;
+	       	color:#ffcc66;
+	       	position: absolute;
+      		display:inline-block;
+      		text-align: center;
+      		position:relative;
+      	}
+      	.home-button:hover {
+      		background-color: #696969;
+      		border: .15em solid #555555;
+      	}
+      	.buttonbig {
+      		width: 18em;
+      		height: 3em;
+      		background-color: #555555;
+      		border: .3em solid #696969;
+      		border-radius: 1em;
+      		transition-duration: 0.4s;
+	       	font-family: "Copperplate", fantasy;
+	       	font-size: 155%;
+	       	color:#ffcc66;
+	       	position: absolute;
+      		display:inline-block;
+      		text-align: center;
+      		position:relative;
+      	}
+      	.buttonbig:hover {
+      		background-color: #696969;
+      		border: .3em solid #555555;
+      	}
+      	.button-character {
+      		width: 13em;
+      		height: 3em;
+      		background-color: #555555;
+      		border: .3em solid #696969;
+      		border-radius: 0.25em;
+      		transition-duration: 0.4s;
+	       	font-family: "Copperplate", fantasy;
+	       	font-size: 250%;
+	       	color:#ffcc66;
+	       	position: absolute;
+      		display:inline-block;
+      		text-align: center;
+      		padding: .25em;
+      		padding-left: .5em;
+      		position:relative;
+      	}
+      	.button-character:hover {
+      		background-color: #696969;
+      		border: .3em solid #555555;
+      	}
+      	.buttonspacer {
+      		display:block;
+      		height: 0.5em;
+      	}
+    	.buttontext {
+	       	color:#ffcc66;
+	       	font-family: "Copperplate", fantasy;
+	       	font-size: 155%;
+	       	position: absolute;
+			top: 50%;
+			left: 50%;
+			-ms-transform: translateY(-50%) translateX(-50%);
+			transform: translateY(-50%) translateX(-50%);
+   		}
+   		.radio-parent {
+		  	list-style-type: none;
+		  	margin: 25px 0 0 0;
+		  	padding: 0;
+		}
+		
+		.radio-parent li {
+		  	float: left;
+		  	margin: 0 5px 0 0;
+		  	width: 8.5em;
+		  	height: 3em;
+		  	position: relative;
+		}
+		
+		.radio-parent label,
+		.radio-parent input {
+		  	display: block;
+		  	position: absolute;
+		  	top: 0;
+		  	left: 0;
+		  	right: 0;
+		  	bottom: 0;
+		}
+		
+		.radio-parent input[type="radio"] {
+		  	opacity: 0.01;
+		  	z-index: 100;
+		}
+		
+		.radio-parent input[type="radio"]:checked+label,
+		.Checked+label {
+		  	background: #ffcc66;
+		  	border: .15em solid #6B8E23;
+		  	color: #6B8E23;
+		}
+		
+		.radio-parent label {
+		  	padding: .4em;
+		  	border: .15em solid #ffcc66;
+		  	background: #6B8E23;
+		  	cursor: pointer;
+		  	z-index: 90;
+		}
+		
+		.radio-parent label:hover {
+		  	background: #808000;
+		}
+		
+		.number-parent {
+			list-style-type: none;
+		}
+		
+		.number-parent li {
+		  	text-align: left;
+		}
+		.tooltip {
+		  	position: relative;
+		  	display: inline-block;
+		}
+		.tooltip .tooltiptext {
+			visibility: hidden;
+			width: 6em;
+			background-color: #555;
+			color: #fff;
+			font-size:95%;
+			text-align: center;
+			border-radius: .5em;
+			padding: 1em 0;
+			position: absolute;
+			z-index: 4;
+			bottom: 50%;
+			right: 110%;
+			margin-bottom: -3.3em;
+			transition: opacity 0.3s;
+		}
+		.tooltip:hover .tooltiptext {
+  			visibility: visible;
+		}
+		.charactername{
+			box-shadow:0 0 2em .5em rbga(0,0,0,0.06);
+			border-radius: 1.5em;
+			color:#ffcc66;
+       		font-family: "Copperplate", fantasy;
+       		font-size: 165%;
+		}
+		.up, .down {
+			margin:0;
+			float:left;
+      		width: 1.3em;
+      		height: 1.3em;
+      		background-color: #555555;
+      		border: .12em solid #ffcc66;
+      		border-radius: .3em;
+	       	color:#ffcc66;
+	       	font-size: 55%;
+	       	position: absolute;
+      		text-align: center;
+      		position:relative;
+      	}
+      	.attribute-score{
+      		width: 1.7em;
+      		padding: 0.05em;
+      		padding-left: 0.15em;
+      		margin: 0.05em;
+      		margin-right:0;
+      		border:.2em solid #ffcc66;
+       		background-color:  #555555;
+       		border-radius: .2em;
+      	}
+      	.class-icon{
+      		width: 1.8em;
+      		height: 1.8em;
+      	}

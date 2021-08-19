@@ -30,7 +30,7 @@ public class CassandraUtilities {
 	public void initialize() {
 		//creates the tables required for our database, from the Tables.rbt document
 		log.trace("CassandraUtilities.initialize() calling RogueUtilities.readFileToList() for Tables.rbt");
-		ru.readFileToList("Tables", ".rbt")
+		ru.readFileToList("source/tables.rbt")
 		  .forEach((s)->session.execute("CREATE TABLE IF NOT EXISTS " + s));
 		log.debug("Database tables created");
 	}
@@ -46,7 +46,7 @@ public class CassandraUtilities {
 		//Monsters, Items, Equipment, Traps
 		//Each from their respectively named document
 		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Monsters.rbt");
-		for(String s : ru.readFileToList("Monsters", ".rbt")) {
+		for(String s : ru.readFileToList("source/Monsters.rbt")) {
 			try {
 				Monster m = mapper.readValue(s, Monster.class);
 				m.setId(UUID.randomUUID());
@@ -58,7 +58,7 @@ public class CassandraUtilities {
 		}
 		
 		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Items.rbt");
-		for(String s : ru.readFileToList("Items", ".rbt")) {
+		for(String s : ru.readFileToList("source/items.rbt")) {
 			try {
 				Item i = mapper.readValue(s, Item.class);
 				i.setId(UUID.randomUUID());
@@ -70,7 +70,7 @@ public class CassandraUtilities {
 		}
 		
 		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Equipment.rbt");
-		for(String s : ru.readFileToList("Equipment", ".rbt")) {
+		for(String s : ru.readFileToList("source/equipment.rbt")) {
 			try {
 				Equipment eq = mapper.readValue(s, Equipment.class);
 				eq.setId(UUID.randomUUID());
@@ -82,7 +82,7 @@ public class CassandraUtilities {
 		}
 		
 		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Traps.rbt");
-		for(String s : ru.readFileToList("Traps", ".rbt")) {
+		for(String s : ru.readFileToList("source/traps.rbt")) {
 			try {
 				Trap t = mapper.readValue(s, Trap.class);
 				t.setId(UUID.randomUUID());
@@ -98,7 +98,7 @@ public class CassandraUtilities {
 	public void dropAllTables() {
 		//drops all of our database's tables, as listed in TableList.rbt
 		log.trace("CassandraUtilities.dropAllTables() calling RogueUtilities.readFileToList()");
-		ru.readFileToList("TableList", ".rbt")
+		ru.readFileToList("source/tableList.rbt")
 		  .forEach((s)->session.execute("DROP TABLE IF EXISTS " + s));
 		log.debug("Database tables dropped");
 	}
