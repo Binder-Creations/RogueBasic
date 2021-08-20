@@ -1,5 +1,5 @@
-function intializeAttributes(){
-	var attributes = document.getElementsByClassName("attribute-score");
+function intializeAttributes(classname){
+	var attributes = document.getElementsByClassName(classname);
 	for(var i = 0; i<attributes.length; i++){
 		attributes.item(i).value = 8;
 	}

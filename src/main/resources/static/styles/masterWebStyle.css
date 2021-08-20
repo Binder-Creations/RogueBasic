@@ -1,92 +1,107 @@
 @charset "UTF-8";
 		
       	*, *:before, *:after {
-          	margin: 0;
-          	padding: 0;
-          	box-sizing: border-box;
+          	margin:0;
+          	padding:0;
+          	box-sizing:border-box;
+          	color:#ffcc66;
+     	  	font-family:"Copperplate", fantasy;
+     	  	text-align:center;
       	}
-      	.body {
+      	body {
       		background-repeat:no-repeat;
-    		background-attachment: fixed;
-  			background-position: center;
-  			background-size: cover;
-      		text-align: center;
+    		background-attachment:fixed;
+  			background-position:center;
+  			background-size:cover;
+    	    background-image:url(../images/RogueBackground.webp);
       	}
-      	.body-uncentered{
-      	    background-repeat:no-repeat;
-    		background-attachment: fixed;
-  			background-position: center;
-  			background-size: cover;
-      	}
-      	.centering-box{
-	      	height:100%;
-	      	width:100%;
-	      	text-align:center;
-      	}
-      	.righting-box{
-	      	height:100%;
-	      	width:100%;
-	      	text-align:right;
-      	}
-      	.titlecontainer {
-      	   	position: absolute;
-      	   	display: block;
-      	   	top: 3em;
-      	   	width: 100%;
-      	   	z-index: 1;
-      	   	text-align: center;
-      	}
-	   .title {
-			width: 60%;
-      	}	
-       input[type=text], input[type=password]{
+      	input[type=text], input[type=password] {
        		padding:.15em;
        		padding-left:.4em;
        		margin:.5em;
        		border:.2em solid #ffcc66;
-       		background-color:  #555555;
-       		border-radius: .2em;
-       		color:#ffcc66;
-       }
-       
-       br {
-			display: block;
-			content: " ";
-			margin: 0;
-	   }
-       .formcontainer {
-      	   	display: block;
-      	   	position: absolute;
-      	   	top: 17em;
-      	   	z-index: 2;
-      	   	left: 50%;
-      	   	text-align: center;
+       		background-color: #555555;
+       		border-radius:.2em;
+       		text-align:left;
+        }
+        br {
+			display:block;
+			content:" ";
+	    }
+	    .inline-block {
+	    	display:inline-block;
+	    }
+	    .center-aligner {
+		    width:100%;
+		    height:100%;
+		    text-align:center;
+	    }
+	    .center-align {
+	    	text-align:center;
+	    }
+	    .left-align {
+	    	text-align:left;
+	    }
+	    .right-align {
+	    	text-align:right;
+	    }
+      	.right-aligner {
+      		width:100%;
+		    height:100%;
+      		text-align:right;
       	}
-      	.formwrapper{
-      		position: relative;
-      		left: -50%;
+      	.title {
+      		display:inline-block;
+      		width:40em;
+      		max-width:90%;
+      		z-index:1;
+      	}
+      	.spacer-600{
+      		display:block;
+      		height:6em;
+      	}
+      	.spacer-450{
+      		display:block;
+      		height:4.5em;
+      	}
+      	.spacer-300 {
+      		display:block;
+      		height:3em;
+      	}
+      	.spacer-150 {
+      		display:block;
+      		height:1.5em;
+      	}
+      	.spacer-100 {
+      		height:1em;
+      	}
+      	.spacer-50 {
+      		display:block;
+      		height:.5em;
+      	}
+      	.spacer-25 {
+      		display:block;
+      		height:.25em;
+      	}
+      	.spacer-cell {
+      		width:0.5em;
+      	}
+      	.formbox{
       		padding: 1em;
+      		display:inline-block;
     		background-color: rgb(34, 35, 36, 0.8);
     		border: .3em solid rgb(12, 13, 13, 0.8);
       	}
       	.formtextlarge {
-       		color:#ffcc66;
-       		font-family: "Copperplate", fantasy;
        		font-size: 165%;
    		}
 		.formtext {
-       		color:#ffcc66;
-       		font-family: "Copperplate", fantasy;
        		font-size: 140%;
    		}
    		.formtextsmall {
-       		color:#ffcc66;
-     	  	font-family: "Copperplate", fantasy;
     	   	font-size: 115%;
    		}
    		.formtexttiny {
-       		color:#ffcc66;
-     	  	font-family: "Copperplate", fantasy;
     	   	font-size: 90%;
    		}
    		.labeladjust{
@@ -95,11 +110,7 @@
    		}
    		.failtext {
        		color:#ff0000;
-       		font-family: "Copperplate", fantasy;
        		font-size: 115%;
-   		}
-		.formbox {
-	   		display:inline-block;
    		}
    	    .buttoncontainer {
       		display: block;
@@ -116,9 +127,7 @@
       		border: .15em solid #696969;
       		border-radius: .5em;
       		transition-duration: 0.4s;
-	       	font-family: "Copperplate", fantasy;
 	       	font-size: 130%;
-	       	color:#ffcc66;
 	       	position: absolute;
       		display:inline-block;
       		text-align: center;
@@ -141,9 +150,7 @@
       		border: .15em solid #696969;
       		border-radius: 2em;
       		transition-duration: 0.4s;
-	       	font-family: "Copperplate", fantasy;
 	       	font-size: 130%;
-	       	color:#ffcc66;
 	       	position: absolute;
       		display:inline-block;
       		text-align: center;
@@ -160,9 +167,7 @@
       		border: .3em solid #696969;
       		border-radius: 1em;
       		transition-duration: 0.4s;
-	       	font-family: "Copperplate", fantasy;
 	       	font-size: 155%;
-	       	color:#ffcc66;
 	       	position: absolute;
       		display:inline-block;
       		text-align: center;
@@ -179,9 +184,7 @@
       		border: .3em solid #696969;
       		border-radius: 0.25em;
       		transition-duration: 0.4s;
-	       	font-family: "Copperplate", fantasy;
 	       	font-size: 250%;
-	       	color:#ffcc66;
 	       	position: absolute;
       		display:inline-block;
       		text-align: center;
@@ -193,13 +196,7 @@
       		background-color: #696969;
       		border: .3em solid #555555;
       	}
-      	.buttonspacer {
-      		display:block;
-      		height: 0.5em;
-      	}
     	.buttontext {
-	       	color:#ffcc66;
-	       	font-family: "Copperplate", fantasy;
 	       	font-size: 155%;
 	       	position: absolute;
 			top: 50%;
@@ -209,16 +206,19 @@
    		}
    		.radio-parent {
 		  	list-style-type: none;
-		  	margin: 25px 0 0 0;
-		  	padding: 0;
+		}
+		.radio-parent:after{
+			content: "";
+			clear: both;
+			display: table;
 		}
 		
 		.radio-parent li {
 		  	float: left;
-		  	margin: 0 5px 0 0;
+		  	margin: 0 .2em 0 0;
 		  	width: 8.5em;
 		  	height: 3em;
-		  	position: relative;
+		  	position:relative;
 		}
 		
 		.radio-parent label,
@@ -288,7 +288,6 @@
 		.charactername{
 			box-shadow:0 0 2em .5em rbga(0,0,0,0.06);
 			border-radius: 1.5em;
-			color:#ffcc66;
        		font-family: "Copperplate", fantasy;
        		font-size: 165%;
 		}
@@ -300,18 +299,14 @@
       		background-color: #555555;
       		border: .12em solid #ffcc66;
       		border-radius: .3em;
-	       	color:#ffcc66;
 	       	font-size: 55%;
-	       	position: absolute;
-      		text-align: center;
       		position:relative;
       	}
-      	.attribute-score{
+      	.attribute{
       		width: 1.7em;
-      		padding: 0.05em;
-      		padding-left: 0.15em;
-      		margin: 0.05em;
-      		margin-right:0;
+      		padding: 0.05em 0.05em 0.05em 0.15em;
+      		margin: 0 0.05em 0 0;
+      		text-align: left;
       		border:.2em solid #ffcc66;
        		background-color:  #555555;
        		border-radius: .2em;
@@ -319,4 +314,39 @@
       	.class-icon{
       		width: 1.8em;
       		height: 1.8em;
+      	}
+      	.point-circle{
+      	    width: 2.2em;
+      		height: 2.2em;
+      		line-height:2.2em;
+      		background-color: #555555;
+      		border: .2em solid #696969;
+      		border-radius: 2em;
+	       	font-size: 180%;
+	       	position: absolute;
+      		display:inline-block;
+      		text-align: center;
+      		position:relative;
+      	}
+      	.v-h-centered{
+      		position:absolute;
+      		top: 50%;
+      		left:50%;
+      		transform: translate(-50%, -50%);
+      		-ms-transform: translateY(-50%) translateX(-50%);
+      	}
+      	.hilight-1 {
+	      	padding:.3em 2.5em .3em 2.5em;
+	      	background-color:rgb(85, 85, 85, 0.4);
+	      	border-radius: 3em;
+	      	display:inline-block;
+      	}
+      	.hilight-2 {
+	      	padding:.2em 1em .2em 1em;
+	      	background-color:rgb(55, 55, 55, 0.8);
+	      	border-radius: 2em;
+	      	display:inline-block;
+      	}
+      	.atr-offset {
+      		top:.11em
       	}

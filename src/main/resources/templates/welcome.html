@@ -5,20 +5,15 @@
 	<title>Rogue Basic Account Created!</title>
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
     <script type="text/javascript" th:src="@{/scripts/autoRedirect.js}"></script>
-    <style>
-    	.body{
-    	    background-image: url([[@{images/RogueBackground.webp}]]);
-    	}
-    </style>
 </head>
-<body class=body>
-   	<div class="titlecontainer">
-   		<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
-  	</div>
- 	<div class="formcontainer">
+<body>
+	<div class="spacer-300"></div>
+   	<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
+ 	<div class="spacer-600"></div>
+ 	<div class="formbox">
 		<p class="formtext" th:text="'Your Rogue Basic account has successfully been created, ' + ${name}"></p>  		
 		<p class="formtext">You will be redirected to the login screen in...</p> 
-		<p class ="failtext" id="counter">5</p>
+		<p class ="failtext" id="counter">3</p>
 	</div>
 </body>
 </html>

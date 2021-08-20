@@ -4,24 +4,17 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title th:text="'Prepare for Adventure, ' + ${name}" ></title>
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
-     <style th:inline="text">
-        .body{
-    	    background-image: url([[@{images/RogueBackground.webp}]]);
-    	}
-   	</style>
 </head>
-<body class=body>
-   	<div class="titlecontainer">
-   		<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
-  	</div>
-  	<div class=buttoncontainer>
-	 	<button class="buttonbig" th:if="${has_characters}" type="button" onclick="location.href='/character_select'">Character Select</button>
-	 	<div class="buttonspacer" th:if="${has_characters}"></div>
-	 	<button class="buttonbig" type="button" onclick="location.href='/new_character'">Create New Character</button>
-	 	<div class="buttonspacer"></div>
-	 	<button class="buttonbig" type="button">Spend Souls</button>
-	 	<div class="buttonspacer"></div>
-	 	<button class="buttonbig" type="button" onclick="location.href='/login?logout=true'">Logout</button>
-	 </div>
+<body>
+	<div class="spacer-300"></div>
+   	<img class="title" th:src='@{/images/RogueBasicTitle.png}'>
+  	<div class="spacer-450"></div>
+ 	<button class="buttonbig" th:if="${has_characters}" type="button" onclick="location.href='/character_select'">Character Select</button>
+ 	<div class="spacer-50" th:if="${has_characters}"></div>
+ 	<button class="buttonbig" type="button" onclick="location.href='/new_character'">Create New Character</button>
+ 	<div class="spacer-50"></div>
+ 	<button class="buttonbig" type="button">Spend Souls</button>
+ 	<div class="spacer-50"></div>
+ 	<button class="buttonbig" type="button" onclick="location.href='/login?logout=true'">Logout</button>
 </body>
 </html>

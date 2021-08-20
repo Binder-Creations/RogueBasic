@@ -3,45 +3,31 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>Welcome to RogueBasic</title>
-    <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet"/>
-    <style>
-    	.body{
-    	    background-image: url([[@{images/RogueBackground.webp}]]);
-    	}
-    </style>
+    <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
 </head>
-<body class=body>
-   	<div class="titlecontainer">
-   		<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
-  	</div>
- 	<div>
-  		<form class="formcontainer" action="#" th:action="@{/login}" th:object="${login}" method="post">
-		    <div class="formwrapper">
-			    <p th:if="${failure}" class=failtext>Login attempt failed.</p>
-	  			<p th:if="${failure}" class=failtext>Please make sure your Username and Password are correct.</p>
-			    <div class=formbox>
-				    <label class="formtext labeladjust" for="uname"><b>Username</b></label>
-				    <input type="text" placeholder="Enter Username" name="uname" th:field="*{name}" required>
-				</div>
-				<div>
-				    <label for="psw" class="formtext labeladjust"><b>Password</b></label>
-				    <input type="password" placeholder="Enter Password" name="psw" th:field="*{password}" required>
-				</div>
-			    <div>
-			    	<label class = formtextsmall>
-			     		<input type="checkbox" checked="checked" name="remember" th:field="*{remember}"> Remember me
-			    	</label>
-			    </div>
-			    <div style="height:.5em;"></div>
-			    <div>
-			    	<button class="buttonnormal" type="submit">Login</button>
-			    </div>
-			    <div style="height:.5em;"></div>
-			    <div>
-				    <span class="formtextsmall"><a th:href="@{/register}">New user? Create account!</a></span>
-				</div>
-			</div>
-		</form>
-	</div>
+<body>
+	<div class="spacer-300"></div>
+   	<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
+ 	<div class="spacer-600"></div>
+ 	<form action="#" th:action="@{/login}" th:object="${login}" method="post">
+	    <div class="formbox">
+		    <p th:if="${failure}" class=failtext>Login attempt failed.</p>
+  			<p th:if="${failure}" class=failtext>Please make sure <br></br> Username and Password are correct.</p>
+		    <div th:if="${failure}" class="spacer-50"></div>
+		    <label class="formtext labeladjust" for="uname"><b>Username</b></label>
+		    <input type="text" placeholder="Enter Username" name="uname" th:field="*{name}" required>
+		    <div class="spacer-25"></div>
+		    <label for="psw" class="formtext labeladjust"><b>Password</b></label>
+		    <input type="password" placeholder="Enter Password" name="psw" th:field="*{password}" required>
+	    	<div></div>
+	    	<label class = formtextsmall>
+	     		<input type="checkbox" checked="checked" name="remember" th:field="*{remember}"> Remember me
+	    	</label>
+		    <div class="spacer-100"></div>
+		    <button class="buttonnormal" type="submit">Login</button>
+		    <div class="spacer-100"></div>
+			<span class="formtextsmall"><a th:href="@{/register}">New user? Create account!</a></span>
+		</div>
+	</form>
 </body>
 </html>
