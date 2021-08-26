@@ -7,13 +7,13 @@
     <script type="text/javascript" th:src="@{/scripts/autoRedirect.js}"></script>
 </head>
 <body>
-	<div class="spacer-300"></div>
+	<div class="spacer-l"></div>
    	<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
- 	<div class="spacer-600"></div>
+ 	<div class="spacer-xxl"></div>
  	<div class="formbox">
-		<p class="formtext" th:text="'Your Rogue Basic account has successfully been created, ' + ${name}"></p>  		
-		<p class="formtext">You will be redirected to the login screen in...</p> 
-		<p class ="failtext" id="counter">3</p>
+		<p class="font-m" th:text="'Your Rogue Basic account has successfully been created, ' + ${name}"></p>  		
+		<p class="font-m">You will be redirected to the login screen in...</p> 
+		<p class ="font-red font-xs" id="counter">3</p>
 	</div>
 </body>
 </html>

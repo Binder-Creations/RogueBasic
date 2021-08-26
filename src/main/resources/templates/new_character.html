@@ -21,34 +21,34 @@
 		<button class="home-button" type="button" onclick="location.href='/home'"><p style="position:relative; bottom:.2em;">🏘</p></button>
 	</div>
 	<div class="center-aligner">    	
-	   	<div class="spacer-300"></div>
+	   	<div class="spacer-l"></div>
 	   	<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
-	 	<div class="spacer-450"></div>
+	 	<div class="spacer-xl"></div>
   		<form class="formbox" action="#" th:action="@{/new_character}" th:object="${new_character}" method="post">
-		    <p class="hilight-1 formtextlarge">Create Your Adventurer</p>
-		    <div class="spacer-100"></div>
+		    <p class="hilight-1 font-xl">Create Your Adventurer</p>
+		    <div class="spacer-s"></div>
 			<input type="text" class="charactername" placeholder="Enter Character Name" th:field="*{name}" required>
-			<div class="spacer-100"></div>
+			<div class="spacer-s"></div>
 			<ul class="radio-parent">
 				<li>
 					<input type="radio" id="warrior" name="class_selection" value="Warrior" th:field="*{characterClass}" required/>
-					<label class=formtextsmall for="warrior">⚔️ Warrior 🛡️</label>
+					<label class=font-xs for="warrior">⚔️ Warrior 🛡️</label>
 				</li>
 				<li>
 					<input type="radio" id="rogue" name="class_selection"  value="Rogue" th:field="*{characterClass}" required/>
-					<label class=formtextsmall for="rogue">🔪 Rogue 🏹</label>
+					<label class=font-xs for="rogue">🔪 Rogue 🏹</label>
 				</li>
 				<li>
 					<input type="radio" id="wizard" name="class_selection"  value="Wizard" th:field="*{characterClass}" required/>
-					<label class=formtextsmall for="wizard">🔮 Wizard ⚗️</label>
+					<label class=font-xs for="wizard">🔮 Wizard ⚗️</label>
 				</li>
 			</ul>
-			<div class="spacer-150"></div>
-			<p class="hilight-2 formtext">Attribute Points Remaining</p>
-			<div class="spacer-50"></div>
+			<div class="spacer-m"></div>
+			<p class="hilight-2 font-m">Attribute Points Remaining</p>
+			<div class="spacer-xs"></div>
 			<div class="point-circle"><p class="v-h-centered" id="counter">32</p></div>
-			<div class="spacer-50"></div>
-			<table class="formtext inline-block">
+			<div class="spacer-xs"></div>
+			<table class="font-m inline-block">
 				<tbody>
 					<tr style="text-align: right;">
 						<td class="tooltip atr-offset">Constitution
@@ -58,7 +58,7 @@
 	                        	<tbody>
 	                          		<tr>
 	                            		<td>
-	                             			 <input type="number" class="attribute formtexttiny" id="AttributeCon" name="AttributeCon" min="8" max="18" step="1" readonly="Readonly" onchange="getTotals()" th:field="*{constitution}"/>
+	                             			 <input type="number" class="attribute font-xxs" id="AttributeCon" name="AttributeCon" min="8" max="18" step="1" readonly="Readonly" onchange="getTotals()" th:field="*{constitution}"/>
 	                            		</td>
 	                            		<td>
 	                             			<button class="up" type="button" onclick="increment('AttributeCon')" value="AttributeCon">▲</button>
@@ -78,7 +78,7 @@
 	                        	<tbody>
 	                          		<tr>
 	                            		<td>
-	                             			 <input type="number" class="attribute formtexttiny" id="AttributeStr" name="AttributeStr" min="8" max="18" step="1" readonly="Readonly" onchange="getTotals()" th:field="*{strength}"/>
+	                             			 <input type="number" class="attribute font-xxs" id="AttributeStr" name="AttributeStr" min="8" max="18" step="1" readonly="Readonly" onchange="getTotals()" th:field="*{strength}"/>
 	                            		</td>
 	                            		<td>
 	                             			<button class="up" type="button" onclick="increment('AttributeStr')" value="AttributeStr">▲</button>
@@ -98,7 +98,7 @@
 	                        	<tbody>
 	                          		<tr>
 	                            		<td>
-	                             			 <input type="number" class="attribute formtexttiny" id="AttributeDex" name="AttributeDex" min="8" max="18" step="1" readonly="Readonly" onchange="getTotals()" th:field="*{dexterity}"/>
+	                             			 <input type="number" class="attribute font-xxs" id="AttributeDex" name="AttributeDex" min="8" max="18" step="1" readonly="Readonly" onchange="getTotals()" th:field="*{dexterity}"/>
 	                            		</td>
 	                            		<td>
 	                             			<button class="up" type="button" onclick="increment('AttributeDex')" value="AttributeDex">▲</button>
@@ -118,7 +118,7 @@
 	                        	<tbody>
 	                          		<tr>
 	                            		<td>
-	                             			 <input type="number" class="attribute formtexttiny" id="AttributeInt" name="AttributeInt" min="8" max="18" step="1" readonly="Readonly" onchange="getTotals()" th:field="*{intelligence}"/>
+	                             			 <input type="number" class="attribute font-xxs" id="AttributeInt" name="AttributeInt" min="8" max="18" step="1" readonly="Readonly" onchange="getTotals()" th:field="*{intelligence}"/>
 	                            		</td>
 	                            		<td>
 	                             			<button class="up" type="button" onclick="increment('AttributeInt')" value="AttributeInt">▲</button>
@@ -132,7 +132,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<div class="spacer-150"></div>
+			<div class="spacer-m"></div>
 		    <button class="buttonnormal" type="submit">Venture Forth</button>
 		</form>
 	</div>

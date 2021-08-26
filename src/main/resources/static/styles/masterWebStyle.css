@@ -56,30 +56,30 @@
       		max-width:90%;
       		z-index:1;
       	}
-      	.spacer-600{
+      	.spacer-xxl{
       		display:block;
       		height:6em;
       	}
-      	.spacer-450{
+      	.spacer-xl{
       		display:block;
       		height:4.5em;
       	}
-      	.spacer-300 {
+      	.spacer-l {
       		display:block;
       		height:3em;
       	}
-      	.spacer-150 {
+      	.spacer-m {
       		display:block;
       		height:1.5em;
       	}
-      	.spacer-100 {
+      	.spacer-s {
       		height:1em;
       	}
-      	.spacer-50 {
+      	.spacer-xs {
       		display:block;
       		height:.5em;
       	}
-      	.spacer-25 {
+      	.spacer-xxs {
       		display:block;
       		height:.25em;
       	}
@@ -92,25 +92,30 @@
     		background-color: rgb(34, 35, 36, 0.8);
     		border: .3em solid rgb(12, 13, 13, 0.8);
       	}
-      	.formtextlarge {
+      	.font-xl{
        		font-size: 165%;
    		}
-		.formtext {
+   		.font-l{
+   			font-size: 155%
+   		}
+		.font-m{
        		font-size: 140%;
    		}
-   		.formtextsmall {
+   		.font-s{
+   			font-size: 130%;
+   		}
+   		.font-xs{
     	   	font-size: 115%;
    		}
-   		.formtexttiny {
+   		.font-xxs{
     	   	font-size: 90%;
    		}
-   		.labeladjust{
+   		.label{
    			position:relative;
    			top:.12em;
    		}
-   		.failtext {
+   		.font-red {
        		color:#ff0000;
-       		font-size: 115%;
    		}
    	    .buttoncontainer {
       		display: block;

@@ -6,24 +6,24 @@
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
 </head>
 <body>
-	<div class="spacer-300"></div>
+	<div class="spacer-l"></div>
    	<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
- 	<div class="spacer-600"></div>
+ 	<div class="spacer-xxl"></div>
  	<form class="formbox" action="#" th:action="@{/register}" th:object="${register}" method="post">
-		    <p th:unless="${failure}" class=formtextsmall>Create a new account!</p>
-		    <div th:unless="${failure}" class="spacer-50"></div>
-		    <p th:if="${failure}" class=failtext>That Username is taken.</p>
-  			<p th:if="${failure}" class=failtext>Please try again.</p>
-		    <div th:if="${failure}" class="spacer-50"></div>
-		    <label class="formtext labeladjust" for="uname"><b>Username</b></label>
+		    <p th:unless="${failure}" class="font-xs">Create a new account!</p>
+		    <div th:unless="${failure}" class="spacer-xs"></div>
+		    <p th:if="${failure}" class="font-red font-xs">That Username is taken.</p>
+  			<p th:if="${failure}" class="font-red font-xs">Please try again.</p>
+		    <div th:if="${failure}" class="spacer-xs"></div>
+		    <label class="font-m label" for="uname"><b>Username</b></label>
 		    <input type="text" placeholder="Enter Username" name="uname" th:field="*{name}" required>
-			<div class="spacer-25"></div>
-		    <label class="formtext labeladjust" for="psw"><b>Password</b></label>
+			<div class="spacer-xxs"></div>
+		    <label class="font-m label" for="psw"><b>Password</b></label>
 		    <input type="password" placeholder="Enter Password" name="psw" th:field="*{password}" required>
-			<div class="spacer-100"></div>
+			<div class="spacer-s"></div>
 	    	<button class="buttonnormal" type="submit">Register</button>
-		    <div class="spacer-100"></div>
-		    <span class="formtextsmall"><a th:href="@{/login}">Already have an account? Login.</a></span>
+		    <div class="spacer-s"></div>
+		    <span class="font-xs"><a th:href="@{/login}">Already have an account? Login.</a></span>
 	</form>
 </body>
 </html>

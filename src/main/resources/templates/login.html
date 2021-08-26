@@ -6,27 +6,27 @@
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
 </head>
 <body>
-	<div class="spacer-300"></div>
+	<div class="spacer-l"></div>
    	<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
- 	<div class="spacer-600"></div>
+ 	<div class="spacer-xxl"></div>
  	<form action="#" th:action="@{/login}" th:object="${login}" method="post">
 	    <div class="formbox">
-		    <p th:if="${failure}" class=failtext>Login attempt failed.</p>
-  			<p th:if="${failure}" class=failtext>Please make sure <br></br> Username and Password are correct.</p>
-		    <div th:if="${failure}" class="spacer-50"></div>
-		    <label class="formtext labeladjust" for="uname"><b>Username</b></label>
+		    <p th:if="${failure}" class="font-red font-xs">Login attempt failed.</p>
+  			<p th:if="${failure}" class="font-red font-xs">Please make sure <br></br> Username and Password are correct.</p>
+		    <div th:if="${failure}" class="spacer-xs"></div>
+		    <label class="font-m label" for="uname"><b>Username</b></label>
 		    <input type="text" placeholder="Enter Username" name="uname" th:field="*{name}" required>
-		    <div class="spacer-25"></div>
-		    <label for="psw" class="formtext labeladjust"><b>Password</b></label>
+		    <div class="spacer-xxs"></div>
+		    <label for="psw" class="font-m label"><b>Password</b></label>
 		    <input type="password" placeholder="Enter Password" name="psw" th:field="*{password}" required>
 	    	<div></div>
-	    	<label class = formtextsmall>
+	    	<label class = "font-xs">
 	     		<input type="checkbox" checked="checked" name="remember" th:field="*{remember}"> Remember me
 	    	</label>
-		    <div class="spacer-100"></div>
+		    <div class="spacer-s"></div>
 		    <button class="buttonnormal" type="submit">Login</button>
-		    <div class="spacer-100"></div>
-			<span class="formtextsmall"><a th:href="@{/register}">New user? Create account!</a></span>
+		    <div class="spacer-s"></div>
+			<span class="font-xs"><a th:href="@{/register}">New user? Create account!</a></span>
 		</div>
 	</form>
 </body>

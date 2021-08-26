@@ -6,15 +6,15 @@
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
 </head>
 <body>
-	<div class="spacer-300"></div>
+	<div class="spacer-l"></div>
    	<img class="title" th:src='@{/images/RogueBasicTitle.png}'>
-  	<div class="spacer-450"></div>
+  	<div class="spacer-xl"></div>
  	<button class="buttonbig" th:if="${has_characters}" type="button" onclick="location.href='/character_select'">Character Select</button>
- 	<div class="spacer-50" th:if="${has_characters}"></div>
+ 	<div class="spacer-xs" th:if="${has_characters}"></div>
  	<button class="buttonbig" type="button" onclick="location.href='/new_character'">Create New Character</button>
- 	<div class="spacer-50"></div>
+ 	<div class="spacer-xs"></div>
  	<button class="buttonbig" type="button">Spend Souls</button>
- 	<div class="spacer-50"></div>
+ 	<div class="spacer-xs"></div>
  	<button class="buttonbig" type="button" onclick="location.href='/login?logout=true'">Logout</button>
 </body>
 </html>

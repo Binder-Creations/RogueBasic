@@ -10,27 +10,29 @@
 		<button class="home-button" type="button" onclick="location.href='/home'"><p style="position:relative; bottom:.2em;">🏘</p></button>
 	</div>
 	<div class="center-aligner">
-		<div class="spacer-300"></div>   	
+		<div class="spacer-l"></div>   	
 	   	<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
-	  	<div class="spacer-450"></div>
-		<div th:each="playercharacter: ${characters}">
-		 	<button class="button-character" type="button" onclick="location.href='/new_character'">
-		 		<table>
-		 			<tr>
-		 				<td>
-		 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Warrior'" th:src="@{/images/RogueWarriorIcon.png}"/>
-		 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Rogue'" th:src="@{/images/RogueRogueIcon.png}"/>
-		 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Wizard'" th:src="@{/images/RogueWizardIcon.png}"/>
-		 				</td>
-		 				<td class="spacer-cell"/>
-		 				<td th:text="'lv.'+${playercharacter.level}"/>
-		 				<td class="spacer-cell"/>
-		 				<td th:text="${playercharacter.name}"/>
-		 			</tr>
-		 		</table>
-		 	</button>
-		 	<div class="spacer-50"></div>
-		</div>	
+	  	<div class="spacer-xl"></div>
+	  	<form action="#" th:action="@{/character_select}" method="post">
+			<div th:each="playercharacter: ${characters}">
+			 	<button name="character_id" th:value=${playercharacter.id} class="button-character" type="submit">
+			 		<table>
+			 			<tr>
+			 				<td>
+			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Warrior'" th:src="@{/images/RogueWarriorIcon.png}"/>
+			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Rogue'" th:src="@{/images/RogueRogueIcon.png}"/>
+			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Wizard'" th:src="@{/images/RogueWizardIcon.png}"/>
+			 				</td>
+			 				<td class="spacer-cell"/>
+			 				<td th:text="'lv.'+${playercharacter.level}"/>
+			 				<td class="spacer-cell"/>
+			 				<td th:text="${playercharacter.name}"/>
+			 			</tr>
+			 		</table>
+			 	</button>
+			 	<div class="spacer-xs"></div>
+			</div>
+		</form>
 	 </div>
 </body>
 </html>
