@@ -1,7 +1,5 @@
 package com.RogueBasic;
 
-import java.util.Arrays;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.CommandLineRunner;
@@ -12,7 +10,9 @@ import org.springframework.context.annotation.Bean;
 import com.RogueBasic.beans.Player;
 import com.RogueBasic.data.PlayerDao;
 import com.RogueBasic.util.CassandraConnector;
+import com.RogueBasic.util.CassandraUtilities;
 import com.datastax.oss.driver.api.core.CqlSession;
+
 
 @SpringBootApplication
 public class Application {
@@ -29,8 +29,10 @@ public class Application {
 			try {
 				CqlSession service = CassandraConnector.connect();
 				PlayerDao pdao = new PlayerDao(service);
-				Player p = new Player("test", "test");
-				pdao.save(p);
+				Player p = new Player("Test5000", "supreme");
+				p.setMetacurrency(5000);
+				pdao.firstSave(p);
+				System.out.println(pdao.findById(p.getId()).toString());
 				System.out.println("Connected to Cassandra.");
 			}catch(Exception e) {
 				e.printStackTrace();

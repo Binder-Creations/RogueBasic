@@ -12,7 +12,7 @@ function increment(id){
 			setCounterValue(getCounterValue()-1);
 			return;
 		}
-		if(document.getElementById(id).value < 18){
+		if(document.getElementById(id).value < 17){
 			setCounterValue(getCounterValue()-2);
 			return;
 		}
@@ -23,7 +23,7 @@ function increment(id){
 function decrement(id){
 	if(document.getElementById(id).value > 8)  {
 		document.getElementById(id).value = parseInt(document.getElementById(id).value) - 1;
-		if(document.getElementById(id).value == 17){
+		if(document.getElementById(id).value > 15){
 			setCounterValue(getCounterValue()+3);
 			return;
 		}

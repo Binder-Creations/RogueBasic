@@ -18,14 +18,14 @@
 </head>
 <body onload="intializeAttributes('attribute')">
 	<div class="right-aligner">
-		<button class="home-button" type="button" onclick="location.href='/home'"><p style="position:relative; bottom:.2em;">🏘</p></button>
+		<button class="btn-home font-s" type="button" onclick="location.href='/home'"><p>🏘</p></button>
 	</div>
 	<div class="center-aligner">    	
 	   	<div class="spacer-l"></div>
 	   	<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
 	 	<div class="spacer-xl"></div>
-  		<form class="formbox" action="#" th:action="@{/new_character}" th:object="${new_character}" method="post">
-		    <p class="hilight-1 font-xl">Create Your Adventurer</p>
+  		<form class="formbox" action="#" th:action="@{/new_character}" th:object="${newCharacter}" method="post">
+		    <p class="hilight-l font-xl">Create Your Adventurer</p>
 		    <div class="spacer-s"></div>
 			<input type="text" class="charactername" placeholder="Enter Character Name" th:field="*{name}" required>
 			<div class="spacer-s"></div>
@@ -44,15 +44,15 @@
 				</li>
 			</ul>
 			<div class="spacer-m"></div>
-			<p class="hilight-2 font-m">Attribute Points Remaining</p>
+			<p class="hilight-m font-m">Attribute Points Remaining</p>
 			<div class="spacer-xs"></div>
-			<div class="point-circle"><p class="v-h-centered" id="counter">32</p></div>
+			<div class="circle-atr font-xxl"><p class="v-h-centered" id="counter">30</p></div>
 			<div class="spacer-xs"></div>
 			<table class="font-m inline-block">
 				<tbody>
 					<tr style="text-align: right;">
 						<td class="tooltip atr-offset">Constitution
-						<span class="tooltiptext">++Health<br></br>++Health Regen</span></td>
+						<span class="tooltiptext font-xxs">++Health<br></br>++Health Regen</span></td>
 						<td style="text-align: center;">
 	                      	<table>
 	                        	<tbody>
@@ -61,9 +61,12 @@
 	                             			 <input type="number" class="attribute font-xxs" id="AttributeCon" name="AttributeCon" min="8" max="18" step="1" readonly="Readonly" onchange="getTotals()" th:field="*{constitution}"/>
 	                            		</td>
 	                            		<td>
-	                             			<button class="up" type="button" onclick="increment('AttributeCon')" value="AttributeCon">▲</button>
+	                             			<button class="up font-xxxs" type="button" onclick="increment('AttributeCon')" value="AttributeCon">▲</button>
 	                              			<div></div>
-	                              			<button class="down" type="button" onclick="decrement('AttributeCon')" value="AttributeCon">▼</button>
+	                              			<button class="down font-xxxs" type="button" onclick="decrement('AttributeCon')" value="AttributeCon">▼</button>
+	                            		</td>
+	                            		<td>
+	                            			<button th:if="${newCharacter.constitutionMetabonus > 0}" class="circle-bonus font-xxs" type="button" th:text="'+'+${newCharacter.constitutionMetabonus}+' (👻)'"></button>
 	                            		</td>
 	                          		</tr>
 	                        	</tbody>
@@ -72,7 +75,7 @@
 					</tr>
 					<tr style="text-align: right;">
 						<td class="tooltip atr-offset">Strength
-						<span class="tooltiptext">+Power<br></br>++Armor<br></br>++Carry Weight</span></td>
+						<span class="tooltiptext font-xxs">+Power<br></br>++Armor<br></br>++Carry Weight</span></td>
 						<td style="text-align: center;">
 	                      	<table>
 	                        	<tbody>
@@ -81,9 +84,12 @@
 	                             			 <input type="number" class="attribute font-xxs" id="AttributeStr" name="AttributeStr" min="8" max="18" step="1" readonly="Readonly" onchange="getTotals()" th:field="*{strength}"/>
 	                            		</td>
 	                            		<td>
-	                             			<button class="up" type="button" onclick="increment('AttributeStr')" value="AttributeStr">▲</button>
+	                             			<button class="up font-xxxs" type="button" onclick="increment('AttributeStr')" value="AttributeStr">▲</button>
 	                              			<div></div>
-	                              			<button class="down" type="button" onclick="decrement('AttributeStr')" value="AttributeStr">▼</button>
+	                              			<button class="down font-xxxs" type="button" onclick="decrement('AttributeStr')" value="AttributeStr">▼</button>
+	                            		</td>
+	                            		<td>
+	                            			<button th:if="${newCharacter.strengthMetabonus > 0}" class="circle-bonus font-xxs" type="button" th:text="'+'+${newCharacter.strengthMetabonus}+' (👻)'"></button>
 	                            		</td>
 	                          		</tr>
 	                        	</tbody>
@@ -92,7 +98,7 @@
 					</tr>
 					<tr style="text-align: right;">
 						<td class="tooltip atr-offset">Dexterity
-						<span class="tooltiptext">+Power<br></br>++Dodge<br></br>++Crit</span></td>
+						<span class="tooltiptext font-xxs">+Power<br></br>++Dodge<br></br>++Crit</span></td>
 						<td style="text-align: center;">
 	                      	<table>
 	                        	<tbody>
@@ -101,9 +107,12 @@
 	                             			 <input type="number" class="attribute font-xxs" id="AttributeDex" name="AttributeDex" min="8" max="18" step="1" readonly="Readonly" onchange="getTotals()" th:field="*{dexterity}"/>
 	                            		</td>
 	                            		<td>
-	                             			<button class="up" type="button" onclick="increment('AttributeDex')" value="AttributeDex">▲</button>
+	                             			<button class="up font-xxxs" type="button" onclick="increment('AttributeDex')" value="AttributeDex">▲</button>
 	                              			<div></div>
-	                              			<button class="down" type="button" onclick="decrement('AttributeDex')" value="AttributeDex">▼</button>
+	                              			<button class="down font-xxxs" type="button" onclick="decrement('AttributeDex')" value="AttributeDex">▼</button>
+	                            		</td>
+	                            		<td>
+	                            			<button th:if="${newCharacter.dexterityMetabonus > 0}" class="circle-bonus font-xxs" type="button" th:text="'+'+${newCharacter.dexterityMetabonus}+' (👻)'"></button>
 	                            		</td>
 	                          		</tr>
 	                        	</tbody>
@@ -112,7 +121,7 @@
 					</tr>
 					<tr style="text-align: right;">
 						<td class="tooltip atr-offset">Intelligence
-						<span class="tooltiptext">+Power<br></br>++Energy<br></br>++Energy Regen</span></td>
+						<span class="tooltiptext font-xxs">+Power<br></br>++Energy<br></br>++Energy Regen</span></td>
 						<td style="text-align: center;">
 	                      	<table>
 	                        	<tbody>
@@ -121,9 +130,12 @@
 	                             			 <input type="number" class="attribute font-xxs" id="AttributeInt" name="AttributeInt" min="8" max="18" step="1" readonly="Readonly" onchange="getTotals()" th:field="*{intelligence}"/>
 	                            		</td>
 	                            		<td>
-	                             			<button class="up" type="button" onclick="increment('AttributeInt')" value="AttributeInt">▲</button>
+	                             			<button class="up font-xxxs" type="button" onclick="increment('AttributeInt')" value="AttributeInt">▲</button>
 	                              			<div></div>
-	                              			<button class="down" type="button" onclick="decrement('AttributeInt')" value="AttributeInt">▼</button>
+	                              			<button class="down font-xxxs" type="button" onclick="decrement('AttributeInt')" value="AttributeInt">▼</button>
+	                            		</td>
+	                            		<td>
+	                            			<button th:if="${newCharacter.intelligenceMetabonus > 0}" class="circle-bonus font-xxs" type="button" th:text="'+'+${newCharacter.intelligenceMetabonus}+' (👻)'"></button>
 	                            		</td>
 	                          		</tr>
 	                        	</tbody>
@@ -132,8 +144,10 @@
 					</tr>
 				</tbody>
 			</table>
+			<div class="spacer-xxs"></div>
+			<button th:if="${newCharacter.currencyMetabonus > 0}" class="circle-bonus font-s" type="button" th:text="'+'+${newCharacter.currencyMetabonus}+'💰 (👻)'"></button>
 			<div class="spacer-m"></div>
-		    <button class="buttonnormal" type="submit">Venture Forth</button>
+		    <button class="btn-m font-s" type="submit">Venture Forth</button>
 		</form>
 	</div>
 </body>

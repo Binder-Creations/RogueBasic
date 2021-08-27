@@ -2,19 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title th:text="'Prepare for Adventure, ' + ${name}" ></title>
+	<title>Prepare for Adventure!</title>
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
 </head>
 <body>
 	<div class="spacer-l"></div>
    	<img class="title" th:src='@{/images/RogueBasicTitle.png}'>
   	<div class="spacer-xl"></div>
- 	<button class="buttonbig" th:if="${has_characters}" type="button" onclick="location.href='/character_select'">Character Select</button>
+ 	<button class="btn-l font-l" th:if="${has_characters}" type="button" onclick="location.href='/character_select'">Character Select</button>
  	<div class="spacer-xs" th:if="${has_characters}"></div>
- 	<button class="buttonbig" type="button" onclick="location.href='/new_character'">Create New Character</button>
+ 	<button class="btn-l font-l" type="button" onclick="location.href='/new_character'">Create New Character</button>
  	<div class="spacer-xs"></div>
- 	<button class="buttonbig" type="button">Spend Souls</button>
+ 	<button class="btn-l font-l" type="button" onclick="location.href='/spend_souls'">Spend Souls</button>
  	<div class="spacer-xs"></div>
- 	<button class="buttonbig" type="button" onclick="location.href='/login?logout=true'">Logout</button>
+ 	<button class="btn-l font-l" type="button" onclick="location.href='/login?logout=true'">Logout</button>
+	<div class="spacer-s"></div>
 </body>
 </html>

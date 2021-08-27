@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>Infuse Future Adventurers with Soul-Power!</title>
+    <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript" th:src="@{/scripts/postReload.js}"></script>
+</head>
+<body>
+	<div class="right-aligner">
+		<button class="btn-home font-s"  onclick="location.href='/home'"><p>🏘</p></button>
+	</div>
+	<div class="center-aligner"> 
+		<div class="spacer-l"></div>
+	   	<img class="title" th:src='@{/images/RogueBasicTitle.png}'>
+	  	<div class="spacer-xl"></div>
+	  	<div class="circle-souls font-xxl" th:text="${spendSouls.metacurrency}+'👻'"></div>
+		<div class="spacer-s"></div>
+		<div> 	
+		 	<button class="active btn-l font-l" id="Constitution" th:if="${spendSouls.constitutionMetabonus*spendSouls.constitutionMetabonus*10 + 10 < spendSouls.metacurrency}" th:value="${spendSouls.constitutionMetabonus*spendSouls.constitutionMetabonus*10 + 10}">
+		 		<div class="flex">
+			 		<p class="left" th:text="${spendSouls.constitutionMetabonus*spendSouls.constitutionMetabonus*10 + 10}+'👻:'"></p>
+			 		<p class="center">+1 Starting Constitution</p>
+		 		</div>
+		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.constitutionMetabonus}"></p>
+		 	</button>
+		 	<button class="btn-l-faded font-l" th:unless="${spendSouls.constitutionMetabonus*spendSouls.constitutionMetabonus*10 + 10 < spendSouls.metacurrency}" >
+		 		<div class="flex">
+		 			<p class="left font-red" th:text="${spendSouls.constitutionMetabonus*spendSouls.constitutionMetabonus*10 + 10}+'👻:'"></p>
+		 			<p class="center">+1 Starting Constitution</p>
+		 		</div>
+		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.constitutionMetabonus}"></p>
+		 	</button>
+		 	<div class="spacer-xs"></div>
+		 	<button class="active btn-l font-l" id="Strength" th:if="${spendSouls.strengthMetabonus*spendSouls.strengthMetabonus*10 + 10 < spendSouls.metacurrency}" th:onclick="" th:value="${spendSouls.strengthMetabonus*spendSouls.strengthMetabonus*10 + 10}">
+		 		<div class="flex">
+		 			<p class="left" th:text="${spendSouls.strengthMetabonus*spendSouls.strengthMetabonus*10 + 10}+'👻:'"></p>
+		 			<p class="center">+1 Starting Strength
+		 		</div>
+		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.strengthMetabonus}"></p>
+		 	</button>
+		 	<button class="btn-l-faded font-l" th:unless="${spendSouls.strengthMetabonus*spendSouls.strengthMetabonus*10 + 10 < spendSouls.metacurrency}" >
+		 		<div class="flex">
+		 			<p class="left font-red" th:text="${spendSouls.strengthMetabonus*spendSouls.strengthMetabonus*10 + 10}+'👻:'"></p>
+		 			<p class="center">+1 Starting Strength
+		 		</div>
+		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.strengthMetabonus}"></p>
+		 	</button>
+		 	<div class="spacer-xs"></div>
+		 	<button class="active btn-l font-l" id="Dexterity" th:if="${spendSouls.dexterityMetabonus*spendSouls.dexterityMetabonus*10 + 10 < spendSouls.metacurrency}" th:onclick="" th:value="${spendSouls.dexterityMetabonus*spendSouls.dexterityMetabonus*10 + 10}">
+		 		<div class="flex">
+		 			<p class="left" th:text="${spendSouls.dexterityMetabonus*spendSouls.dexterityMetabonus*10 + 10}+'👻:'"></p>
+		 			<p class="center">+1 Starting Dexterity</p>
+		 		</div>
+		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.dexterityMetabonus}"></p>
+		 	</button>
+		 	<button class="btn-l-faded font-l" th:unless="${spendSouls.dexterityMetabonus*spendSouls.dexterityMetabonus*10 + 10 < spendSouls.metacurrency}" >
+		 		<div class="flex">
+		 			<p class="left font-red" th:text="${spendSouls.dexterityMetabonus*spendSouls.dexterityMetabonus*10 + 10}+'👻:'"></p>
+		 			<p class="center">+1 Starting Dexterity</p>
+		 		</div>
+		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.dexterityMetabonus}"></p>
+		 	</button>
+		 	<div class="spacer-xs"></div>
+		 	<button class="active btn-l font-l" id="Intelligence" th:if="${spendSouls.intelligenceMetabonus*spendSouls.intelligenceMetabonus*10 + 10 < spendSouls.metacurrency}" th:onclick="" th:value="${spendSouls.intelligenceMetabonus*spendSouls.intelligenceMetabonus*10 + 10}">
+		 		<div class="flex">
+		 			<p class="left" th:text="${spendSouls.intelligenceMetabonus*spendSouls.intelligenceMetabonus*10 + 10}+'👻:'"></p>
+		 			<p class="center">+1 Starting Intelligence</p>
+		 		</div>
+		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.intelligenceMetabonus}"></p>
+		 	</button>
+		 	<button class="btn-l-faded font-l" th:unless="${spendSouls.intelligenceMetabonus*spendSouls.intelligenceMetabonus*10 + 10 < spendSouls.metacurrency}" >
+		 		<div class="flex">
+		 			<p class="left font-red" th:text="${spendSouls.intelligenceMetabonus*spendSouls.intelligenceMetabonus*10 + 10}+'👻:'"></p>
+		 			<p class="center">+1 Starting Intelligence</p>
+		 		</div>
+		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.intelligenceMetabonus}"></p>
+		 	</button>
+			<div class="spacer-xs"></div>
+			<button class="active btn-l font-l" id="Currency" th:if="${spendSouls.currencyMetabonus*spendSouls.currencyMetabonus*5/625 + 5 < spendSouls.metacurrency}" th:onclick="" th:value="${spendSouls.currencyMetabonus*spendSouls.currencyMetabonus*5/625 + 5}">
+				<div class="flex">
+					<p class="left" th:text="${spendSouls.currencyMetabonus*spendSouls.currencyMetabonus*5/625 + 5}+'👻:'"></p>
+					<p class="center">+25 Starting Gold</p>
+				</div>
+				<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.currencyMetabonus}"></p>
+			</button>
+		 	<button class="btn-l-faded font-l" th:unless="${spendSouls.currencyMetabonus*spendSouls.currencyMetabonus*5/625 + 5 < spendSouls.metacurrency}" >
+		 		<div class="flex">
+		 			<p class="left font-red" th:text="${spendSouls.currencyMetabonus*spendSouls.currencyMetabonus*5/625 + 5}+'👻:'"></p>
+		 			<p class="center">+25 Starting Gold</p>
+		 		</div>
+		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.currencyMetabonus}"></p>
+		 	</button>
+			<div class="spacer-s"></div>
+		</div>
+	</div>
+</body>
+</html>

@@ -40,7 +40,7 @@ public class DungeonController {
 			CqlSession session = CassandraConnector.getSession();
 			CassandraUtilities cu = new CassandraUtilities(session);
 			DungeonServices ds = new DungeonServices(session);
-			PlayerCharacter pc = new PlayerCharacter(UUID.randomUUID(), "taco", "Warrior", 1, 1, 1, 1);
+			PlayerCharacter pc = new PlayerCharacter("taco", "Warrior", 1, 1, 1, 1, 0);
 			PlayerCharacterDao pcd = new PlayerCharacterDao(session);
 			DungeonDao dd = new DungeonDao(session);
 			FloorDao fd = new FloorDao(session);

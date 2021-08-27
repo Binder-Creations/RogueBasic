@@ -13,7 +13,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 public class PlayerCharacter {
 	
 	@PrimaryKey private UUID id;
-	private UUID playerId;
+	private String location;
 	private String name;
 	private String characterClass;
 	private int experience;
@@ -54,10 +54,10 @@ public class PlayerCharacter {
 	
 	public PlayerCharacter() {}
 	
-	public PlayerCharacter(UUID playerId, String name, String characterClass, int constitution, int strength, int dexterity, int intelligence) {
+	public PlayerCharacter(String name, String characterClass, int constitution, int strength, int dexterity, int intelligence, int currencyMetabonus) {
 		super();
 		this.id = UUID.randomUUID();
-		this.playerId = playerId;
+		this.location = "Town";
 		this.name = name;
 		this.characterClass = characterClass;
 		this.constitution = constitution;
@@ -68,7 +68,7 @@ public class PlayerCharacter {
 		this.level = 1;
 		switch(characterClass) {
 			case "Rogue":
-				this.currency = 150;
+				this.currency = 150 + currencyMetabonus;
 				this.powerBonus = 15;
 				this.healthBonus = 20;
 				this.healthRegenBonus = 2;
@@ -81,7 +81,7 @@ public class PlayerCharacter {
 				this.armorBonus = 5;
 				break;
 			case "Warrior":
-				this.currency = 50;
+				this.currency = 50 + currencyMetabonus;
 				this.powerBonus = 10;
 				this.healthBonus = 30;
 				this.healthRegenBonus = 4;
@@ -94,7 +94,7 @@ public class PlayerCharacter {
 				this.armorBonus = 10;
 				break;
 			case "Wizard":
-				this.currency = 100;
+				this.currency = 100 + currencyMetabonus;
 				this.powerBonus = 20;
 				this.healthBonus = 10;
 				this.healthRegenBonus = 1;
@@ -113,13 +113,13 @@ public class PlayerCharacter {
 	public UUID getId() {
 		return id;
 	}
-	
-	public UUID getPlayerId() {
-		return playerId;
+
+	public String getLocation() {
+		return location;
 	}
 
-	public void setPlayerId(UUID playerId) {
-		this.playerId = playerId;
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public String getName() {
@@ -416,8 +416,8 @@ public class PlayerCharacter {
 		return Objects.hash(abilityIds, armorBonus, carryCapacityBonus, characterClass, constitution, constitutionBonus,
 				critRatingBonus, currency, currentCarryCapacity, currentEncumberance, currentEnergy, currentHealth,
 				dexterity, dexterityBonus, dodgeRatingBonus, encumberanceBonus, energyBonus, energyRegenBonus,
-				experience, healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, inventory, level, name,
-				playerId, powerBonus, strength, strengthBonus);
+				experience, healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, inventory, level,
+				location, name, powerBonus, strength, strengthBonus);
 	}
 	
 	@Override
@@ -442,13 +442,13 @@ public class PlayerCharacter {
 				&& healthBonus == other.healthBonus && healthRegenBonus == other.healthRegenBonus
 				&& Objects.equals(id, other.id) && intelligence == other.intelligence
 				&& intelligenceBonus == other.intelligenceBonus && Objects.equals(inventory, other.inventory)
-				&& level == other.level && Objects.equals(name, other.name) && Objects.equals(playerId, other.playerId)
+				&& level == other.level && Objects.equals(location, other.location) && Objects.equals(name, other.name)
 				&& powerBonus == other.powerBonus && strength == other.strength && strengthBonus == other.strengthBonus;
 	}
 	
 	@Override
 	public String toString() {
-		return "PlayerCharacter [id=" + id + ", playerId=" + playerId + ", name=" + name + ", characterClass="
+		return "PlayerCharacter [id=" + id + ", location=" + location + ", name=" + name + ", characterClass="
 				+ characterClass + ", experience=" + experience + ", level=" + level + ", currency=" + currency
 				+ ", abilityIds=" + abilityIds + ", inventory=" + inventory + ", constitution=" + constitution
 				+ ", strength=" + strength + ", dexterity=" + dexterity + ", intelligence=" + intelligence

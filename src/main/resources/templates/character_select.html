@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div class="right-aligner">
-		<button class="home-button" type="button" onclick="location.href='/home'"><p style="position:relative; bottom:.2em;">🏘</p></button>
+		<button class="btn-home font-s" type="button" onclick="location.href='/home'"><p style="position:relative; bottom:.2em;">🏘</p></button>
 	</div>
 	<div class="center-aligner">
 		<div class="spacer-l"></div>   	
@@ -15,7 +15,7 @@
 	  	<div class="spacer-xl"></div>
 	  	<form action="#" th:action="@{/character_select}" method="post">
 			<div th:each="playercharacter: ${characters}">
-			 	<button name="character_id" th:value=${playercharacter.id} class="button-character" type="submit">
+			 	<button name="character_id" th:value=${playercharacter.id} class="btn-xl font-xxxl" type="submit">
 			 		<table>
 			 			<tr>
 			 				<td>
