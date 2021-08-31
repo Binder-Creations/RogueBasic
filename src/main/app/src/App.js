@@ -9,14 +9,19 @@ class App extends React.Component {
     if(this.state.character_id){
       fetch('/pc/'+ this.state.character_id)
         .then(response => response.json())
+        // .then(data => {this.setState({pc: data}); let dataObj = JSON.parse(data); return dataObj;})
+        // .then(dataObj => dataObj.location == "Town"
+        //   ? this.setState({room:null}) 
+        //   : fetch('/room/'+ dataObj.location)
+        //   .then(response => response.json())
+        //   .then(data => this.setState({room: data})))
         .then(data => this.setState({pc: data}))
-      if(this.state.pc.location != "Town"){
-        fetch('/room/'+this.state.pc.location)
-          .then(response => response.json())
-          .then(data => this.setState({room: data}))
-      };
+        .then(this.setState(state => state.pc.location == "Town"
+          ? {room: null}
+          : {room: fetch('/room/'+ state.pc.location)
+            .then(response => response.json())}))
     };
-  }
+  };
 
   render(){
     return this.state.character_id 
