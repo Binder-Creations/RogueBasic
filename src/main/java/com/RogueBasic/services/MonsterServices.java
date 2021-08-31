@@ -117,13 +117,11 @@ public class MonsterServices {
 	private List<Monster> genEncounter(int monsterValue, List<Monster> minibossPool, List<Monster> bossPool,
 			List<Monster> monsterPool) {
 		List<Monster> encounter = new ArrayList<>();
-		System.out.println(monsterValue);
 		int smallestLevel = monsterValue;
 		for(Monster m: monsterPool) {
 			if(m.getLevel()<smallestLevel)
 				smallestLevel = m.getLevel();
 		}
-		System.out.println(smallestLevel);
 		if (minibossPool != null) {
 			Monster miniboss = minibossPool.get(ThreadLocalRandom.current().nextInt(minibossPool.size()));
 			encounter.add(miniboss);

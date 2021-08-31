@@ -16,8 +16,9 @@ public class test {
 	public static void main(String[] args) {
 		CqlSession session = CassandraConnector.connect();
 		CassandraUtilities cu = new CassandraUtilities(session);
-		cu.dropAllTables();
-		cu.initialize();
+//		cu.dropAllTables();
+//		cu.initialize();
+		cu.populate();
 //		PlayerDao pdao = new PlayerDao(session);
 //		Player p = new Player("taco", "taco");
 //		pdao.save(p);

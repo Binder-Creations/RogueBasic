@@ -28,11 +28,11 @@ public class Application {
 			System.out.println("Application started.");
 			try {
 				CqlSession service = CassandraConnector.connect();
-				PlayerDao pdao = new PlayerDao(service);
-				Player p = new Player("Test5000", "supreme");
-				p.setMetacurrency(5000);
-				pdao.firstSave(p);
-				System.out.println(pdao.findById(p.getId()).toString());
+//				PlayerDao pdao = new PlayerDao(service);
+//				Player p = new Player("Test5000", "supreme");
+//				p.setMetacurrency(5000);
+//				pdao.firstSave(p);
+//				System.out.println(pdao.findById(p.getId()).toString());
 				System.out.println("Connected to Cassandra.");
 			}catch(Exception e) {
 				e.printStackTrace();

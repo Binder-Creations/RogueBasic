@@ -40,13 +40,13 @@ public class DungeonServices {
 		this.ru = new RogueUtilities();
 	}
 	
-	public UUID generate(UUID pcId) {
+	//creates an unsaved, framed dungeon (with floors/rooms yet to be generated)
+	public Dungeon generateShell(UUID pcId) {
 		if(pcId == null) {
 			log.debug("passed null pcId; returning null");
 			return null;
 		}
 		
-		FloorServices fs = new FloorServices(session);
 		PlayerCharacterDao pcDao = new PlayerCharacterDao(session);
 		PlayerCharacter pc = pcDao.findById(pcId);
 		Dungeon dungeon = new Dungeon();
@@ -69,12 +69,20 @@ public class DungeonServices {
 			return null;
 		}
 		
+		log.trace("DungeonServices.generate() returning UUID" );
+		return dungeon;
+	}
+	
+	//completes a framed dungeon by adding floors and rooms, and saves it to the database
+	public Dungeon addFloors(Dungeon dungeon) {
+		FloorServices fs = new FloorServices(session);
+		
 		//Calls FloorServices->RoomServices->Monster/Item/Equipment/TrapServices
 		//to generate the contents of the dungeon, before saving it to our database
 		//and returning the id
-		log.trace("DungeonServices.generate() calling FloorServices.generate()");
+		log.trace("DungeonServices.addFloors() calling FloorServices.generate()");
 		dungeon.setFloorIds(fs.generate(dungeon));
-		log.trace("DungeonServices.generate() calling DungeonDao.save()");
+		log.trace("DungeonServices.addFloors() calling DungeonDao.save()");
 		dao.save(dungeon);
 		
 		//log our dungeon and all of its enumerated objects
@@ -114,9 +122,8 @@ public class DungeonServices {
 				}
 			}
 		}
-		
-		log.trace("DungeonServices.generate() returning UUID" );
-		return dungeon.getId();
+		log.trace("DungeonServices.addFloors() returning UUID" );
+		return dungeon;
 	}
 	
 	public int genChallengeRating(int level) {

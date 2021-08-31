@@ -38,19 +38,16 @@ public class PlayerCharacter {
 	private int powerBonus;
 	private int healthBonus;
 	private int healthRegenBonus;
-	private int encumberanceBonus;
-	private int carryCapacityBonus;
+	private int armorPenBonus;
+	private int armorBonus;
 	private int dodgeRatingBonus;
 	private int critRatingBonus;
 	private int energyBonus;
 	private int energyRegenBonus;
-	private int armorBonus;
 	
 	//temporary stats
 	private int currentHealth;
 	private int currentEnergy;
-	private int currentEncumberance;
-	private int currentCarryCapacity;
 	
 	public PlayerCharacter() {}
 	
@@ -72,39 +69,36 @@ public class PlayerCharacter {
 				this.powerBonus = 15;
 				this.healthBonus = 20;
 				this.healthRegenBonus = 2;
-				this.encumberanceBonus = 12;
-				this.carryCapacityBonus = 30;
+				this.armorPenBonus = 5;
+				this.armorBonus = 5;
 				this.dodgeRatingBonus = 15;
 				this.critRatingBonus = 20;
 				this.energyBonus = 30;
-				this.energyRegenBonus = 4;
-				this.armorBonus = 5;
+				this.energyRegenBonus = 4;	
 				break;
 			case "Warrior":
 				this.currency = 50 + currencyMetabonus;
 				this.powerBonus = 10;
 				this.healthBonus = 30;
 				this.healthRegenBonus = 4;
-				this.encumberanceBonus = 18;
-				this.carryCapacityBonus = 50;
+				this.armorPenBonus = 10;
+				this.armorBonus = 10;
 				this.dodgeRatingBonus = 5;
 				this.critRatingBonus = 10;
 				this.energyBonus = 20;
 				this.energyRegenBonus = 3;
-				this.armorBonus = 10;
 				break;
 			case "Wizard":
 				this.currency = 100 + currencyMetabonus;
 				this.powerBonus = 20;
 				this.healthBonus = 10;
 				this.healthRegenBonus = 1;
-				this.encumberanceBonus = 8;
-				this.carryCapacityBonus = 20;
+				this.armorPenBonus = 0;
+				this.armorBonus = 0;
 				this.dodgeRatingBonus = 10;
 				this.critRatingBonus = 5;
 				this.energyBonus = 40;
-				this.energyRegenBonus = 5;
-				this.armorBonus = 0;
+				this.energyRegenBonus = 5;		
 				break;
 		}
 		
@@ -266,22 +260,22 @@ public class PlayerCharacter {
 		this.healthRegenBonus = healthRegenBonus;
 	}
 	
-	public int getEncumberanceBonus() {
-		return encumberanceBonus;
+	public int getArmorPenBonus() {
+		return armorPenBonus;
 	}
-	
-	public void setEncumberanceBonus(int encumberanceBonus) {
-		this.encumberanceBonus = encumberanceBonus;
+
+	public void setArmorPenBonus(int armorPenBonus) {
+		this.armorPenBonus = armorPenBonus;
 	}
-	
-	public int getCarryCapacityBonus() {
-		return carryCapacityBonus;
+
+	public int getArmorBonus() {
+		return armorBonus;
 	}
-	
-	public void setCarryCapacityBonus(int carryCapacityBonus) {
-		this.carryCapacityBonus = carryCapacityBonus;
+
+	public void setArmorBonus(int armorBonus) {
+		this.armorBonus = armorBonus;
 	}
-	
+
 	public int getDodgeRatingBonus() {
 		return dodgeRatingBonus;
 	}
@@ -313,14 +307,6 @@ public class PlayerCharacter {
 		this.energyRegenBonus = energyRegenBonus;
 	}
 	
-	public int getArmorBonus() {
-		return armorBonus;
-	}
-	
-	public void setArmorBonus(int armorBonus) {
-		this.armorBonus = armorBonus;
-	}
-	
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
@@ -335,22 +321,6 @@ public class PlayerCharacter {
 	
 	public void setCurrentEnergy(int currentEnergy) {
 		this.currentEnergy = currentEnergy;
-	}
-	
-	public int getCurrentEncumberance() {
-		return currentEncumberance;
-	}
-	
-	public void setCurrentEncumberance(int currentEncumberance) {
-		this.currentEncumberance = currentEncumberance;
-	}
-	
-	public int getCurrentCarryCapacity() {
-		return currentCarryCapacity;
-	}
-	
-	public void setCurrentCarryCapacity(int currentCarryCapacity) {
-		this.currentCarryCapacity = currentCarryCapacity;
 	}
 
 	//calculations for stat totals (base + gear)
@@ -372,52 +342,48 @@ public class PlayerCharacter {
 	
 	//calculations for derived stats
 	public int calcPower() {
-		return ((strength + strengthBonus + dexterity + dexterityBonus + intelligence + intelligenceBonus)/2 + powerBonus);
+		return (calcTotalStrength() + calcTotalDexterity() + calcTotalIntelligence())/2 + powerBonus;
 	}
 	
 	public int calcHealth() {
-		return constitution*4 + healthBonus;
+		return calcTotalConstitution()*4 + healthBonus;
 	}
 	
 	public int calcHealthRegen() {
-		return constitution/3 + healthRegenBonus;
+		return calcTotalConstitution()/3 + healthRegenBonus;
 	}
 	
-	public int calcEncumberance() {
-		return strength*3 + encumberanceBonus;
-	}
-	
-	public int calcCarryCapacity() {
-		return strength*15 + carryCapacityBonus;
-	}
-	
-	public int calcDodgeRating() {
-		return dexterity*2 + dodgeRatingBonus;
-	}
-	
-	public int calcCritRating() {
-		return dexterity*2 + critRatingBonus;
-	}
-	
-	public int calcEnergy() {
-		return intelligence*6 + energyBonus;
-	}
-	
-	public int calcEnergyRegen() {
-		return intelligence/2 + energyRegenBonus;
+	public int calcArmorPen() {
+		return calcTotalStrength()*2 + armorPenBonus;
 	}
 	
 	public int calcArmor() {
-		return strength*2 + armorBonus;
+		return calcTotalStrength()*2 + armorBonus;
 	}
+	
+	public int calcDodgeRating() {
+		return calcTotalDexterity()*2 + dodgeRatingBonus;
+	}
+	
+	public int calcCritRating() {
+		return calcTotalDexterity()*2 + critRatingBonus;
+	}
+	
+	public int calcEnergy() {
+		return calcTotalIntelligence()*6 + energyBonus;
+	}
+	
+	public int calcEnergyRegen() {
+		return calcTotalIntelligence()/2 + energyRegenBonus;
+	}
+	
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(abilityIds, armorBonus, carryCapacityBonus, characterClass, constitution, constitutionBonus,
-				critRatingBonus, currency, currentCarryCapacity, currentEncumberance, currentEnergy, currentHealth,
-				dexterity, dexterityBonus, dodgeRatingBonus, encumberanceBonus, energyBonus, energyRegenBonus,
-				experience, healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, inventory, level,
-				location, name, powerBonus, strength, strengthBonus);
+		return Objects.hash(abilityIds, armorBonus, armorPenBonus, characterClass, constitution, constitutionBonus,
+				critRatingBonus, currency, currentEnergy, currentHealth, dexterity, dexterityBonus, dodgeRatingBonus,
+				energyBonus, energyRegenBonus, experience, healthBonus, healthRegenBonus, id, intelligence,
+				intelligenceBonus, inventory, level, location, name, powerBonus, strength, strengthBonus);
 	}
 	
 	@Override
@@ -430,14 +396,12 @@ public class PlayerCharacter {
 			return false;
 		PlayerCharacter other = (PlayerCharacter) obj;
 		return Objects.equals(abilityIds, other.abilityIds) && armorBonus == other.armorBonus
-				&& carryCapacityBonus == other.carryCapacityBonus
-				&& Objects.equals(characterClass, other.characterClass) && constitution == other.constitution
-				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
-				&& currency == other.currency && currentCarryCapacity == other.currentCarryCapacity
-				&& currentEncumberance == other.currentEncumberance && currentEnergy == other.currentEnergy
-				&& currentHealth == other.currentHealth && dexterity == other.dexterity
-				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
-				&& encumberanceBonus == other.encumberanceBonus && energyBonus == other.energyBonus
+				&& armorPenBonus == other.armorPenBonus && Objects.equals(characterClass, other.characterClass)
+				&& constitution == other.constitution && constitutionBonus == other.constitutionBonus
+				&& critRatingBonus == other.critRatingBonus && currency == other.currency
+				&& currentEnergy == other.currentEnergy && currentHealth == other.currentHealth
+				&& dexterity == other.dexterity && dexterityBonus == other.dexterityBonus
+				&& dodgeRatingBonus == other.dodgeRatingBonus && energyBonus == other.energyBonus
 				&& energyRegenBonus == other.energyRegenBonus && experience == other.experience
 				&& healthBonus == other.healthBonus && healthRegenBonus == other.healthRegenBonus
 				&& Objects.equals(id, other.id) && intelligence == other.intelligence
@@ -454,11 +418,9 @@ public class PlayerCharacter {
 				+ ", strength=" + strength + ", dexterity=" + dexterity + ", intelligence=" + intelligence
 				+ ", constitutionBonus=" + constitutionBonus + ", strengthBonus=" + strengthBonus + ", dexterityBonus="
 				+ dexterityBonus + ", intelligenceBonus=" + intelligenceBonus + ", powerBonus=" + powerBonus
-				+ ", healthBonus=" + healthBonus + ", healthRegenBonus=" + healthRegenBonus + ", encumberanceBonus="
-				+ encumberanceBonus + ", carryCapacityBonus=" + carryCapacityBonus + ", dodgeRatingBonus="
-				+ dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus + ", energyBonus=" + energyBonus
-				+ ", energyRegenBonus=" + energyRegenBonus + ", armorBonus=" + armorBonus + ", currentHealth="
-				+ currentHealth + ", currentEnergy=" + currentEnergy + ", currentEncumberance=" + currentEncumberance
-				+ ", currentCarryCapacity=" + currentCarryCapacity + "]";
+				+ ", healthBonus=" + healthBonus + ", healthRegenBonus=" + healthRegenBonus + ", armorPenBonus="
+				+ armorPenBonus + ", armorBonus=" + armorBonus + ", dodgeRatingBonus=" + dodgeRatingBonus
+				+ ", critRatingBonus=" + critRatingBonus + ", energyBonus=" + energyBonus + ", energyRegenBonus="
+				+ energyRegenBonus + ", currentHealth=" + currentHealth + ", currentEnergy=" + currentEnergy + "]";
 	}
 }

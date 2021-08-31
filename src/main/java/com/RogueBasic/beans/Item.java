@@ -13,18 +13,16 @@ public class Item {
 	private String name;
 	private String description;
 	private int cost;
-	private double weight;
 	private String action;
 	
 	public Item() {}
 	
-	public Item(String name, String description, int cost, double weight, String action) {
+	public Item(String name, String description, int cost, String action) {
 		super();
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
 		this.cost = cost;
-		this.weight = weight;
 		this.action = action;
 	}
 	
@@ -59,14 +57,6 @@ public class Item {
 		this.cost = cost;
 	}
 	
-	public double getWeight() {
-		return weight;
-	}
-	
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
-	
 	public String getAction() {
 		return action;
 	}
@@ -76,7 +66,7 @@ public class Item {
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(action, cost, description, id, name, weight);
+		return Objects.hash(action, cost, description, id, name);
 	}
 	
 	@Override
@@ -90,14 +80,13 @@ public class Item {
 		Item other = (Item) obj;
 		return Objects.equals(action, other.action) && cost == other.cost
 				&& Objects.equals(description, other.description) && Objects.equals(id, other.id)
-				&& Objects.equals(name, other.name)
-				&& Double.doubleToLongBits(weight) == Double.doubleToLongBits(other.weight);
+				&& Objects.equals(name, other.name);
 	}
 	
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", cost=" + cost + ", weight="
-				+ weight + ", action=" + action + "]";
+		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", cost=" + cost + ", action="
+				+ action + "]";
 	}
 	
 	
