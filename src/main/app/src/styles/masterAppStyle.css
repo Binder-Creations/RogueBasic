@@ -9,16 +9,58 @@
      	  	text-align:center;
       	}
       	body {
-      		background-repeat:no-repeat;
-    		background-attachment:fixed;
-  			background-position:center;
-  			background-size:cover;
-    	    background-image:url(../images/town.png);
+    	    background-color:black;
       	}
         br {
 			display:block;
 			content:" ";
 	    }
+			.app-container {
+				position:absolute;
+      	top: 50%;
+      	transform: translateY(-50%);
+      	-ms-transform: translateY(-50%);
+			}
+			.background {
+				max-height: 100%;
+				max-width: 100%;
+				width: auto;
+				height: auto;
+				display:block;
+			}
+			.tavern {
+				opacity:0;
+				position:absolute;
+				width:18.8333%;
+				height:63.85%;
+				left:34.3095%;
+				bottom:17.75%;
+			}
+			.tavern:hover {
+				opacity:1.0;
+			}
+			.inn {
+				opacity:0;
+				position:absolute;
+				width:20.2142%;
+				height:47.7%;
+				left:51.5238%;
+				top:31.7%;
+			}
+			.inn:hover {
+				opacity:1.0;
+			}
+			.shop {
+				opacity:0;
+				position:absolute;
+				width:21.3571%;
+				height:36.15%;
+				left:14.7619%;
+				top:46.6%;
+			}
+			.shop:hover {
+				opacity:1.0;
+			}
 	    .inline-block {
 	    	display:inline-block;
 	    }
@@ -130,31 +172,36 @@
       		border: .15em solid #555555;
       	}
       	.btn-home {
-      	   	position: absolute;
-      	   	display: block;
-      	   	top: 1.5em;
-      	   	right: 1.5em;
-      	   	z-index: 5;
-      	   	text-align: center;
-      	   	width: 2em;
-      		height: 2em;
-      		background-color: #555555;
-      		border: .15em solid #696969;
-      		border-radius: 2em;
+      	  position: absolute;
+      	  top: 5%;
+      	  right: 2.3809%;
+      	  z-index: 5;
+      	  text-align: center;
+      	  width: 6.5%;
+      		height: 13.65%;
+      		background-color: #55555588;
+      		border: 1% solid #69696988;
+      		border-radius: 100%;
       		transition-duration: 0.4s;
-	       	position: absolute;
-      		display:inline-block;
-      		text-align: center;
-      		position:relative;
       	}
       	.btn-home:hover {
-      		background-color: #696969;
-      		border: .15em solid #555555;
+      		background-color: #69696988;
+      		border: 1% solid #55555588;
       	}
       	.btn-home p {
       		position:relative; 
       		bottom:.2em;
       	}
+				.btn-home img{
+					position:absolute;
+					width: 75%;
+					height: auto;
+					opacity: 0.5;
+      		top: 50%;
+      		left:50%;
+      		transform: translate(-50%, -50%);
+      		-ms-transform: translateY(-50%) translateX(-50%);
+				}
       	.btn-l {
       		width: 18em;
       		height: 3em;
