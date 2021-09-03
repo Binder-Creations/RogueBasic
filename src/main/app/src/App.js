@@ -8,12 +8,12 @@ import inn from "./images/inn.png";
 import innExterior from "./images/inn-exterior.png";
 import shop from "./images/shop.png";
 import shopExterior from "./images/shop-exterior.png";
+import Ui from "./modules/Ui"
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log("Constructing")
     this.state = {
       pc: {},
       scene: "Default", 
@@ -38,7 +38,6 @@ class App extends React.Component {
   };
 
   render(){
-    console.log("Rendering")
     if (!this.state.character_id)
       return this.routeToLogin();
 
@@ -69,55 +68,59 @@ class App extends React.Component {
     renderTown(){
       return (
         <div className="app-container">
-          <img className="background" src={town}/>
-          <input className="tavern" type="image" src={tavernExterior} onClick={ () => { this.changeScene("Tavern")} }/>
-          <input className="inn" type="image" src={innExterior} onClick={ () => { this.changeScene("Inn")} }/>
-          <input className="shop" type="image" src={shopExterior} onClick={ () => { this.changeScene("Shop")} }/>
+          <img className="background" src={town} alt="Town"/>
+          <input className="tavern" type="image" src={tavernExterior} alt="Tavern" onClick={ () => { this.changeScene("Tavern")} }/>
+          <input className="inn" type="image" src={innExterior} alt="Inn" onClick={ () => { this.changeScene("Inn")} }/>
+          <input className="shop" type="image" src={shopExterior} alt="Shop" onClick={ () => { this.changeScene("Shop")} }/>
+          <Ui pc={this.state.pc}/>
         </div>
       );
     }
     renderTavern(){
       return (
         <div className="app-container">
-          <img className="background" src={tavern}/>
+          <img className="background" alt="Tavern" src={tavern}/>
           <button className="btn-home" onClick={ () => { this.changeScene("Default")} }>
-            <img src={townIcon}/>
+            <img src={townIcon} alt="Town"/>
           </button>
+          <Ui pc={this.state.pc}/>
         </div>
       );
     }
     renderInn(){
       return (
         <div className="app-container">
-          <img className="background" src={inn}/>
+          <img className="background" alt="Inn" src={inn}/>
           <button className="btn-home" onClick={ () => { this.changeScene("Default")} }>
-            <img src={townIcon}/>
+            <img src={townIcon} alt="Town"/>
           </button>
+          <Ui pc={this.state.pc}/>
         </div>
       );
     }
     renderShop(){
       return (
         <div className="app-container">
-          <img className="background" src={shop}/>
+          <img className="background" alt="Shop" src={shop}/>
           <button className="btn-home" onClick={ () => { this.changeScene("Default")} }>
-            <img src={townIcon}/>
+            <img src={townIcon} alt="Town"/>
           </button>
+          <Ui pc={this.state.pc}/>
         </div>
       );
     }
     renderRoom(){
       return (
         <div className="app-container">
-          <img className="background" src={town}/>
+          <img className="background" src={town} alt="Town"/>
+          <Ui pc={this.state.pc}/>
         </div>
       );
     }
     changeScene(newScene){
-      console.log(this.state.scene);
       this.setState({scene:newScene}, ()=>{console.log(this.state.scene)});
     }
 
 }
-  
+
 export default App

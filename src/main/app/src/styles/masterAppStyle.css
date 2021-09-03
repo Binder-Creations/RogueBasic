@@ -61,6 +61,138 @@
 			.shop:hover {
 				opacity:1.0;
 			}
+			.bar-health-background{
+				position:absolute;
+				width:20.1854%;
+				height:5.082%;
+				top: 5%;
+				left: 7.0%;
+			}
+			.bar-health-frame{
+				position:absolute;
+				width:20.1546%;
+				height:5.082%;
+				top: 5%;
+				left: 7.0308%;				
+			}
+			.bar-health{
+				position:absolute;
+				height:4.7603%;
+				top: 5.123%;
+				left: 7.1235%;				
+			}
+			.bar-energy-background{
+				position:absolute;
+				width:20.1854%;
+				height:5.082%;
+				top: 13.329%;
+				left: 7.0%;
+			}
+			.bar-energy-frame{
+				position:absolute;
+				width:20.1546%;
+				height:5.082%;
+				top: 13.329%;
+				left: 7.0308%;				
+			}
+			.bar-energy{
+				position:absolute;
+				height:4.7603%;
+				top: 13.452%;
+				left: 7.1235%;				
+			}
+			.heart{
+				position:absolute;
+				height:7.329%;
+				width:3.95%;
+				top: 3.8765%;
+				left: 2.3809%;
+			}
+			.swirl {
+				position:absolute;
+				height:7.329%;
+				width:3.95%;
+				top: 12.2055%;
+				left: 2.3809%;
+			}
+			.skill {
+				position:absolute;
+				bottom: 3.8765%;
+				height:12.8%;
+				width:6.0952%;
+				border: 0em;
+				background-color:#00000000;
+				opacity: 0.8;
+			}
+			.skill img {
+				position: absolute;
+				left: 0%;
+				top: 0%;
+				width: 100%;
+				height: 100%;
+			}
+			.skill:hover {
+				opacity: 1.0;
+			}
+			.s-1 {
+				left: 36.3096%;
+			}
+			.s-2 {
+				left: 43.4048%;
+			}
+			.s-3 {
+				left: 50.5%;
+			}
+			.s-4 {
+				left: 57.5952%;
+			}
+			.map-overlay {
+				position: absolute;
+				right: 1.8459%;
+				bottom: 3.8765%;
+				width: 13.5%;
+				height: 28.35%;
+			}
+			.map-underlay {
+				position: absolute;
+				right: 2.4415%;
+				bottom: 5.0515%;
+				width: 12.3089%;
+				height: 26%;
+			}
+			.btn-attack {
+				position:absolute;
+				left: 1.8459%;
+				bottom: 3.8765%;
+				width: 13.5%;
+				height: 28.35%;
+				opacity: 0.8;
+			}
+			.btn-attack:hover {
+				opacity:1;
+			}
+			.btn-character {
+				position:absolute;
+				left: 13.8459%;
+				bottom: 15.0515%;
+				width: 4.5%;
+				height: 9.45%;
+				opacity: 0.8;
+			}
+			.btn-character:hover {
+				opacity:1;
+			}
+			.btn-inventory {
+				position:absolute;
+				left: 12.3459%;
+				bottom: 5.7515%;
+				width: 4.5%;
+				height: 9.45%;
+				opacity: 0.8;
+			}
+			.btn-inventory:hover {
+				opacity:1;
+			}
 	    .inline-block {
 	    	display:inline-block;
 	    }
