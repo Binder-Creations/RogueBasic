@@ -32,9 +32,9 @@
 				opacity:0;
 				position:absolute;
 				width:18.8333%;
-				height:63.85%;
+				height:74.5%;
 				left:34.3095%;
-				bottom:17.75%;
+				bottom:17.95%;
 			}
 			.tavern:hover {
 				opacity:1.0;
@@ -43,9 +43,9 @@
 				opacity:0;
 				position:absolute;
 				width:20.2142%;
-				height:47.7%;
+				height:59.15%;
 				left:51.5238%;
-				top:31.7%;
+				bottom:20.65%;
 			}
 			.inn:hover {
 				opacity:1.0;
@@ -54,9 +54,9 @@
 				opacity:0;
 				position:absolute;
 				width:21.3571%;
-				height:36.15%;
+				height:47.3%;
 				left:14.7619%;
-				top:46.6%;
+				bottom:17.35%;
 			}
 			.shop:hover {
 				opacity:1.0;
@@ -66,73 +66,81 @@
 				width:20.1854%;
 				height:5.082%;
 				top: 5%;
-				left: 7.0%;
+				left: 5.0%;
 			}
 			.bar-health-frame{
 				position:absolute;
 				width:20.1546%;
 				height:5.082%;
 				top: 5%;
-				left: 7.0308%;				
+				left: 5.0308%;				
 			}
 			.bar-health{
 				position:absolute;
 				height:4.7603%;
 				top: 5.123%;
-				left: 7.1235%;				
+				left: 5.1235%;				
 			}
 			.bar-energy-background{
 				position:absolute;
 				width:20.1854%;
 				height:5.082%;
-				top: 13.329%;
-				left: 7.0%;
+				top: 12.329%;
+				left: 5.0%;
 			}
 			.bar-energy-frame{
 				position:absolute;
 				width:20.1546%;
 				height:5.082%;
-				top: 13.329%;
-				left: 7.0308%;				
+				top: 12.329%;
+				left: 5.0308%;				
 			}
 			.bar-energy{
 				position:absolute;
 				height:4.7603%;
-				top: 13.452%;
-				left: 7.1235%;				
+				top: 12.452%;
+				left: 5.1235%;				
 			}
 			.heart{
 				position:absolute;
 				height:7.329%;
-				width:3.95%;
+				width:3.49%;
 				top: 3.8765%;
 				left: 2.3809%;
 			}
 			.swirl {
 				position:absolute;
 				height:7.329%;
-				width:3.95%;
-				top: 12.2055%;
+				width:3.49%;
+				top: 11.2055%;
 				left: 2.3809%;
 			}
 			.skill {
 				position:absolute;
-				bottom: 3.8765%;
-				height:12.8%;
-				width:6.0952%;
+				bottom: 2.8265%;
+				height:14.9%;
+				width:7.0952%;
 				border: 0em;
 				background-color:#00000000;
-				opacity: 0.8;
 			}
 			.skill img {
 				position: absolute;
+			}
+			.skill .glow {
 				left: 0%;
 				top: 0%;
+				opacity: 0.0;
 				width: 100%;
 				height: 100%;
 			}
-			.skill:hover {
+			.skill:hover .glow{
 				opacity: 1.0;
+			}
+			.skill .frame {
+				left: 6.7568%;
+				top: 6.7568%;
+				width: 86.4865%;
+				height: 86.4865%;
 			}
 			.s-1 {
 				left: 36.3096%;
@@ -166,10 +174,6 @@
 				bottom: 3.8765%;
 				width: 13.5%;
 				height: 28.35%;
-				opacity: 0.8;
-			}
-			.btn-attack:hover {
-				opacity:1;
 			}
 			.btn-character {
 				position:absolute;
@@ -177,10 +181,6 @@
 				bottom: 15.0515%;
 				width: 4.5%;
 				height: 9.45%;
-				opacity: 0.8;
-			}
-			.btn-character:hover {
-				opacity:1;
 			}
 			.btn-inventory {
 				position:absolute;
@@ -188,10 +188,56 @@
 				bottom: 5.7515%;
 				width: 4.5%;
 				height: 9.45%;
-				opacity: 0.8;
 			}
-			.btn-inventory:hover {
-				opacity:1;
+			.menu-character {
+				position: absolute;
+				right: 7.3691%;
+				top: 5%;
+				width: 85.2619%;
+				height: 90%;
+			}
+			.badge{
+				position: absolute;
+				left: 20.0357%;
+				top: 5.75%;
+				width: 17.8571%;
+				height: 37.5%;
+			}
+			.character-name{
+				position: absolute;
+				left: 8.0595%;
+				top: 50.35%;
+				width: 41.31%;
+				height: 7.25%;
+				font-size: 150%;
+			}
+			.btn-close {
+				position: absolute;
+				right: 7.9975%;
+				top: 6.4%;
+				width: 4%;
+				height: 8.4%;
+			}
+			.btn-atr {
+				position:absolute;
+				width: 18.5714%;
+				height: 11.25%;
+			}
+			.con {
+				left: 10.2024%;
+				top: 70.05%;
+			}
+			.str {
+				left: 10.2024%;
+				top: 81.75%;
+			}
+			.dex {
+				left: 28.9643%;
+				top: 70.05%;
+			}
+			.int {
+				left: 28.9643%;
+				top: 81.75%;
 			}
 	    .inline-block {
 	    	display:inline-block;
