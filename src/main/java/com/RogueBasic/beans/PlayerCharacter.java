@@ -19,6 +19,7 @@ public class PlayerCharacter {
 	private String characterClass;
 	private int experience;
 	private int level;
+	private int attributePoints;
 	private int currency;
 	private Set<UUID> abilityIds;
 	private Map<UUID, Integer> inventory;
@@ -63,8 +64,9 @@ public class PlayerCharacter {
 		this.strength = strength;
 		this.dexterity = dexterity;
 		this.intelligence = intelligence;
-		this.experience = 0;
+		this.experience = 60;
 		this.level = 1;
+		this.attributePoints = 4;
 		switch(characterClass) {
 			case "Rogue":
 				this.currency = 150 + currencyMetabonus;
@@ -159,6 +161,14 @@ public class PlayerCharacter {
 		this.level = level;
 	}
 	
+	public int getAttributePoints() {
+		return attributePoints;
+	}
+
+	public void setAttributePoints(int attributePoints) {
+		this.attributePoints = attributePoints;
+	}
+
 	public int getCurrency() {
 		return currency;
 	}
@@ -391,10 +401,11 @@ public class PlayerCharacter {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(abilityIds, armorBonus, armorPenBonus, characterClass, constitution, constitutionBonus,
-				critRatingBonus, currency, currentEnergy, currentHealth, dexterity, dexterityBonus, dodgeRatingBonus,
-				energyBonus, energyRegenBonus, experience, day, healthBonus, healthRegenBonus, id, intelligence,
-				intelligenceBonus, inventory, level, location, name, powerBonus, strength, strengthBonus);
+		return Objects.hash(abilityIds, armorBonus, armorPenBonus, attributePoints, characterClass, constitution,
+				constitutionBonus, critRatingBonus, currency, currentEnergy, currentHealth, day, dexterity,
+				dexterityBonus, dodgeRatingBonus, energyBonus, energyRegenBonus, experience, healthBonus,
+				healthRegenBonus, id, intelligence, intelligenceBonus, inventory, level, location, name, powerBonus,
+				strength, strengthBonus);
 	}
 	
 	@Override
@@ -407,14 +418,14 @@ public class PlayerCharacter {
 			return false;
 		PlayerCharacter other = (PlayerCharacter) obj;
 		return Objects.equals(abilityIds, other.abilityIds) && armorBonus == other.armorBonus
-				&& armorPenBonus == other.armorPenBonus && Objects.equals(characterClass, other.characterClass)
-				&& constitution == other.constitution && constitutionBonus == other.constitutionBonus
-				&& critRatingBonus == other.critRatingBonus && currency == other.currency
-				&& currentEnergy == other.currentEnergy && currentHealth == other.currentHealth
-				&& dexterity == other.dexterity && dexterityBonus == other.dexterityBonus
-				&& dodgeRatingBonus == other.dodgeRatingBonus && energyBonus == other.energyBonus
-				&& energyRegenBonus == other.energyRegenBonus && experience == other.experience
-				&& day == other.day && healthBonus == other.healthBonus
+				&& armorPenBonus == other.armorPenBonus && attributePoints == other.attributePoints
+				&& Objects.equals(characterClass, other.characterClass) && constitution == other.constitution
+				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
+				&& currency == other.currency && currentEnergy == other.currentEnergy
+				&& currentHealth == other.currentHealth && day == other.day && dexterity == other.dexterity
+				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
+				&& energyBonus == other.energyBonus && energyRegenBonus == other.energyRegenBonus
+				&& experience == other.experience && healthBonus == other.healthBonus
 				&& healthRegenBonus == other.healthRegenBonus && Objects.equals(id, other.id)
 				&& intelligence == other.intelligence && intelligenceBonus == other.intelligenceBonus
 				&& Objects.equals(inventory, other.inventory) && level == other.level
@@ -426,14 +437,14 @@ public class PlayerCharacter {
 	public String toString() {
 		return "PlayerCharacter [id=" + id + ", location=" + location + ", day=" + day + ", name=" + name
 				+ ", characterClass=" + characterClass + ", experience=" + experience + ", level=" + level
-				+ ", currency=" + currency + ", abilityIds=" + abilityIds + ", inventory=" + inventory
-				+ ", constitution=" + constitution + ", strength=" + strength + ", dexterity=" + dexterity
-				+ ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus + ", strengthBonus="
-				+ strengthBonus + ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus=" + intelligenceBonus
-				+ ", powerBonus=" + powerBonus + ", healthBonus=" + healthBonus + ", healthRegenBonus="
-				+ healthRegenBonus + ", armorPenBonus=" + armorPenBonus + ", armorBonus=" + armorBonus
-				+ ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus + ", energyBonus="
-				+ energyBonus + ", energyRegenBonus=" + energyRegenBonus + ", currentHealth=" + currentHealth
-				+ ", currentEnergy=" + currentEnergy + "]";
+				+ ", attributePoints=" + attributePoints + ", currency=" + currency + ", abilityIds=" + abilityIds
+				+ ", inventory=" + inventory + ", constitution=" + constitution + ", strength=" + strength
+				+ ", dexterity=" + dexterity + ", intelligence=" + intelligence + ", constitutionBonus="
+				+ constitutionBonus + ", strengthBonus=" + strengthBonus + ", dexterityBonus=" + dexterityBonus
+				+ ", intelligenceBonus=" + intelligenceBonus + ", powerBonus=" + powerBonus + ", healthBonus="
+				+ healthBonus + ", healthRegenBonus=" + healthRegenBonus + ", armorPenBonus=" + armorPenBonus
+				+ ", armorBonus=" + armorBonus + ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus="
+				+ critRatingBonus + ", energyBonus=" + energyBonus + ", energyRegenBonus=" + energyRegenBonus
+				+ ", currentHealth=" + currentHealth + ", currentEnergy=" + currentEnergy + "]";
 	}
 }

@@ -1,8 +1,8 @@
 import React from "react";
 import barBackground from "../images/bar-background.png";
 import barFrame from "../images/bar-frame.png";
-import healthBar from "../images/health-bar.png";
-import energyBar from "../images/energy-bar.png";
+import barHealth from "../images/bar-health.png";
+import barEnergy from "../images/bar-energy.png";
 import heart from "../images/heart.png";
 import swirl from "../images/swirl.png";
 import skillGlow from "../images/skill-glow.png";
@@ -27,14 +27,6 @@ class Ui extends React.Component {
   constructor(props){
     super(props);
     this.state = {};
-    this.state.healthHover = this.props.pc.currentHealth + "/" + ((this.props.pc.constitution*1 + this.props.pc.constitutionBonus*1)*4 + this.props.pc.healthBonus*1);
-    this.state.energyHover = this.props.pc.currentEnergy + "/" + ((this.props.pc.intelligence*1 + this.props.pc.intelligenceBonus*1)*6 + this.props.pc.energyBonus*1);
-    this.state.healthStyle = {
-      width: 20*(this.props.pc.currentHealth/((this.props.pc.constitution*1 + this.props.pc.constitutionBonus*1)*4 + this.props.pc.healthBonus*1)) + "%"
-    }
-    this.state.energyStyle = {
-      width: 20*(this.props.pc.currentEnergy/((this.props.pc.intelligence*1 + this.props.pc.intelligenceBonus*1)*6 + this.props.pc.energyBonus*1)) + "%"
-    }
     this.state.characterMenu = false;
     this.state.inventoryMenu = false;
     this.characterMenuToggle = false;
@@ -49,19 +41,27 @@ class Ui extends React.Component {
       this.buttonAttack = buttonAttackWarrior;
       this.buttonAttackHover = buttonAttackWarriorHover;   
     }
+    this.healthStyle = {
+      width: 20*(this.props.pc.currentHealth/((this.props.pc.constitution*1 + this.props.pc.constitutionBonus*1)*4 + this.props.pc.healthBonus*1)) + "%"
+    }
+    this.energyStyle = {
+       width: 20*(this.props.pc.currentEnergy/((this.props.pc.intelligence*1 + this.props.pc.intelligenceBonus*1)*6 + this.props.pc.energyBonus*1)) + "%"
+    }
+    this.healthHover = this.props.pc.currentHealth + "/" + ((this.props.pc.constitution*1 + this.props.pc.constitutionBonus*1)*4 + this.props.pc.healthBonus*1);
+    this.energyHover = this.props.pc.currentEnergy + "/" + ((this.props.pc.intelligence*1 + this.props.pc.intelligenceBonus*1)*6 + this.props.pc.energyBonus*1);
   }
 
   render(){
     return(
       <>
-        <img className="bar-health-background" src={barBackground} alt="Health" title={this.state.healthHover}/>
-        <img className="bar-health" src={healthBar} alt="Health" title={this.state.healthHover} style={this.state.healthStyle}/>
-        <img className="bar-health-frame" src={barFrame} alt="Health" title={this.state.healthHover}/>
-        <img className="heart" src={heart} alt="Health" title={this.state.healthHover}/>
-        <img className="bar-energy-background" src={barBackground} alt="Energy" title={this.state.energyHover}/>
-        <img className="bar-energy" src={energyBar} alt="Energy" title={this.state.energyHover} style={this.state.energyStyle}/>
-        <img className="bar-energy-frame" src={barFrame} alt="Energy" title={this.state.energyHover}/>
-        <img className="swirl" src={swirl} alt="Energy" title={this.state.energyHover}/>
+        <img className="bar-health-background" src={barBackground} alt="Health" title={this.healthHover}/>
+        <img className="bar-health" src={barHealth} alt="Health" title={this.healthHover} style={this.healthStyle}/>
+        <img className="bar-health-frame" src={barFrame} alt="Health" title={this.healthHover}/>
+        <img className="heart" src={heart} alt="Health" title={this.healthHover}/>
+        <img className="bar-energy-background" src={barBackground} alt="Energy" title={this.energyHover}/>
+        <img className="bar-energy" src={barEnergy} alt="Energy" title={this.energyHover} style={this.energyStyle}/>
+        <img className="bar-energy-frame" src={barFrame} alt="Energy" title={this.energyHover}/>
+        <img className="swirl" src={swirl} alt="Energy" title={this.energyHover}/>
         <button className="skill s-1">
           <img className="glow" src={skillGlow} alt="Skill-1"/>
           <img className="frame" src={skillBackground} alt="Skill-1"/>
@@ -110,8 +110,15 @@ class Ui extends React.Component {
       this.state.inventoryMenu = false;
       this.inventoryMenuToggle = false;
     }
+    this.healthStyle = {
+      width: 20*(this.props.pc.currentHealth/((this.props.pc.constitution*1 + this.props.pc.constitutionBonus*1)*4 + this.props.pc.healthBonus*1)) + "%"
+    }
+    this.energyStyle = {
+       width: 20*(this.props.pc.currentEnergy/((this.props.pc.intelligence*1 + this.props.pc.intelligenceBonus*1)*6 + this.props.pc.energyBonus*1)) + "%"
+    }
+    this.healthHover = this.props.pc.currentHealth + "/" + ((this.props.pc.constitution*1 + this.props.pc.constitutionBonus*1)*4 + this.props.pc.healthBonus*1);
+    this.energyHover = this.props.pc.currentEnergy + "/" + ((this.props.pc.intelligence*1 + this.props.pc.intelligenceBonus*1)*6 + this.props.pc.energyBonus*1);
   }
-
 }
 
 export default Ui

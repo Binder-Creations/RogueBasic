@@ -66,7 +66,7 @@ class App extends React.Component {
     }
     renderTown(){
       return (
-        <div style={{fontSize: window.innerHeight/24}} className="app-container">
+        <div className="app-container">
           <img className="background" src={town} alt="Town"/>
           <input className="tavern" type="image" src={tavernExterior} alt="Tavern" onClick={ () => { this.changeScene("Tavern")} }/>
           <input className="inn" type="image" src={innExterior} alt="Inn" onClick={ () => { this.changeScene("Inn")} }/>
@@ -77,7 +77,7 @@ class App extends React.Component {
     }
     renderTavern(){
       return (
-        <div style={{fontSize: window.innerHeight/24}} className="app-container">
+        <div className="app-container">
           <img className="background" alt="Tavern" src={tavern}/>
           <button className="btn-home" onClick={ () => { this.changeScene("Default")} }>
             <img src={townIcon} alt="Town"/>
@@ -88,7 +88,7 @@ class App extends React.Component {
     }
     renderInn(){
       return (
-        <div style={{fontSize: window.innerHeight/24}} className="app-container">
+        <div className="app-container">
           <img className="background" alt="Inn" src={inn}/>
           <button className="btn-home" onClick={ () => { this.changeScene("Default")} }>
             <img src={townIcon} alt="Town"/>
@@ -99,7 +99,7 @@ class App extends React.Component {
     }
     renderShop(){
       return (
-        <div style={{fontSize: window.innerHeight/24}} className="app-container">
+        <div className="app-container">
           <img className="background" alt="Shop" src={shop}/>
           <button className="btn-home" onClick={ () => { this.changeScene("Default")} }>
             <img src={townIcon} alt="Town"/>
@@ -110,7 +110,7 @@ class App extends React.Component {
     }
     renderRoom(){
       return (
-        <div style={{fontSize: window.innerHeight/24}} className="app-container">
+        <div className="app-container">
           <img className="background" src={town} alt="Town"/>
           <Ui pc={this.state.pc}/>
         </div>

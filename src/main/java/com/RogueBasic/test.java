@@ -22,10 +22,10 @@ public class test {
 //		PlayerDao pdao = new PlayerDao(session);
 //		Player p = new Player("taco", "taco");
 //		pdao.save(p);
-//		PlayerCharacterDao pcdao = new PlayerCharacterDao(session);
-//		PlayerCharacter pc = new PlayerCharacter(UUID.randomUUID(), "taco", "taco", 0, 0, 0, 0);
-//		pcdao.save(pc);
-//		System.out.println(pcdao.findById(pc.getId()).toString());
+		PlayerCharacterDao pcdao = new PlayerCharacterDao(session);
+		PlayerCharacter pc = new PlayerCharacter("taco", "taco", 0, 0, 0, 0, 0);
+		pcdao.save(pc);
+		System.out.println(pcdao.findById(pc.getId()).toString());
 //		EquipmentDao edao = new EquipmentDao(session);
 //		Equipment e = new Equipment();
 //		pc

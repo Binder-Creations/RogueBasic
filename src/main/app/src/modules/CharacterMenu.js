@@ -13,6 +13,8 @@ import buttonIntelligenceHover from "../images/button-intelligence-hover.png";
 import badgeWarrior from "../images/badge-warrior.png";
 import badgeRogue from "../images/badge-rogue.png";
 import badgeMage from "../images/badge-mage.png";
+import barExperience from "../images/bar-experience.png";
+import barFrame from "../images/bar-frame.png";
 
 class CharacterMenu extends React.Component {
 
@@ -28,38 +30,70 @@ class CharacterMenu extends React.Component {
     } else {
       this.badge = badgeWarrior;
     }
+    this.experienceStyle = {
+      width: 47.9754*(this.props.pc.experience/(Math.round(this.props.pc.level**1.5)*100)) + "%"
+    }
+    this.experienceHover = this.props.pc.experience + "/" + Math.round(this.props.pc.level**1.5)*100 + " experience to next level";
   }
 
   render(){
     if(this.props.on && !this.state.close){
       return(
-        <>
-          <img className="menu-character" src={characterMenu} alt="Character Information Screen"/>
+        <div className="menu-character">
+          <img className="background" src={characterMenu} alt="Character Information Screen"/>
           <img className="badge" src={this.badge} alt={this.props.pc.characterClass}/>
           <input className="btn-close" type="image" src={buttonClose} alt="Close" onClick={ () => { this.closeToggle = true; this.setState({close:true}) } }
             onMouseEnter={e => (e.currentTarget.src = buttonCloseHover)}
             onMouseLeave={e => (e.currentTarget.src = buttonClose)}
           />
-          <input className="btn-atr con" type="image" src={buttonConstitution} alt="Constitution"
-            onMouseEnter={e => (e.currentTarget.src = buttonConstitutionHover)}
-            onMouseLeave={e => (e.currentTarget.src = buttonConstitution)}
-          />
-          <input className="btn-atr str" type="image" src={buttonStrength} alt="Strength"
-            onMouseEnter={e => (e.currentTarget.src = buttonStrengthHover)}
-            onMouseLeave={e => (e.currentTarget.src = buttonStrength)}
-          />
-          <input className="btn-atr dex" type="image" src={buttonDexterity} alt="Dexterity"
-            onMouseEnter={e => (e.currentTarget.src = buttonDexterityHover)}
-            onMouseLeave={e => (e.currentTarget.src = buttonDexterity)}
-          />
-          <input className="btn-atr int" type="image" src={buttonIntelligence} alt="Intelligence"
-            onMouseEnter={e => (e.currentTarget.src = buttonIntelligenceHover)}
-            onMouseLeave={e => (e.currentTarget.src = buttonIntelligence)}
-          />
+          <div className="btn-atr con">
+            <input className="background" type="image" src={buttonConstitution} alt="Constitution"
+              onMouseEnter={e => (e.currentTarget.src = buttonConstitutionHover)}
+              onMouseLeave={e => (e.currentTarget.src = buttonConstitution)}
+            />
+            <p className="v-h-centered noselect">
+              +Con
+            </p>
+          </div>
+          <div className="btn-atr str">
+            <input className="background" type="image" src={buttonStrength} alt="Strength"
+              onMouseEnter={e => (e.currentTarget.src = buttonStrengthHover)}
+              onMouseLeave={e => (e.currentTarget.src = buttonStrength)}
+            />
+            <p className="v-h-centered noselect">
+              +Str
+            </p>
+          </div>
+          <div className="btn-atr dex">
+            <input className="background" type="image" src={buttonDexterity} alt="Dexterity"
+              onMouseEnter={e => (e.currentTarget.src = buttonDexterityHover)}
+              onMouseLeave={e => (e.currentTarget.src = buttonDexterity)}
+            />
+            <p className="v-h-centered noselect">
+              +Dex
+            </p>
+          </div>
+          <div className="btn-atr int">
+            <input className="background" type="image" src={buttonIntelligence} alt="Intelligence"
+              onMouseEnter={e => (e.currentTarget.src = buttonIntelligenceHover)}
+              onMouseLeave={e => (e.currentTarget.src = buttonIntelligence)}
+            />
+            <p className="v-h-centered noselect">
+              +Int
+            </p>
+          </div>
           <div className="character-name">
             <p className="v-h-centered">{this.props.pc.name}</p>
           </div>
-        </>
+          <div className="character-level">
+            <p className="v-h-centered">{this.props.pc.level}</p>
+          </div>
+          <div className="character-points">
+            <p className="v-h-centered">{"Points: "+this.props.pc.attributePoints}</p>
+          </div>
+          <img className="bar-experience" src={barExperience} alt="Experience" title={this.experienceHover} style={this.experienceStyle}/>
+          <img className="bar-experience-frame" src={barFrame} alt="Experience" title={this.experienceHover}/>
+        </div>
       )  
     } else {
       return(
@@ -73,6 +107,10 @@ class CharacterMenu extends React.Component {
       this.state.close = false;
       this.closeToggle = false;
     }
+    this.experienceStyle = {
+      width: 47.9754*(this.props.pc.experience/(Math.round(this.props.pc.level**1.5)*100)) + "%"
+    }
+    this.experienceHover = this.props.pc.experience + "/" + Math.round(this.props.pc.level**1.5)*100;
     
   }
 

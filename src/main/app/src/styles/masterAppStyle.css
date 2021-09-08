@@ -4,12 +4,14 @@
           	margin:0;
           	padding:0;
           	box-sizing:border-box;
-          	color:#ffcc66;
+          	
      	  	font-family:"Copperplate", fantasy;
      	  	text-align:center;
       	}
       	body {
     	    background-color:black;
+					font-size: 2vw;
+					color:#ffcc66;
       	}
         br {
 			display:block;
@@ -100,6 +102,20 @@
 				height:4.7603%;
 				top: 12.452%;
 				left: 5.1235%;				
+			}
+			.bar-experience{
+				position:absolute;
+				height:4.1667%;
+				top: 59.8889%;
+				left: 1.0891%;
+			}
+			.bar-experience-frame{
+				position:absolute;
+				height:4.1667%;
+				width: 47.9754%;
+				top: 59.8889%;
+				left: 1.0891%;
+				
 			}
 			.heart{
 				position:absolute;
@@ -198,46 +214,73 @@
 			}
 			.badge{
 				position: absolute;
-				left: 20.0357%;
-				top: 5.75%;
-				width: 17.8571%;
-				height: 37.5%;
+				left: 14.4932%;
+				top: 0.8377%;
+				width: 20.9439%;
+				height: 41.6666%;
 			}
 			.character-name{
 				position: absolute;
-				left: 8.0595%;
-				top: 50.35%;
-				width: 41.31%;
-				height: 7.25%;
+				left: 0.8936%;
+				top: 50.3888%;
+				width: 48.4222%;
+				height: 7.4444%;
 				font-size: 150%;
+			}
+			.character-level {
+				position: absolute;
+				left: 23.0362%;
+				top: 43.0556%;
+				width: 3.9654%;
+				height: 7.2222%;
+				font-size: 120%;
+			}
+			.character-points {
+				position: absolute;
+				left: 17.2019%;
+				top: 64.7222%;
+				width: 15.5822%;
+				height: 6.9444%;
+				font-size: 80%;
 			}
 			.btn-close {
 				position: absolute;
-				right: 7.9975%;
-				top: 6.4%;
-				width: 4%;
-				height: 8.4%;
+				left: 93.8006%;
+				top: 1.6111%;
+				width: 5.3058%;
+				height: 10.5556%;
 			}
 			.btn-atr {
 				position:absolute;
-				width: 18.5714%;
-				height: 11.25%;
+				width: 21.7816%;
+				height: 12.5%;
+				font-size: 170%;
+				color:#000000;
 			}
 			.con {
-				left: 10.2024%;
-				top: 70.05%;
+				left: 3.1355%;
+				top: 72.2777%;
 			}
 			.str {
-				left: 10.2024%;
-				top: 81.75%;
+				left: 3.1355%;
+				top: 85.2777%;
 			}
 			.dex {
-				left: 28.9643%;
-				top: 70.05%;
+				left: 25.1406%;
+				top: 72.2777%;
 			}
 			.int {
-				left: 28.9643%;
-				top: 81.75%;
+				left: 25.1406%;
+				top: 85.2777%;
+			}
+			.noselect {
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				pointer-events: none;
 			}
 	    .inline-block {
 	    	display:inline-block;
