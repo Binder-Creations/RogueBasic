@@ -32,8 +32,8 @@ class App extends React.Component {
         //   ? null
         //   : JSON.parse(fetch('/room/'+ this.state.pc.location)
         //     .then(response => response.json())))
+      this.appState = this.appState.bind(this);
     };
-    this.changeScene = this.changeScene.bind(this);
   };
 
   render(){
@@ -68,10 +68,10 @@ class App extends React.Component {
       return (
         <div className="app-container">
           <img className="background" src={town} alt="Town"/>
-          <input className="tavern" type="image" src={tavernExterior} alt="Tavern" onClick={ () => { this.changeScene("Tavern")} }/>
-          <input className="inn" type="image" src={innExterior} alt="Inn" onClick={ () => { this.changeScene("Inn")} }/>
-          <input className="shop" type="image" src={shopExterior} alt="Shop" onClick={ () => { this.changeScene("Shop")} }/>
-          <Ui pc={this.state.pc}/>
+          <input className="tavern" type="image" src={tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
+          <input className="inn" type="image" src={innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
+          <input className="shop" type="image" src={shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
+          <Ui appState={this.appState} pc={this.state.pc}/>
         </div>
       );
     }
@@ -79,10 +79,10 @@ class App extends React.Component {
       return (
         <div className="app-container">
           <img className="background" alt="Tavern" src={tavern}/>
-          <button className="btn-home" onClick={ () => { this.changeScene("Default")} }>
+          <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={this.state.pc}/>
         </div>
       );
     }
@@ -90,10 +90,10 @@ class App extends React.Component {
       return (
         <div className="app-container">
           <img className="background" alt="Inn" src={inn}/>
-          <button className="btn-home" onClick={ () => { this.changeScene("Default")} }>
+          <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={this.state.pc}/>
         </div>
       );
     }
@@ -101,10 +101,10 @@ class App extends React.Component {
       return (
         <div className="app-container">
           <img className="background" alt="Shop" src={shop}/>
-          <button className="btn-home" onClick={ () => { this.changeScene("Default")} }>
+          <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={this.state.pc}/>
         </div>
       );
     }
@@ -112,12 +112,39 @@ class App extends React.Component {
       return (
         <div className="app-container">
           <img className="background" src={town} alt="Town"/>
-          <Ui pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={this.state.pc}/>
         </div>
       );
     }
-    changeScene(newScene){
-      this.setState({scene:newScene});
+    async savePc(pc){
+      await fetch('/pc/', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(pc)
+      });
+      return;
+    }
+    appState(method, key, value){
+      method: switch(method){
+        case "pointbuy":
+          let pc = {...this.state.pc};
+          pc.attributePoints > 0
+            ? pc.attributePoints -= 1
+            : pc.attributePoints = 0;
+          key: switch(key){ 
+            case "con":
+              pc.constitution += 1;
+              pc.currentHealth += 4;
+              break key;
+            default:
+              break key;
+          }
+          this.savePc(pc)
+            .then(()=>{this.setState({pc: pc})});
+        break method;
+      }
     }
 
 }

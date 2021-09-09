@@ -1,21 +1,26 @@
 @charset "UTF-8";
 		
-      	*, *:before, *:after {
-          	margin:0;
-          	padding:0;
-          	box-sizing:border-box;
-          	
-     	  	font-family:"Copperplate", fantasy;
-     	  	text-align:center;
-      	}
-      	body {
-    	    background-color:black;
-					font-size: 2vw;
-					color:#ffcc66;
-      	}
-        br {
-			display:block;
-			content:" ";
+      *, *:before, *:after {
+        margin:0;
+        padding:0;
+      	box-sizing:border-box;	
+     	  font-family:"Copperplate", fantasy;
+      }
+      body {
+    	  background-color:black;
+				font-size: 2vw;
+				color:#ffcc66;
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				text-align:center;
+      }
+      br {
+				display:block;
+				content:" ";
 	    }
 			.app-container {
 				position:absolute;
@@ -106,16 +111,15 @@
 			.bar-experience{
 				position:absolute;
 				height:4.1667%;
-				top: 59.8889%;
-				left: 1.0891%;
+				top: 58.4444%;
+				left: 5.222%;
 			}
 			.bar-experience-frame{
 				position:absolute;
 				height:4.1667%;
-				width: 47.9754%;
-				top: 59.8889%;
-				left: 1.0891%;
-				
+				width: 43.8984%;
+				top: 58.4444%;
+				left: 5.222%;
 			}
 			.heart{
 				position:absolute;
@@ -221,16 +225,23 @@
 			}
 			.character-name{
 				position: absolute;
-				left: 0.8936%;
-				top: 50.3888%;
+				left: 0.8378%;
+				top: 49%;
 				width: 48.4222%;
-				height: 7.4444%;
+				height: 6.8889%;
 				font-size: 150%;
+			}
+			.character-level-background {
+				position: absolute;
+				left: 0.6423%;
+				top: 55.5556%;
+				width: 5.0545%;
+				height: 10.0556%;
 			}
 			.character-level {
 				position: absolute;
-				left: 23.0362%;
-				top: 43.0556%;
+				left: 1.2008%;
+				top: 56.9444%;
 				width: 3.9654%;
 				height: 7.2222%;
 				font-size: 120%;
@@ -238,10 +249,30 @@
 			.character-points {
 				position: absolute;
 				left: 17.2019%;
-				top: 64.7222%;
+				top: 63.9444%;
 				width: 15.5822%;
 				height: 6.9444%;
 				font-size: 80%;
+			}
+			.atr-values {
+				position: absolute;
+				left: 52.7427%;
+				top: 18.8889%;
+				width: 22.0688%;
+				height: 28.6667%;
+				font-size: 120%;
+				color: #000000;
+				text-align: left;
+			}
+			.atr-bonuses {
+				position: absolute;
+				left: 68.8674%;
+				top: 17.8889%;
+				width: 28.0688%;
+				height: 28.6667%;
+				font-size: 60%;
+				color: #000000;
+				text-align: right;
 			}
 			.btn-close {
 				position: absolute;
@@ -273,13 +304,7 @@
 				left: 25.1406%;
 				top: 85.2777%;
 			}
-			.noselect {
-				-webkit-touch-callout: none;
-				-webkit-user-select: none;
-				-khtml-user-select: none;
-				-moz-user-select: none;
-				-ms-user-select: none;
-				user-select: none;
+			.nopointer {
 				pointer-events: none;
 			}
 	    .inline-block {

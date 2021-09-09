@@ -26,11 +26,10 @@ class Ui extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {};
-    this.state.characterMenu = false;
-    this.state.inventoryMenu = false;
-    this.characterMenuToggle = false;
-    this.inventoryMenuToggle = false;
+    this.state = {
+      characterMenu: false,
+      inventoryMenu: false
+    };
     if(this.props.pc.characterClass == "Rogue"){
       this.buttonAttack = buttonAttackRogue;
       this.buttonAttackHover = buttonAttackRogueHover;
@@ -49,6 +48,7 @@ class Ui extends React.Component {
     }
     this.healthHover = this.props.pc.currentHealth + "/" + ((this.props.pc.constitution*1 + this.props.pc.constitutionBonus*1)*4 + this.props.pc.healthBonus*1);
     this.energyHover = this.props.pc.currentEnergy + "/" + ((this.props.pc.intelligence*1 + this.props.pc.intelligenceBonus*1)*6 + this.props.pc.energyBonus*1);
+    this.toggleCharacterMenu = this.toggleCharacterMenu.bind(this);
   }
 
   render(){
@@ -88,7 +88,7 @@ class Ui extends React.Component {
           onMouseEnter={e => (e.currentTarget.src = this.buttonAttackHover)}
           onMouseLeave={e => (e.currentTarget.src = this.buttonAttack)}
         />
-        <input class="btn-character" type="image" src={buttonCharacter} alt="Character" onClick={ () => { this.characterMenuToggle = true; this.setState({characterMenu: true}) } } 
+        <input class="btn-character" type="image" src={buttonCharacter} alt="Character" onClick={this.toggleCharacterMenu} 
           onMouseEnter={e => (e.currentTarget.src = buttonCharacterHover)}
           onMouseLeave={e => (e.currentTarget.src = buttonCharacter)}
         />
@@ -96,20 +96,18 @@ class Ui extends React.Component {
           onMouseEnter={e => (e.currentTarget.src = buttonInventoryHover)}
           onMouseLeave={e => (e.currentTarget.src = buttonInventory)}
         />
-        <CharacterMenu on={this.state.characterMenu} pc={this.props.pc}/>
+        <CharacterMenu appState={this.props.appState} toggle={this.toggleCharacterMenu} on={this.state.characterMenu} pc={this.props.pc}/>
       </>
     )
   }
 
+  toggleCharacterMenu(){
+    this.state.characterMenu
+      ? this.setState({characterMenu: false})
+      : this.setState({characterMenu: true});
+  }
+
   componentDidUpdate(){
-    if(this.characterMenuToggle){
-      this.state.characterMenu = false;
-      this.characterMenuToggle = false;
-    }
-    if(this.inventoryMenuToggle){
-      this.state.inventoryMenu = false;
-      this.inventoryMenuToggle = false;
-    }
     this.healthStyle = {
       width: 20*(this.props.pc.currentHealth/((this.props.pc.constitution*1 + this.props.pc.constitutionBonus*1)*4 + this.props.pc.healthBonus*1)) + "%"
     }

@@ -67,6 +67,7 @@ public class PlayerCharacter {
 		this.experience = 60;
 		this.level = 1;
 		this.attributePoints = 4;
+		this.constitutionBonus = 1;
 		switch(characterClass) {
 			case "Rogue":
 				this.currency = 150 + currencyMetabonus;
