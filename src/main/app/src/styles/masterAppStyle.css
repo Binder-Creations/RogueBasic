@@ -1,7 +1,7 @@
 @charset "UTF-8";
 		
       *, *:before, *:after {
-        margin:0;
+				margin:0;
         padding:0;
       	box-sizing:border-box;	
      	  font-family:"Copperplate", fantasy;
@@ -248,7 +248,7 @@
 			}
 			.character-points {
 				position: absolute;
-				left: 17.2019%;
+				left: 16.7019%;
 				top: 63.9444%;
 				width: 15.5822%;
 				height: 6.9444%;
@@ -267,12 +267,52 @@
 			.atr-bonuses {
 				position: absolute;
 				left: 68.8674%;
-				top: 17.8889%;
+				top: 19.8889%;
 				width: 28.0688%;
 				height: 28.6667%;
-				font-size: 60%;
+				font-size: 50%;
 				color: #000000;
-				text-align: right;
+				text-align: ceneter;
+			}
+			.der-stats-1 {
+				position: absolute;
+				left: 51.2706%;
+				top: 57.5%;
+				width: 16.029%;
+				height: 35.6667%;
+				font-size: 100%;
+				color: #000000;
+				text-align: left;
+			}
+			.der-stats-2{
+				position: absolute;
+				left: 74.9232%;
+				top: 57.5%;
+				width: 16.029%;
+				height: 35.6667%;
+				font-size: 100%;
+				color: #000000;
+				text-align: left;
+			}
+			.der-values-1{
+				position: absolute;
+				left: 67.3555%;
+				top: 57.5%;
+				width: 7.4839%;
+				height: 35.6667%;
+				font-size: 100%;
+				color: #000000;
+				text-align: ceneter;
+			}
+			.der-values-2{
+				position: absolute;
+				left: 91.0081%;
+				top: 57.5%;
+				width: 7.4839%;
+				height: 35.6667%;
+				font-size: 100%;
+				color: #000000;
+				text-align: ceneter;
 			}
 			.btn-close {
 				position: absolute;
@@ -351,8 +391,7 @@
       		height:1em;
       	}
       	.spacer-xs {
-      		display:block;
-      		height:.5em;
+      		margin:1.95%;
       	}
       	.spacer-xxs {
       		display:block;

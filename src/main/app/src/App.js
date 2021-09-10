@@ -9,6 +9,7 @@ import innExterior from "./images/inn-exterior.png";
 import shop from "./images/shop.png";
 import shopExterior from "./images/shop-exterior.png";
 import Ui from "./modules/Ui"
+import PcServices from "./modules/PcServices";
 
 class App extends React.Component {
 
@@ -39,16 +40,19 @@ class App extends React.Component {
   render(){
     if (!this.state.character_id)
       return this.routeToLogin();
-
+    
+    const pcServices = new PcServices(this.state.pc)
+    const pc = pcServices.addStats()
+    console.log(pc)
     if (this.state.pc.location == "Town"){
       if(this.state.scene=="Default"){
-        return this.renderTown();
+        return this.renderTown(pc);
       } else if(this.state.scene=="Tavern"){
-        return this.renderTavern();
+        return this.renderTavern(pc);
       } else if(this.state.scene=="Inn"){
-        return this.renderInn();
+        return this.renderInn(pc);
       } else if(this.state.scene=="Shop"){
-        return this.renderShop();
+        return this.renderShop(pc);
       }
     }else{
       return this.renderRoom()
@@ -64,55 +68,55 @@ class App extends React.Component {
         </Router>
       );
     }
-    renderTown(){
+    renderTown(pc){
       return (
         <div className="app-container">
           <img className="background" src={town} alt="Town"/>
           <input className="tavern" type="image" src={tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
           <input className="inn" type="image" src={innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
           <input className="shop" type="image" src={shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
-          <Ui appState={this.appState} pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={pc}/>
         </div>
       );
     }
-    renderTavern(){
+    renderTavern(pc){
       return (
         <div className="app-container">
           <img className="background" alt="Tavern" src={tavern}/>
           <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui appState={this.appState} pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={pc}/>
         </div>
       );
     }
-    renderInn(){
+    renderInn(pc){
       return (
         <div className="app-container">
           <img className="background" alt="Inn" src={inn}/>
           <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui appState={this.appState} pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={pc}/>
         </div>
       );
     }
-    renderShop(){
+    renderShop(pc){
       return (
         <div className="app-container">
           <img className="background" alt="Shop" src={shop}/>
           <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui appState={this.appState} pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={pc}/>
         </div>
       );
     }
-    renderRoom(){
+    renderRoom(pc){
       return (
         <div className="app-container">
           <img className="background" src={town} alt="Town"/>
-          <Ui appState={this.appState} pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={pc}/>
         </div>
       );
     }
@@ -137,6 +141,16 @@ class App extends React.Component {
             case "con":
               pc.constitution += 1;
               pc.currentHealth += 4;
+              break key;
+            case "str":
+              pc.strength += 1;
+              break key;
+            case "dex":
+              pc.dexterity += 1;
+              break key;
+            case "int":
+              pc.intelligence += 1;
+              pc.currentEnergy += 6;
               break key;
             default:
               break key;

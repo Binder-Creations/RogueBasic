@@ -60,6 +60,7 @@ class AttributeBuyButtons extends React.Component {
               <input className="background" type="image" src={buttonStrength} alt="Strength"
                 onMouseEnter={e => (e.currentTarget.src = buttonStrengthHover)}
                 onMouseLeave={e => (e.currentTarget.src = buttonStrength)}
+                onClick={()=>{this.props.appState("pointbuy", "str", 1)}}
               />
               <p className="v-h-centered nopointer">
                 +Str
@@ -69,6 +70,7 @@ class AttributeBuyButtons extends React.Component {
               <input className="background" type="image" src={buttonDexterity} alt="Dexterity"
                 onMouseEnter={e => (e.currentTarget.src = buttonDexterityHover)}
                 onMouseLeave={e => (e.currentTarget.src = buttonDexterity)}
+                onClick={()=>{this.props.appState("pointbuy", "dex", 1)}}
               />
               <p className="v-h-centered nopointer">
                 +Dex
@@ -78,6 +80,7 @@ class AttributeBuyButtons extends React.Component {
               <input className="background" type="image" src={buttonIntelligence} alt="Intelligence"
                 onMouseEnter={e => (e.currentTarget.src = buttonIntelligenceHover)}
                 onMouseLeave={e => (e.currentTarget.src = buttonIntelligence)}
+                onClick={()=>{this.props.appState("pointbuy", "int", 1)}}
               />
               <p className="v-h-centered nopointer">
                 +Int

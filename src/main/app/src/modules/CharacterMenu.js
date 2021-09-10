@@ -57,14 +57,51 @@ class CharacterMenu extends React.Component {
             <p title={this.atrValueTitle("int", this.props.pc.intelligenceBonus)}>Intelligence: <span style={this.atrValueStyle(this.props.pc.intelligenceBonus)}>{(this.props.pc.intelligence*1 + this.props.pc.intelligenceBonus*1)}</span></p>
           </div>
           <div className="atr-bonuses">
-            <p></p>
-            <p>{"+"+(this.props.pc.constitution + this.props.pc.constitutionBonus)*4+" Health" + " – " + "+" + Math.round((this.props.pc.constitution + this.props.pc.constitutionBonus)/3)+" Health Regen"}</p>
-            <p></p>
-            <p>{"+"+Math.round((this.props.pc.strength + this.props.pc.strengthBonus)/2)+" Power" + " – " + "+"+(this.props.pc.strength + this.props.pc.strengthBonus)*2+" Armor" + " – " + "+"+(this.props.pc.strength + this.props.pc.strengthBonus)*2+" Armor Penetration"}</p>
-            <p></p>
-            <p>{"+"+Math.round((this.props.pc.dexterity + this.props.pc.dexterityBonus)/2)+" Power" + " – " + "+"+(this.props.pc.dexterity + this.props.pc.dexterityBonus)*2+" Dodge Rating" + " – " + "+"+(this.props.pc.dexterity + this.props.pc.dexterityBonus)*2+" Critical Rating"}</p>
-            <p></p>
-            <p>{"+"+Math.round((this.props.pc.intelligence + this.props.pc.intelligenceBonus)/2)+" Power" + " – " + "+"+(this.props.pc.intelligence + this.props.pc.intelligenceBonus)*6+" Energy" + " – " + "+"+Math.round((this.props.pc.intelligence + this.props.pc.intelligenceBonus)/2)+" Energy Regen"}</p>
+            <p>{"+"+(this.props.pc.constitution + this.props.pc.constitutionBonus)*4+" Health"}</p>
+            <p>{"+" + Math.round((this.props.pc.constitution + this.props.pc.constitutionBonus)/3)+" Health Regen"}</p>
+            <p className="spacer-xs"></p>
+            <p>{"+"+Math.round((this.props.pc.strength + this.props.pc.strengthBonus)/2)+" Power"}</p>
+            <p>{"+"+(this.props.pc.strength + this.props.pc.strengthBonus)*2+" Armor" + " +"+(this.props.pc.strength + this.props.pc.strengthBonus)*2+" Armor Pen"}</p>
+            <p className="spacer-xs"></p>
+            <p>{"+"+Math.round((this.props.pc.dexterity + this.props.pc.dexterityBonus)/2)+" Power"}</p>
+            <p>{"+"+(this.props.pc.dexterity + this.props.pc.dexterityBonus)*2+" Dodge Rating" + " +"+(this.props.pc.dexterity + this.props.pc.dexterityBonus)*2+" Crit Rating"}</p>
+            <p className="spacer-xs"></p>
+            <p>{"+"+Math.round((this.props.pc.intelligence + this.props.pc.intelligenceBonus)/2)+" Power"}</p>
+            <p>{"+"+(this.props.pc.intelligence + this.props.pc.intelligenceBonus)*6+" Energy" + " +"+Math.round((this.props.pc.intelligence + this.props.pc.intelligenceBonus)/2)+" Energy Regen"}</p>
+          </div>
+          <div className="der-stats-1">
+            <p title="All Damage Increases by 1% per Power">Power:</p>
+            <p title="Total Damage You Can Take Before Dying">Max Health:</p>
+            <p title="Health Regained Per Dungeon Room Traveled">Health Regen:</p>
+            <p title="Reduces Physical Damage Taken; Half Effect Against Magic">Armor:</p>
+            <p title="Percent Incoming Physical Damage is Reduced by">Physical Resistance:</p>
+            <p title="Percent Incoming Magical Damage is Reduced by">Magical Resistance:</p>
+            <p title="Reduces Enemy Armor">Armor Penetration:</p>
+          </div>
+          <div className="der-stats-2">
+            <p title="Increases Critical Chance">Critical Rating:</p>
+            <p title="Percent Chance to Deal Double Damage with Attack or Spell">Critical Chance:</p>
+            <p title="Increases Dodge Chance">Dodge Rating:</p>
+            <p title="Percent Chance to Avoid Enemy Attacks and Spells">Dodge Chance:</p>
+            <p title="Total Resource Available to Spend on Skills">Max Energy:</p>
+            <p title="Energy Regained Per Dungeon Room Traveled">Energy Regen:</p>
+          </div>
+          <div className="der-values-1">
+            <p title={Math.round((this.props.pc.strength + this.props.pc.strengthBonus)/2)+ "(str) + " + Math.round((this.props.pc.dexterity + this.props.pc.dexterityBonus)/2) + "(dex) + " + Math.round((this.props.pc.intelligence + this.props.pc.intelligenceBonus)/2) + "(int) + " + this.props.pc.powerBonus + "(bonus)"}>{Math.round((this.props.pc.strength + this.props.pc.strengthBonus)/2) + Math.round((this.props.pc.dexterity + this.props.pc.dexterityBonus)/2) + Math.round((this.props.pc.intelligence + this.props.pc.intelligenceBonus)/2) + this.props.pc.powerBonus}</p>
+            <p title={(this.props.pc.constitution + this.props.pc.constitutionBonus)*4 + "(con) + " + this.props.pc.healthBonus + "(bonus)"}>{(this.props.pc.constitution + this.props.pc.constitutionBonus)*4 + this.props.pc.healthBonus}</p>
+            <p title={(this.props.pc.constitution + this.props.pc.constitutionBonus)*4 + "(con) + " + this.props.pc.healthBonus + "(bonus)"}>{(this.props.pc.constitution + this.props.pc.constitutionBonus)*4 + this.props.pc.healthBonus}</p>
+            <p title="">{Math.round(70-(Math.pow(70, 1-(Math.sqrt((this.props.pc.armorBonus + (this.props.pc.strength + this.props.pc.strengthBonus)*2) > 1000 ? 1000 : (this.props.pc.armorBonus + (this.props.pc.strength + this.props.pc.strengthBonus)*2))/100)))) + "%"}</p>
+            <p title="">{Math.round((70-(Math.pow(70, 1-(Math.sqrt((this.props.pc.armorBonus + (this.props.pc.strength + this.props.pc.strengthBonus)*2) > 1000 ? 1000 : (this.props.pc.armorBonus + (this.props.pc.strength + this.props.pc.strengthBonus)*2))/100))))/2) + "%"}</p>
+            <p title="">{}</p>
+            <p title="">{}</p>
+          </div>
+          <div className="der-values-2">
+            <p title="">{}</p>
+            <p title="">{}</p>
+            <p title="">{}</p>
+            <p title="">{}</p>
+            <p title="">{}</p>
+            <p title="">{}</p>
           </div>
         </div>
       )  
