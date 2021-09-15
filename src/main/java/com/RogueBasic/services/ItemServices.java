@@ -12,29 +12,24 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.RogueBasic.beans.Dungeon;
-import com.RogueBasic.beans.Equipment;
 import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.Room;
-import com.RogueBasic.data.EquipmentDao;
 import com.RogueBasic.data.ItemDao;
 import com.datastax.oss.driver.api.core.CqlSession;
 
 public class ItemServices {
 	private ItemDao dao;
-	private EquipmentDao edao;
 	private static final Logger log = LogManager.getLogger(ItemServices.class);
 
 	public ItemServices(CqlSession session) {
 		super();
 		dao = new ItemDao(session);
-		edao = new EquipmentDao(session);
 	}
 
 	public void generate(Dungeon dungeon, Room room, int level){
 		List<Item> lootPool;
 		List<Item> loot;
 		Set<UUID> itemIds = new HashSet<>();
-		Set<UUID> equipmentIds = new HashSet<>();
 		
 		int lootValue = genLV(dungeon.getChallengeRating(), level, room.isMiniboss(), room.isBoss(), room.getMonsterIds() != null, room.getTrapId() != null);	
 		if (lootValue == 0)
@@ -44,15 +39,10 @@ public class ItemServices {
 		loot = genLoot(lootValue, lootPool);
 		
 		for (Item i : loot) {
-			if (i instanceof Equipment) {
-				equipmentIds.add(i.getId());
-			} else {
-				itemIds.add(i.getId());
-			}
+			itemIds.add(i.getId());
 		}
 		
 		room.setItemIds(itemIds);
-		room.setEquipmentIds(equipmentIds);
 	}
 	
 	private int genLV(int challengeRating, int level, boolean miniboss, boolean boss, boolean monsters,
@@ -74,7 +64,6 @@ public class ItemServices {
 	private List<Item> genLootPool(int lootValue){
 		int lowerBound = lootValue > 60 ? 20 : lootValue/3;
 		List<Item> pool = dao.getAll();
-		pool.addAll(0, edao.getAll());
 		pool.stream()
 			   .filter((i)-> i.getCost()>=lowerBound && i.getCost() <= lootValue)
 			   .collect(Collectors.toList());

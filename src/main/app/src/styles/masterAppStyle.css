@@ -209,7 +209,7 @@
 				width: 4.5%;
 				height: 9.45%;
 			}
-			.menu-character {
+			.menu {
 				position: absolute;
 				right: 7.3691%;
 				top: 5%;
@@ -222,6 +222,27 @@
 				top: 0.8377%;
 				width: 20.9439%;
 				height: 41.6666%;
+			}
+			.silhouette-warrior{
+				position: absolute;
+				left: 16.5875%;
+				top: 6.7222%;
+				width: 16.8389%;
+				height: 86.6111%;
+			}
+			.silhouette-wizard{
+				position: absolute;
+				left: 11.5052%;
+				top: 4.3333%;
+				width: 24.4345%;
+				height: 89.1111%;
+			}
+			.silhouette-rogue{
+				position: absolute;
+				left: 16.6713%;
+				top: 6.7778%;
+				width: 15.8894%;
+				height: 86.6667%;
 			}
 			.character-name{
 				position: absolute;
@@ -277,40 +298,40 @@
 			.der-stats-1 {
 				position: absolute;
 				left: 51.2706%;
-				top: 57.5%;
+				top: 58.5%;
 				width: 16.029%;
 				height: 35.6667%;
-				font-size: 100%;
+				font-size: 90%;
 				color: #000000;
 				text-align: left;
 			}
 			.der-stats-2{
 				position: absolute;
 				left: 74.9232%;
-				top: 57.5%;
+				top: 58.5%;
 				width: 16.029%;
 				height: 35.6667%;
-				font-size: 100%;
+				font-size: 90%;
 				color: #000000;
 				text-align: left;
 			}
 			.der-values-1{
 				position: absolute;
 				left: 67.3555%;
-				top: 57.5%;
+				top: 58.5%;
 				width: 7.4839%;
 				height: 35.6667%;
-				font-size: 100%;
+				font-size: 90%;
 				color: #000000;
 				text-align: ceneter;
 			}
 			.der-values-2{
 				position: absolute;
 				left: 91.0081%;
-				top: 57.5%;
+				top: 58.5%;
 				width: 7.4839%;
 				height: 35.6667%;
-				font-size: 100%;
+				font-size: 90%;
 				color: #000000;
 				text-align: ceneter;
 			}

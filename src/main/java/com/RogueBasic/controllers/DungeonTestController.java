@@ -18,7 +18,6 @@ import com.RogueBasic.beans.Player;
 import com.RogueBasic.beans.PlayerCharacter;
 import com.RogueBasic.beans.Room;
 import com.RogueBasic.data.DungeonDao;
-import com.RogueBasic.data.EquipmentDao;
 import com.RogueBasic.data.FloorDao;
 import com.RogueBasic.data.ItemDao;
 import com.RogueBasic.data.MonsterDao;
@@ -46,7 +45,6 @@ public class DungeonTestController {
 			FloorDao fd = new FloorDao(session);
 			RoomDao rdao = new RoomDao(session);
 			MonsterDao mdao = new MonsterDao(session);
-			EquipmentDao edao = new EquipmentDao(session);
 			ItemDao idao = new ItemDao(session);
 			TrapDao tdao = new TrapDao(session);
 			pcd.save(pc);

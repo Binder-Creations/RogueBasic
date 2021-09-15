@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.RogueBasic.beans.PlayerCharacter;
+import com.RogueBasic.beans.PlayerCharacterExport;
 import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.util.CassandraConnector;
 
@@ -21,15 +22,15 @@ public class PCController {
 
 
     @GetMapping("/{id}")
-    public PlayerCharacter getPlayerCharacter(@PathVariable String id) {
+    public PlayerCharacterExport getPlayerCharacter(@PathVariable String id) {
     	PlayerCharacterDao pcDao = new PlayerCharacterDao(CassandraConnector.getSession());
-    	return pcDao.findById(UUID.fromString(id));
+    	return new PlayerCharacterExport(pcDao.findById(UUID.fromString(id)));
     }
 
     @PutMapping
-    public ResponseEntity updatePlayerCharacter(@RequestBody PlayerCharacter pc) {
+    public ResponseEntity updatePlayerCharacter(@RequestBody PlayerCharacterExport pc) {
     	PlayerCharacterDao pcDao = new PlayerCharacterDao(CassandraConnector.getSession());
-    	pcDao.save(pc);
+    	pcDao.save(new PlayerCharacter(pc));
         return ResponseEntity.ok().build();
     }
 }

@@ -1,6 +1,0 @@
-{"name": "Test1e", "description": "Tester", "cost": 5, "weight": 1.1, "action": "Testing", "powerBonus": 5}
-{"name": "Test2e", "description": "Tester", "cost": 10, "weight": 1.1, "action": "Testing", "powerBonus": 5}
-{"name": "Test3e", "description": "Tester", "cost": 15, "weight": 1.1, "action": "Testing", "powerBonus": 5}
-{"name": "Test4e", "description": "Tester", "cost": 20, "weight": 1.1, "action": "Testing", "powerBonus": 5}
-{"name": "Test5e", "description": "Tester", "cost": 25, "weight": 1.1, "action": "Testing", "powerBonus": 5}
-{"name": "Test6e", "description": "Tester", "cost": 30, "weight": 1.1, "action": "Testing", "powerBonus": 5}

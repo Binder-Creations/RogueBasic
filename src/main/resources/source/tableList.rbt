@@ -6,6 +6,5 @@ rogue.DUNGEON
 rogue.FLOOR
 rogue.ROOM
 rogue.ITEM
-rogue.EQUIPMENT
 rogue.MONSTER
 rogue.TRAP

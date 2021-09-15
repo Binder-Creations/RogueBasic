@@ -17,7 +17,6 @@ import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.PlayerCharacter;
 import com.RogueBasic.beans.Room;
 import com.RogueBasic.data.DungeonDao;
-import com.RogueBasic.data.EquipmentDao;
 import com.RogueBasic.data.FloorDao;
 import com.RogueBasic.data.ItemDao;
 import com.RogueBasic.data.MonsterDao;
@@ -92,7 +91,6 @@ public class DungeonServices {
 			RoomDao rdao = new RoomDao(session);
 			MonsterDao mdao = new MonsterDao(session);
 			ItemDao idao = new ItemDao(session);
-			EquipmentDao edao = new EquipmentDao(session);
 			TrapDao tdao = new TrapDao(session);
 			
 			for(UUID id: dungeon.getFloorIds()) {
@@ -109,11 +107,6 @@ public class DungeonServices {
 					if(room.getItemIds()!=null) {
 						for(UUID u : room.getItemIds()) {
 							log.debug(idao.findById(u).toString());
-						}
-					}
-					if(room.getEquipmentIds()!=null) {
-						for(UUID u : room.getEquipmentIds()) {
-							log.debug(edao.findById(u).toString());
 						}
 					}
 					if(room.getTrapId()!=null) {

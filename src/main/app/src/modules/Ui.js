@@ -20,7 +20,8 @@ import buttonCharacter from "../images/button-character.png";
 import buttonInventory from "../images/button-inventory.png";
 import buttonCharacterHover from "../images/button-character-hover.png";
 import buttonInventoryHover from "../images/button-inventory-hover.png";
-import CharacterMenu from "./CharacterMenu"
+import CharacterMenu from "./CharacterMenu";
+import InventoryMenu from "./InventoryMenu";
 
 class Ui extends React.Component {
 
@@ -40,18 +41,19 @@ class Ui extends React.Component {
       this.buttonAttack = buttonAttackWarrior;
       this.buttonAttackHover = buttonAttackWarriorHover;   
     }
-    this.healthStyle = {
-      width: 20*(this.props.pc.currentHealth/((this.props.pc.constitution*1 + this.props.pc.constitutionBonus*1)*4 + this.props.pc.healthBonus*1)) + "%"
-    }
-    this.energyStyle = {
-       width: 20*(this.props.pc.currentEnergy/((this.props.pc.intelligence*1 + this.props.pc.intelligenceBonus*1)*6 + this.props.pc.energyBonus*1)) + "%"
-    }
-    this.healthHover = this.props.pc.currentHealth + "/" + ((this.props.pc.constitution*1 + this.props.pc.constitutionBonus*1)*4 + this.props.pc.healthBonus*1);
-    this.energyHover = this.props.pc.currentEnergy + "/" + ((this.props.pc.intelligence*1 + this.props.pc.intelligenceBonus*1)*6 + this.props.pc.energyBonus*1);
     this.toggleCharacterMenu = this.toggleCharacterMenu.bind(this);
+    this.toggleInventoryMenu = this.toggleInventoryMenu.bind(this);
   }
 
   render(){
+    this.healthStyle = {
+      width: 20*(this.props.pc.currentHealth/this.props.pc.healthTotal) + "%"
+    }
+    this.energyStyle = {
+       width: 20*(this.props.pc.currentEnergy/this.props.pc.energyTotal) + "%"
+    }
+    this.healthHover = this.props.pc.currentHealth + "/" + this.props.pc.healthTotal;
+    this.energyHover = this.props.pc.currentEnergy + "/" + this.props.pc.energyTotal;
     return(
       <>
         <img className="bar-health-background" src={barBackground} alt="Health" title={this.healthHover}/>
@@ -92,11 +94,12 @@ class Ui extends React.Component {
           onMouseEnter={e => (e.currentTarget.src = buttonCharacterHover)}
           onMouseLeave={e => (e.currentTarget.src = buttonCharacter)}
         />
-        <input class="btn-inventory" type="image" src={buttonInventory} alt="Inventory"
+        <input class="btn-inventory" type="image" src={buttonInventory} alt="Inventory" onClick={this.toggleInventoryMenu} 
           onMouseEnter={e => (e.currentTarget.src = buttonInventoryHover)}
           onMouseLeave={e => (e.currentTarget.src = buttonInventory)}
         />
         <CharacterMenu appState={this.props.appState} toggle={this.toggleCharacterMenu} on={this.state.characterMenu} pc={this.props.pc}/>
+        <InventoryMenu appState={this.props.appState} toggle={this.toggleInventoryMenu} on={this.state.inventoryMenu} pc={this.props.pc}/>
       </>
     )
   }
@@ -107,16 +110,12 @@ class Ui extends React.Component {
       : this.setState({characterMenu: true});
   }
 
-  componentDidUpdate(){
-    this.healthStyle = {
-      width: 20*(this.props.pc.currentHealth/((this.props.pc.constitution*1 + this.props.pc.constitutionBonus*1)*4 + this.props.pc.healthBonus*1)) + "%"
-    }
-    this.energyStyle = {
-       width: 20*(this.props.pc.currentEnergy/((this.props.pc.intelligence*1 + this.props.pc.intelligenceBonus*1)*6 + this.props.pc.energyBonus*1)) + "%"
-    }
-    this.healthHover = this.props.pc.currentHealth + "/" + ((this.props.pc.constitution*1 + this.props.pc.constitutionBonus*1)*4 + this.props.pc.healthBonus*1);
-    this.energyHover = this.props.pc.currentEnergy + "/" + ((this.props.pc.intelligence*1 + this.props.pc.intelligenceBonus*1)*6 + this.props.pc.energyBonus*1);
+  toggleInventoryMenu(){
+    this.state.inventoryMenu
+      ? this.setState({inventoryMenu: false})
+      : this.setState({inventoryMenu: true});
   }
+
 }
 
 export default Ui

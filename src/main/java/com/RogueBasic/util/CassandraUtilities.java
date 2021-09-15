@@ -5,11 +5,9 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.RogueBasic.beans.Equipment;
 import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.Monster;
 import com.RogueBasic.beans.Trap;
-import com.RogueBasic.data.EquipmentDao;
 import com.RogueBasic.data.ItemDao;
 import com.RogueBasic.data.MonsterDao;
 import com.RogueBasic.data.TrapDao;
@@ -39,7 +37,6 @@ public class CassandraUtilities {
 		ObjectMapper mapper = new ObjectMapper();
 		MonsterDao mdao = new MonsterDao(session);
 		ItemDao idao = new ItemDao(session);
-		EquipmentDao edao = new EquipmentDao(session);
 		TrapDao tdao = new TrapDao(session);
 		
 		//populates our tables with predefined game objects:
@@ -61,21 +58,11 @@ public class CassandraUtilities {
 		for(String s : ru.readFileToList("source/items.rbt")) {
 			try {
 				Item i = mapper.readValue(s, Item.class);
-				i.setId(UUID.randomUUID());
+				if(i.getId() == null) {
+					i.setId(UUID.randomUUID());
+				}
 				log.trace("CassandraUtilities.populate() calling ItemDao.save()");
 				idao.save(i);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Equipment.rbt");
-		for(String s : ru.readFileToList("source/equipment.rbt")) {
-			try {
-				Equipment eq = mapper.readValue(s, Equipment.class);
-				eq.setId(UUID.randomUUID());
-				log.trace("CassandraUtilities.populate() calling EquipmentDao.save()");
-				edao.save(eq);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
