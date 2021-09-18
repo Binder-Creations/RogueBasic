@@ -13,6 +13,7 @@ public class Item {
 	private String name;
 	private String description;
 	private String type;
+	private String rarity;
 	private String image;
 	private int cost;
 	private String actionType;
@@ -33,36 +34,39 @@ public class Item {
 	
 	public Item() {}
 	
-	public Item(String name, String description, String type, String image, int cost, String actionType, int actionValue) {
+	public Item(String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue) {
 		super();
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
 		this.type = type;
+		this.rarity = rarity;
 		this.image = image;
 		this.cost = cost;
 		this.actionType = actionType;
 		this.actionValue = actionValue;
 	}
 	
-	public Item(UUID id, String name, String description, String type, String image, int cost, String actionType, int actionValue) {
+	public Item(UUID id, String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.type = type;
+		this.rarity = rarity;
 		this.image = image;
 		this.cost = cost;
 		this.actionType = actionType;
 		this.actionValue = actionValue;
 	}
 	
-	public Item(String name, String description, String type, String image, int cost, double weight, String actionType, int constitutionBonus, int strengthBonus, int dexterityBonus, int intelligenceBonus, int powerBonus, int healthBonus, int healthRegenBonus, int armorBonus, int armorPenBonus, int dodgeRatingBonus, int critRatingBonus, int energyBonus, int energyRegenBonus, int actionValue) {
+	public Item(String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue, int constitutionBonus, int strengthBonus, int dexterityBonus, int intelligenceBonus, int powerBonus, int healthBonus, int healthRegenBonus, int armorBonus, int armorPenBonus, int dodgeRatingBonus, int critRatingBonus, int energyBonus, int energyRegenBonus) {
 		super();
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
 		this.type = type;
+		this.rarity = rarity;
 		this.image = image;
 		this.cost = cost;
 		this.actionType = actionType;
@@ -79,14 +83,16 @@ public class Item {
 		this.energyBonus = energyBonus;
 		this.energyRegenBonus = energyRegenBonus;
 		this.armorBonus = armorBonus;
+		this.armorPenBonus = armorPenBonus;
 	}
 	
-	public Item(UUID id, String name, String description, String type, String image, int cost, double weight, String actionType, int constitutionBonus, int strengthBonus, int dexterityBonus, int intelligenceBonus, int powerBonus, int healthBonus, int healthRegenBonus, int armorBonus, int armorPenBonus, int dodgeRatingBonus, int critRatingBonus, int energyBonus, int energyRegenBonus, int actionValue) {
+	public Item(UUID id, String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue, int constitutionBonus, int strengthBonus, int dexterityBonus, int intelligenceBonus, int powerBonus, int healthBonus, int healthRegenBonus, int armorBonus, int armorPenBonus, int dodgeRatingBonus, int critRatingBonus, int energyBonus, int energyRegenBonus) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.type = type;
+		this.rarity = rarity;
 		this.image = image;
 		this.cost = cost;
 		this.actionType = actionType;
@@ -103,6 +109,7 @@ public class Item {
 		this.energyBonus = energyBonus;
 		this.energyRegenBonus = energyRegenBonus;
 		this.armorBonus = armorBonus;
+		this.armorPenBonus = armorPenBonus;
 	}
 	
 	public UUID getId() {
@@ -134,6 +141,14 @@ public class Item {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	public String getRarity() {
+		return rarity;
+	}
+
+	public void setRarity(String rarity) {
+		this.rarity = rarity;
 	}
 
 	public String getImage() {
@@ -276,7 +291,8 @@ public class Item {
 	public int hashCode() {
 		return Objects.hash(actionType, actionValue, armorBonus, armorPenBonus, constitutionBonus, cost,
 				critRatingBonus, description, dexterityBonus, dodgeRatingBonus, energyBonus, energyRegenBonus,
-				healthBonus, healthRegenBonus, id, image, intelligenceBonus, name, powerBonus, strengthBonus, type);
+				healthBonus, healthRegenBonus, id, image, intelligenceBonus, name, powerBonus, rarity, strengthBonus,
+				type);
 	}
 	
 	@Override
@@ -297,20 +313,20 @@ public class Item {
 				&& healthBonus == other.healthBonus && healthRegenBonus == other.healthRegenBonus
 				&& Objects.equals(id, other.id) && Objects.equals(image, other.image)
 				&& intelligenceBonus == other.intelligenceBonus && Objects.equals(name, other.name)
-				&& powerBonus == other.powerBonus && strengthBonus == other.strengthBonus
-				&& Objects.equals(type, other.type);
+				&& powerBonus == other.powerBonus && Objects.equals(rarity, other.rarity)
+				&& strengthBonus == other.strengthBonus && Objects.equals(type, other.type);
 	}
 	
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", type=" + type + ", image="
-				+ image + ", cost=" + cost + ", actionType=" + actionType + ", actionValue=" + actionValue
-				+ ", constitutionBonus=" + constitutionBonus + ", strengthBonus=" + strengthBonus + ", dexterityBonus="
-				+ dexterityBonus + ", intelligenceBonus=" + intelligenceBonus + ", powerBonus=" + powerBonus
-				+ ", healthBonus=" + healthBonus + ", healthRegenBonus=" + healthRegenBonus + ", armorBonus="
-				+ armorBonus + ", armorPenBonus=" + armorPenBonus + ", dodgeRatingBonus=" + dodgeRatingBonus
-				+ ", critRatingBonus=" + critRatingBonus + ", energyBonus=" + energyBonus + ", energyRegenBonus="
-				+ energyRegenBonus + "]";
+		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", type=" + type + ", rarity="
+				+ rarity + ", image=" + image + ", cost=" + cost + ", actionType=" + actionType + ", actionValue="
+				+ actionValue + ", constitutionBonus=" + constitutionBonus + ", strengthBonus=" + strengthBonus
+				+ ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus=" + intelligenceBonus + ", powerBonus="
+				+ powerBonus + ", healthBonus=" + healthBonus + ", healthRegenBonus=" + healthRegenBonus
+				+ ", armorBonus=" + armorBonus + ", armorPenBonus=" + armorPenBonus + ", dodgeRatingBonus="
+				+ dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus + ", energyBonus=" + energyBonus
+				+ ", energyRegenBonus=" + energyRegenBonus + "]";
 	}
 	
 	

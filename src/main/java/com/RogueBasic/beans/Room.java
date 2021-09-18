@@ -1,5 +1,6 @@
 package com.RogueBasic.beans;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -21,7 +22,7 @@ public class Room {
 	private UUID eastRoomId;
 	private UUID westRoomId;
 	private UUID trapId;
-	private Set<UUID> itemIds;
+	private Map<UUID, Integer> loot;
 	private Set<UUID> monsterIds;
 	private boolean miniboss;
 	private boolean boss;
@@ -124,12 +125,13 @@ public class Room {
 		this.trapId = trapId;
 	}
 	
-	public Set<UUID> getItemIds() {
-		return itemIds;
+
+	public Map<UUID, Integer> getLoot() {
+		return loot;
 	}
-	
-	public void setItemIds(Set<UUID> itemIds) {
-		this.itemIds = itemIds;
+
+	public void setLoot(Map<UUID, Integer> loot) {
+		this.loot = loot;
 	}
 
 	public Set<UUID> getMonsterIds() {
@@ -158,8 +160,8 @@ public class Room {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(boss, dungeonId, eastRoomId, floorId, id, itemIds, miniboss, monsterIds,
-				northRoomId, southRoomId, stairsNext, stairsPrevious, trapId, westRoomId, xCoord, yCoord);
+		return Objects.hash(boss, dungeonId, eastRoomId, floorId, id, loot, miniboss, monsterIds, northRoomId,
+				southRoomId, stairsNext, stairsPrevious, trapId, westRoomId, xCoord, yCoord);
 	}
 
 	@Override
@@ -172,9 +174,8 @@ public class Room {
 			return false;
 		Room other = (Room) obj;
 		return boss == other.boss && Objects.equals(dungeonId, other.dungeonId)
-				&& Objects.equals(eastRoomId, other.eastRoomId)
-				&& Objects.equals(floorId, other.floorId) && Objects.equals(id, other.id)
-				&& Objects.equals(itemIds, other.itemIds) && miniboss == other.miniboss
+				&& Objects.equals(eastRoomId, other.eastRoomId) && Objects.equals(floorId, other.floorId)
+				&& Objects.equals(id, other.id) && Objects.equals(loot, other.loot) && miniboss == other.miniboss
 				&& Objects.equals(monsterIds, other.monsterIds) && Objects.equals(northRoomId, other.northRoomId)
 				&& Objects.equals(southRoomId, other.southRoomId) && stairsNext == other.stairsNext
 				&& stairsPrevious == other.stairsPrevious && Objects.equals(trapId, other.trapId)
@@ -186,7 +187,8 @@ public class Room {
 		return "Room [id=" + id + ", floorId=" + floorId + ", dungeonId=" + dungeonId + ", xCoord=" + xCoord
 				+ ", yCoord=" + yCoord + ", stairsPrevious=" + stairsPrevious + ", stairsNext=" + stairsNext
 				+ ", northRoomId=" + northRoomId + ", southRoomId=" + southRoomId + ", eastRoomId=" + eastRoomId
-				+ ", westRoomId=" + westRoomId + ", trapId=" + trapId + ", itemIds=" + itemIds + ", monsterIds=" + monsterIds + ", miniboss=" + miniboss + ", boss=" + boss + "]";
+				+ ", westRoomId=" + westRoomId + ", trapId=" + trapId + ", loot=" + loot + ", monsterIds=" + monsterIds
+				+ ", miniboss=" + miniboss + ", boss=" + boss + "]";
 	}
 	
 }

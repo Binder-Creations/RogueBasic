@@ -104,11 +104,11 @@ public class DungeonServices {
 							log.debug(mdao.findById(u).toString());
 						}
 					}
-					if(room.getItemIds()!=null) {
-						for(UUID u : room.getItemIds()) {
-							log.debug(idao.findById(u).toString());
-						}
-					}
+//					if(room.getLoot()!=null) {
+//						for(UUID u : room.getLoot()) {
+//							log.debug(idao.findById(u).toString());
+//						}
+//					}
 					if(room.getTrapId()!=null) {
 						log.debug(tdao.findById(room.getTrapId()).toString());
 					}
