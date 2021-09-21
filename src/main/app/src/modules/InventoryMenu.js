@@ -5,6 +5,8 @@ import buttonCloseHover from "../images/button-close-hover.png";
 import silhouetteWarrior from "../images/silhouette-warrior.png";
 import silhouetteRogue from "../images/silhouette-rogue.png";
 import silhouetteWizard from "../images/silhouette-wizard.png";
+import Inventory from "./Inventory";
+
 
 class InventoryMenu extends React.Component {
 
@@ -32,6 +34,9 @@ class InventoryMenu extends React.Component {
             onMouseEnter={e => (e.currentTarget.src = buttonCloseHover)}
             onMouseLeave={e => (e.currentTarget.src = buttonClose)}
           />
+          <div className="inventory-box">
+            <Inventory appState={this.props.appState} pc={this.props.pc}/>
+          </div>
         </div>
       )  
     } else {

@@ -1,14 +1,10 @@
 package com.RogueBasic.beans;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
 
 import com.RogueBasic.data.AbilityDao;
 import com.RogueBasic.data.ItemDao;

@@ -37,21 +37,21 @@ public class ItemServices {
 		int lootValue = genLV(dungeon.getChallengeRating(), level, dungeon.getPrefixMod(), room.isMiniboss(), room.isBoss(), room.getMonsterIds() != null, room.getTrapId() != null);	
 		if (lootValue == 0)
 			return;
-		room.setLoot(genLoot(lootValue, dungeon.getChallengeRating(), dungeon.isMiniboss(), dungeon.isBoss()));
+		room.setLoot(genLoot(lootValue, dungeon.getChallengeRating(), room.isMiniboss(), room.isBoss()));
 	}
 	
 	private int genLV(int challengeRating, int level, String prefixMod, boolean miniboss, boolean boss, boolean monsters,boolean trapped) {
-		int modifier = 10*(2+(challengeRating/2)+(level));
+		int modifier = 40*(2+(challengeRating/2)+(level));
 		int base = boss 
-				? challengeRating*60
+				? challengeRating*180
 				: miniboss
-					? challengeRating*45
+					? challengeRating*120
 					: monsters
-						? challengeRating*30
+						? challengeRating*90
 						: trapped
-							? challengeRating*20
-							:challengeRating*10;
-		int lootValue = base - modifier + ThreadLocalRandom.current().nextInt(3*modifier);
+							? challengeRating*60
+							:challengeRating*30;
+		int lootValue = base + ThreadLocalRandom.current().nextInt(modifier);
 		if(prefixMod != null)
 			if (prefixMod.substring(0, 4).equals("loot"))
 				lootValue = (lootValue*(100 + Integer.parseInt(prefixMod.substring(5))))/100;

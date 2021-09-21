@@ -10,11 +10,6 @@ import java.util.UUID;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-import com.RogueBasic.data.AbilityDao;
-import com.RogueBasic.data.ItemDao;
-import com.RogueBasic.util.CassandraConnector;
-import com.datastax.oss.driver.api.core.CqlSession;
-
 
 @Table
 public class PlayerCharacter {
