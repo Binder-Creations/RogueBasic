@@ -29,6 +29,7 @@ import com.datastax.oss.driver.api.core.CqlSession;
 public class test {
 	public static void main(String[] args) {
 		RogueUtilities ru = new RogueUtilities();
+		
 //		test test = new test();
 //		System.out.println(test.genLV(1, 1, null, false, false, true, false));
 //		String[] exceptions = {};
@@ -36,35 +37,35 @@ public class test {
 //		for(int i = 0; i < 50; i++) {
 //		}
 		CqlSession session = CassandraConnector.connect();
-		System.out.println(session);
+//		System.out.println(session);
 		CassandraUtilities cu = new CassandraUtilities(session);
-		DungeonServices du = new DungeonServices(session);
-		PlayerCharacterServices pcs = new PlayerCharacterServices(session);
-		PlayerCharacterDao pcd = new PlayerCharacterDao(session);
-		PlayerCharacter pc = new PlayerCharacter("t", "Rogue", 10, 10, 10, 10, 10);
-		FloorDao fd = new FloorDao(session);
-		RoomDao rd = new RoomDao(session);
-		ItemDao idd = new ItemDao(session);
-		pcd.save(pc);
-		Dungeon d = du.addFloors(du.generateShell(pc.getId()));
-		System.out.println(d.toString());
-		for(UUID floor: d.getFloorIds()) {
-			Floor floorO = fd.findById(floor);
-			System.out.println(floorO.toString());
-			for(UUID room: floorO.getRoomIds()) {
-				Room roomO = rd.findById(room);
-				System.out.println(roomO.toString());
-				if(roomO.getLoot() != null) {
-					for(UUID item: roomO.getLoot().keySet()) {
-						System.out.println(idd.findById(item).toString());
-					}
-				}
-			}
-		}
+//		DungeonServices du = new DungeonServices(session);
+//		PlayerCharacterServices pcs = new PlayerCharacterServices(session);
+//		PlayerCharacterDao pcd = new PlayerCharacterDao(session);
+//		PlayerCharacter pc = new PlayerCharacter("t", "Rogue", 10, 10, 10, 10, 10);
+//		FloorDao fd = new FloorDao(session);
+//		RoomDao rd = new RoomDao(session);
+//		ItemDao idd = new ItemDao(session);
+//		pcd.save(pc);
+//		Dungeon d = du.addFloors(du.generateShell(pc.getId()));
+//		System.out.println(d.toString());
+//		for(UUID floor: d.getFloorIds()) {
+//			Floor floorO = fd.findById(floor);
+//			System.out.println(floorO.toString());
+//			for(UUID room: floorO.getRoomIds()) {
+//				Room roomO = rd.findById(room);
+//				System.out.println(roomO.toString());
+//				if(roomO.getLoot() != null) {
+//					for(UUID item: roomO.getLoot().keySet()) {
+//						System.out.println(idd.findById(item).toString());
+//					}
+//				}
+//			}
+//		}
 	
-//		cu.dropAllTables();
-//		cu.initialize();
-//		cu.populate();
+		cu.dropAllTables();
+		cu.initialize();
+		cu.populate();
 ////
 //		ItemDao id = new ItemDao(session);
 //		List<Item> ilist = id.getAll();

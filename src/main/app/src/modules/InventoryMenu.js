@@ -6,6 +6,7 @@ import silhouetteWarrior from "../images/silhouette-warrior.png";
 import silhouetteRogue from "../images/silhouette-rogue.png";
 import silhouetteWizard from "../images/silhouette-wizard.png";
 import Inventory from "./Inventory";
+import Equipped from "./Equipped";
 
 
 class InventoryMenu extends React.Component {
@@ -34,8 +35,10 @@ class InventoryMenu extends React.Component {
             onMouseEnter={e => (e.currentTarget.src = buttonCloseHover)}
             onMouseLeave={e => (e.currentTarget.src = buttonClose)}
           />
+          <p className="gold-count">{this.props.pc.currency}</p>
+          <Equipped appState={this.props.appState} pc={this.props.pc} combat={this.props.combat}/>
           <div className="inventory-box">
-            <Inventory appState={this.props.appState} pc={this.props.pc}/>
+            <Inventory appState={this.props.appState} pc={this.props.pc} combat={this.props.combat}/>
           </div>
         </div>
       )  

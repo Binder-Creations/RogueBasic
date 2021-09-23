@@ -37,7 +37,7 @@ class CharacterMenu extends React.Component {
             onMouseEnter={e => (e.currentTarget.src = buttonCloseHover)}
             onMouseLeave={e => (e.currentTarget.src = buttonClose)}
           />
-          <AttributeBuyButtons appState={this.props.appState} attributePoints={this.props.pc.attributePoints}/>
+          <AttributeBuyButtons appState={this.props.appState} attributePoints={this.props.pc.attributePoints} combat={this.props.combat}/>
           <div className="character-name">
             <p className="v-h-centered">{this.props.pc.name}</p>
           </div>

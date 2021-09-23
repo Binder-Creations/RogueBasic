@@ -10,6 +10,10 @@ import java.util.UUID;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import com.RogueBasic.data.ItemDao;
+import com.RogueBasic.services.ItemServices;
+import com.RogueBasic.util.CassandraConnector;
+
 
 @Table
 public class PlayerCharacter {
@@ -68,10 +72,12 @@ public class PlayerCharacter {
 		this.level = 1;
 		this.inventory = new HashMap<>();
 		this.inventory.put(UUID.fromString("d822106a-e753-40db-898d-d438d1592baa"), 1);
-		this.inventory.put(UUID.fromString("ab0d75df-8457-4dde-adfe-77c9b37d262d"), 1);
+		this.inventory.put(UUID.fromString("ab0d75df-8457-4dde-adfe-77c9b37d262d"), 2);
 		switch(characterClass) {
 			case "Rogue":
 				this.equippedBody = UUID.fromString("4013e206-1991-458b-b998-7c8536ad4af3");
+				this.equippedPrimary = UUID.fromString("2d139761-0d80-4be1-88dd-436c2c76c0a0");
+				this.equippedSecondary = UUID.fromString("9413a77b-a76a-4462-8e9e-a05b6a4e479f");
 				this.currency = 150 + currencyMetabonus;
 				this.powerBonus = 15;
 				this.healthBonus = 20;
@@ -85,6 +91,8 @@ public class PlayerCharacter {
 				break;
 			case "Warrior":
 				this.equippedBody = UUID.fromString("914f823f-2691-4f39-bd8f-27381ccfb556");
+				this.equippedPrimary = UUID.fromString("4eff0337-cae1-42c1-b1fe-6ac397f12c09");
+				this.equippedSecondary = UUID.fromString("5fb043b1-745d-4243-b22a-e8ecc69ddb81");
 				this.currency = 50 + currencyMetabonus;
 				this.powerBonus = 10;
 				this.healthBonus = 30;
@@ -98,6 +106,8 @@ public class PlayerCharacter {
 				break;
 			case "Wizard":
 				this.equippedBody = UUID.fromString("111e072e-0c47-49b3-8cd6-7ddbffd025ea");
+				this.equippedPrimary = UUID.fromString("a3fc0e39-2baf-4729-9b14-28b6a8528d53");
+				this.equippedSecondary = UUID.fromString("d32c3382-3752-4244-9bf0-78d7a93946a5");
 				this.currency = 100 + currencyMetabonus;
 				this.powerBonus = 20;
 				this.healthBonus = 10;
@@ -112,6 +122,14 @@ public class PlayerCharacter {
 		}
 		this.currentHealth = (this.constitution + this.constitutionBonus)*4 + this.healthBonus;
 		this.currentEnergy = (this.intelligence + this.intelligenceBonus)*6 + this.energyBonus;
+		ItemServices iss = new ItemServices(CassandraConnector.getSession());
+		ItemDao id = new ItemDao(CassandraConnector.getSession());
+		for(int i = 0; i < 30; i++) {
+			String[] exceptions = {};
+			Item item = iss.genEquipment(exceptions, 8);
+			id.save(item);
+			inventory.put(item.getId(), 1);
+		}
 	}
 	
 	public PlayerCharacter(PlayerCharacterExport pc) {

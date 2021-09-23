@@ -114,7 +114,7 @@ public class ItemServices {
 		return equipment;
 	}
 	
-	private Item genEquipment(String[] exceptions, int challengeRating){
+	public Item genEquipment(String[] exceptions, int challengeRating){
 		String[] defaultTypes = {"headLight", "headMedium", "headHeavy", "bodyLight", "bodyMedium", "bodyHeavy", "back", "neck", "sword", "bow", "staff", "shield", "dagger", "spellbook"};
 		List<String> types = new ArrayList<>(Arrays.asList(defaultTypes));
 		
@@ -142,7 +142,7 @@ public class ItemServices {
 			
 			int statSum = (int)Math.round(Math.pow(ThreadLocalRandom.current().nextInt(challengeRating, ((challengeRating*3)/2+3))*5, 0.65)*rarityMultiplier);		
 			int cost = ThreadLocalRandom.current().nextInt(statSum*8, statSum*12);
-			String image = Integer.toString(ThreadLocalRandom.current().nextInt(new File("src/main/app/src/images/items/" + type).list().length + 1));
+			String image = Integer.toString(ThreadLocalRandom.current().nextInt(1, new File("src/main/app/src/images/items/" + type).list().length));
 			
 			StringBuffer nameBuffer = new StringBuffer();
 			StringBuffer descriptionBuffer = new StringBuffer();

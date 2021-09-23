@@ -16,11 +16,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pc: {},
-      scene: "Default", 
+      pc: {nameL: null},
+      scene: "Default",
+      combat: false, 
       character_id: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*\=\s*([^;]*).*$)|^.*$/, "$1")
     };
-    this.state.pc.name = null;
+    // this.state.pc.name = null;
     if(this.state.character_id){
       fetch('/pc/'+ this.state.character_id)
       .then(response => response.json())
@@ -46,7 +47,6 @@ class App extends React.Component {
     }
     const pcServices = new PcServices(this.state.pc)
     pcServices.addStats()
-    console.log(this.state.pc)
     if (this.state.pc.location == "Town"){
       if(this.state.scene=="Default"){
         return this.renderTown(this.state.pc);
@@ -89,7 +89,7 @@ class App extends React.Component {
           <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui appState={this.appState} pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat}/>
         </div>
       );
     }
@@ -100,7 +100,7 @@ class App extends React.Component {
           <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui appState={this.appState} pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat}/>
         </div>
       );
     }
@@ -111,7 +111,7 @@ class App extends React.Component {
           <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui appState={this.appState} pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat}/>
         </div>
       );
     }
@@ -119,7 +119,7 @@ class App extends React.Component {
       return (
         <div className="app-container">
           <img className="background" src={town} alt="Town"/>
-          <Ui appState={this.appState} pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat}/>
         </div>
       );
     }
