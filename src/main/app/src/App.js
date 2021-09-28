@@ -16,12 +16,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pc: {nameL: null},
+      pc: {name: null},
       scene: "Default",
       combat: false, 
-      character_id: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*\=\s*([^;]*).*$)|^.*$/, "$1")
+      character_id: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
+      width: window.innerWidth
     };
-    // this.state.pc.name = null;
     if(this.state.character_id){
       fetch('/pc/'+ this.state.character_id)
       .then(response => response.json())
@@ -35,8 +35,10 @@ class App extends React.Component {
         //   ? null
         //   : JSON.parse(fetch('/room/'+ this.state.pc.location)
         //     .then(response => response.json())))
-      this.appState = this.appState.bind(this);
+      
     };
+    this.appState = this.appState.bind(this);
+    this.updateWidth = this.updateWidth.bind(this);
   };
 
   render(){
@@ -45,17 +47,21 @@ class App extends React.Component {
     if(!this.state.pc.name){
       return(<></>)
     }
+    if(!this.listeningWidth){
+      window.addEventListener("resize", this.updateWidth)
+      this.listeningWidth = true;
+    }
     const pcServices = new PcServices(this.state.pc)
     pcServices.addStats()
     if (this.state.pc.location == "Town"){
       if(this.state.scene=="Default"){
-        return this.renderTown(this.state.pc);
+        return this.renderTown();
       } else if(this.state.scene=="Tavern"){
-        return this.renderTavern(this.state.pc);
+        return this.renderTavern();
       } else if(this.state.scene=="Inn"){
-        return this.renderInn(this.state.pc);
+        return this.renderInn();
       } else if(this.state.scene=="Shop"){
-        return this.renderShop(this.state.pc);
+        return this.renderShop();
       }
     }else{
       return this.renderRoom()
@@ -78,7 +84,7 @@ class App extends React.Component {
           <input className="tavern" type="image" src={tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
           <input className="inn" type="image" src={innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
           <input className="shop" type="image" src={shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
-          <Ui appState={this.appState} pc={this.state.pc}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} width={this.state.width}/>
         </div>
       );
     }
@@ -89,7 +95,7 @@ class App extends React.Component {
           <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} width={this.state.width}/>
         </div>
       );
     }
@@ -100,7 +106,7 @@ class App extends React.Component {
           <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} width={this.state.width}/>
         </div>
       );
     }
@@ -111,7 +117,7 @@ class App extends React.Component {
           <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} width={this.state.width}/>
         </div>
       );
     }
@@ -119,7 +125,7 @@ class App extends React.Component {
       return (
         <div className="app-container">
           <img className="background" src={town} alt="Town"/>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} width={this.state.width}/>
         </div>
       );
     }
@@ -132,6 +138,9 @@ class App extends React.Component {
         body: JSON.stringify(pc)
       });
       return;
+    }
+    updateWidth(){
+      this.setState({width: window.innerWidth});
     }
     appState(method, key, value){
       method: switch(method){

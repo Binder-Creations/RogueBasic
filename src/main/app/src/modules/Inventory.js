@@ -9,6 +9,7 @@ import backgroundGreen from "../images/background-green.png";
 import backgroundBlue from "../images/background-blue.png";
 import backgroundPurple from "../images/background-purple.png";
 import items from "../images/items";
+import ItemTooltip from "./ItemTooltip";
 
 class Inventory extends React.Component {
   
@@ -18,7 +19,6 @@ class Inventory extends React.Component {
     this.itemList = [];
     this.frame = "";
     this.background = "";
-
     this.setFrameBackground = this.setFrameBackground.bind(this);
     this.push = this.push.bind(this);
     this.pushUsableCount = this.pushUsableCount.bind(this);
@@ -53,7 +53,7 @@ class Inventory extends React.Component {
       ? 5
       : fillSize;
     while (this.itemList.length < fillSize*5){
-      this.itemList.push(<div><img src={frameEmpty} className="item-frame"/></div>)
+      this.itemList.push(<div className="inventory-box-item"><img src={frameEmpty} className="absolute-fill"/></div>)
     }
 
     return this.itemList;
@@ -135,46 +135,50 @@ class Inventory extends React.Component {
 
   pushUsableCount(item){
     this.itemList.push(
-      <div>
-        <img src={this.background} className="item-frame"/>
+      <div className="inventory-box-item item-tooltip">
+        <img src={this.background} className="absolute-fill"/>
         <img src={this.items[item.type]["i"+item.image]} className="item-image"/>
-        <img src={this.frame} className="item-frame"/>
+        <img src={this.frame} className="absolute-fill"/>
         <p className="item-count">
           {this.props.pc.inventory[item.id]}
         </p>
+        <ItemTooltip item={item} width={this.props.width}/>
       </div>
       )
   }
 
   pushUnusableCount(item){
     this.itemList.push(
-      <div>
-        <img src={this.background} className="item-frame-gray"/>
-        <img src={this.items[item.type]["i"+item.image]} className="item-image-gray"/>
-        <img src={this.frame} className="item-frame-gray"/>
+      <div className="inventory-box-item item-tooltip">
+        <img src={this.background} className="absolute-fill gray-75"/>
+        <img src={this.items[item.type]["i"+item.image]} className="item-image gray-75"/>
+        <img src={this.frame} className="absolute-fill gray-75"/>
         <p className="item-count">
           {this.props.pc.inventory[item.id]}
         </p>
+        <ItemTooltip item={item} width={this.props.width}/>
       </div>
       )
   }
 
   pushUsable(item){
     this.itemList.push(
-      <div>
-        <img src={this.background} className="item-frame"/>
+      <div className="inventory-box-item item-tooltip">
+        <img src={this.background} className="absolute-fill"/>
         <img src={this.items[item.type]["i"+item.image]} className="item-image"/>
-        <img src={this.frame} className="item-frame"/>
+        <img src={this.frame} className="absolute-fill"/>
+        <ItemTooltip item={item} width={this.props.width}/>
       </div>
     )
   }
 
   pushUnusable(item){
     this.itemList.push(
-      <div>
-        <img src={this.background} className="item-frame-gray"/>
-        <img src={this.items[item.type]["i"+item.image]} className="item-image-gray"/>
-        <img src={this.frame} className="item-frame-gray"/>
+      <div className="inventory-box-item item-tooltip">
+        <img src={this.background} className="absolute-fill gray-75"/>
+        <img src={this.items[item.type]["i"+item.image]} className="item-image gray-75"/>
+        <img src={this.frame} className="absolute-fill gray-75"/>
+        <ItemTooltip item={item} width={this.props.width}/>
       </div>
     )
   }

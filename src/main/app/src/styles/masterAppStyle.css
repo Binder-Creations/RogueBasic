@@ -6,6 +6,23 @@
       	box-sizing:border-box;	
      	  font-family:"Copperplate", fantasy;
       }
+			::-webkit-scrollbar {
+				width: 1vw;
+			}
+
+			::-webkit-scrollbar-track {
+				box-shadow: inset 0 0 0.7vw #a87e1299;
+				background: #4f3c0e99;
+			}
+
+			::-webkit-scrollbar-thumb {
+				background: #a47f32;
+				border-radius: 0.2vw;
+			}
+
+			::-webkit-scrollbar-thumb:hover {
+				background: #89651f;
+			}
       body {
     	  background-color:black;
 				font-size: 2vw;
@@ -373,38 +390,44 @@
 				height: 4.2778%;
 				font-size: 75%;
 			}
+			.inventory-box-placeholder{
+				position:relative;
+				width:40.0447%;
+			}
+			.inventory-box-wrapper {
+				position: absolute;
+				overflow-y: auto;
+				overflow-x: hidden;
+				left: 0%;
+				top: 20.2222%;
+				width: 100%;
+				height: 73.6111%;
+			}
 			.inventory-box {
 				position: absolute;
 				left: 54.9567%;
-				top: 20.2222%;
+				top: 0%;
 				width: 40.0447%;
-				height: 73.6111%;
+				height: 100%;
 				display:flex;
-				overflow-y: auto;
-				overflow-x: hidden;
 				flex-flow: row wrap;
 				align-items: flex-start;
 				align-content: flex-start;
 			}
-			.inventory-box div {
+			.inventory-box-item {
 				position: relative;
 				width: 18.1311%;
 				height:19.6226%;
 				margin: 0.1887% 0.935%;
 			}
-			.item-frame {
+			.absolute-fill {
 				position: absolute;
 				top:0%;
 				left:0%;
 				width: 100%;
 				height: 100%;
 			}
-			.item-frame-gray {
-				position: absolute;
-				top:0%;
-				left:0%;
-				width: 100%;
-				height: 100%;
+			.gray-75 {
 				filter: grayscale(75%);
 			}
 			.item-image {
@@ -413,14 +436,6 @@
 				left:5%;
 				width: 90%;
 				height: 90%;
-			}
-			.item-image-gray {
-				position: absolute;
-				top:5%;
-				left:5%;
-				width: 90%;
-				height: 90%;
-				filter: grayscale(75%);
 			}
 			.item-count {
 				position: absolute;
@@ -473,29 +488,6 @@
 				width: 9.4946%;
 				height: 18.8889%;
 			}
-			/* width */
-
-			::-webkit-scrollbar {
-				width: 1vw;
-			}
-
-			/* Track */
-			::-webkit-scrollbar-track {
-				box-shadow: inset 0 0 0.7vw #a87e1299;
-				background: #4f3c0e99;
-			}
-
-			/* Handle */
-			::-webkit-scrollbar-thumb {
-				background: #a47f32;
-				border-radius: 0.2vw;
-			}
-
-			/* Handle on hover */
-			::-webkit-scrollbar-thumb:hover {
-				background: #89651f;
-			}
-
 			.nopointer {
 				pointer-events: none;
 			}
@@ -548,33 +540,152 @@
       		transform: translate(-50%, -50%);
       		-ms-transform: translateY(-50%) translateX(-50%);
 				}
-		.tooltip {
-		  	position: relative;
-		  	display: inline-block;
-		}
-		.tooltip .tooltiptext {
-			visibility: hidden;
-			width: 6em;
-			background-color: #555;
-			color: #fff;
-			text-align: center;
-			border-radius: .5em;
-			padding: 1em 0;
+
+		.item-tooltip-box{
 			position: absolute;
-			z-index: 4;
-			bottom: 50%;
-			right: 110%;
-			margin-bottom: -3.3em;
+			visibility: hidden;
 			transition: opacity 0.3s;
+			z-index: 9;
 		}
-		.tooltip:hover .tooltiptext {
-  			visibility: visible;
+		.item-tooltip:hover .item-tooltip-box{
+			visibility: visible;
 		}
- 
-      	.v-h-centered{
-      		position:absolute;
-      		top: 50%;
-      		left:50%;
-      		transform: translate(-50%, -50%);
-      		-ms-transform: translateY(-50%) translateX(-50%);
-      	}
+		.top-left{
+			top: 0%;
+			left: 108%;
+		}
+		.top-right{
+			top: 0%;
+			right: 108%;
+		}
+		.center-left{
+			top: 202%;
+			left: 108%;
+		}
+		.center-right{
+			top: 202%;
+			right: 108%;
+		}
+		.bottom-left{
+			bottom: 0%;
+			left: 108%;
+		}
+		.bottom-right{
+			bottom: 0%;
+			right: 108%;
+		}
+		.item-tooltip-image{
+			position: absolute;
+			left: 3.5714%;
+			top: 14.6667%;
+			width: 17.1429%;
+			height: 11.4286%;
+		}
+		.item-tooltip-badge-generic{
+			position: absolute;
+			left: 80.1427%;
+			top: 14.6667%;
+			width: 15.4286%;
+			height: 11.4286%;
+		}
+		.item-tooltip-badge-wizard{
+			position: absolute;
+			left: 3.5714%;
+			top: 14.6667%;
+			width: 17.1429%;
+			height: 11.4286%;
+		}
+		.item-tooltip-badge-rogue{
+			position: absolute;
+			left: 81.7143%;
+			top: 14.6667%;
+			width: 12.5714%;
+			height: 11.4286%;
+		}
+		.item-tooltip-badge-warrior{
+			position: absolute;
+			left: 79.7143%;
+			top: 14.6667%;
+			width: 16.2857%;
+			height: 11.4286%;
+		}
+		.item-tooltip-icon-heal{
+			position: absolute;
+			left: 54.8571%;
+			top: 29.7143%;
+			width: 9.4286%;
+			height: 11.4286%;
+		}
+		.item-tooltip-icon-armor{
+			position: absolute;
+			left: 50.7143%;
+			top: 29.7143%;
+			width: 21.5714%;
+			height: 11.4286%;
+		}
+		.item-tooltip-icon-power{
+			position: absolute;
+			left: 53.1429%;
+			top: 29.7143%;
+			width: 16.7143%;
+			height: 11.4286%;
+		}
+		.item-tooltip-icon-value{
+			position: absolute;
+			left: 32.8571%;
+			top: 29.7143%;
+			width: 17.1429%;
+			height: 11.4286%;
+			font-size: 128%;
+		}
+		.item-tooltip-name{
+			position: absolute;
+			left: 9.7143%;
+			top: 2.4762%;
+			width: 80.1429%;
+			height: 11.4286%;
+			color:#000000;
+			font-size: 70%;
+		}
+		.item-tooltip-cost{
+			position: absolute;
+			left: 43.2857%;
+			top: 75.5238%;
+			width: 16.8571%;
+			height: 6.0%;
+			font-size: 62.5%;
+		}
+		.item-tooltip-description{
+			position: absolute;
+			left: 9.7143%;
+			top: 85.9048%;
+			width: 80.1429%;
+			height: 11.4286%;
+			color:#000000;
+			font-size: 50%;
+		}
+		.item-tooltip-general{
+			position: absolute;
+			left: 21.7143%;
+			top: 16.6667%;
+			width: 56.5714%;
+			height: 11.4286%;
+			color:#000000;
+			font-size: 80%;
+		}
+		.item-tooltip-statbox{
+			position: absolute;
+			left: 9.7143%;
+			top: 42.2857%;
+			width: 80.5714%;
+			height: 31.7143%;
+			color:#000000;
+			font-size: 70%;
+		}
+		.v-h-centered{
+			position:absolute;
+			top: 50%;
+			left:50%;
+			transform: translate(-50%, -50%);
+			-ms-transform: translateY(-50%) translateX(-50%);
+		}

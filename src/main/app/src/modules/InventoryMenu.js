@@ -36,9 +36,11 @@ class InventoryMenu extends React.Component {
             onMouseLeave={e => (e.currentTarget.src = buttonClose)}
           />
           <p className="gold-count">{this.props.pc.currency}</p>
-          <Equipped appState={this.props.appState} pc={this.props.pc} combat={this.props.combat}/>
-          <div className="inventory-box">
-            <Inventory appState={this.props.appState} pc={this.props.pc} combat={this.props.combat}/>
+          <Equipped appState={this.props.appState} pc={this.props.pc} combat={this.props.combat} width={this.props.width}/>
+          <div className="inventory-box-wrapper">
+            <div className="inventory-box">
+              <Inventory appState={this.props.appState} pc={this.props.pc} combat={this.props.combat} width={this.props.width}/>
+            </div>
           </div>
         </div>
       )  

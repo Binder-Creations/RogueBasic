@@ -17,7 +17,8 @@ public class HomeController {
 	public String home(@CookieValue(value="player_id", defaultValue="0") String playerId, @CookieValue(value="player_name", defaultValue="null") String playerName, Model model) {
 		PlayerDao pdao = new PlayerDao(CassandraConnector.getSession());
 		model.addAttribute("name", playerName);
-		model.addAttribute("has_characters", pdao.findById(UUID.fromString(playerId)).getCharacterIds() != null);
+		if(!playerId.equals("0"))
+			model.addAttribute("has_characters", pdao.findById(UUID.fromString(playerId)).getCharacterIds() != null);
 		return playerId.equals("0") 
 				? "redirect:/login"
 				: "home";

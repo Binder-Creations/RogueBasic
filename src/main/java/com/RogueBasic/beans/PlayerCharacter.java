@@ -76,8 +76,8 @@ public class PlayerCharacter {
 		switch(characterClass) {
 			case "Rogue":
 				this.equippedBody = UUID.fromString("4013e206-1991-458b-b998-7c8536ad4af3");
-				this.equippedPrimary = UUID.fromString("2d139761-0d80-4be1-88dd-436c2c76c0a0");
-				this.equippedSecondary = UUID.fromString("9413a77b-a76a-4462-8e9e-a05b6a4e479f");
+				this.equippedPrimary = UUID.fromString("4eff0337-cae1-42c1-b1fe-6ac397f12c09");
+				this.equippedSecondary = UUID.fromString("5fb043b1-745d-4243-b22a-e8ecc69ddb81");
 				this.currency = 150 + currencyMetabonus;
 				this.powerBonus = 15;
 				this.healthBonus = 20;
@@ -91,8 +91,8 @@ public class PlayerCharacter {
 				break;
 			case "Warrior":
 				this.equippedBody = UUID.fromString("914f823f-2691-4f39-bd8f-27381ccfb556");
-				this.equippedPrimary = UUID.fromString("4eff0337-cae1-42c1-b1fe-6ac397f12c09");
-				this.equippedSecondary = UUID.fromString("5fb043b1-745d-4243-b22a-e8ecc69ddb81");
+				this.equippedPrimary = UUID.fromString("2d139761-0d80-4be1-88dd-436c2c76c0a0");
+				this.equippedSecondary = UUID.fromString("9413a77b-a76a-4462-8e9e-a05b6a4e479f");
 				this.currency = 50 + currencyMetabonus;
 				this.powerBonus = 10;
 				this.healthBonus = 30;

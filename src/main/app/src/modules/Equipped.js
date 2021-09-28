@@ -75,9 +75,9 @@ class Equipped extends React.Component {
   pushUsable(item, slot){
     this.equippedList.push(
       <div className={"equipped-" + slot}>
-        <img src={this.background} className="item-frame"/>
+        <img src={this.background} className="absolute-fill"/>
         <img src={this.items[item.type]["i"+item.image]} className="item-image"/>
-        <img src={frame} className="item-frame"/>
+        <img src={frame} className="absolute-fill"/>
       </div>
     )
   }
@@ -85,9 +85,9 @@ class Equipped extends React.Component {
   pushUnusable(item, slot){
     this.equippedList.push(
       <div className={"equipped-" + slot}>
-        <img src={this.background} className="item-frame"/>
+        <img src={this.background} className="absolute-fill"/>
         <img src={this.items[item.type]["i"+item.image]} className="item-image"/>
-        <img src={frame} className="item-frame"/>
+        <img src={frame} className="absolute-fill"/>
       </div>
     )
   }

@@ -4,7 +4,7 @@ import buttonClose from "../images/button-close.png";
 import buttonCloseHover from "../images/button-close-hover.png";
 import badgeWarrior from "../images/badge-warrior.png";
 import badgeRogue from "../images/badge-rogue.png";
-import badgeMage from "../images/badge-mage.png";
+import badgeWizard from "../images/badge-wizard.png";
 import barExperience from "../images/bar-experience.png";
 import barFrame from "../images/bar-frame.png";
 import characterLevelBackground from "../images/character-level-background.png";
@@ -17,7 +17,7 @@ class CharacterMenu extends React.Component {
     if(this.props.pc.characterClass == "Rogue"){
       this.badge = badgeRogue;
     } else if(this.props.pc.characterClass == "Wizard"){
-      this.badge = badgeMage;
+      this.badge = badgeWizard;
     } else {
       this.badge = badgeWarrior;
     }
