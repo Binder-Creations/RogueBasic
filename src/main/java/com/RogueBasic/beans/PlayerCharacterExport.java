@@ -52,6 +52,8 @@ public class PlayerCharacterExport {
 	private int currentHealth;
 	private int currentEnergy;
 	
+	public PlayerCharacterExport() {}
+	
 	public PlayerCharacterExport(PlayerCharacter pc) {
 		CqlSession session = CassandraConnector.getSession();
 		AbilityDao adao = new AbilityDao(session);

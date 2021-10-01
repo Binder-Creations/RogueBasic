@@ -390,24 +390,22 @@
 				height: 4.2778%;
 				font-size: 75%;
 			}
-			.inventory-box-placeholder{
-				position:relative;
-				width:40.0447%;
-			}
 			.inventory-box-wrapper {
+				z-index: 1;
 				position: absolute;
 				overflow-y: auto;
 				overflow-x: hidden;
 				left: 0%;
 				top: 20.2222%;
-				width: 100%;
+				width: 95.0014%;
 				height: 73.6111%;
 			}
 			.inventory-box {
+				pointer-events: auto;
 				position: absolute;
-				left: 54.9567%;
+				right: 0%;
 				top: 0%;
-				width: 40.0447%;
+				width: 42.1517%;
 				height: 100%;
 				display:flex;
 				flex-flow: row wrap;
@@ -446,47 +444,35 @@
 				color:white;
 				font-size: 75%;
 			}
-			.equipped-head {
+			.item-equipped {
 				position: absolute;
+				z-index: 2;
+				width: 9.4946%;
+				height: 18.8889%;
+			}
+			.equipped-head {
 				top:8.8333%;
 				left:1.4242%;
-				width: 9.4946%;
-				height: 18.8889%;
 			}
 			.equipped-body {
-				position: absolute;
 				top:40.6667%;
 				left:1.4521%;
-				width: 9.4946%;
-				height: 18.8889%;
 			}
 			.equipped-back {
-				position: absolute;
 				top:72%;
 				left:1.4521%;
-				width: 9.4946%;
-				height: 18.8889%;
 			}
 			.equipped-neck{
-				position: absolute;
 				top:9.6667%;
 				left:39.2907%;
-				width: 9.4946%;
-				height: 18.8889%;
 			}
 			.equipped-primary{
-				position: absolute;
 				top:40.667%;
 				left:39.2907%;
-				width: 9.4946%;
-				height: 18.8889%;
 			}
 			.equipped-secondary{
-				position: absolute;
 				top:72%;
 				left:39.2907%;
-				width: 9.4946%;
-				height: 18.8889%;
 			}
 			.nopointer {
 				pointer-events: none;
@@ -547,32 +533,38 @@
 			transition: opacity 0.3s;
 			z-index: 9;
 		}
+
+		.item-tooltip * {
+			pointer-events: none
+		}
+
 		.item-tooltip:hover .item-tooltip-box{
 			visibility: visible;
 		}
+
 		.top-left{
 			top: 0%;
-			left: 108%;
+			left: 100.2%;
 		}
 		.top-right{
 			top: 0%;
-			right: 108%;
+			right: 100.2%;
 		}
 		.center-left{
-			top: 202%;
-			left: 108%;
+			top: -150%;
+			left: 100.2%;
 		}
 		.center-right{
-			top: 202%;
-			right: 108%;
+			top: -150%;
+			right: 100.2%;
 		}
 		.bottom-left{
 			bottom: 0%;
-			left: 108%;
+			left: 100.2%;
 		}
 		.bottom-right{
 			bottom: 0%;
-			right: 108%;
+			right: 100.2%;
 		}
 		.item-tooltip-image{
 			position: absolute;
@@ -590,7 +582,7 @@
 		}
 		.item-tooltip-badge-wizard{
 			position: absolute;
-			left: 3.5714%;
+			left: 79.4%;
 			top: 14.6667%;
 			width: 17.1429%;
 			height: 11.4286%;
@@ -632,11 +624,12 @@
 		}
 		.item-tooltip-icon-value{
 			position: absolute;
-			left: 32.8571%;
+			left: 32.2571%;
 			top: 29.7143%;
 			width: 17.1429%;
 			height: 11.4286%;
 			font-size: 128%;
+			text-align: right;
 		}
 		.item-tooltip-name{
 			position: absolute;

@@ -20,7 +20,7 @@ class App extends React.Component {
       scene: "Default",
       combat: false, 
       character_id: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
-      width: window.innerWidth
+      widthChange: 0
     };
     if(this.state.character_id){
       fetch('/pc/'+ this.state.character_id)
@@ -37,6 +37,7 @@ class App extends React.Component {
         //     .then(response => response.json())))
       
     };
+    this.pcServices = "";
     this.appState = this.appState.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
   };
@@ -47,12 +48,15 @@ class App extends React.Component {
     if(!this.state.pc.name){
       return(<></>)
     }
-    if(!this.listeningWidth){
-      window.addEventListener("resize", this.updateWidth)
-      this.listeningWidth = true;
+    if(this.pcServices == ""){
+      this.pcServices = new PcServices(this.state.pc)
+      
     }
-    const pcServices = new PcServices(this.state.pc)
-    pcServices.addStats()
+    this.pcServices.updateStats()
+    if(!this.listenersAdded){
+      window.addEventListener("resize", this.updateWidth)
+      this.listenersAdded = true;
+    }
     if (this.state.pc.location == "Town"){
       if(this.state.scene=="Default"){
         return this.renderTown();
@@ -84,7 +88,7 @@ class App extends React.Component {
           <input className="tavern" type="image" src={tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
           <input className="inn" type="image" src={innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
           <input className="shop" type="image" src={shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} width={this.state.width}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} widthChange={this.state.widthChange}/>
         </div>
       );
     }
@@ -95,7 +99,7 @@ class App extends React.Component {
           <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} width={this.state.width}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} widthChange={this.state.widthChange}/>
         </div>
       );
     }
@@ -106,7 +110,7 @@ class App extends React.Component {
           <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} width={this.state.width}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} widthChange={this.state.widthChange}/>
         </div>
       );
     }
@@ -117,7 +121,7 @@ class App extends React.Component {
           <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
             <img src={townIcon} alt="Town"/>
           </button>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} width={this.state.width}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} widthChange={this.state.widthChange}/>
         </div>
       );
     }
@@ -125,7 +129,7 @@ class App extends React.Component {
       return (
         <div className="app-container">
           <img className="background" src={town} alt="Town"/>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} width={this.state.width}/>
+          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} widthChange={this.state.widthChange}/>
         </div>
       );
     }
@@ -140,12 +144,55 @@ class App extends React.Component {
       return;
     }
     updateWidth(){
-      this.setState({width: window.innerWidth});
+      this.setState({widthChange: ++this.state.widthChange});
     }
     appState(method, key, value){
+      let pc;
       method: switch(method){
+        case "inventory":  
+          pc = {...this.state.pc};
+          console.log(pc)
+          if(pc.inventory[key.id] > 1){
+            pc.inventory.set(pc.inventory[key.id] -= 1);
+          }else{
+            delete pc.inventory[key.id]
+            var index = pc.inventoryCache.indexOf(key);
+            if (index !== -1)
+              pc.inventoryCache.splice(index, 1);
+          }
+          key: switch (key.actionType){
+            case "heal":
+              pc.currentHealth = (pc.currentHealth + pc.healthTotal*(1+key.actionValue/100) > pc.healthTotal)
+                ? pc.healthTotal
+                : pc.currentHealth + pc.healthTotal*(1+key.actionValue/100);
+              break key;
+            default:
+              var slot;
+              if(key.type == "headLight" || key.type == "headMedium" || key.type == "headHeavy"){
+                slot = "Head";
+              } else if (key.type == "bodyLight" || key.type == "bodyMedium" || key.type == "bodyHeavy"){
+                slot = "Body"
+              } else if (key.type == "neck"){
+                slot = "Neck"
+              } else if (key.type == "back"){
+                slot = "Back"
+              } else if (key.type == "bow" || key.type == "staff" || key.type == "sword"){
+                slot = "Primary"
+              } else {
+                slot = "Secondary"
+              }
+              if(pc["equipped" + slot]){
+                pc.inventory[pc["equipped" + slot].id] = 1;
+                pc.inventoryCache.push(pc["equipped" + slot])
+              }
+              pc["equipped" + slot] = key;
+              break key;
+          }
+          this.savePc(pc)
+            .then(()=>{this.setState({pc: pc})});
+          break method;
         case "pointbuy":
-          let pc = {...this.state.pc};
+          pc = {...this.state.pc};
           pc.attributePoints > 0
             ? pc.attributePoints -= 1
             : pc.attributePoints = 0;
@@ -169,7 +216,7 @@ class App extends React.Component {
           }
           this.savePc(pc)
             .then(()=>{this.setState({pc: pc})});
-        break method;
+          break method;
       }
     }
 

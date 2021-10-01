@@ -93,7 +93,7 @@ public class PlayerCharacter {
 				this.equippedBody = UUID.fromString("914f823f-2691-4f39-bd8f-27381ccfb556");
 				this.equippedPrimary = UUID.fromString("2d139761-0d80-4be1-88dd-436c2c76c0a0");
 				this.equippedSecondary = UUID.fromString("9413a77b-a76a-4462-8e9e-a05b6a4e479f");
-				this.currency = 50 + currencyMetabonus;
+				this.currency = 100 + currencyMetabonus;
 				this.powerBonus = 10;
 				this.healthBonus = 30;
 				this.healthRegenBonus = 4;
@@ -120,8 +120,6 @@ public class PlayerCharacter {
 				this.energyRegenBonus = 5;		
 				break;
 		}
-		this.currentHealth = (this.constitution + this.constitutionBonus)*4 + this.healthBonus;
-		this.currentEnergy = (this.intelligence + this.intelligenceBonus)*6 + this.energyBonus;
 		ItemServices iss = new ItemServices(CassandraConnector.getSession());
 		ItemDao id = new ItemDao(CassandraConnector.getSession());
 		for(int i = 0; i < 30; i++) {

@@ -98,8 +98,8 @@ class Ui extends React.Component {
           onMouseEnter={e => (e.currentTarget.src = buttonInventoryHover)}
           onMouseLeave={e => (e.currentTarget.src = buttonInventory)}
         />
-        <CharacterMenu appState={this.props.appState} toggle={this.toggleCharacterMenu} on={this.state.characterMenu} pc={this.props.pc} combat={this.props.combat} width={this.props.width}/>
-        <InventoryMenu appState={this.props.appState} toggle={this.toggleInventoryMenu} on={this.state.inventoryMenu} pc={this.props.pc} combat={this.props.combat} width={this.props.width}/>
+        <CharacterMenu appState={this.props.appState} toggle={this.toggleCharacterMenu} on={this.state.characterMenu} pc={this.props.pc} combat={this.props.combat} widthChange={this.props.widthChange}/>
+        <InventoryMenu appState={this.props.appState} toggle={this.toggleInventoryMenu} on={this.state.inventoryMenu} pc={this.props.pc} combat={this.props.combat} widthChange={this.props.widthChange}/>
       </>
     )
   }

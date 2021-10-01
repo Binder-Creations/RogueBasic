@@ -5,6 +5,7 @@ import backgroundBlue from "../images/background-blue.png";
 import backgroundPurple from "../images/background-purple.png";
 import frame from "../images/equipped-frame.png";
 import items from "../images/items";
+import ItemTooltip from "./ItemTooltip";
 
 class Equipped extends React.Component {
   
@@ -74,20 +75,22 @@ class Equipped extends React.Component {
 
   pushUsable(item, slot){
     this.equippedList.push(
-      <div className={"equipped-" + slot}>
+      <div className={"item-tooltip item-equipped equipped-" + slot}>
         <img src={this.background} className="absolute-fill"/>
         <img src={this.items[item.type]["i"+item.image]} className="item-image"/>
         <img src={frame} className="absolute-fill"/>
+        <ItemTooltip item={item} widthChange={this.props.widthChange} leftMod={0.2}/>
       </div>
     )
   }
 
   pushUnusable(item, slot){
     this.equippedList.push(
-      <div className={"equipped-" + slot}>
+      <div className={"item-tooltip item-equipped equipped-" + slot}>
         <img src={this.background} className="absolute-fill"/>
         <img src={this.items[item.type]["i"+item.image]} className="item-image"/>
         <img src={frame} className="absolute-fill"/>
+        <ItemTooltip item={item} widthChange={this.props.widthChange} leftMod={0.2}/>
       </div>
     )
   }

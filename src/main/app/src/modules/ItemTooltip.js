@@ -34,8 +34,10 @@ class ItemTooltip extends React.Component {
     this.powerColor = {color: "#a83a0e"};
     this.healColor = {color: "#ce6eb9"};
     this.type = "";
-    this.tooltipQuadrant = "";
-    this.style = {height: "0px", width: "0px"};
+    this.tooltipQuadrant = "bottom-left";
+    this.style = "";
+    this.previousWidthChange = 0;
+    this.tooltipBox = React.createRef();
     
     this.fillStatBox = this.fillStatBox.bind(this);
     this.setBadgeIconType = this.setBadgeIconType.bind(this);
@@ -49,10 +51,9 @@ class ItemTooltip extends React.Component {
     this.setTooltipQuadrant();
     this.setStyle();
     this.setNameColor();
-    console.log(this.style);
 
     return (
-      <div className={"item-tooltip-box " + this.tooltipQuadrant} style={this.style} ref={(tooltipBox) => {this.tooltipBox = tooltipBox}}>
+      <div className={"item-tooltip-box " + this.tooltipQuadrant} style={this.style} ref={this.tooltipBox}>
         <img className="absolute-fill" src={tooltipItem}/>
         <img className="item-tooltip-image" src={this.items[this.props.item.type]["i" + this.props.item.image]}/>
         <img className={this.badgeClass} src={this.badge}/>
@@ -68,7 +69,14 @@ class ItemTooltip extends React.Component {
   }
 
   componentDidMount(){
-    this.setState({boundingRect: this.tooltipBox.getBoundingClientRect()});
+    this.setState({boundingRect: this.tooltipBox.current.getBoundingClientRect()});
+  }
+
+  componentDidUpdate(){
+    if(this.props.widthChange > this.previousWidthChange){
+      this.previousWidthChange = this.props.widthChange;
+      this.setState({boundingRect: this.tooltipBox.current.getBoundingClientRect()});
+    }
   }
 
   fillStatBox(){
@@ -294,35 +302,68 @@ class ItemTooltip extends React.Component {
   }
 
   setTooltipQuadrant(){
-    let top = true;
-    let left = true;
-    let center = false;
-    if(this.state.boundingRect)
-      top = this.state.boundingRect.y < window.innerHeight/2
+    if(this.state.boundingRect != ""){
+      let centerPointX = 0;
+      let centerPointY = 0;
+      let blackSpace = (window.innerHeight - window.innerWidth*0.4286) > 0 
+        ? (window.innerHeight - window.innerWidth*0.4286)/2
+        : 0;
+      switch(this.tooltipQuadrant){
+        case "top-left":
+          centerPointY = this.state.boundingRect.top - blackSpace + this.state.boundingRect.height*0.1238;
+          centerPointX = this.state.boundingRect.left - this.state.boundingRect.width*0.1857;
+          break;
+        case "center-left":
+          centerPointY = this.state.boundingRect.top - blackSpace + this.state.boundingRect.height*0.4952;
+          centerPointX = this.state.boundingRect.left - this.state.boundingRect.width*0.1857;
+          break;
+        case "bottom-left":
+          centerPointY = this.state.boundingRect.bottom - blackSpace - this.state.boundingRect.height*0.1238;
+          centerPointX = this.state.boundingRect.left - this.state.boundingRect.width*0.1857;
+          break;
+        case "top-right":
+          centerPointY = this.state.boundingRect.top - blackSpace + this.state.boundingRect.height*0.1238;
+          centerPointX = this.state.boundingRect.right + this.state.boundingRect.width*0.1857;
+          break;
+        case "center-right":
+          centerPointY = this.state.boundingRect.top - blackSpace + this.state.boundingRect.height*0.4952;
+          centerPointX = this.state.boundingRect.right + this.state.boundingRect.width*0.1857;
+          break;
+        case "bottom-right":
+          centerPointY = this.state.boundingRect.bottom - blackSpace - this.state.boundingRect.height*0.1238;
+          centerPointX = this.state.boundingRect.right + this.state.boundingRect.width*0.1857;
+          break;
+      }
+
+      let top = true;
+      let left = true;
+      let center = false;
+
+      top = centerPointY < (window.innerWidth*0.4286)*0.45
         ? true
         : false
-      center = this.state.boundingRect.y < window.innerHeight*0.66 && this.state.boundingRect.y > window.innnerHeight*0.33
+      center = (centerPointY < (window.innerWidth*0.4286)*0.60 && centerPointY > (window.innerWidth*0.4286)*0.45)
         ? true
         : false
-      left = this.state.boundingRect.x < window.innerWidth/2
+      left = centerPointX < window.innerWidth*this.props.leftMod
         ? true
         : false
-    
-    this.tooltipQuadrant = left
-      ? center
-        ? "center-left"
-        : top
-          ? "top-left"
-          : "bottom-left"
-      : center
-        ? "center-right"
-        : top
-          ? "top-right"
-          : "bottom-right"
+      this.tooltipQuadrant = left
+        ? center
+          ? "center-left"
+          : top
+            ? "top-left"
+            : "bottom-left"
+        : center
+          ? "center-right"
+          : top
+            ? "top-right"
+            : "bottom-right"
+    }
   }
 
   setStyle(){
-    this.style = {height: + this.props.width*0.25 + "px", width: + this.props.width*0.166667 + "px"}
+    this.style = {height: + window.innerWidth*0.25 + "px", width: + window.innerWidth*0.1667 + "px"}
   }
 
   setNameColor(){

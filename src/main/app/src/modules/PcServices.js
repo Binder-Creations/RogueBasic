@@ -1,9 +1,71 @@
 class PcServices {
-  pc = {};
-
   constructor(pc){
     this.pc = pc;
+    this.emptySlot = {
+      armorBonus: 0,
+      armorPenBonus: 0,
+      constitutionBonus: 0,
+      critRatingBonus: 0,
+      dexterityBonus: 0,
+      dodgeRatingBonus: 0,
+      energyBonus: 0,
+      energyRegenBonus: 0,
+      healthBonus: 0,
+      healthRegenBonus: 0,
+      intelligenceBonus: 0,
+      powerBonus: 0,
+      strengthBonus: 0}
+    this.bonuses = ["constitution", "strength", "dexterity", "intelligence", "power", "health", "healthRegen", "armor", "armorPen", "critRating", "dodgeRating", "energy", "energyRegen"];
+    this.baseStats = this.pc.characterClass == "Rogue" 
+    ? {
+      armorBonus: 0,
+      armorPenBonus: 0,
+      constitutionBonus: 0,
+      critRatingBonus: 10,
+      dexterityBonus: 0,
+      dodgeRatingBonus: 10,
+      energyBonus: 20,
+      energyRegenBonus: 2,
+      healthBonus: 20,
+      healthRegenBonus: 2,
+      powerBonus: 20,
+      intelligenceBonus: 0,
+      strengthBonus: 0
+    }
+    : this.pc.characterClass == "Wizard"
+      ? {
+        armorBonus: 0,
+        armorPenBonus: 0,
+        constitutionBonus: 0,
+        critRatingBonus: 0,
+        dexterityBonus: 0,
+        dodgeRatingBonus: 5,
+        energyBonus: 50,
+        energyRegenBonus: 8,
+        healthBonus: 10,
+        healthRegenBonus: 1,
+        intelligenceBonus: 0,
+        powerBonus: 15,
+        strengthBonus: 0
+      }
+      : {
+        armorBonus: 10,
+        armorPenBonus: 10,
+        constitutionBonus: 0,
+        critRatingBonus: 5,
+        dexterityBonus: 0,
+        dodgeRatingBonus: 0,
+        energyBonus: 0,
+        energyRegenBonus: 0,
+        healthBonus: 30,
+        healthRegenBonus: 5,
+        intelligenceBonus: 0,
+        powerBonus: 10,
+        strengthBonus: 0
+      };
+
   }
+  
 
   conTotal(){
     return this.pc.constitution*1 + this.pc.constitutionBonus*1;
@@ -56,10 +118,10 @@ class PcServices {
     return Math.round(this.pc.level**1.5)*100;
   }
   physResistCalc(){
-    return Math.round((70-70**(1-(((this.armorTotal()*(1/((13+this.pc.level)/14)))**0.5)/100)) + Number.EPSILON)*10)/10
+    return Math.round((95-95**(1-(((this.armorTotal()*(1/((13+this.pc.level)/14)))**0.55)/100)) + Number.EPSILON)*10)/10
   }
   magResistCalc(){
-    return Math.round((70-70**(1-(((this.armorTotal()*(1/((13+this.pc.level)/14)))**0.5)/100)) + Number.EPSILON)*5)/10
+    return Math.round((75-75**(1-(((this.armorTotal()*(1/((13+this.pc.level)/14)))**0.4)/100)) + Number.EPSILON)*10)/10
   }
   critChanceCalc(){
     return Math.round(((this.critRatingTotal()*(1/((13+this.pc.level)/14)))**0.78 + Number.EPSILON)*10)/10
@@ -67,7 +129,23 @@ class PcServices {
   dodgeChanceCalc(){
     return Math.round((95-(95*(1-(((this.dodgeRatingTotal()*(1/((13+this.pc.level)/14)))**0.7)/100))) + Number.EPSILON)*10)/10
   }
-  addStats(){
+  updateStats(){
+    let head = this.pc.equippedHead ? this.pc.equippedHead : this.emptySlot
+    let body = this.pc.equippedBody ? this.pc.equippedBody : this.emptySlot
+    let back = this.pc.equippedBack ? this.pc.equippedBack : this.emptySlot
+    let neck = this.pc.equippedNeck ? this.pc.equippedNeck : this.emptySlot
+    let primary = this.pc.equippedPrimary ? this.pc.equippedPrimary : this.emptySlot
+    let secondary = this.pc.equippedSecondary ? this.pc.equippedSecondary : this.emptySlot
+    let equipped = [this.baseStats, head, body, back, neck, primary, secondary];
+
+    for(const bonus of this.bonuses){
+      let tempValue = 0;
+      for(const slot of equipped){
+        tempValue += slot[bonus+"Bonus"];
+      }
+      this.pc[bonus+"Bonus"] = tempValue;
+    }
+
     this.pc.experienceNeeded = this.experienceNeededCalc();
     this.pc.conTotal = this.conTotal();
     this.pc.strTotal = this.strTotal();
@@ -86,8 +164,13 @@ class PcServices {
     this.pc.magResist = this.magResistCalc();
     this.pc.critChance = this.critChanceCalc();
     this.pc.dodgeChance = this.dodgeChanceCalc();
-  }
 
+    if(!this.initiaized){
+      this.pc.currentHealth = this.healthTotal();
+      this.pc.currentEnergy = this.energyTotal();
+      this.initiaized = true;
+    }
+  }
 }
 
 export default PcServices;

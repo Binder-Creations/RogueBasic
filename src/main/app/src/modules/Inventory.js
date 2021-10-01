@@ -135,14 +135,14 @@ class Inventory extends React.Component {
 
   pushUsableCount(item){
     this.itemList.push(
-      <div className="inventory-box-item item-tooltip">
+      <div className="inventory-box-item item-tooltip" onClick={()=>{this.props.appState("inventory", item, 0)}}>
         <img src={this.background} className="absolute-fill"/>
         <img src={this.items[item.type]["i"+item.image]} className="item-image"/>
         <img src={this.frame} className="absolute-fill"/>
         <p className="item-count">
           {this.props.pc.inventory[item.id]}
         </p>
-        <ItemTooltip item={item} width={this.props.width}/>
+        <ItemTooltip item={item} widthChange={this.props.widthChange} leftMod={0.7}/>
       </div>
       )
   }
@@ -156,18 +156,18 @@ class Inventory extends React.Component {
         <p className="item-count">
           {this.props.pc.inventory[item.id]}
         </p>
-        <ItemTooltip item={item} width={this.props.width}/>
+        <ItemTooltip item={item} widthChange={this.props.widthChange} leftMod={0.7}/>
       </div>
       )
   }
 
   pushUsable(item){
     this.itemList.push(
-      <div className="inventory-box-item item-tooltip">
+      <div className="inventory-box-item item-tooltip" onClick={()=>{this.props.appState("inventory", item, 0)}}>
         <img src={this.background} className="absolute-fill"/>
         <img src={this.items[item.type]["i"+item.image]} className="item-image"/>
         <img src={this.frame} className="absolute-fill"/>
-        <ItemTooltip item={item} width={this.props.width}/>
+        <ItemTooltip item={item} widthChange={this.props.widthChange} leftMod={0.7}/>
       </div>
     )
   }
@@ -178,7 +178,7 @@ class Inventory extends React.Component {
         <img src={this.background} className="absolute-fill gray-75"/>
         <img src={this.items[item.type]["i"+item.image]} className="item-image gray-75"/>
         <img src={this.frame} className="absolute-fill gray-75"/>
-        <ItemTooltip item={item} width={this.props.width}/>
+        <ItemTooltip item={item} widthChange={this.props.widthChange} leftMod={0.7}/>
       </div>
     )
   }

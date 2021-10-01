@@ -23,6 +23,8 @@ class InventoryMenu extends React.Component {
       this.silhouette = silhouetteWarrior;
       this.silhouetteClass = "silhouette-warrior";
     }
+    this.scrollable = React.createRef();
+    this.update = this.update.bind(this);
   }
 
   render(){
@@ -36,10 +38,10 @@ class InventoryMenu extends React.Component {
             onMouseLeave={e => (e.currentTarget.src = buttonClose)}
           />
           <p className="gold-count">{this.props.pc.currency}</p>
-          <Equipped appState={this.props.appState} pc={this.props.pc} combat={this.props.combat} width={this.props.width}/>
-          <div className="inventory-box-wrapper">
+          <Equipped appState={this.props.appState} pc={this.props.pc} combat={this.props.combat} widthChange={this.props.widthChange}/>
+          <div className="inventory-box-wrapper" ref={this.scrollable}>
             <div className="inventory-box">
-              <Inventory appState={this.props.appState} pc={this.props.pc} combat={this.props.combat} width={this.props.width}/>
+              <Inventory appState={this.props.appState} pc={this.props.pc} combat={this.props.combat} widthChange={this.props.widthChange}/>
             </div>
           </div>
         </div>
@@ -49,6 +51,19 @@ class InventoryMenu extends React.Component {
         <></>
       )
     }
+  }
+
+  componentDidUpdate() {
+    if(!this.listenersAdded){
+      if(this.scrollable.current){}
+        this.scrollable.current.addEventListener("scroll", this.update)
+        this.listenersAdded = true;
+      }
+    }
+
+  update() {
+    console.log("scrolled")
+    this.forceUpdate();
   }
 }
 
