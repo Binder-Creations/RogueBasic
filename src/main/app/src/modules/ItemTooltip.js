@@ -7,7 +7,7 @@ import badgeWizardSmall from "../images/badge-wizard-small.png";
 import badgeRogueSmall from "../images/badge-rogue-small.png";
 import badgeWarriorSmall from "../images/badge-warrior-small.png";
 import badgeGenericSmall from "../images/badge-generic-small.png";
-import items from "../images/items";
+import * as items from "../images/items";
 
 class ItemTooltip extends React.Component {
   
@@ -37,6 +37,7 @@ class ItemTooltip extends React.Component {
     this.tooltipQuadrant = "bottom-left";
     this.style = "";
     this.previousWidthChange = 0;
+    this.previousUpdate = 0;
     this.tooltipBox = React.createRef();
     
     this.fillStatBox = this.fillStatBox.bind(this);
@@ -51,6 +52,10 @@ class ItemTooltip extends React.Component {
     this.setTooltipQuadrant();
     this.setStyle();
     this.setNameColor();
+
+    if(!this.initialize){
+      this.initialize = true;
+    }
 
     return (
       <div className={"item-tooltip-box " + this.tooltipQuadrant} style={this.style} ref={this.tooltipBox}>
@@ -73,8 +78,9 @@ class ItemTooltip extends React.Component {
   }
 
   componentDidUpdate(){
-    if(this.props.widthChange > this.previousWidthChange){
+    if(this.props.widthChange > this.previousWidthChange || this.props.update > this.previousUpdate){
       this.previousWidthChange = this.props.widthChange;
+      this.previousUpdate = this.props.update;
       this.setState({boundingRect: this.tooltipBox.current.getBoundingClientRect()});
     }
   }

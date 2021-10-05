@@ -13,10 +13,11 @@ class InventoryMenu extends React.Component {
 
   constructor(props){
     super(props);
-    if(this.props.pc.characterClass == "Rogue"){
+    this.state = {update: 0};
+    if(this.props.props.pc.characterClass == "Rogue"){
       this.silhouette = silhouetteRogue;
       this.silhouetteClass = "silhouette-rogue";
-    } else if(this.props.pc.characterClass == "Wizard"){
+    } else if(this.props.props.pc.characterClass == "Wizard"){
       this.silhouette = silhouetteWizard;
       this.silhouetteClass = "silhouette-wizard";
     } else {
@@ -32,16 +33,21 @@ class InventoryMenu extends React.Component {
       return(
         <div className="menu">
           <img className="background" src={inventoryMenu} alt="Inventory Screen"/>
-          <img className={this.silhouetteClass} src={this.silhouette} alt={this.props.pc.characterClass}/>
+          <img className={this.silhouetteClass} src={this.silhouette} alt={this.props.props.pc.characterClass}/>
           <input className="btn-close" type="image" src={buttonClose} alt="Close" onClick={this.props.toggle}
             onMouseEnter={e => (e.currentTarget.src = buttonCloseHover)}
             onMouseLeave={e => (e.currentTarget.src = buttonClose)}
           />
-          <p className="gold-count">{this.props.pc.currency}</p>
-          <Equipped appState={this.props.appState} pc={this.props.pc} combat={this.props.combat} widthChange={this.props.widthChange}/>
+          <p className="gold-count">{this.props.props.pc.currency}</p>
+          <Equipped slot="head" item={this.props.props.pc.equippedHead} appState={this.props.props.appState} combat={this.props.props.combat} widthChange={this.props.props.widthChange}/>
+          <Equipped slot="body" item={this.props.props.pc.equippedBody} appState={this.props.props.appState} combat={this.props.props.combat} widthChange={this.props.props.widthChange}/>
+          <Equipped slot="back" item={this.props.props.pc.equippedBack} appState={this.props.props.appState} combat={this.props.props.combat} widthChange={this.props.props.widthChange}/>
+          <Equipped slot="neck" item={this.props.props.pc.equippedNeck} appState={this.props.props.appState} combat={this.props.props.combat} widthChange={this.props.props.widthChange}/>
+          <Equipped slot="primary" item={this.props.props.pc.equippedPrimary} appState={this.props.props.appState} combat={this.props.props.combat} widthChange={this.props.props.widthChange}/>
+          <Equipped slot="secondary" item={this.props.props.pc.equippedSecondary} appState={this.props.props.appState} combat={this.props.props.combat} widthChange={this.props.props.widthChange}/>
           <div className="inventory-box-wrapper" ref={this.scrollable}>
             <div className="inventory-box">
-              <Inventory appState={this.props.appState} pc={this.props.pc} combat={this.props.combat} widthChange={this.props.widthChange}/>
+              <Inventory props={this.props.props} update={this.state.update}/>
             </div>
           </div>
         </div>
@@ -55,15 +61,15 @@ class InventoryMenu extends React.Component {
 
   componentDidUpdate() {
     if(!this.listenersAdded){
-      if(this.scrollable.current){}
+      if(this.scrollable.current){
         this.scrollable.current.addEventListener("scroll", this.update)
         this.listenersAdded = true;
       }
     }
+  }
 
   update() {
-    console.log("scrolled")
-    this.forceUpdate();
+    this.setState({update: ++this.state.update});
   }
 }
 

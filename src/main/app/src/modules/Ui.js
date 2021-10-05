@@ -31,10 +31,10 @@ class Ui extends React.Component {
       characterMenu: false,
       inventoryMenu: false
     };
-    if(this.props.pc.characterClass == "Rogue"){
+    if(this.props.props.pc.characterClass == "Rogue"){
       this.buttonAttack = buttonAttackRogue;
       this.buttonAttackHover = buttonAttackRogueHover;
-    } else if(this.props.pc.characterClass == "Wizard"){
+    } else if(this.props.props.pc.characterClass == "Wizard"){
       this.buttonAttack = buttonAttackWizard;
       this.buttonAttackHover = buttonAttackWizardHover;
     } else {
@@ -47,13 +47,22 @@ class Ui extends React.Component {
 
   render(){
     this.healthStyle = {
-      width: 20*(this.props.pc.currentHealth/this.props.pc.healthTotal) + "%"
+      width: 20*(this.props.props.pc.currentHealth/this.props.props.pc.healthTotal) + "%"
     }
     this.energyStyle = {
-       width: 20*(this.props.pc.currentEnergy/this.props.pc.energyTotal) + "%"
+       width: 20*(this.props.props.pc.currentEnergy/this.props.props.pc.energyTotal) + "%"
     }
-    this.healthHover = this.props.pc.currentHealth + "/" + this.props.pc.healthTotal;
-    this.energyHover = this.props.pc.currentEnergy + "/" + this.props.pc.energyTotal;
+    this.healthHover = this.props.props.pc.currentHealth + "/" + this.props.props.pc.healthTotal;
+    this.energyHover = this.props.props.pc.currentEnergy + "/" + this.props.props.pc.energyTotal;
+    let Skill = (props) => {
+      return(
+        <button className={"skill s-"+props.number}>
+          <img className="glow" src={skillGlow} alt="Skill"/>
+          <img className="frame" src={skillBackground} alt="Skill"/>
+          <img className="frame" src={skillFrame} alt="Skill"/>
+        </button>
+      )
+    }
     return(
       <>
         <img className="bar-health-background" src={barBackground} alt="Health" title={this.healthHover}/>
@@ -64,26 +73,10 @@ class Ui extends React.Component {
         <img className="bar-energy" src={barEnergy} alt="Energy" title={this.energyHover} style={this.energyStyle}/>
         <img className="bar-energy-frame" src={barFrame} alt="Energy" title={this.energyHover}/>
         <img className="swirl" src={swirl} alt="Energy" title={this.energyHover}/>
-        <button className="skill s-1">
-          <img className="glow" src={skillGlow} alt="Skill-1"/>
-          <img className="frame" src={skillBackground} alt="Skill-1"/>
-          <img className="frame" src={skillFrame} alt="Skill-1"/>
-        </button>
-        <button className="skill s-2">
-          <img className="glow" src={skillGlow} alt="Skill-2"/>
-          <img className="frame" src={skillBackground} alt="Skill-2"/>
-          <img className="frame" src={skillFrame} alt="Skill-2"/>
-        </button>
-        <button className="skill s-3">
-          <img className="glow" src={skillGlow} alt="Skill-3"/>
-          <img className="frame" src={skillBackground} alt="Skill-3"/>
-          <img className="frame" src={skillFrame} alt="Skill-3"/>
-        </button>
-        <button className="skill s-4">
-          <img className="glow" src={skillGlow} alt="Skill-4"/>
-          <img className="frame" src={skillBackground} alt="Skill-4"/>
-          <img className="frame" src={skillFrame} alt="Skill-4"/>
-        </button>
+        <Skill number="1"/>
+        <Skill number="2"/>
+        <Skill number="3"/>
+        <Skill number="4"/>
         <img className="map-underlay" src={mapUnderlay} alt="Map"/>
         <img className="map-overlay" src={mapOverlay} alt="Map"/>
         <input class="btn-attack" type="image" src={this.buttonAttack} alt="Attack"
@@ -98,8 +91,8 @@ class Ui extends React.Component {
           onMouseEnter={e => (e.currentTarget.src = buttonInventoryHover)}
           onMouseLeave={e => (e.currentTarget.src = buttonInventory)}
         />
-        <CharacterMenu appState={this.props.appState} toggle={this.toggleCharacterMenu} on={this.state.characterMenu} pc={this.props.pc} combat={this.props.combat} widthChange={this.props.widthChange}/>
-        <InventoryMenu appState={this.props.appState} toggle={this.toggleInventoryMenu} on={this.state.inventoryMenu} pc={this.props.pc} combat={this.props.combat} widthChange={this.props.widthChange}/>
+        <CharacterMenu props={this.props.props} toggle={this.toggleCharacterMenu} on={this.state.characterMenu}/>
+        <InventoryMenu props={this.props.props} toggle={this.toggleInventoryMenu} on={this.state.inventoryMenu}/>
       </>
     )
   }

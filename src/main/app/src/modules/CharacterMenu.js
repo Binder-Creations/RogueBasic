@@ -14,9 +14,9 @@ class CharacterMenu extends React.Component {
 
   constructor(props){
     super(props);
-    if(this.props.pc.characterClass == "Rogue"){
+    if(this.props.props.pc.characterClass == "Rogue"){
       this.badge = badgeRogue;
-    } else if(this.props.pc.characterClass == "Wizard"){
+    } else if(this.props.props.pc.characterClass == "Wizard"){
       this.badge = badgeWizard;
     } else {
       this.badge = badgeWarrior;
@@ -25,49 +25,49 @@ class CharacterMenu extends React.Component {
 
   render(){
     this.experienceStyle = {
-      width: 43.8984*(this.props.pc.experience/this.props.pc.experienceNeeded) + "%"
+      width: 43.8984*(this.props.props.pc.experience/this.props.props.pc.experienceNeeded) + "%"
     }
-    this.experienceHover = this.props.pc.experience + "/" + this.props.pc.experienceNeeded;
+    this.experienceHover = this.props.props.pc.experience + "/" + this.props.props.pc.experienceNeeded;
     if(this.props.on){
       return(
         <div className="menu">
           <img className="background" src={characterMenu} alt="Character Information Screen"/>
-          <img className="badge" src={this.badge} alt={this.props.pc.characterClass}/>
+          <img className="badge" src={this.badge} alt={this.props.props.pc.characterClass}/>
           <input className="btn-close" type="image" src={buttonClose} alt="Close" onClick={this.props.toggle}
             onMouseEnter={e => (e.currentTarget.src = buttonCloseHover)}
             onMouseLeave={e => (e.currentTarget.src = buttonClose)}
           />
-          <AttributeBuyButtons appState={this.props.appState} attributePoints={this.props.pc.attributePoints} combat={this.props.combat}/>
+          <AttributeBuyButtons props={this.props.props}/>
           <div className="character-name">
-            <p className="v-h-centered">{this.props.pc.name}</p>
+            <p className="v-h-centered">{this.props.props.pc.name}</p>
           </div>
           <div className="character-points">
-            <p className="v-h-centered">{"Points: "+this.props.pc.attributePoints}</p>
+            <p className="v-h-centered">{"Points: "+this.props.props.pc.attributePoints}</p>
           </div>
           <img className="bar-experience" src={barExperience} alt="Experience" title={this.experienceHover} style={this.experienceStyle}/>
           <img className="bar-experience-frame" src={barFrame} alt="Experience" title={this.experienceHover}/>
           <img className="character-level-background" src={characterLevelBackground}></img>
           <div className="character-level">
-            <p className="v-h-centered">{this.props.pc.level}</p>
+            <p className="v-h-centered">{this.props.props.pc.level}</p>
           </div>
           <div className="atr-values">
-            <p title={this.atrValueTitle("con", this.props.pc.constitutionBonus)}>Constitution: <span style={this.atrValueStyle(this.props.pc.constitutionBonus)}>{this.props.pc.conTotal}</span></p>
-            <p title={this.atrValueTitle("str", this.props.pc.strengthBonus)}>Strength: <span style={this.atrValueStyle(this.props.pc.strengthBonus)}>{this.props.pc.strTotal}</span></p>
-            <p title={this.atrValueTitle("dex", this.props.pc.dexterityBonus)}>Dexterity: <span style={this.atrValueStyle(this.props.pc.dexterityBonus)}>{this.props.pc.dexTotal}</span></p>
-            <p title={this.atrValueTitle("int", this.props.pc.intelligenceBonus)}>Intelligence: <span style={this.atrValueStyle(this.props.pc.intelligenceBonus)}>{this.props.pc.intTotal}</span></p>
+            <p title={this.atrValueTitle("con", this.props.props.pc.constitutionBonus)}>Constitution: <span style={this.atrValueStyle(this.props.props.pc.constitutionBonus)}>{this.props.props.pc.conTotal}</span></p>
+            <p title={this.atrValueTitle("str", this.props.props.pc.strengthBonus)}>Strength: <span style={this.atrValueStyle(this.props.props.pc.strengthBonus)}>{this.props.props.pc.strTotal}</span></p>
+            <p title={this.atrValueTitle("dex", this.props.props.pc.dexterityBonus)}>Dexterity: <span style={this.atrValueStyle(this.props.props.pc.dexterityBonus)}>{this.props.props.pc.dexTotal}</span></p>
+            <p title={this.atrValueTitle("int", this.props.props.pc.intelligenceBonus)}>Intelligence: <span style={this.atrValueStyle(this.props.props.pc.intelligenceBonus)}>{this.props.props.pc.intTotal}</span></p>
           </div>
           <div className="atr-bonuses">
-            <p>{"+"+this.props.pc.conTotal*4+" Health"}</p>
-            <p>{"+" + Math.round(this.props.pc.conTotal/3)+" Health Regen"}</p>
+            <p>{"+"+this.props.props.pc.conTotal*4+" Health"}</p>
+            <p>{"+" + Math.round(this.props.props.pc.conTotal/3)+" Health Regen"}</p>
             <p className="spacer-xs"></p>
-            <p>{"+"+Math.round(this.props.pc.strTotal/2)+" Power"}</p>
-            <p>{"+"+this.props.pc.strTotal*2+" Armor" + " +"+(this.props.pc.strTotal)*2+" Armor Pen"}</p>
+            <p>{"+"+Math.round(this.props.props.pc.strTotal/2)+" Power"}</p>
+            <p>{"+"+this.props.props.pc.strTotal*2+" Armor" + " +"+(this.props.props.pc.strTotal)*2+" Armor Pen"}</p>
             <p className="spacer-xs"></p>
-            <p>{"+"+Math.round(this.props.pc.dexTotal/2)+" Power"}</p>
-            <p>{"+"+this.props.pc.dexTotal*2+" Dodge Rating" + " +"+this.props.pc.dexTotal*2+" Crit Rating"}</p>
+            <p>{"+"+Math.round(this.props.props.pc.dexTotal/2)+" Power"}</p>
+            <p>{"+"+this.props.props.pc.dexTotal*2+" Dodge Rating" + " +"+this.props.props.pc.dexTotal*2+" Crit Rating"}</p>
             <p className="spacer-xs"></p>
-            <p>{"+"+Math.round(this.props.pc.intTotal/2)+" Power"}</p>
-            <p>{"+"+this.props.pc.intTotal*6+" Energy" + " +"+Math.round(this.props.pc.intTotal/2)+" Energy Regen"}</p>
+            <p>{"+"+Math.round(this.props.props.pc.intTotal/2)+" Power"}</p>
+            <p>{"+"+this.props.props.pc.intTotal*6+" Energy" + " +"+Math.round(this.props.props.pc.intTotal/2)+" Energy Regen"}</p>
           </div>
           <div className="der-stats-1">
             <p title="All Damage Increases by 1% per Power">Power:</p>
@@ -87,21 +87,21 @@ class CharacterMenu extends React.Component {
             <p title="Energy Regained Per Dungeon Room Traveled">Energy Regen:</p>
           </div>
           <div className="der-values-1">
-            <p>{this.props.pc.powerTotal}</p>
-            <p>{this.props.pc.healthTotal}</p>
-            <p>{this.props.pc.healthRegenTotal}</p>
-            <p>{this.props.pc.armorTotal}</p>
-            <p title="Based on Enemies of Equal Level">{this.props.pc.physResist + "%"}</p>
-            <p title="Based on Enemies of Equal Level">{this.props.pc.magResist + "%"}</p>
-            <p>{this.props.pc.armorPenTotal}</p>
+            <p>{this.props.props.pc.powerTotal}</p>
+            <p>{this.props.props.pc.healthTotal}</p>
+            <p>{this.props.props.pc.healthRegenTotal}</p>
+            <p>{this.props.props.pc.armorTotal}</p>
+            <p title="Based on Enemies of Equal Level">{this.props.props.pc.physResist + "%"}</p>
+            <p title="Based on Enemies of Equal Level">{this.props.props.pc.magResist + "%"}</p>
+            <p>{this.props.props.pc.armorPenTotal}</p>
           </div>
           <div className="der-values-2">
-            <p>{this.props.pc.critRatingTotal}</p>
-            <p title="Based on Enemies of Equal Level">{this.props.pc.critChance + "%"}</p>
-            <p>{this.props.pc.dodgeRatingTotal}</p>
-            <p title="Based on Enemies of Equal Level">{this.props.pc.dodgeChance + "%"}</p>
-            <p>{this.props.pc.energyTotal}</p>
-            <p>{this.props.pc.energyRegenTotal}</p>
+            <p>{this.props.props.pc.critRatingTotal}</p>
+            <p title="Based on Enemies of Equal Level">{this.props.props.pc.critChance + "%"}</p>
+            <p>{this.props.props.pc.dodgeRatingTotal}</p>
+            <p title="Based on Enemies of Equal Level">{this.props.props.pc.dodgeChance + "%"}</p>
+            <p>{this.props.props.pc.energyTotal}</p>
+            <p>{this.props.props.pc.energyRegenTotal}</p>
           </div>
         </div>
       )  
@@ -116,26 +116,26 @@ class CharacterMenu extends React.Component {
     if(bonus > 0){
       switch(atr){
         case "con":
-          return this.props.pc.constitution + "(base) + " + this.props.pc.constitutionBonus + "(bonus)";
+          return this.props.props.pc.constitution + "(base) + " + this.props.props.pc.constitutionBonus + "(bonus)";
         case "str":
-          return this.props.pc.strength + "(base) + " + this.props.pc.strengthBonus + "(bonus)";
+          return this.props.props.pc.strength + "(base) + " + this.props.props.pc.strengthBonus + "(bonus)";
         case "dex":
-          return this.props.pc.dexterity + "(base) + " + this.props.pc.dexterityBonus + "(bonus)";
+          return this.props.props.pc.dexterity + "(base) + " + this.props.props.pc.dexterityBonus + "(bonus)";
         case "int":
-          return this.props.pc.intelligence + "(base) + " + this.props.pc.intelligenceBonus + "(bonus)";
+          return this.props.props.pc.intelligence + "(base) + " + this.props.props.pc.intelligenceBonus + "(bonus)";
         default:
           return;
       }
     }else{
       switch(atr){
         case "con":
-          return this.props.pc.constitution + "(base)";
+          return this.props.props.pc.constitution + "(base)";
         case "str":
-          return this.props.pc.strength + "(base)";
+          return this.props.props.pc.strength + "(base)";
         case "dex":
-          return this.props.pc.dexterity + "(base)";
+          return this.props.props.pc.dexterity + "(base)";
         case "int":
-          return this.props.pc.intelligence + "(base)";
+          return this.props.props.pc.intelligence + "(base)";
         default:
           return;
       }

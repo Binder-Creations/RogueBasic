@@ -8,7 +8,7 @@ import backgroundGrey from "../images/background-grey.png";
 import backgroundGreen from "../images/background-green.png";
 import backgroundBlue from "../images/background-blue.png";
 import backgroundPurple from "../images/background-purple.png";
-import items from "../images/items";
+import * as items from "../images/items";
 import ItemTooltip from "./ItemTooltip";
 
 class Inventory extends React.Component {
@@ -31,16 +31,16 @@ class Inventory extends React.Component {
     this.itemList = [];
     let sort = [];
 
-    if(this.props.pc.characterClass == "Rogue"){
+    if(this.props.props.pc.characterClass == "Rogue"){
       sort = ["potion", "consumable", "bow", "dagger", "headMedium", "bodyMedium", "neck", "back", "staff", "spellbook", "sword", "shield", "headLight", "bodyLight", "headHeavy", "bodyHeavy"];
-    } else if (this.props.pc.characterClass == "Wizard"){
+    } else if (this.props.props.pc.characterClass == "Wizard"){
       sort = ["potion", "consumable", "staff", "spellbook", "headLight", "bodyLight", "neck", "back", "bow", "dagger", "sword", "shield", "headMedium", "bodyMedium", "headHeavy", "bodyHeavy"];
     } else {
       sort = ["potion", "consumable", "sword", "shield", "headHeavy", "bodyHeavy", "neck", "back", "staff", "spellbook", "bow", "dagger", "headLight", "bodyLight", "headMedium", "bodyMedium"];
     }
 
     sort.forEach(type => {
-      this.props.pc.inventoryCache.forEach(item => {
+      this.props.props.pc.inventoryCache.forEach(item => {
         if(item.type == type){
           this.setFrameBackground(item.rarity);
           this.push(item);
@@ -82,21 +82,21 @@ class Inventory extends React.Component {
 
   push(item){
     if(item.type == "potion"){
-      if(this.props.pc.inventory[item.id] > 1){
+      if(this.props.props.pc.inventory[item.id] > 1){
         this.pushUsableCount(item);
       } else {
         this.pushUsable(item);
       }
     }
     if(item.type == "consumable"){
-      if(this.props.combat){
-        if(this.props.pc.inventory[item.id] > 1){
+      if(this.props.props.combat){
+        if(this.props.props.pc.inventory[item.id] > 1){
           this.pushUnusableCount(item);
         } else {
           this.pushUnusable(item);
         }
       } else {
-        if(this.props.pc.inventory[item.id] > 1){
+        if(this.props.props.pc.inventory[item.id] > 1){
           this.pushUsableCount(item);
         } else {
           this.pushUsable(item);
@@ -104,28 +104,28 @@ class Inventory extends React.Component {
       }
     }
     if(item.type == "back" || item.type == "neck"){
-      if(this.props.combat){
+      if(this.props.props.combat){
         this.pushUnusable(item);
       } else {
         this.pushUsable(item);
       }
     }
     if(item.type == "staff" || item.type == "spellbook" || item.type == "headLight" || item.type == "bodyLight"){
-      if(this.props.pc.characterClass == "Wizard" && !this.props.combat){
+      if(this.props.props.pc.characterClass == "Wizard" && !this.props.props.combat){
         this.pushUsable(item);
       } else {
         this.pushUnusable(item);
       }
     }
     if(item.type == "bow" || item.type == "dagger" || item.type == "headMedium" || item.type == "bodyMedium"){
-      if(this.props.pc.characterClass == "Rogue" && !this.props.combat){
+      if(this.props.props.pc.characterClass == "Rogue" && !this.props.props.combat){
         this.pushUsable(item);
       } else {
         this.pushUnusable(item);
       }
     }
     if(item.type == "sword" || item.type == "shield" || item.type == "headHeavy" || item.type == "bodyHeavy"){
-      if(this.props.pc.characterClass == "Warrior" && !this.props.combat){
+      if(this.props.props.pc.characterClass == "Warrior" && !this.props.props.combat){
         this.pushUsable(item);
       } else {
         this.pushUnusable(item);
@@ -135,14 +135,14 @@ class Inventory extends React.Component {
 
   pushUsableCount(item){
     this.itemList.push(
-      <div className="inventory-box-item item-tooltip" onClick={()=>{this.props.appState("inventory", item, 0)}}>
+      <div className="inventory-box-item item-tooltip" onClick={()=>{this.props.props.appState("inventory", item, 0)}}>
         <img src={this.background} className="absolute-fill"/>
         <img src={this.items[item.type]["i"+item.image]} className="item-image"/>
         <img src={this.frame} className="absolute-fill"/>
         <p className="item-count">
-          {this.props.pc.inventory[item.id]}
+          {this.props.props.pc.inventory[item.id]}
         </p>
-        <ItemTooltip item={item} widthChange={this.props.widthChange} leftMod={0.7}/>
+        <ItemTooltip item={item} widthChange={this.props.props.widthChange}  update={this.props.update} leftMod={0.7}/>
       </div>
       )
   }
@@ -154,20 +154,20 @@ class Inventory extends React.Component {
         <img src={this.items[item.type]["i"+item.image]} className="item-image gray-75"/>
         <img src={this.frame} className="absolute-fill gray-75"/>
         <p className="item-count">
-          {this.props.pc.inventory[item.id]}
+          {this.props.props.pc.inventory[item.id]}
         </p>
-        <ItemTooltip item={item} widthChange={this.props.widthChange} leftMod={0.7}/>
+        <ItemTooltip item={item} widthChange={this.props.props.widthChange}  update={this.props.update} leftMod={0.7}/>
       </div>
       )
   }
 
   pushUsable(item){
     this.itemList.push(
-      <div className="inventory-box-item item-tooltip" onClick={()=>{this.props.appState("inventory", item, 0)}}>
+      <div className="inventory-box-item item-tooltip" onClick={()=>{this.props.props.appState("inventory", item, 0)}}>
         <img src={this.background} className="absolute-fill"/>
         <img src={this.items[item.type]["i"+item.image]} className="item-image"/>
         <img src={this.frame} className="absolute-fill"/>
-        <ItemTooltip item={item} widthChange={this.props.widthChange} leftMod={0.7}/>
+        <ItemTooltip item={item} widthChange={this.props.props.widthChange}  update={this.props.update} leftMod={0.7}/>
       </div>
     )
   }
@@ -178,7 +178,7 @@ class Inventory extends React.Component {
         <img src={this.background} className="absolute-fill gray-75"/>
         <img src={this.items[item.type]["i"+item.image]} className="item-image gray-75"/>
         <img src={this.frame} className="absolute-fill gray-75"/>
-        <ItemTooltip item={item} widthChange={this.props.widthChange} leftMod={0.7}/>
+        <ItemTooltip item={item} widthChange={this.props.props.widthChange}  update={this.props.update} leftMod={0.7}/>
       </div>
     )
   }

@@ -1,15 +1,9 @@
 import React from "react";
 import {Route, BrowserRouter as Router} from "react-router-dom";
-import town from "./images/town.png";
-import townIcon from "./images/town-icon.png";
-import tavernExterior from "./images/tavern-exterior.png";
-import tavern from "./images/tavern.png";
-import inn from "./images/inn.png";
-import innExterior from "./images/inn-exterior.png";
-import shop from "./images/shop.png";
-import shopExterior from "./images/shop-exterior.png";
 import Ui from "./modules/Ui"
 import PcServices from "./modules/PcServices";
+import * as images from "./images"
+import * as items from "./images/items";
 
 class App extends React.Component {
 
@@ -37,6 +31,8 @@ class App extends React.Component {
         //     .then(response => response.json())))
       
     };
+    this.images = images;
+    this.items = items;
     this.pcServices = "";
     this.appState = this.appState.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
@@ -44,7 +40,24 @@ class App extends React.Component {
 
   render(){
     if (!this.state.character_id)
-      return this.routeToLogin();
+      return(
+        <Router>
+          <Route path='/' component={() => { 
+            window.location.href = '/login'; 
+            return null;
+          }}/>
+        </Router>
+      );
+    
+    this.props.props = {
+        images: this.images, 
+        items: this.items, 
+        appState: this.appState, 
+        pc: this.state.pc, 
+        combat: this.state.combat, 
+        widthChange: this.state.widthChange
+      }
+      
     if(!this.state.pc.name){
       return(<></>)
     }
@@ -57,82 +70,67 @@ class App extends React.Component {
       window.addEventListener("resize", this.updateWidth)
       this.listenersAdded = true;
     }
+    let backgroundSrc;
+    let elements;
+    let InnerElements = () => {
+      return(elements);
+    }
+
+    let TownButton = () => {
+      return(
+      <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
+        <img src={this.images.townIcon} alt="Town"/>
+      </button>
+      );
+    }
     if (this.state.pc.location == "Town"){
       if(this.state.scene=="Default"){
-        return this.renderTown();
+        backgroundSrc = this.images.town
+        elements = <>
+          <input className="tavern" type="image" src={this.images.tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
+          <input className="inn" type="image" src={this.images.innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
+          <input className="shop" type="image" src={this.images.shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
+        </>
       } else if(this.state.scene=="Tavern"){
-        return this.renderTavern();
+        backgroundSrc = this.images.tavern
+        elements = <>
+          <TownButton/>
+        </>
       } else if(this.state.scene=="Inn"){
-        return this.renderInn();
+        backgroundSrc = this.images.inn
+        elements = <>
+          <TownButton/>
+        </>
       } else if(this.state.scene=="Shop"){
-        return this.renderShop();
+        backgroundSrc = this.images.shop
+        elements = <>
+          <TownButton/>
+        </>
       }
     }else{
-      return this.renderRoom()
+      backgroundSrc = this.images.town
+      elements = <></>
       }
+    return(
+    <div className="app-container">
+      <img className="background" src={backgroundSrc} alt="Background"/>
+      <InnerElements/>
+      <Ui props={this.props.props}/>
+    </div>
+    );
     }
-    routeToLogin(){
-      return (
-        <Router>
-          <Route path='/' component={() => { 
-            window.location.href = '/login'; 
-            return null;
-          }}/>
-        </Router>
-      );
+
+    componentDidMount(){
+      Object.keys(this.images).forEach((image) => {
+        new Image().src = this.images[image];
+      });
+      Object.keys(this.items).forEach((type) => {
+        Object.keys(this.items[type]).forEach((item) => {
+          new Image().src = this.items[type][item];
+        });
+      });
     }
-    renderTown(){
-      return (
-        <div className="app-container">
-          <img className="background" src={town} alt="Town"/>
-          <input className="tavern" type="image" src={tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
-          <input className="inn" type="image" src={innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
-          <input className="shop" type="image" src={shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} widthChange={this.state.widthChange}/>
-        </div>
-      );
-    }
-    renderTavern(){
-      return (
-        <div className="app-container">
-          <img className="background" alt="Tavern" src={tavern}/>
-          <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
-            <img src={townIcon} alt="Town"/>
-          </button>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} widthChange={this.state.widthChange}/>
-        </div>
-      );
-    }
-    renderInn(){
-      return (
-        <div className="app-container">
-          <img className="background" alt="Inn" src={inn}/>
-          <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
-            <img src={townIcon} alt="Town"/>
-          </button>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} widthChange={this.state.widthChange}/>
-        </div>
-      );
-    }
-    renderShop(){
-      return (
-        <div className="app-container">
-          <img className="background" alt="Shop" src={shop}/>
-          <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
-            <img src={townIcon} alt="Town"/>
-          </button>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} widthChange={this.state.widthChange}/>
-        </div>
-      );
-    }
-    renderRoom(){
-      return (
-        <div className="app-container">
-          <img className="background" src={town} alt="Town"/>
-          <Ui appState={this.appState} pc={this.state.pc} combat={this.state.combat} widthChange={this.state.widthChange}/>
-        </div>
-      );
-    }
+
     async savePc(pc){
       await fetch('/pc/', {
         method: 'PUT',
@@ -151,9 +149,8 @@ class App extends React.Component {
       method: switch(method){
         case "inventory":  
           pc = {...this.state.pc};
-          console.log(pc)
           if(pc.inventory[key.id] > 1){
-            pc.inventory.set(pc.inventory[key.id] -= 1);
+            pc.inventory[key.id] -= 1;
           }else{
             delete pc.inventory[key.id]
             var index = pc.inventoryCache.indexOf(key);
@@ -187,6 +184,26 @@ class App extends React.Component {
               }
               pc["equipped" + slot] = key;
               break key;
+          }
+          this.savePc(pc)
+            .then(()=>{this.setState({pc: pc})});
+          break method;
+        case "unequip":  
+          pc = {...this.state.pc};
+          pc.inventory[key.id] = 1;
+          pc.inventoryCache.push(key);
+          if(key.type == "headLight" || key.type == "headMedium" || key.type == "headHeavy"){
+            pc.equippedHead = null;
+          } else if (key.type == "bodyLight" || key.type == "bodyMedium" || key.type == "bodyHeavy"){
+            pc.equippedBody = null;
+          } else if (key.type == "neck"){
+            pc.equippedNeck = null;
+          } else if (key.type == "back"){
+            pc.equippedBack = null;
+          } else if (key.type == "bow" || key.type == "staff" || key.type == "sword"){
+            pc.equippedPrimary = null;
+          } else {
+            pc.equippedSecondary = null;
           }
           this.savePc(pc)
             .then(()=>{this.setState({pc: pc})});
