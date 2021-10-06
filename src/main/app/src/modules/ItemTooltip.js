@@ -1,13 +1,4 @@
 import React from "react";
-import tooltipItem from "../images/tooltip-item.png";
-import iconArmor from "../images/icon-armor.png";
-import iconHeal from "../images/icon-heal.png";
-import iconPower from "../images/icon-power.png";
-import badgeWizardSmall from "../images/badge-wizard-small.png";
-import badgeRogueSmall from "../images/badge-rogue-small.png";
-import badgeWarriorSmall from "../images/badge-warrior-small.png";
-import badgeGenericSmall from "../images/badge-generic-small.png";
-import * as items from "../images/items";
 
 class ItemTooltip extends React.Component {
   
@@ -16,23 +7,22 @@ class ItemTooltip extends React.Component {
     this.state = {
       boundingRect: ""
     }
-    this.items = items;
     this.tooltipBox = "";
     this.statBox = [];
     this.badge = "";
     this.badgeClass = "";
-    this.nameColor = this.commonColor;
-    this.commonColor = {color: "#39363a"};
-    this.uncommonColor = {color:"#4d610f"};
-    this.rareColor = {color:"#1e4d7a"};
-    this.epicColor = {color: "#4e0f62"};
-    this.icon = iconHeal;
+    this.nameColor = this.colorCommon;
+    this.colorCommon = {color: "#39363a"};
+    this.colorUncommon = {color:"#4d610f"};
+    this.colorRare = {color:"#1e4d7a"};
+    this.colorEpic = {color: "#4e0f62"};
+    this.icon = this.props.props.images.iconHeal;
     this.iconClass = "";
     this.iconValue = "";
-    this.iconValueColor = this.armorColor;
-    this.armorColor = {color: "#136f9b"};
-    this.powerColor = {color: "#a83a0e"};
-    this.healColor = {color: "#ce6eb9"};
+    this.iconValueColor = this.colorArmor;
+    this.colorArmor = {color: "#136f9b"};
+    this.colorPower = {color: "#a83a0e"};
+    this.colorHeal = {color: "#ce6eb9"};
     this.type = "";
     this.tooltipQuadrant = "bottom-left";
     this.style = "";
@@ -51,16 +41,12 @@ class ItemTooltip extends React.Component {
     this.setBadgeIconType();
     this.setTooltipQuadrant();
     this.setStyle();
-    this.setNameColor();
-
-    if(!this.initialize){
-      this.initialize = true;
-    }
+    this.nameColor = this["color"+this.props.item.rarity]
 
     return (
       <div className={"item-tooltip-box " + this.tooltipQuadrant} style={this.style} ref={this.tooltipBox}>
-        <img className="absolute-fill" src={tooltipItem}/>
-        <img className="item-tooltip-image" src={this.items[this.props.item.type]["i" + this.props.item.image]}/>
+        <img className="absolute-fill" src={this.props.props.images.tooltipItem}/>
+        <img className="item-tooltip-image" src={this.props.props.items[this.props.item.type]["i" + this.props.item.image]}/>
         <img className={this.badgeClass} src={this.badge}/>
         <img className={this.iconClass} src={this.icon}/>
         <p className="item-tooltip-icon-value" style={this.iconValueColor}>{this.iconValue}</p>
@@ -78,8 +64,8 @@ class ItemTooltip extends React.Component {
   }
 
   componentDidUpdate(){
-    if(this.props.widthChange > this.previousWidthChange || this.props.update > this.previousUpdate){
-      this.previousWidthChange = this.props.widthChange;
+    if(this.props.props.widthChange > this.previousWidthChange || this.props.update > this.previousUpdate){
+      this.previousWidthChange = this.props.props.widthChange;
       this.previousUpdate = this.props.update;
       this.setState({boundingRect: this.tooltipBox.current.getBoundingClientRect()});
     }
@@ -142,165 +128,165 @@ class ItemTooltip extends React.Component {
   setBadgeIconType(){
     switch(this.props.item.type){
       case "potion":
-        this.badge = badgeGenericSmall;
+        this.badge = this.props.props.images.badgeGenericSmall;
         this.badgeClass = "item-tooltip-badge-generic";
         this.type = "Potion";
         this.iconValue = this.props.item.actionValue;
         actionType: switch(this.props.item.actionType){
           case "heal":
-            this.icon = iconHeal;
+            this.icon = this.props.props.images.iconHeal;
             this.iconClass = "item-tooltip-icon-heal";
-            this.iconValueColor = this.healColor
+            this.iconValueColor = this.colorHeal
             break actionType;
           default:
-            this.icon = iconHeal;
+            this.icon = this.props.props.images.iconHeal;
             this.iconClass = "item-tooltip-icon-heal";
-            this.iconValueColor = this.healColor;
+            this.iconValueColor = this.colorHeal;
             break actionType;
         }
         break;
       case "consumable":
-        this.badge = badgeGenericSmall;
+        this.badge = this.props.props.images.badgeGenericSmall;
         this.badgeClass = "item-tooltip-badge-generic";
         this.type = "Consumable";
         this.iconValue = this.props.item.actionValue;
         actionType: switch(this.props.item.actionType){
           case "heal":
-            this.icon = iconHeal;
+            this.icon = this.props.props.images.iconHeal;
             this.iconClass = "item-tooltip-icon-heal";
-            this.iconValueColor = this.healColor
+            this.iconValueColor = this.colorHeal
             break actionType;
           default:
-            this.icon = iconHeal;
+            this.icon = this.props.props.images.iconHeal;
             this.iconClass = "item-tooltip-icon-heal";
-            this.iconValueColor = this.healColor
+            this.iconValueColor = this.colorHeal
             break actionType;
         }
         break;
       case "headLight":
-        this.badge = badgeWizardSmall;
+        this.badge = this.props.props.images.badgeWizardSmall;
         this.badgeClass = "item-tooltip-badge-wizard";
-        this.icon = iconArmor;
+        this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.armorColor;
+        this.iconValueColor = this.colorArmor;
         this.type = "Hat";
         break;
       case "headMedium":
-        this.badge = badgeRogueSmall;
+        this.badge = this.props.props.images.badgeRogueSmall;
         this.badgeClass = "item-tooltip-badge-rogue";
-        this.icon = iconArmor;
+        this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.armorColor;
+        this.iconValueColor = this.colorArmor;
         this.type = "Light Helmet";
         break;
       case "headHeavy":
-        this.badge = badgeWarriorSmall;
+        this.badge = this.props.props.images.badgeWarriorSmall;
         this.badgeClass = "item-tooltip-badge-warrior";
-        this.icon = iconArmor;
+        this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.armorColor;
+        this.iconValueColor = this.colorArmor;
         this.type = "Heavy Helmet";
         break;
       case "bodyLight":
-        this.badge = badgeWizardSmall;
+        this.badge = this.props.props.images.badgeWizardSmall;
         this.badgeClass = "item-tooltip-badge-wizard";
-        this.icon = iconArmor;
+        this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.armorColor;
+        this.iconValueColor = this.colorArmor;
         this.type = "Clothing";
         break;
       case "bodyMedium":
-        this.badge = badgeRogueSmall;
+        this.badge = this.props.props.images.badgeRogueSmall;
         this.badgeClass = "item-tooltip-badge-rogue";
-        this.icon = iconArmor;
+        this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.armorColor;
+        this.iconValueColor = this.colorArmor;
         this.type = "Light Armor";
         break;
       case "bodyHeavy":
-        this.badge = badgeWarriorSmall;
+        this.badge = this.props.props.images.badgeWarriorSmall;
         this.badgeClass = "item-tooltip-badge-warrior";
-        this.icon = iconArmor;
+        this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.armorColor;
+        this.iconValueColor = this.colorArmor;
         this.type = "Heavy Armor";
         break;
       case "back":
-        this.badge = badgeGenericSmall;
+        this.badge = this.props.props.images.badgeGenericSmall;
         this.badgeClass = "item-tooltip-badge-generic";
-        this.icon = iconArmor;
+        this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.armorColor;
+        this.iconValueColor = this.colorArmor;
         this.type = "Cloak";
         break;  
       case "neck":
-        this.badge = badgeGenericSmall;
+        this.badge = this.props.props.images.badgeGenericSmall;
         this.badgeClass = "item-tooltip-badge-generic";
-        this.icon = iconPower;
+        this.icon = this.props.props.images.iconPower;
         this.iconClass = "item-tooltip-icon-power";
         this.iconValue = this.props.item.powerBonus;
-        this.iconValueColor = this.powerColor;
+        this.iconValueColor = this.colorPower;
         this.type = "Amulet";
         break;
       case "staff":
-        this.badge = badgeWizardSmall;
+        this.badge = this.props.props.images.badgeWizardSmall;
         this.badgeClass = "item-tooltip-badge-wizard";
-        this.icon = iconPower;
+        this.icon = this.props.props.images.iconPower;
         this.iconClass = "item-tooltip-icon-power";
         this.iconValue = this.props.item.powerBonus;
-        this.iconValueColor = this.powerColor;
+        this.iconValueColor = this.colorPower;
         this.type = "Staff";
         break;
       case "spellbook":
-        this.badge = badgeWizardSmall;
+        this.badge = this.props.props.images.badgeWizardSmall;
         this.badgeClass = "item-tooltip-badge-wizard";
-        this.icon = iconPower;
+        this.icon = this.props.props.images.iconPower;
         this.iconClass = "item-tooltip-icon-power";
         this.iconValue = this.props.item.powerBonus;
-        this.iconValueColor = this.powerColor;
+        this.iconValueColor = this.colorPower;
         this.type = "Spellbook";
         break;
       case "bow":
-        this.badge = badgeRogueSmall;
+        this.badge = this.props.props.images.badgeRogueSmall;
         this.badgeClass = "item-tooltip-badge-rogue";
-        this.icon = iconPower;
+        this.icon = this.props.props.images.iconPower;
         this.iconClass = "item-tooltip-icon-power";
         this.iconValue = this.props.item.powerBonus;
-        this.iconValueColor = this.powerColor;
+        this.iconValueColor = this.colorPower;
         this.type = "Bow";
         break;
       case "dagger":
-        this.badge = badgeRogueSmall;
+        this.badge = this.props.props.images.badgeRogueSmall;
         this.badgeClass = "item-tooltip-badge-rogue";
-        this.icon = iconPower;
+        this.icon = this.props.props.images.iconPower;
         this.iconClass = "item-tooltip-icon-power";
         this.iconValue = this.props.item.powerBonus;
-        this.iconValueColor = this.powerColor;
+        this.iconValueColor = this.colorPower;
         this.type = "Dagger";
         break;
       case "sword":
-        this.badge = badgeWarriorSmall;
+        this.badge = this.props.props.images.badgeWarriorSmall;
         this.badgeClass = "item-tooltip-badge-warrior";
-        this.icon = iconPower;
+        this.icon = this.props.props.images.iconPower;
         this.iconClass = "item-tooltip-icon-power";
         this.iconValue = this.props.item.powerBonus;
-        this.iconValueColor = this.powerColor;
+        this.iconValueColor = this.colorPower;
         this.type = "Sword";
         break;
       case "shield":
-        this.badge = badgeWarriorSmall;
+        this.badge = this.props.props.images.badgeWarriorSmall;
         this.badgeClass = "item-tooltip-badge-warrior";
-        this.icon = iconArmor;
+        this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.armorColor;
+        this.iconValueColor = this.colorArmor;
         this.type = "Shield";
         break;
     }
@@ -371,24 +357,6 @@ class ItemTooltip extends React.Component {
   setStyle(){
     this.style = {height: + window.innerWidth*0.25 + "px", width: + window.innerWidth*0.1667 + "px"}
   }
-
-  setNameColor(){
-    switch(this.props.item.rarity){
-      case "Common":
-        this.nameColor = this.commonColor;
-        break;
-      case "Uncommon":
-        this.nameColor = this.uncommonColor;
-        break;
-      case "Rare":
-        this.nameColor = this.rareColor;
-        break;
-      case "Epic":
-        this.nameColor = this.epicColor;
-        break;
-    }
-  }
-
 }
 
 export default ItemTooltip;

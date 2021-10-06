@@ -11,13 +11,14 @@ import org.springframework.data.cassandra.core.mapping.Table;
 public class Shop {
 	@PrimaryKey private UUID id;
 	private Map<UUID, Integer> inventory;
-	private int lastRefresh;
 	
-	public Shop() {}
-
-	public Shop(UUID id) {
-		this.id = id;
-		this.lastRefresh = 1;
+	public Shop() {
+		this.id = UUID.randomUUID();
+	}
+	
+	public Shop(ShopExport shop) {
+		this.id = shop.getId();
+		this.inventory = shop.getInventory();
 	}
 
 	public UUID getId() {
@@ -28,9 +29,17 @@ public class Shop {
 		this.id = id;
 	}
 
+	public Map<UUID, Integer> getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Map<UUID, Integer> inventory) {
+		this.inventory = inventory;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, inventory, lastRefresh);
+		return Objects.hash(id, inventory);
 	}
 
 	@Override
@@ -42,13 +51,12 @@ public class Shop {
 		if (getClass() != obj.getClass())
 			return false;
 		Shop other = (Shop) obj;
-		return Objects.equals(id, other.id) && Objects.equals(inventory, other.inventory)
-				&& lastRefresh == other.lastRefresh;
+		return Objects.equals(id, other.id) && Objects.equals(inventory, other.inventory);
 	}
 
 	@Override
 	public String toString() {
-		return "Shop [id=" + id + ", inventory=" + inventory + ", lastRefresh=" + lastRefresh + "]";
+		return "Shop [id=" + id + ", inventory=" + inventory + "]";
 	}
 
 	

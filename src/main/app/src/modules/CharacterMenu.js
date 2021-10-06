@@ -1,13 +1,4 @@
 import React from "react";
-import characterMenu from "../images/character-menu.png";
-import buttonClose from "../images/button-close.png";
-import buttonCloseHover from "../images/button-close-hover.png";
-import badgeWarrior from "../images/badge-warrior.png";
-import badgeRogue from "../images/badge-rogue.png";
-import badgeWizard from "../images/badge-wizard.png";
-import barExperience from "../images/bar-experience.png";
-import barFrame from "../images/bar-frame.png";
-import characterLevelBackground from "../images/character-level-background.png";
 import AttributeBuyButtons from "./AttributeBuyButtons";
 
 class CharacterMenu extends React.Component {
@@ -15,11 +6,11 @@ class CharacterMenu extends React.Component {
   constructor(props){
     super(props);
     if(this.props.props.pc.characterClass == "Rogue"){
-      this.badge = badgeRogue;
+      this.badge = this.props.props.images.badgeRogue;
     } else if(this.props.props.pc.characterClass == "Wizard"){
-      this.badge = badgeWizard;
+      this.badge = this.props.props.images.badgeWizard;
     } else {
-      this.badge = badgeWarrior;
+      this.badge = this.props.props.images.badgeWarrior;
     }
   }
 
@@ -31,11 +22,11 @@ class CharacterMenu extends React.Component {
     if(this.props.on){
       return(
         <div className="menu">
-          <img className="background" src={characterMenu} alt="Character Information Screen"/>
+          <img className="background" src={this.props.props.images.characterMenu} alt="Character Information Screen"/>
           <img className="badge" src={this.badge} alt={this.props.props.pc.characterClass}/>
-          <input className="btn-close" type="image" src={buttonClose} alt="Close" onClick={this.props.toggle}
-            onMouseEnter={e => (e.currentTarget.src = buttonCloseHover)}
-            onMouseLeave={e => (e.currentTarget.src = buttonClose)}
+          <input className="btn-close" type="image" src={this.props.props.images.buttonClose} alt="Close" onClick={this.props.toggle}
+            onMouseEnter={e => (e.currentTarget.src = this.props.props.images.buttonCloseHover)}
+            onMouseLeave={e => (e.currentTarget.src = this.props.props.images.buttonClose)}
           />
           <AttributeBuyButtons props={this.props.props}/>
           <div className="character-name">
@@ -44,9 +35,9 @@ class CharacterMenu extends React.Component {
           <div className="character-points">
             <p className="v-h-centered">{"Points: "+this.props.props.pc.attributePoints}</p>
           </div>
-          <img className="bar-experience" src={barExperience} alt="Experience" title={this.experienceHover} style={this.experienceStyle}/>
-          <img className="bar-experience-frame" src={barFrame} alt="Experience" title={this.experienceHover}/>
-          <img className="character-level-background" src={characterLevelBackground}></img>
+          <img className="bar-experience" src={this.props.props.images.barExperience} alt="Experience" title={this.experienceHover} style={this.experienceStyle}/>
+          <img className="bar-experience-frame" src={this.props.props.images.barFrame} alt="Experience" title={this.experienceHover}/>
+          <img className="character-level-background" src={this.props.props.images.characterLevelBackground}></img>
           <div className="character-level">
             <p className="v-h-centered">{this.props.props.pc.level}</p>
           </div>

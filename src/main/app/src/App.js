@@ -48,7 +48,16 @@ class App extends React.Component {
           }}/>
         </Router>
       );
-    
+      if(this.state.scene=="Home"){
+          return(
+            <Router>
+              <Route path='/' component={() => { 
+                window.location.href = '/home'; 
+                return null;
+              }}/>
+            </Router>
+          );
+        }
     this.props.props = {
         images: this.images, 
         items: this.items, 
@@ -83,6 +92,13 @@ class App extends React.Component {
       </button>
       );
     }
+    let HomeButton = () => {
+      return(
+      <button className="btn-home" onClick={ () => { this.setState({scene:"Home"})} }>
+        <img src={this.images.scrollIcon} alt="Home"/>
+      </button>
+      );
+    }
     if (this.state.pc.location == "Town"){
       if(this.state.scene=="Default"){
         backgroundSrc = this.images.town
@@ -90,6 +106,7 @@ class App extends React.Component {
           <input className="tavern" type="image" src={this.images.tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
           <input className="inn" type="image" src={this.images.innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
           <input className="shop" type="image" src={this.images.shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
+          <HomeButton/>
         </>
       } else if(this.state.scene=="Tavern"){
         backgroundSrc = this.images.tavern

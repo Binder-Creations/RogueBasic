@@ -1,7 +1,7 @@
-export {default as backgroundBlue} from './background-blue.png'
-export {default as backgroundGreen} from './background-green.png'
-export {default as backgroundGrey} from './background-grey.png'
-export {default as backgroundPurple} from './background-purple.png'
+export {default as backgroundRare} from './background-rare.png'
+export {default as backgroundUncommon} from './background-uncommon.png'
+export {default as backgroundCommon} from './background-common.png'
+export {default as backgroundEpic} from './background-epic.png'
 export {default as badgeGenericSmall} from './badge-generic-small.png'
 export {default as badgeRogueSmall} from './badge-rogue-small.png'
 export {default as badgeRogue} from './badge-rogue.png'
@@ -42,11 +42,11 @@ export {default as buttonStrength} from './button-strength.png'
 export {default as characterLevelBackground} from './character-level-background.png'
 export {default as characterMenu} from './character-menu.png'
 export {default as equippedFrame} from './equipped-frame.png'
-export {default as frameBlue} from './frame-blue.png'
+export {default as frameRare} from './frame-rare.png'
 export {default as frameEmpty} from './frame-empty.png'
-export {default as frameGreen} from './frame-green.png'
-export {default as frameGrey} from './frame-grey.png'
-export {default as framePurple} from './frame-purple.png'
+export {default as frameUncommon} from './frame-uncommon.png'
+export {default as frameCommon} from './frame-common.png'
+export {default as frameEpic} from './frame-epic.png'
 export {default as heart} from './heart.png'
 export {default as iconArmor} from './icon-armor.png'
 export {default as iconGeal} from './icon-heal.png'
@@ -58,6 +58,7 @@ export {default as inn} from './inn.png'
 export {default as inventoryMenu} from './inventory-menu.png'
 export {default as mapOverlay} from './map-overlay.png'
 export {default as mapUnderlay} from './map-underlay.png'
+export {default as scrollIcon} from './scroll-icon.png'
 export {default as shopExterior} from './shop-exterior.png'
 export {default as shopTitleHover} from './shop-title-hover.png'
 export {default as shopTitle} from './shop-title.png'
@@ -77,87 +78,3 @@ export {default as tooltipItem} from './tooltip-item.png'
 export {default as townIcon} from './town-icon.png'
 export {default as townNarrow} from './town-narrow.png'
 export {default as town} from './town.png'
-
-// const images = {
-//   backgroundBlue,
-//   backgroundGreen,
-//   backgroundGrey,
-//   backgroundPurple,
-//   badgeGenericSmall,
-//   badgeRogueSmall,
-//   badgeRogue,
-//   badgeWarriorSmall,
-//   badgeWarrior,
-//   badgeWizardSmall,
-//   badgeWizard,
-//   barBackground,
-//   barEnergy,
-//   barExperience,
-//   barFrame,
-//   barHealth,
-//   buttonAttackRogueHover,
-//   buttonAttackRogue,
-//   buttonAttackWarriorHover,
-//   buttonAttackWarrior,
-//   buttonAttackWizardHover,
-//   buttonAttackWizard,
-//   buttonAttack,
-//   buttonCharacterHover,
-//   buttonCharacter,
-//   buttonCloseHover,
-//   buttonClose,
-//   buttonConstitutionHover,
-//   buttonConstitutionInactive,
-//   buttonConstitution,
-//   buttonDexterityHover,
-//   buttonDexterityInactive,
-//   buttonDexterity,
-//   buttonIntelligenceHover,
-//   buttonIntelligenceInactive,
-//   buttonIntelligence,
-//   buttonInventoryHover,
-//   buttonInventory,
-//   buttonStrengthHover,
-//   buttonStrengthInactive,
-//   buttonStrength,
-//   characterLevelBackground,
-//   characterMenu,
-//   equippedFrame,
-//   frameBlue,
-//   frameEmpty,
-//   frameGreen,
-//   frameGrey,
-//   framePurple,
-//   heart,
-//   iconArmor,
-//   iconGeal,
-//   iconPower,
-//   innExterior,
-//   innTitleHover,
-//   innTitle,
-//   inn,
-//   inventoryMenu,
-//   mapOverlay,
-//   mapUnderlay,
-//   shopExterior,
-//   shopTitleHover,
-//   shopTitle,
-//   shop,
-//   silhouetteRogue,
-//   silhouetteWarrior,
-//   silhouetteWizard,
-//   skillBackground,
-//   skillFrame,
-//   skillGlow,
-//   swirl,
-//   tavernExterior,
-//   tavernTitleHover,
-//   tavernTitle,
-//   tavern,
-//   tooltipItem,
-//   townIcon,
-//   townNarrow,
-//   town
-// }
-
-// export default images;

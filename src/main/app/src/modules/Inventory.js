@@ -1,25 +1,13 @@
 import React from "react";
-import frameEmpty from "../images/frame-empty.png";
-import frameGrey from "../images/frame-grey.png";
-import frameGreen from "../images/frame-green.png";
-import frameBlue from "../images/frame-blue.png";
-import framePurple from "../images/frame-purple.png";
-import backgroundGrey from "../images/background-grey.png";
-import backgroundGreen from "../images/background-green.png";
-import backgroundBlue from "../images/background-blue.png";
-import backgroundPurple from "../images/background-purple.png";
-import * as items from "../images/items";
 import ItemTooltip from "./ItemTooltip";
 
 class Inventory extends React.Component {
   
   constructor(props){
     super(props);
-    this.items = items;
     this.itemList = [];
     this.frame = "";
     this.background = "";
-    this.setFrameBackground = this.setFrameBackground.bind(this);
     this.push = this.push.bind(this);
     this.pushUsableCount = this.pushUsableCount.bind(this);
     this.pushUnusableCount = this.pushUnusableCount.bind(this);
@@ -42,7 +30,8 @@ class Inventory extends React.Component {
     sort.forEach(type => {
       this.props.props.pc.inventoryCache.forEach(item => {
         if(item.type == type){
-          this.setFrameBackground(item.rarity);
+          this.background = this.props.props.images["background"+item.rarity]
+          this.frame = this.props.props.images["frame"+item.rarity]
           this.push(item);
         }
       })
@@ -53,31 +42,10 @@ class Inventory extends React.Component {
       ? 5
       : fillSize;
     while (this.itemList.length < fillSize*5){
-      this.itemList.push(<div className="inventory-box-item"><img src={frameEmpty} className="absolute-fill"/></div>)
+      this.itemList.push(<div className="inventory-box-item"><img src={this.props.props.images.frameEmpty} className="absolute-fill"/></div>)
     }
 
     return this.itemList;
-  }
-
-  setFrameBackground(rarity){
-    switch(rarity){
-      case "Uncommon":
-        this.background = backgroundGreen;
-        this.frame = frameGreen;
-        break;
-      case "Rare":
-        this.background = backgroundBlue;
-        this.frame = frameBlue;
-        break;
-      case "Epic":
-        this.background = backgroundPurple;
-        this.frame = framePurple;
-        break;
-      default:
-        this.background = backgroundGrey;
-        this.frame = frameGrey;
-        break;
-    }
   }
 
   push(item){
@@ -137,12 +105,12 @@ class Inventory extends React.Component {
     this.itemList.push(
       <div className="inventory-box-item item-tooltip" onClick={()=>{this.props.props.appState("inventory", item, 0)}}>
         <img src={this.background} className="absolute-fill"/>
-        <img src={this.items[item.type]["i"+item.image]} className="item-image"/>
+        <img src={this.props.props.items[item.type]["i"+item.image]} className="item-image"/>
         <img src={this.frame} className="absolute-fill"/>
         <p className="item-count">
           {this.props.props.pc.inventory[item.id]}
         </p>
-        <ItemTooltip item={item} widthChange={this.props.props.widthChange}  update={this.props.update} leftMod={0.7}/>
+        <ItemTooltip props={this.props.props} item={item} update={this.props.update} leftMod={0.7}/>
       </div>
       )
   }
@@ -151,12 +119,12 @@ class Inventory extends React.Component {
     this.itemList.push(
       <div className="inventory-box-item item-tooltip">
         <img src={this.background} className="absolute-fill gray-75"/>
-        <img src={this.items[item.type]["i"+item.image]} className="item-image gray-75"/>
+        <img src={this.props.props.items[item.type]["i"+item.image]} className="item-image gray-75"/>
         <img src={this.frame} className="absolute-fill gray-75"/>
         <p className="item-count">
           {this.props.props.pc.inventory[item.id]}
         </p>
-        <ItemTooltip item={item} widthChange={this.props.props.widthChange}  update={this.props.update} leftMod={0.7}/>
+        <ItemTooltip props={this.props.props} item={item} update={this.props.update} leftMod={0.7}/>
       </div>
       )
   }
@@ -165,9 +133,9 @@ class Inventory extends React.Component {
     this.itemList.push(
       <div className="inventory-box-item item-tooltip" onClick={()=>{this.props.props.appState("inventory", item, 0)}}>
         <img src={this.background} className="absolute-fill"/>
-        <img src={this.items[item.type]["i"+item.image]} className="item-image"/>
+        <img src={this.props.props.items[item.type]["i"+item.image]} className="item-image"/>
         <img src={this.frame} className="absolute-fill"/>
-        <ItemTooltip item={item} widthChange={this.props.props.widthChange}  update={this.props.update} leftMod={0.7}/>
+        <ItemTooltip props={this.props.props} item={item} update={this.props.update} leftMod={0.7}/>
       </div>
     )
   }
@@ -176,9 +144,9 @@ class Inventory extends React.Component {
     this.itemList.push(
       <div className="inventory-box-item item-tooltip">
         <img src={this.background} className="absolute-fill gray-75"/>
-        <img src={this.items[item.type]["i"+item.image]} className="item-image gray-75"/>
+        <img src={this.props.props.items[item.type]["i"+item.image]} className="item-image gray-75"/>
         <img src={this.frame} className="absolute-fill gray-75"/>
-        <ItemTooltip item={item} widthChange={this.props.props.widthChange}  update={this.props.update} leftMod={0.7}/>
+        <ItemTooltip props={this.props.props} item={item} update={this.props.update} leftMod={0.7}/>
       </div>
     )
   }

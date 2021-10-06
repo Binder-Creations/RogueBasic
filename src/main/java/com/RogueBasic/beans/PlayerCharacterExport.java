@@ -16,6 +16,8 @@ public class PlayerCharacterExport {
 	
 	private UUID id;
 	private String location;
+	private UUID currentDungeon;
+	private UUID currentShop;
 	private int day;
 	private String name;
 	private String characterClass;
@@ -61,6 +63,8 @@ public class PlayerCharacterExport {
 		
 		this.id = pc.getId();
 		this.location = pc.getLocation();
+		this.currentDungeon = pc.getCurrentDungeon();
+		this.currentShop = pc.getCurrentShop();
 		this.day = pc.getDay();
 		this.name = pc.getName();
 		this.characterClass = pc.getCharacterClass();
@@ -124,6 +128,22 @@ public class PlayerCharacterExport {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public UUID getCurrentDungeon() {
+		return currentDungeon;
+	}
+
+	public void setCurrentDungeon(UUID currentDungeon) {
+		this.currentDungeon = currentDungeon;
+	}
+
+	public UUID getCurrentShop() {
+		return currentShop;
+	}
+
+	public void setCurrentShop(UUID currentShop) {
+		this.currentShop = currentShop;
 	}
 
 	public int getDay() {
@@ -409,9 +429,9 @@ public class PlayerCharacterExport {
 	@Override
 	public int hashCode() {
 		return Objects.hash(abilities, armorBonus, armorPenBonus, attributePoints, characterClass, constitution,
-				constitutionBonus, critRatingBonus, currency, currentEnergy, currentHealth, day, dexterity,
-				dexterityBonus, dodgeRatingBonus, energyBonus, energyRegenBonus, equippedBack, equippedBody,
-				equippedHead, equippedNeck, equippedPrimary, equippedSecondary, experience, healthBonus,
+				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentHealth, currentShop,
+				day, dexterity, dexterityBonus, dodgeRatingBonus, energyBonus, energyRegenBonus, equippedBack,
+				equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary, experience, healthBonus,
 				healthRegenBonus, id, intelligence, intelligenceBonus, inventory, inventoryCache, level, location, name,
 				powerBonus, strength, strengthBonus);
 	}
@@ -429,8 +449,9 @@ public class PlayerCharacterExport {
 				&& armorPenBonus == other.armorPenBonus && attributePoints == other.attributePoints
 				&& Objects.equals(characterClass, other.characterClass) && constitution == other.constitution
 				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
-				&& currency == other.currency && currentEnergy == other.currentEnergy
-				&& currentHealth == other.currentHealth && day == other.day && dexterity == other.dexterity
+				&& currency == other.currency && Objects.equals(currentDungeon, other.currentDungeon)
+				&& currentEnergy == other.currentEnergy && currentHealth == other.currentHealth
+				&& Objects.equals(currentShop, other.currentShop) && day == other.day && dexterity == other.dexterity
 				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
 				&& energyBonus == other.energyBonus && energyRegenBonus == other.energyRegenBonus
 				&& Objects.equals(equippedBack, other.equippedBack) && Objects.equals(equippedBody, other.equippedBody)
@@ -447,11 +468,12 @@ public class PlayerCharacterExport {
 
 	@Override
 	public String toString() {
-		return "PlayerCharacterExport [id=" + id + ", location=" + location + ", day=" + day + ", name=" + name
-				+ ", characterClass=" + characterClass + ", experience=" + experience + ", level=" + level
-				+ ", attributePoints=" + attributePoints + ", currency=" + currency + ", abilities=" + abilities
-				+ ", inventory=" + inventory + ", inventoryCache=" + inventoryCache + ", equippedHead=" + equippedHead
-				+ ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck
+		return "PlayerCharacterExport [id=" + id + ", location=" + location + ", currentDungeon=" + currentDungeon
+				+ ", currentShop=" + currentShop + ", day=" + day + ", name=" + name + ", characterClass="
+				+ characterClass + ", experience=" + experience + ", level=" + level + ", attributePoints="
+				+ attributePoints + ", currency=" + currency + ", abilities=" + abilities + ", inventory=" + inventory
+				+ ", inventoryCache=" + inventoryCache + ", equippedHead=" + equippedHead + ", equippedBody="
+				+ equippedBody + ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck
 				+ ", equippedPrimary=" + equippedPrimary + ", equippedSecondary=" + equippedSecondary
 				+ ", constitution=" + constitution + ", strength=" + strength + ", dexterity=" + dexterity
 				+ ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus + ", strengthBonus="

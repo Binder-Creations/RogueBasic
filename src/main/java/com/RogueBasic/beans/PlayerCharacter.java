@@ -21,6 +21,7 @@ public class PlayerCharacter {
 	@PrimaryKey private UUID id;
 	private String location;
 	private UUID currentDungeon;
+	private UUID currentShop;
 	private int day;
 	private String name;
 	private String characterClass;
@@ -133,6 +134,8 @@ public class PlayerCharacter {
 	public PlayerCharacter(PlayerCharacterExport pc) {
 		this.id = pc.getId();
 		this.location = pc.getLocation();
+		this.currentDungeon = pc.getCurrentDungeon();
+		this.currentShop = pc.getCurrentShop();
 		this.day = pc.getDay();
 		this.name = pc.getName();
 		this.characterClass = pc.getCharacterClass();
@@ -196,6 +199,14 @@ public class PlayerCharacter {
 
 	public void setCurrentDungeon(UUID currentDungeon) {
 		this.currentDungeon = currentDungeon;
+	}
+
+	public UUID getCurrentShop() {
+		return currentShop;
+	}
+
+	public void setCurrentShop(UUID currentShop) {
+		this.currentShop = currentShop;
 	}
 
 	public int getDay() {
@@ -473,9 +484,9 @@ public class PlayerCharacter {
 	@Override
 	public int hashCode() {
 		return Objects.hash(abilityIds, armorBonus, armorPenBonus, attributePoints, characterClass, constitution,
-				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentHealth, day,
-				dexterity, dexterityBonus, dodgeRatingBonus, energyBonus, energyRegenBonus, equippedBack, equippedBody,
-				equippedHead, equippedNeck, equippedPrimary, equippedSecondary, experience, healthBonus,
+				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentHealth, currentShop,
+				day, dexterity, dexterityBonus, dodgeRatingBonus, energyBonus, energyRegenBonus, equippedBack,
+				equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary, experience, healthBonus,
 				healthRegenBonus, id, intelligence, intelligenceBonus, inventory, level, location, name, powerBonus,
 				strength, strengthBonus);
 	}
@@ -494,12 +505,12 @@ public class PlayerCharacter {
 				&& Objects.equals(characterClass, other.characterClass) && constitution == other.constitution
 				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
 				&& currency == other.currency && Objects.equals(currentDungeon, other.currentDungeon)
-				&& currentEnergy == other.currentEnergy && currentHealth == other.currentHealth && day == other.day
-				&& dexterity == other.dexterity && dexterityBonus == other.dexterityBonus
-				&& dodgeRatingBonus == other.dodgeRatingBonus && energyBonus == other.energyBonus
-				&& energyRegenBonus == other.energyRegenBonus && Objects.equals(equippedBack, other.equippedBack)
-				&& Objects.equals(equippedBody, other.equippedBody) && Objects.equals(equippedHead, other.equippedHead)
-				&& Objects.equals(equippedNeck, other.equippedNeck)
+				&& currentEnergy == other.currentEnergy && currentHealth == other.currentHealth
+				&& Objects.equals(currentShop, other.currentShop) && day == other.day && dexterity == other.dexterity
+				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
+				&& energyBonus == other.energyBonus && energyRegenBonus == other.energyRegenBonus
+				&& Objects.equals(equippedBack, other.equippedBack) && Objects.equals(equippedBody, other.equippedBody)
+				&& Objects.equals(equippedHead, other.equippedHead) && Objects.equals(equippedNeck, other.equippedNeck)
 				&& Objects.equals(equippedPrimary, other.equippedPrimary)
 				&& Objects.equals(equippedSecondary, other.equippedSecondary) && experience == other.experience
 				&& healthBonus == other.healthBonus && healthRegenBonus == other.healthRegenBonus
@@ -511,19 +522,19 @@ public class PlayerCharacter {
 	
 	@Override
 	public String toString() {
-		return "PlayerCharacter [id=" + id + ", location=" + location + ", currentDungeon=" + currentDungeon + ", day="
-				+ day + ", name=" + name + ", characterClass=" + characterClass + ", experience=" + experience
-				+ ", level=" + level + ", attributePoints=" + attributePoints + ", currency=" + currency
-				+ ", abilityIds=" + abilityIds + ", inventory=" + inventory + ", equippedHead=" + equippedHead
-				+ ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck
-				+ ", equippedPrimary=" + equippedPrimary + ", equippedSecondary=" + equippedSecondary
-				+ ", constitution=" + constitution + ", strength=" + strength + ", dexterity=" + dexterity
-				+ ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus + ", strengthBonus="
-				+ strengthBonus + ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus=" + intelligenceBonus
-				+ ", powerBonus=" + powerBonus + ", healthBonus=" + healthBonus + ", healthRegenBonus="
-				+ healthRegenBonus + ", armorPenBonus=" + armorPenBonus + ", armorBonus=" + armorBonus
-				+ ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus + ", energyBonus="
-				+ energyBonus + ", energyRegenBonus=" + energyRegenBonus + ", currentHealth=" + currentHealth
-				+ ", currentEnergy=" + currentEnergy + "]";
+		return "PlayerCharacter [id=" + id + ", location=" + location + ", currentDungeon=" + currentDungeon
+				+ ", currentShop=" + currentShop + ", day=" + day + ", name=" + name + ", characterClass="
+				+ characterClass + ", experience=" + experience + ", level=" + level + ", attributePoints="
+				+ attributePoints + ", currency=" + currency + ", abilityIds=" + abilityIds + ", inventory=" + inventory
+				+ ", equippedHead=" + equippedHead + ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack
+				+ ", equippedNeck=" + equippedNeck + ", equippedPrimary=" + equippedPrimary + ", equippedSecondary="
+				+ equippedSecondary + ", constitution=" + constitution + ", strength=" + strength + ", dexterity="
+				+ dexterity + ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus
+				+ ", strengthBonus=" + strengthBonus + ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus="
+				+ intelligenceBonus + ", powerBonus=" + powerBonus + ", healthBonus=" + healthBonus
+				+ ", healthRegenBonus=" + healthRegenBonus + ", armorPenBonus=" + armorPenBonus + ", armorBonus="
+				+ armorBonus + ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus
+				+ ", energyBonus=" + energyBonus + ", energyRegenBonus=" + energyRegenBonus + ", currentHealth="
+				+ currentHealth + ", currentEnergy=" + currentEnergy + "]";
 	}
 }
