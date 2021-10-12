@@ -1,6 +1,9 @@
 class PcServices {
-  constructor(pc){
-    this.pc = pc;
+  constructor(characterClass){
+    console.log("hello")
+    this.pc = null;
+    this.healthTotalPrevious = null;
+    this.energyTotalPrevious = null;
     this.emptySlot = {
       armorBonus: 0,
       armorPenBonus: 0,
@@ -16,7 +19,7 @@ class PcServices {
       powerBonus: 0,
       strengthBonus: 0}
     this.bonuses = ["constitution", "strength", "dexterity", "intelligence", "power", "health", "healthRegen", "armor", "armorPen", "critRating", "dodgeRating", "energy", "energyRegen"];
-    this.baseStats = this.pc.characterClass == "Rogue" 
+    this.baseStats = characterClass == "Rogue" 
     ? {
       armorBonus: 0,
       armorPenBonus: 0,
@@ -32,7 +35,7 @@ class PcServices {
       intelligenceBonus: 0,
       strengthBonus: 0
     }
-    : this.pc.characterClass == "Wizard"
+    : characterClass == "Wizard"
       ? {
         armorBonus: 0,
         armorPenBonus: 0,
@@ -66,7 +69,9 @@ class PcServices {
 
   }
   
-
+  setPc(pc){
+    this.pc = pc;
+  }
   conTotal(){
     return this.pc.constitution*1 + this.pc.constitutionBonus*1;
   }
@@ -165,11 +170,45 @@ class PcServices {
     this.pc.critChance = this.critChanceCalc();
     this.pc.dodgeChance = this.dodgeChanceCalc();
 
-    if(!this.initiaized){
+    if(this.pc.currentHealth === -1){
       this.pc.currentHealth = this.healthTotal();
-      this.pc.currentEnergy = this.energyTotal();
-      this.initiaized = true;
     }
+
+    if(this.pc.currentEnergy === -1){
+      this.pc.currentEnergy = this.energyTotal();
+    }
+
+    if(this.healthTotalPrevious){
+      if(this.healthTotalPrevious > this.healthTotal()){
+        this.pc.currentHealth -= (this.healthTotalPrevious - this.healthTotal());
+        this.pc.currentHealth = this.pc.currentHealth > 0
+          ? this.pc.currentHealth
+          : 1
+      }
+      if(this.healthTotalPrevious < this.healthTotal()){
+        this.pc.currentHealth += (this.healthTotal() - this.healthTotalPrevious);
+        this.pc.currentHealth = this.pc.currentHealth > this.healthTotal()
+          ? this.healthTotal()
+          : this.pc.currentHealth
+      }
+    }
+
+    if(this.energyTotalPrevious){
+      if(this.energyTotalPrevious > this.energyTotal()){
+        this.pc.currentEnergy -= (this.energyTotalPrevious - this.energyTotal());
+        this.pc.currentEnergy = this.pc.currentEnergy > 0
+          ? this.pc.currentEnergy
+          : 1
+      }
+      if(this.energyTotalPrevious < this.energyTotal()){
+        this.pc.currentEnergy += (this.energyTotal() - this.energyTotalPrevious);
+        this.pc.currentEnergy = this.pc.currentEnergy > this.energyTotal()
+          ? this.energyTotal()
+          : this.pc.currentEnergy
+      }
+    }
+    this.healthTotalPrevious = this.healthTotal();
+    this.energyTotalPrevious = this.energyTotal();
   }
 }
 

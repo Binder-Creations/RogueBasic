@@ -19,10 +19,7 @@ class ItemTooltip extends React.Component {
     this.icon = this.props.props.images.iconHeal;
     this.iconClass = "";
     this.iconValue = "";
-    this.iconValueColor = this.colorArmor;
-    this.colorArmor = {color: "#136f9b"};
-    this.colorPower = {color: "#a83a0e"};
-    this.colorHeal = {color: "#ce6eb9"};
+    this.iconValueColor = this.props.props.colorArmor;
     this.type = "";
     this.tooltipQuadrant = "bottom-left";
     this.style = "";
@@ -51,7 +48,7 @@ class ItemTooltip extends React.Component {
         <img className={this.iconClass} src={this.icon}/>
         <p className="item-tooltip-icon-value" style={this.iconValueColor}>{this.iconValue}</p>
         <p className="item-tooltip-name" style={this.nameColor}>{this.props.item.name}</p>
-        <p className="item-tooltip-cost">{this.props.item.cost}</p>
+        <p className="item-tooltip-cost">{this.props.item.cost*this.props.costMult}</p>
         <p className="item-tooltip-description">{this.props.item.description}</p>        
         <div className="item-tooltip-general">{this.type}</div>
         <div className="item-tooltip-statbox">{this.statBox}</div>
@@ -123,6 +120,11 @@ class ItemTooltip extends React.Component {
         <p>{"+" + this.props.item.energyBonus + " Energy"}</p>
       )
     }
+    if(this.props.item.energyRegenBonus){
+      this.statBox.push(
+        <p>{"+" + this.props.item.energyRegenBonus + " Energy Regen"}</p>
+      )
+    }
   }
 
   setBadgeIconType(){
@@ -136,12 +138,12 @@ class ItemTooltip extends React.Component {
           case "heal":
             this.icon = this.props.props.images.iconHeal;
             this.iconClass = "item-tooltip-icon-heal";
-            this.iconValueColor = this.colorHeal
+            this.iconValueColor = this.props.props.colorHeal
             break actionType;
           default:
             this.icon = this.props.props.images.iconHeal;
             this.iconClass = "item-tooltip-icon-heal";
-            this.iconValueColor = this.colorHeal;
+            this.iconValueColor = this.props.props.colorHeal;
             break actionType;
         }
         break;
@@ -154,12 +156,12 @@ class ItemTooltip extends React.Component {
           case "heal":
             this.icon = this.props.props.images.iconHeal;
             this.iconClass = "item-tooltip-icon-heal";
-            this.iconValueColor = this.colorHeal
+            this.iconValueColor = this.props.props.colorHeal
             break actionType;
           default:
             this.icon = this.props.props.images.iconHeal;
             this.iconClass = "item-tooltip-icon-heal";
-            this.iconValueColor = this.colorHeal
+            this.iconValueColor = this.props.props.colorHeal
             break actionType;
         }
         break;
@@ -169,7 +171,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.colorArmor;
+        this.iconValueColor = this.props.props.colorArmor;
         this.type = "Hat";
         break;
       case "headMedium":
@@ -178,7 +180,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.colorArmor;
+        this.iconValueColor = this.props.props.colorArmor;
         this.type = "Light Helmet";
         break;
       case "headHeavy":
@@ -187,7 +189,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.colorArmor;
+        this.iconValueColor = this.props.props.colorArmor;
         this.type = "Heavy Helmet";
         break;
       case "bodyLight":
@@ -196,7 +198,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.colorArmor;
+        this.iconValueColor = this.props.props.colorArmor;
         this.type = "Clothing";
         break;
       case "bodyMedium":
@@ -205,7 +207,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.colorArmor;
+        this.iconValueColor = this.props.props.colorArmor;
         this.type = "Light Armor";
         break;
       case "bodyHeavy":
@@ -214,7 +216,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.colorArmor;
+        this.iconValueColor = this.props.props.colorArmor;
         this.type = "Heavy Armor";
         break;
       case "back":
@@ -223,7 +225,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.colorArmor;
+        this.iconValueColor = this.props.props.colorArmor;
         this.type = "Cloak";
         break;  
       case "neck":
@@ -232,7 +234,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconPower;
         this.iconClass = "item-tooltip-icon-power";
         this.iconValue = this.props.item.powerBonus;
-        this.iconValueColor = this.colorPower;
+        this.iconValueColor = this.props.props.colorPower;
         this.type = "Amulet";
         break;
       case "staff":
@@ -241,7 +243,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconPower;
         this.iconClass = "item-tooltip-icon-power";
         this.iconValue = this.props.item.powerBonus;
-        this.iconValueColor = this.colorPower;
+        this.iconValueColor = this.props.props.colorPower;
         this.type = "Staff";
         break;
       case "spellbook":
@@ -250,7 +252,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconPower;
         this.iconClass = "item-tooltip-icon-power";
         this.iconValue = this.props.item.powerBonus;
-        this.iconValueColor = this.colorPower;
+        this.iconValueColor = this.props.props.colorPower;
         this.type = "Spellbook";
         break;
       case "bow":
@@ -259,7 +261,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconPower;
         this.iconClass = "item-tooltip-icon-power";
         this.iconValue = this.props.item.powerBonus;
-        this.iconValueColor = this.colorPower;
+        this.iconValueColor = this.props.props.colorPower;
         this.type = "Bow";
         break;
       case "dagger":
@@ -268,7 +270,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconPower;
         this.iconClass = "item-tooltip-icon-power";
         this.iconValue = this.props.item.powerBonus;
-        this.iconValueColor = this.colorPower;
+        this.iconValueColor = this.props.props.colorPower;
         this.type = "Dagger";
         break;
       case "sword":
@@ -277,7 +279,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconPower;
         this.iconClass = "item-tooltip-icon-power";
         this.iconValue = this.props.item.powerBonus;
-        this.iconValueColor = this.colorPower;
+        this.iconValueColor = this.props.props.colorPower;
         this.type = "Sword";
         break;
       case "shield":
@@ -286,7 +288,7 @@ class ItemTooltip extends React.Component {
         this.icon = this.props.props.images.iconArmor;
         this.iconClass = "item-tooltip-icon-armor";
         this.iconValue = this.props.item.armorBonus;
-        this.iconValueColor = this.colorArmor;
+        this.iconValueColor = this.props.props.colorArmor;
         this.type = "Shield";
         break;
     }

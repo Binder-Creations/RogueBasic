@@ -1,6 +1,7 @@
 import React from "react";
 import {Route, BrowserRouter as Router} from "react-router-dom";
 import Ui from "./modules/Ui"
+import ShopMenu from "./modules/ShopMenu";
 import PcServices from "./modules/PcServices";
 import * as images from "./images"
 import * as items from "./images/items";
@@ -31,11 +32,19 @@ class App extends React.Component {
         //     .then(response => response.json())))
       
     };
-    this.images = images;
-    this.items = items;
-    this.pcServices = "";
+    this.pcServices = new PcServices(this.state.pc.characterClass);
     this.appState = this.appState.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
+
+    this.props.props = {
+      images: images, 
+      items: items, 
+      appState: this.appState,
+      colorArmor: {color: "#136f9b"},
+      colorPower: {color: "#a83a0e"},
+      colorHeal: {color: "#ce6eb9"} 
+    }
+
   };
 
   render(){
@@ -48,102 +57,133 @@ class App extends React.Component {
           }}/>
         </Router>
       );
-      if(this.state.scene=="Home"){
-          return(
-            <Router>
-              <Route path='/' component={() => { 
-                window.location.href = '/home'; 
-                return null;
-              }}/>
-            </Router>
-          );
-        }
-    this.props.props = {
-        images: this.images, 
-        items: this.items, 
-        appState: this.appState, 
-        pc: this.state.pc, 
-        combat: this.state.combat, 
-        widthChange: this.state.widthChange
+    if(this.state.scene=="Home"){
+        return(
+          <Router>
+            <Route path='/' component={() => { 
+              window.location.href = '/home'; 
+              return null;
+            }}/>
+          </Router>
+        );
       }
-      
     if(!this.state.pc.name){
       return(<></>)
     }
-    if(this.pcServices == ""){
-      this.pcServices = new PcServices(this.state.pc)
+
+     if(!this.initializePcServices){
+      this.pcServices.setPc(this.state.pc);
+      this.pcServices.updateStats()
+      this.initializePcServices = true;
+     }
+
+    this.props.props.pc = this.state.pc;
+    this.props.props.combat = this.state.combat;
+    this.props.props.widthChange = this.state.widthChange;
       
-    }
-    this.pcServices.updateStats()
     if(!this.listenersAdded){
       window.addEventListener("resize", this.updateWidth)
       this.listenersAdded = true;
     }
     let backgroundSrc;
-    let elements;
+    let innerElements = <></>
+    let outerElements = <></>
     let InnerElements = () => {
-      return(elements);
+      return(innerElements);
+    }
+    let OuterElements = () => {
+      return(outerElements);
     }
 
     let TownButton = () => {
       return(
       <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
-        <img src={this.images.townIcon} alt="Town"/>
+        <img src={this.props.props.images.townIcon} alt="Town"/>
       </button>
       );
     }
     let HomeButton = () => {
       return(
       <button className="btn-home" onClick={ () => { this.setState({scene:"Home"})} }>
-        <img src={this.images.scrollIcon} alt="Home"/>
+        <img src={this.props.props.images.scrollIcon} alt="Home"/>
       </button>
       );
     }
+
     if (this.state.pc.location == "Town"){
       if(this.state.scene=="Default"){
-        backgroundSrc = this.images.town
-        elements = <>
-          <input className="tavern" type="image" src={this.images.tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
-          <input className="inn" type="image" src={this.images.innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
-          <input className="shop" type="image" src={this.images.shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
+        backgroundSrc = this.props.props.images.town
+        outerElements = <>
+          <input className="tavern" type="image" src={this.props.props.images.tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
+          <input className="inn" type="image" src={this.props.props.images.innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
+          <input className="shop" type="image" src={this.props.props.images.shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
           <HomeButton/>
         </>
       } else if(this.state.scene=="Tavern"){
-        backgroundSrc = this.images.tavern
-        elements = <>
+        backgroundSrc = this.props.props.images.tavern
+        outerElements = <>
           <TownButton/>
         </>
       } else if(this.state.scene=="Inn"){
-        backgroundSrc = this.images.inn
-        elements = <>
+        backgroundSrc = this.props.props.images.inn
+        outerElements = <>
           <TownButton/>
         </>
       } else if(this.state.scene=="Shop"){
-        backgroundSrc = this.images.shop
-        elements = <>
+        if(this.state.pc.currentShop){
+          if(!this.state.shop){
+            fetch('/shop/'+ this.state.pc.currentShop)
+              .then(response => response.json())
+              .then(data => {
+                this.state.pc.currentShop = data.id;
+                this.savePc(this.state.pc);
+                this.setState({shop: data});
+              });
+          } else if(this.state.shop.id != this.state.pc.currentShop){
+            fetch('/shop/'+ this.state.pc.currentShop)
+              .then(response => response.json())
+              .then(data => {
+                this.state.pc.currentShop = data.id;
+                this.savePc(this.state.pc);
+                this.setState({shop: data});
+              });
+          }
+        } else {
+          fetch('/shop/new/'+ this.state.pc.id)
+            .then(response => response.json())
+            .then(data => {
+              this.state.pc.currentShop = data.id;
+              this.savePc(this.state.pc);
+              this.setState({shop: data});
+            });
+        }
+
+        backgroundSrc = this.props.props.images.shop
+        outerElements = <>
+          <ShopMenu props={this.props.props} shop={this.state.shop}/>
           <TownButton/>
         </>
       }
     }else{
-      backgroundSrc = this.images.town
-      elements = <></>
+      backgroundSrc = this.props.props.images.town
       }
     return(
     <div className="app-container">
       <img className="background" src={backgroundSrc} alt="Background"/>
       <InnerElements/>
       <Ui props={this.props.props}/>
+      <OuterElements/>
     </div>
     );
     }
 
     componentDidMount(){
-      Object.keys(this.images).forEach((image) => {
-        new Image().src = this.images[image];
+      Object.keys(this.props.props.images).forEach((image) => {
+        new Image().src = this.props.props.images[image];
       });
-      Object.keys(this.items).forEach((type) => {
-        Object.keys(this.items[type]).forEach((item) => {
-          new Image().src = this.items[type][item];
+      Object.keys(this.props.props.items).forEach((type) => {
+        Object.keys(this.props.props.items[type]).forEach((item) => {
+          new Image().src = this.props.props.items[type][item];
         });
       });
     }
@@ -158,12 +198,86 @@ class App extends React.Component {
       });
       return;
     }
+    async saveShop(shop){
+      await fetch('/shop/', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shop)
+      });
+      return;
+    }
     updateWidth(){
       this.setState({widthChange: ++this.state.widthChange});
     }
     appState(method, key, value){
       let pc;
+      let shop;
+      let addItem = true;
       method: switch(method){
+        case "shop-store":
+          pc = {...this.state.pc};
+          shop = {...this.state.shop};
+          if(shop.inventory[key.id] > 1){
+            shop.inventory[key.id] -= 1;
+          }else{
+            delete shop.inventory[key.id]
+            var index = shop.inventoryCache.indexOf(key);
+            if (index !== -1)
+              shop.inventoryCache.splice(index, 1);
+          }
+
+          pc.currency -= key.cost;
+          pc.currency < 0 
+            ? pc.currency = 0
+            : pc.currency = pc.currency
+
+          if(pc.inventory[key.id]){
+            pc.inventory[key.id] += 1;
+          } else {
+            pc.inventory[key.id] = 1;
+          }
+          for(const item of pc.inventoryCache){
+            if(item.id == key.id){
+              addItem = false;
+            }
+          }
+          if(addItem){
+            pc.inventoryCache.push(key);
+          }
+          this.savePc(pc)
+            .then(this.saveShop(shop))
+            .then(()=>{this.setState({pc: pc, shop: shop})});
+        case "shop-player":
+          pc = {...this.state.pc};
+          shop = {...this.state.shop};
+          if(pc.inventory[key.id] > 1){
+            pc.inventory[key.id] -= 1;
+          }else{
+            delete pc.inventory[key.id]
+            var index = pc.inventoryCache.indexOf(key);
+            if (index !== -1)
+              pc.inventoryCache.splice(index, 1);
+          }
+          pc.currency += key.cost;
+          if(shop.inventory[key.id]){
+            shop.inventory[key.id] += 1;
+          } else {
+            shop.inventory[key.id] = 1;
+          }
+          for(const item of shop.inventoryCache){
+            if(item.id == key.id){
+              addItem = false;
+            }
+          }
+          if(addItem){
+            shop.inventoryCache.push(key);
+          }
+          this.savePc(pc)
+            .then(this.saveShop(shop))
+            .then(()=>{this.setState({pc: pc, shop: shop})});
+        break method;
         case "inventory":  
           pc = {...this.state.pc};
           if(pc.inventory[key.id] > 1){
@@ -202,6 +316,8 @@ class App extends React.Component {
               pc["equipped" + slot] = key;
               break key;
           }
+          this.pcServices.setPc(pc);
+          this.pcServices.updateStats();
           this.savePc(pc)
             .then(()=>{this.setState({pc: pc})});
           break method;
@@ -222,6 +338,8 @@ class App extends React.Component {
           } else {
             pc.equippedSecondary = null;
           }
+          this.pcServices.setPc(pc);
+          this.pcServices.updateStats();
           this.savePc(pc)
             .then(()=>{this.setState({pc: pc})});
           break method;
@@ -233,7 +351,6 @@ class App extends React.Component {
           key: switch(key){ 
             case "con":
               pc.constitution += 1;
-              pc.currentHealth += 4;
               break key;
             case "str":
               pc.strength += 1;
@@ -243,11 +360,12 @@ class App extends React.Component {
               break key;
             case "int":
               pc.intelligence += 1;
-              pc.currentEnergy += 6;
               break key;
             default:
               break key;
           }
+          this.pcServices.setPc(pc);
+          this.pcServices.updateStats();
           this.savePc(pc)
             .then(()=>{this.setState({pc: pc})});
           break method;

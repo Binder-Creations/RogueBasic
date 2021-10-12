@@ -24,13 +24,16 @@ public class ShopServices {
 		dao = new ShopDao(session);
 	}
 	
-	public Map<UUID, Integer> genInventory(UUID pcId) {
+	public Map<UUID, Integer> genInventory(UUID shopID, UUID pcId) {
 		Map<UUID, Integer> inventory = new HashMap<>();
 		CqlSession session = CassandraConnector.getSession();
 		PlayerCharacterDao pcdao = new PlayerCharacterDao(session);
 		ItemDao idao = new ItemDao(session);
 		ItemServices iservice = new ItemServices(session);
 		PlayerCharacter pc = pcdao.findById(pcId);
+		
+		pc.setCurrentShop(shopID);
+		pcdao.save(pc);
 		
 		String[] exceptions;
 		if(pc.getCharacterClass() == "Rogue") {

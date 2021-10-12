@@ -41,7 +41,7 @@ class InventoryMenu extends React.Component {
           <Equipped props={this.props.props} slot="Secondary"/>
           <div className="inventory-box-wrapper" ref={this.scrollable}>
             <div className="inventory-box">
-              <Inventory props={this.props.props} update={this.state.update}/>
+              <Inventory props={this.props.props} update={this.state.update} type="inventory"/>
             </div>
           </div>
         </div>

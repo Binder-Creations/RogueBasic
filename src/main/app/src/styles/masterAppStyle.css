@@ -39,6 +39,10 @@
 				display:block;
 				content:" ";
 	    }
+			table, td, tr {
+				border:none;
+				border-collapse: collapse;
+			}
 			.app-container {
 				position:absolute;
       	top: 50%;
@@ -400,6 +404,16 @@
 				width: 95.0014%;
 				height: 73.6111%;
 			}
+			.shop-box-wrapper {
+				z-index: 1;
+				position: absolute;
+				overflow-y: auto;
+				overflow-x: hidden;
+				left: 0%;
+				top: 20.2222%;
+				width: 45.0433%;
+				height: 73.6111%;
+			}
 			.inventory-box {
 				pointer-events: auto;
 				position: absolute;
@@ -412,11 +426,83 @@
 				align-items: flex-start;
 				align-content: flex-start;
 			}
+			.shop-box {
+				pointer-events: auto;
+				position: absolute;
+				right: 0%;
+				top: 0%;
+				width: 88.9027%;
+				height: 100%;
+				table-layout: fixed;
+			}
 			.inventory-box-item {
 				position: relative;
 				width: 18.1311%;
 				height:19.6226%;
 				margin: 0.1887% 0.935%;
+			}
+			.shop-box-item {
+				position: relative;
+				width: 100%;
+				height: 60%;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			.shop-box-item td {
+				height: 100%;
+			}
+			.shop-fill {
+				display:block;
+				width:100%;
+				height:100%;
+			}
+			.shop-item-container {
+				display:block;
+				position:relative;
+				width:100%;
+				height:100%;
+			}
+			.shop-fill-absolute {
+				position:absolute;
+				top:10%;
+				left:10%;
+				width:80%;
+				height:80%;
+			}
+			.shop-icon-heal {
+				display:inline-block;
+				top:33%;
+				right:10%;
+				width:16%;
+				height:34%;
+			}
+			.shop-icon-armor {
+				display:inline-block;
+				top:33%;
+				right:10%;
+				width:20%;
+				height: 34%;
+			}
+			.shop-icon-power {
+				display:inline-block;
+				top:33%;
+				right:10%;
+				width:15%;
+				height:34%;
+			}
+			.shop-coin {
+				display:inline-block;
+				top:33%;
+				right:0%;
+				width:34%;
+				height:34%;
+			}
+			.shop-image {
+				position: absolute;
+				top:14%;
+				left:14%;
+				width:72%;
+				height:72%;
 			}
 			.absolute-fill {
 				position: absolute;

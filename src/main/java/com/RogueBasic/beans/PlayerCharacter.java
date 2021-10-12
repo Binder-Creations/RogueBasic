@@ -71,6 +71,8 @@ public class PlayerCharacter {
 		this.dexterity = dexterity;
 		this.intelligence = intelligence;
 		this.level = 1;
+		this.currentHealth = -1;
+		this.currentEnergy = -1;
 		this.inventory = new HashMap<>();
 		this.inventory.put(UUID.fromString("d822106a-e753-40db-898d-d438d1592baa"), 1);
 		this.inventory.put(UUID.fromString("ab0d75df-8457-4dde-adfe-77c9b37d262d"), 2);
@@ -148,18 +150,24 @@ public class PlayerCharacter {
 			pc.getAbilities().forEach(ability->this.abilityIds.add(ability.getId()));
 		}
 		this.inventory = pc.getInventory();
-		if(pc.getEquippedHead() != null)
-			this.equippedHead = pc.getEquippedHead().getId();
-		if(pc.getEquippedBody() != null)	
-			this.equippedBody = pc.getEquippedBody().getId();
-		if(pc.getEquippedBack() != null)
-			this.equippedBack = pc.getEquippedBack().getId();
-		if(pc.getEquippedNeck() != null)
-			this.equippedNeck = pc.getEquippedNeck().getId();
-		if(pc.getEquippedPrimary() != null)
-			this.equippedPrimary = pc.getEquippedPrimary().getId();
-		if(pc.getEquippedSecondary() != null)
-			this.equippedSecondary = pc.getEquippedSecondary().getId();
+		this.equippedHead = pc.getEquippedHead() != null
+			? pc.getEquippedHead().getId()
+			: UUID.fromString("00000000-0000-0000-0000-000000000000");
+		this.equippedBody = pc.getEquippedBody() != null
+			? pc.getEquippedBody().getId()
+			: UUID.fromString("00000000-0000-0000-0000-000000000000");
+		this.equippedBack = pc.getEquippedBack() != null
+			? pc.getEquippedBack().getId()
+			: UUID.fromString("00000000-0000-0000-0000-000000000000");
+		this.equippedNeck = pc.getEquippedNeck() != null
+			? pc.getEquippedNeck().getId()
+			: UUID.fromString("00000000-0000-0000-0000-000000000000");
+		this.equippedPrimary = pc.getEquippedPrimary() != null
+			? pc.getEquippedPrimary().getId()
+			: UUID.fromString("00000000-0000-0000-0000-000000000000");
+		this.equippedSecondary = pc.getEquippedSecondary() != null
+			? pc.getEquippedSecondary().getId()
+			: UUID.fromString("00000000-0000-0000-0000-000000000000");
 		this.constitution = pc.getConstitution();
 		this.strength = pc.getStrength();
 		this.dexterity = pc.getDexterity();

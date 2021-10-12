@@ -82,17 +82,29 @@ public class PlayerCharacterExport {
 			pc.getInventory().forEach((id,count)->this.inventoryCache.add(idao.findById(id)));
 		}
 		if (pc.getEquippedHead() != null)
-			this.equippedHead = idao.findById(pc.getEquippedHead());
+			this.equippedHead = pc.getEquippedHead().equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+				? null
+				: idao.findById(pc.getEquippedHead());
 		if (pc.getEquippedBody() != null)
-			this.equippedBody = idao.findById(pc.getEquippedBody());
+			this.equippedBody = pc.getEquippedBody().equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+				? null
+				: idao.findById(pc.getEquippedBody());
 		if (pc.getEquippedBack() != null)
-			this.equippedBack = idao.findById(pc.getEquippedBack());
+			this.equippedBack = pc.getEquippedBack().equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+				? null
+				: idao.findById(pc.getEquippedBack());
 		if (pc.getEquippedNeck() != null)
-			this.equippedNeck = idao.findById(pc.getEquippedNeck());
+			this.equippedNeck = pc.getEquippedNeck().equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+				? null
+				: idao.findById(pc.getEquippedNeck());
 		if (pc.getEquippedPrimary() != null)
-			this.equippedPrimary = idao.findById(pc.getEquippedPrimary());
+			this.equippedPrimary = pc.getEquippedPrimary().equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+				? null
+				: idao.findById(pc.getEquippedPrimary());
 		if (pc.getEquippedSecondary() != null)
-			this.equippedSecondary = idao.findById(pc.getEquippedSecondary());
+			this.equippedSecondary = pc.getEquippedSecondary().equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+				? null
+				: idao.findById(pc.getEquippedSecondary());
 		this.constitution = pc.getConstitution();
 		this.strength = pc.getStrength();
 		this.dexterity = pc.getDexterity();

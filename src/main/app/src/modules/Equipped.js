@@ -24,7 +24,7 @@ class Equipped extends React.Component {
         <img src={this.background} className="absolute-fill"/>
         <img src={this.props.props.items[this.item.type]["i"+this.item.image]} className="item-image"/>
         <img src={this.props.props.images.equippedFrame} className="absolute-fill"/>
-        <ItemTooltip props={this.props.props} item={this.item} leftMod={0.2}/>
+        <ItemTooltip props={this.props.props} item={this.item} leftMod={0.2} costMult={1}/>
       </div>
     );
   }

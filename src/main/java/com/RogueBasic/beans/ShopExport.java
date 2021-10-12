@@ -22,7 +22,7 @@ public class ShopExport {
 		CqlSession session = CassandraConnector.getSession();
 		ItemDao idao = new ItemDao(session);
 		
-		this.id = UUID.randomUUID();
+		this.id = shop.getId();
 		this.inventory = shop.getInventory();
 		if(this.inventory != null) {
 			this.inventoryCache = new HashSet<>();

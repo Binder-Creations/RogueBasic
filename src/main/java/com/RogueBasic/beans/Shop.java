@@ -7,13 +7,20 @@ import java.util.UUID;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import com.RogueBasic.services.ShopServices;
+import com.RogueBasic.util.CassandraConnector;
+
 @Table
 public class Shop {
 	@PrimaryKey private UUID id;
 	private Map<UUID, Integer> inventory;
 	
-	public Shop() {
+	public Shop() {}
+	
+	public Shop(UUID pcId) {
+		ShopServices services = new ShopServices(CassandraConnector.connect());
 		this.id = UUID.randomUUID();
+		this.inventory = services.genInventory(this.id, pcId);
 	}
 	
 	public Shop(ShopExport shop) {
