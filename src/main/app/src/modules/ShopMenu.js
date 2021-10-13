@@ -10,6 +10,7 @@ class ShopMenu extends React.Component {
     this.scrollable = React.createRef();
     this.scrollableShop = React.createRef();
     this.update = this.update.bind(this);
+    this.updateShop = this.updateShop.bind(this);
   }
 
   render(){
@@ -37,21 +38,20 @@ class ShopMenu extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     if(!this.listenersAdded){
       if(this.scrollable.current){
         this.scrollable.current.addEventListener("scroll", this.update)
-      }
-      if(this.scrollableShop.current){
         this.scrollableShop.current.addEventListener("scroll", this.updateShop)
+        this.listenersAdded = true;
       }
-      this.listenersAdded = true;
     }
   }
 
   update() {
     this.setState({update: ++this.state.update});
   }
+
   updateShop() {
     this.setState({updateShop: ++this.state.updateShop});
   }

@@ -1,6 +1,5 @@
 class PcServices {
   constructor(characterClass){
-    console.log("hello")
     this.pc = null;
     this.healthTotalPrevious = null;
     this.energyTotalPrevious = null;

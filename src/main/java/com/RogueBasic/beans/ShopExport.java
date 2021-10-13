@@ -18,6 +18,8 @@ public class ShopExport {
 	private Map<UUID, Integer> inventory;
 	private Set<Item> inventoryCache;
 	
+	public ShopExport () {}
+	
 	public ShopExport(Shop shop) {
 		CqlSession session = CassandraConnector.getSession();
 		ItemDao idao = new ItemDao(session);

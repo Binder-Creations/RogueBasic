@@ -5,6 +5,7 @@ import ShopMenu from "./modules/ShopMenu";
 import PcServices from "./modules/PcServices";
 import * as images from "./images"
 import * as items from "./images/items";
+import ItemServices from "./modules/ItemServices";
 
 class App extends React.Component {
 
@@ -40,11 +41,22 @@ class App extends React.Component {
       images: images, 
       items: items, 
       appState: this.appState,
-      colorArmor: {color: "#136f9b"},
-      colorPower: {color: "#a83a0e"},
-      colorHeal: {color: "#ce6eb9"} 
+      itemServices: new ItemServices({
+        images: images, 
+        items: items, 
+        colorArmor: {color: "#136f9b"},
+        colorPower: {color: "#a83a0e"},
+        colorHeal: {color: "#ce6eb9"},
+        colorCommon: "#39363a",
+        colorUncommon: "#4d610f",
+        colorRare: "#1e4d7a",
+        colorEpic: "#4e0f62",
+        colorShopCommon: "#d2d2d2",
+        colorShopUncommon: "#b4de31",
+        colorShopRare: "#3296f6",
+        colorShopEpic: "#c111f9"
+      })
     }
-
   };
 
   render(){
@@ -71,20 +83,17 @@ class App extends React.Component {
       return(<></>)
     }
 
-     if(!this.initializePcServices){
+     if(!this.initialize){
       this.pcServices.setPc(this.state.pc);
       this.pcServices.updateStats()
-      this.initializePcServices = true;
+      window.addEventListener("resize", this.updateWidth)
+      this.initialize = true;
      }
 
     this.props.props.pc = this.state.pc;
     this.props.props.combat = this.state.combat;
     this.props.props.widthChange = this.state.widthChange;
       
-    if(!this.listenersAdded){
-      window.addEventListener("resize", this.updateWidth)
-      this.listenersAdded = true;
-    }
     let backgroundSrc;
     let innerElements = <></>
     let outerElements = <></>
@@ -219,16 +228,13 @@ class App extends React.Component {
         case "shop-store":
           pc = {...this.state.pc};
           shop = {...this.state.shop};
-          if(shop.inventory[key.id] > 1){
-            shop.inventory[key.id] -= 1;
-          }else{
+          if(key.type != "potion" && key.type != "consumable"){
             delete shop.inventory[key.id]
             var index = shop.inventoryCache.indexOf(key);
             if (index !== -1)
               shop.inventoryCache.splice(index, 1);
           }
-
-          pc.currency -= key.cost;
+          pc.currency -= key.cost*5;
           pc.currency < 0 
             ? pc.currency = 0
             : pc.currency = pc.currency
@@ -249,6 +255,7 @@ class App extends React.Component {
           this.savePc(pc)
             .then(this.saveShop(shop))
             .then(()=>{this.setState({pc: pc, shop: shop})});
+          break method;
         case "shop-player":
           pc = {...this.state.pc};
           shop = {...this.state.shop};
@@ -260,20 +267,14 @@ class App extends React.Component {
             if (index !== -1)
               pc.inventoryCache.splice(index, 1);
           }
+
           pc.currency += key.cost;
-          if(shop.inventory[key.id]){
-            shop.inventory[key.id] += 1;
-          } else {
+          
+          if(key.type != "potion" && key.type != "consumable"){
             shop.inventory[key.id] = 1;
-          }
-          for(const item of shop.inventoryCache){
-            if(item.id == key.id){
-              addItem = false;
-            }
-          }
-          if(addItem){
             shop.inventoryCache.push(key);
           }
+
           this.savePc(pc)
             .then(this.saveShop(shop))
             .then(()=>{this.setState({pc: pc, shop: shop})});

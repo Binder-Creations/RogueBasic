@@ -6,6 +6,7 @@ class Equipped extends React.Component {
   constructor(props){
     super(props);
     this.item = "";
+    this.itemProps = "";
     this.background = "";
 
     this.unequip = this.unequip.bind(this);
@@ -13,18 +14,18 @@ class Equipped extends React.Component {
 
   render(){
     if (this.props.props.pc["equipped"+this.props.slot]){
-      this.item = this.props.props.pc["equipped"+this.props.slot]
-      this.background = this.props.props.images["background"+this.item.rarity]
+      this.item = this.props.props.pc["equipped"+this.props.slot];
+      this.itemProps = this.props.props.itemServices.getProps(this.item);
     } else {
       return <></>
     }
 
     return(
       <div className={"item-tooltip item-equipped equipped-" + this.props.slot.toLowerCase()} onClick={() => {this.unequip()}}>
-        <img src={this.background} className="absolute-fill"/>
-        <img src={this.props.props.items[this.item.type]["i"+this.item.image]} className="item-image"/>
+        <img src={this.itemProps.background} className="absolute-fill"/>
+        <img src={this.itemProps.image} className="item-image"/>
         <img src={this.props.props.images.equippedFrame} className="absolute-fill"/>
-        <ItemTooltip props={this.props.props} item={this.item} leftMod={0.2} costMult={1}/>
+        <ItemTooltip props={this.props.props} itemProps={this.itemProps} item={this.item} leftMod={0.2} costMult={1}/>
       </div>
     );
   }
