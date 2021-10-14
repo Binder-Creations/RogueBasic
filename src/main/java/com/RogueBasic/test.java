@@ -40,9 +40,9 @@ public class test {
 		CqlSession session = CassandraConnector.connect();
 //		System.out.println(session);
 		CassandraUtilities cu = new CassandraUtilities(session);
-		ShopDao sDao = new ShopDao(session);
+//		ShopDao sDao = new ShopDao(session);
 //		System.out.println(sDao.findById(UUID.fromString("db56131c-9248-46cc-8b6a-0d022228aa10")));
-		sDao.getAll().forEach(item -> System.out.println(item));
+//		sDao.getAll().forEach(item -> System.out.println(item));
 //		DungeonServices du = new DungeonServices(session);
 //		PlayerCharacterServices pcs = new PlayerCharacterServices(session);
 //		PlayerCharacterDao pcd = new PlayerCharacterDao(session);
@@ -67,9 +67,9 @@ public class test {
 //			}
 //		}
 	
-//		cu.dropAllTables();
-//		cu.initialize();
-//		cu.populate();
+		cu.dropAllTables();
+		cu.initialize();
+		cu.populate();
 ////
 //		ItemDao id = new ItemDao(session);
 //		List<Item> ilist = id.getAll();

@@ -2,10 +2,12 @@ import React from "react";
 import {Route, BrowserRouter as Router} from "react-router-dom";
 import Ui from "./modules/Ui"
 import ShopMenu from "./modules/ShopMenu";
+import InnMenu from "./modules/InnMenu";
 import PcServices from "./modules/PcServices";
+import ItemServices from "./modules/ItemServices";
 import * as images from "./images"
 import * as items from "./images/items";
-import ItemServices from "./modules/ItemServices";
+
 
 class App extends React.Component {
 
@@ -57,7 +59,32 @@ class App extends React.Component {
         colorShopEpic: "#c111f9"
       })
     }
-  };
+
+    this.disableUiMenus = false;
+    this.backgroundSrc = "";
+    this.innerElements = <></>
+    this.outerElements = <></>
+    this.InnerElements = () => {
+      return(this.innerElements);
+    }
+    this.OuterElements = () => {
+      return(this.outerElements);
+    }
+    this.TownButton = () => {
+      return(
+      <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
+        <img src={this.props.props.images.townIcon} alt="Town"/>
+      </button>
+      );
+    }
+    this.HomeButton = () => {
+      return(
+      <button className="btn-home" onClick={ () => { this.setState({scene:"Home"})} }>
+        <img src={this.props.props.images.scrollIcon} alt="Home"/>
+      </button>
+      );
+    }
+  }
 
   render(){
     if (!this.state.character_id)
@@ -94,49 +121,30 @@ class App extends React.Component {
     this.props.props.combat = this.state.combat;
     this.props.props.widthChange = this.state.widthChange;
       
-    let backgroundSrc;
-    let innerElements = <></>
-    let outerElements = <></>
-    let InnerElements = () => {
-      return(innerElements);
-    }
-    let OuterElements = () => {
-      return(outerElements);
-    }
-
-    let TownButton = () => {
-      return(
-      <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
-        <img src={this.props.props.images.townIcon} alt="Town"/>
-      </button>
-      );
-    }
-    let HomeButton = () => {
-      return(
-      <button className="btn-home" onClick={ () => { this.setState({scene:"Home"})} }>
-        <img src={this.props.props.images.scrollIcon} alt="Home"/>
-      </button>
-      );
-    }
+    this.innerElements = <></>
+    this.outerElements = <></>
+    this.disableUiMenus = false;
 
     if (this.state.pc.location == "Town"){
       if(this.state.scene=="Default"){
-        backgroundSrc = this.props.props.images.town
-        outerElements = <>
+        this.backgroundSrc = this.props.props.images.town
+        this.innerElements = <>
           <input className="tavern" type="image" src={this.props.props.images.tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
           <input className="inn" type="image" src={this.props.props.images.innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
           <input className="shop" type="image" src={this.props.props.images.shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
-          <HomeButton/>
+          <this.HomeButton/>
         </>
       } else if(this.state.scene=="Tavern"){
-        backgroundSrc = this.props.props.images.tavern
-        outerElements = <>
-          <TownButton/>
+        this.backgroundSrc = this.props.props.images.tavern
+        this.outerElements = <>
+          <this.TownButton/>
         </>
       } else if(this.state.scene=="Inn"){
-        backgroundSrc = this.props.props.images.inn
-        outerElements = <>
-          <TownButton/>
+        this.disableUiMenus = true;
+        this.backgroundSrc = this.props.props.images.inn
+        this.outerElements = <>
+          <InnMenu props={this.props.props}/>
+          <this.TownButton/>
         </>
       } else if(this.state.scene=="Shop"){
         if(this.state.pc.currentShop){
@@ -167,21 +175,23 @@ class App extends React.Component {
             });
         }
 
-        backgroundSrc = this.props.props.images.shop
-        outerElements = <>
+        this.disableUiMenus = true;
+        this.backgroundSrc = this.props.props.images.shop
+        this.outerElements = <>
           <ShopMenu props={this.props.props} shop={this.state.shop}/>
-          <TownButton/>
+          <this.TownButton/>
         </>
       }
     }else{
-      backgroundSrc = this.props.props.images.town
+      this.backgroundSrc = this.props.props.images.town
       }
+
     return(
     <div className="app-container">
-      <img className="background" src={backgroundSrc} alt="Background"/>
-      <InnerElements/>
-      <Ui props={this.props.props}/>
-      <OuterElements/>
+      <img className="background" src={this.backgroundSrc} alt="Background"/>
+      <this.InnerElements/>
+      <Ui props={this.props.props} disableUiMenus={this.disableUiMenus}/>
+      <this.OuterElements/>
     </div>
     );
     }
@@ -225,6 +235,31 @@ class App extends React.Component {
       let shop;
       let addItem = true;
       method: switch(method){
+        case "rest":
+          pc = {...this.state.pc};
+          pc.currentHealth = pc.healthTotal;
+          pc.currentEnergy = pc.energyTotal;
+          pc.ate = false;
+          pc.currentShop = null;
+          pc.currentDungeon = null;
+          pc.day += 1;
+          pc.currency -= 250;
+          pc.currency = pc.currency > 0 ? pc.currency : 0;
+
+          this.savePc(pc)
+            .then(()=>{this.setState({pc: pc})});
+          break method;
+        case "eat":
+            pc = {...this.state.pc};
+            pc.currentHealth = pc.healthTotal;
+            pc.currentEnergy = pc.energyTotal;
+            pc.ate = true;
+            pc.currency -= 100;
+            pc.currency = pc.currency > 0 ? pc.currency : 0;
+
+            this.savePc(pc)
+              .then(()=>{this.setState({pc: pc})});
+            break method;
         case "shop-store":
           pc = {...this.state.pc};
           shop = {...this.state.shop};

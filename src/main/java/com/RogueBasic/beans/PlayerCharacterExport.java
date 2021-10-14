@@ -19,6 +19,7 @@ public class PlayerCharacterExport {
 	private UUID currentDungeon;
 	private UUID currentShop;
 	private int day;
+	private boolean ate;
 	private String name;
 	private String characterClass;
 	private int experience;
@@ -66,6 +67,7 @@ public class PlayerCharacterExport {
 		this.currentDungeon = pc.getCurrentDungeon();
 		this.currentShop = pc.getCurrentShop();
 		this.day = pc.getDay();
+		this.ate = pc.isAte();
 		this.name = pc.getName();
 		this.characterClass = pc.getCharacterClass();
 		this.experience = pc.getExperience();
@@ -164,6 +166,14 @@ public class PlayerCharacterExport {
 
 	public void setDay(int day) {
 		this.day = day;
+	}
+
+	public boolean isAte() {
+		return ate;
+	}
+
+	public void setAte(boolean ate) {
+		this.ate = ate;
 	}
 
 	public String getName() {
@@ -440,7 +450,7 @@ public class PlayerCharacterExport {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(abilities, armorBonus, armorPenBonus, attributePoints, characterClass, constitution,
+		return Objects.hash(abilities, armorBonus, armorPenBonus, ate, attributePoints, characterClass, constitution,
 				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentHealth, currentShop,
 				day, dexterity, dexterityBonus, dodgeRatingBonus, energyBonus, energyRegenBonus, equippedBack,
 				equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary, experience, healthBonus,
@@ -458,7 +468,7 @@ public class PlayerCharacterExport {
 			return false;
 		PlayerCharacterExport other = (PlayerCharacterExport) obj;
 		return Objects.equals(abilities, other.abilities) && armorBonus == other.armorBonus
-				&& armorPenBonus == other.armorPenBonus && attributePoints == other.attributePoints
+				&& armorPenBonus == other.armorPenBonus && ate == other.ate && attributePoints == other.attributePoints
 				&& Objects.equals(characterClass, other.characterClass) && constitution == other.constitution
 				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
 				&& currency == other.currency && Objects.equals(currentDungeon, other.currentDungeon)
@@ -481,11 +491,11 @@ public class PlayerCharacterExport {
 	@Override
 	public String toString() {
 		return "PlayerCharacterExport [id=" + id + ", location=" + location + ", currentDungeon=" + currentDungeon
-				+ ", currentShop=" + currentShop + ", day=" + day + ", name=" + name + ", characterClass="
-				+ characterClass + ", experience=" + experience + ", level=" + level + ", attributePoints="
-				+ attributePoints + ", currency=" + currency + ", abilities=" + abilities + ", inventory=" + inventory
-				+ ", inventoryCache=" + inventoryCache + ", equippedHead=" + equippedHead + ", equippedBody="
-				+ equippedBody + ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck
+				+ ", currentShop=" + currentShop + ", day=" + day + ", ate=" + ate + ", name=" + name
+				+ ", characterClass=" + characterClass + ", experience=" + experience + ", level=" + level
+				+ ", attributePoints=" + attributePoints + ", currency=" + currency + ", abilities=" + abilities
+				+ ", inventory=" + inventory + ", inventoryCache=" + inventoryCache + ", equippedHead=" + equippedHead
+				+ ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck
 				+ ", equippedPrimary=" + equippedPrimary + ", equippedSecondary=" + equippedSecondary
 				+ ", constitution=" + constitution + ", strength=" + strength + ", dexterity=" + dexterity
 				+ ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus + ", strengthBonus="

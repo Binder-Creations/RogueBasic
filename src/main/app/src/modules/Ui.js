@@ -22,6 +22,16 @@ class Ui extends React.Component {
     }
     this.toggleCharacterMenu = this.toggleCharacterMenu.bind(this);
     this.toggleInventoryMenu = this.toggleInventoryMenu.bind(this);
+
+    this.Skill = (props) => {
+      return(
+        <button className={"skill s-"+props.number}>
+          <img className="glow" src={this.props.props.images.skillGlow} alt="Skill"/>
+          <img className="frame" src={this.props.props.images.skillBackground} alt="Skill"/>
+          <img className="frame" src={this.props.props.images.skillFrame} alt="Skill"/>
+        </button>
+      )
+    }
   }
 
   render(){
@@ -33,15 +43,11 @@ class Ui extends React.Component {
     }
     this.healthHover = this.props.props.pc.currentHealth + "/" + this.props.props.pc.healthTotal;
     this.energyHover = this.props.props.pc.currentEnergy + "/" + this.props.props.pc.energyTotal;
-    let Skill = (props) => {
-      return(
-        <button className={"skill s-"+props.number}>
-          <img className="glow" src={this.props.props.images.skillGlow} alt="Skill"/>
-          <img className="frame" src={this.props.props.images.skillBackground} alt="Skill"/>
-          <img className="frame" src={this.props.props.images.skillFrame} alt="Skill"/>
-        </button>
-      )
+
+    if(this.props.disableUiMenus && (this.state.characterMenu || this.state.inventoryMenu)){
+      this.setState({characterMenu: false, inventoryMenu: false})
     }
+    
     return(
       <>
         <img className="bar-health-background" src={this.props.props.images.barBackground} alt="Health" title={this.healthHover}/>
@@ -52,10 +58,10 @@ class Ui extends React.Component {
         <img className="bar-energy" src={this.props.props.images.barEnergy} alt="Energy" title={this.energyHover} style={this.energyStyle}/>
         <img className="bar-energy-frame" src={this.props.props.images.barFrame} alt="Energy" title={this.energyHover}/>
         <img className="swirl" src={this.props.props.images.swirl} alt="Energy" title={this.energyHover}/>
-        <Skill number="1"/>
-        <Skill number="2"/>
-        <Skill number="3"/>
-        <Skill number="4"/>
+        <this.Skill number="1"/>
+        <this.Skill number="2"/>
+        <this.Skill number="3"/>
+        <this.Skill number="4"/>
         <img className="map-underlay" src={this.props.props.images.mapUnderlay} alt="Map"/>
         <img className="map-overlay" src={this.props.props.images.mapOverlay} alt="Map"/>
         <input class="btn-attack" type="image" src={this.buttonAttack} alt="Attack"
@@ -77,15 +83,19 @@ class Ui extends React.Component {
   }
 
   toggleCharacterMenu(){
-    this.state.characterMenu
-      ? this.setState({characterMenu: false})
-      : this.setState({characterMenu: true});
+    if(!this.props.disableUiMenus){
+      this.state.characterMenu
+        ? this.setState({characterMenu: false})
+        : this.setState({characterMenu: true});
+    }
   }
 
   toggleInventoryMenu(){
-    this.state.inventoryMenu
-      ? this.setState({inventoryMenu: false})
-      : this.setState({inventoryMenu: true});
+    if(!this.props.disableUiMenus){
+      this.state.inventoryMenu
+        ? this.setState({inventoryMenu: false})
+        : this.setState({inventoryMenu: true});
+    }
   }
 
 }

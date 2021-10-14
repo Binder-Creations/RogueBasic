@@ -39,6 +39,14 @@ class ShopMenu extends React.Component {
   }
 
   componentDidMount() {
+    this.addListeners();
+  }
+
+  componentDidUpdate() {
+    this.addListeners();
+  }
+
+  addListeners(){
     if(!this.listenersAdded){
       if(this.scrollable.current){
         this.scrollable.current.addEventListener("scroll", this.update)

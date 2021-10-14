@@ -32,7 +32,7 @@ class Equipped extends React.Component {
 
   unequip(){
     if (!this.props.props.combat)
-      this.props.props.appState("unequip", this.item, 0)   
+      this.props.props.appState("unequip", this.item)   
   }
 }
 

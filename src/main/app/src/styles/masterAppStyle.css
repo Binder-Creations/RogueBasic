@@ -481,6 +481,56 @@
 				width:80%;
 				height:75%;
 			}
+			.inn-menu {
+				position: absolute;
+				left: 28.5714%;
+				top: 5%;
+				width: 42.881%;
+				height: 90%;
+			}
+			.inn-menu > p {
+				position: absolute;
+				left: 44.5308%;
+				top: 89.8333%;
+				width: 20.211%;
+				height: 6.0%;
+			}
+			.rest {
+				position:absolute;
+				width:97.0572%;
+				height:37.4444%;
+				left:1.7768%;
+				top:12.6667%;
+			}
+			.rest-hover {
+				opacity:0;
+				position:absolute;
+				width:97.0572%;
+				height:37.4444%;
+				left:1.7768%;
+				top:12.6667%;
+			}
+			.rest-hover:hover {
+				opacity:1.0;
+			}
+			.eat {
+				position:absolute;
+				width:97.0572%;
+				height:37.4444%;
+				left:1.7768%;
+				top:50.1111%;
+			}
+			.eat-hover {
+				opacity:0;
+				position:absolute;
+				width:97.0572%;
+				height:37.4444%;
+				left:1.7768%;
+				top:50.1111%;
+			}
+			.eat-hover:hover {
+				opacity:1.0;
+			}
 			.absolute-fill {
 				position: absolute;
 				top:0%;
