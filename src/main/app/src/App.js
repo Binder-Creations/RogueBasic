@@ -3,6 +3,7 @@ import {Route, BrowserRouter as Router} from "react-router-dom";
 import Ui from "./modules/Ui"
 import ShopMenu from "./modules/ShopMenu";
 import InnMenu from "./modules/InnMenu";
+import TavernMenu from "./modules/TavernMenu";
 import PcServices from "./modules/PcServices";
 import ItemServices from "./modules/ItemServices";
 import * as images from "./images"
@@ -135,8 +136,28 @@ class App extends React.Component {
           <this.HomeButton/>
         </>
       } else if(this.state.scene=="Tavern"){
+        if(this.state.pc.currentDungeon && (this.state.dungeon.id != this.state.pc.currentDungeon)){
+          fetch('/dungeon/'+ this.state.pc.currentDungeon)
+          .then(response => response.json())
+          .then(data => {
+            this.setState({dungeon: data});
+          });
+        }
+        if(!this.pc.dungeonBoard){
+          fetch('/dungeon/new/'+ this.state.pc.id)
+          .then(response => response.json())
+          .then(data => {
+            let pc = {...this.state.pc};
+            pc.dungeonBoard = data;
+            this.savePc(pc);
+            this.setState({pc: pc});
+          });
+        } 
+
+        this.disableUiMenus = true;
         this.backgroundSrc = this.props.props.images.tavern
         this.outerElements = <>
+          <TavernMenu props={this.props.props} dungeon={this.state.dungeon}/>
           <this.TownButton/>
         </>
       } else if(this.state.scene=="Inn"){
@@ -152,16 +173,12 @@ class App extends React.Component {
             fetch('/shop/'+ this.state.pc.currentShop)
               .then(response => response.json())
               .then(data => {
-                this.state.pc.currentShop = data.id;
-                this.savePc(this.state.pc);
                 this.setState({shop: data});
               });
           } else if(this.state.shop.id != this.state.pc.currentShop){
             fetch('/shop/'+ this.state.pc.currentShop)
               .then(response => response.json())
               .then(data => {
-                this.state.pc.currentShop = data.id;
-                this.savePc(this.state.pc);
                 this.setState({shop: data});
               });
           }

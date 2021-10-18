@@ -67,6 +67,9 @@ public class DungeonServices {
 		if(genNameModsDescription(dungeon) == false) {
 			return null;
 		}
+		dungeon.setReward((int)Math.round(100*(1+(0.1*(dungeon.getChallengeRating()-1)))*(1+(0.25*(dungeon.getFloorCount()-1)))*(dungeon.isMiniboss() ? 1.34 : 1)*(dungeon.isBoss() ? 1.67 : 1)));
+		
+		this.dao.save(dungeon);
 		
 		log.trace("DungeonServices.generate() returning UUID" );
 		return dungeon;

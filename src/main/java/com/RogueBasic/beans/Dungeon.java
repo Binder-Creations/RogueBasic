@@ -20,6 +20,7 @@ public class Dungeon {
 	private int challengeRating;
 	private boolean miniboss;
 	private boolean boss;
+	private int reward;
 
 	
 	public Dungeon() {}
@@ -110,6 +111,14 @@ public class Dungeon {
 	
 	public void setBoss(boolean boss) {
 		this.boss = boss;
+	}
+
+	public int getReward() {
+		return reward;
+	}
+
+	public void setReward(int reward) {
+		this.reward = reward;
 	}
 
 	@Override

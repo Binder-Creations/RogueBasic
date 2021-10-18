@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.RogueBasic.data.AbilityDao;
+import com.RogueBasic.data.DungeonDao;
 import com.RogueBasic.data.ItemDao;
 import com.RogueBasic.util.CassandraConnector;
 import com.datastax.oss.driver.api.core.CqlSession;
@@ -16,6 +17,7 @@ public class PlayerCharacterExport {
 	
 	private UUID id;
 	private String location;
+	private Set<Dungeon> dungeonBoard;
 	private UUID currentDungeon;
 	private UUID currentShop;
 	private int day;
@@ -59,11 +61,16 @@ public class PlayerCharacterExport {
 	
 	public PlayerCharacterExport(PlayerCharacter pc) {
 		CqlSession session = CassandraConnector.getSession();
-		AbilityDao adao = new AbilityDao(session);
-		ItemDao idao = new ItemDao(session);
+		AbilityDao aDao = new AbilityDao(session);
+		ItemDao iDao = new ItemDao(session);
+		DungeonDao dDao = new DungeonDao(session);
 		
 		this.id = pc.getId();
 		this.location = pc.getLocation();
+		if(pc.getDungeonBoard() != null) {
+			this.dungeonBoard = new HashSet<>();
+			pc.getDungeonBoard().forEach(id->this.dungeonBoard.add(dDao.findById(id)));
+		}
 		this.currentDungeon = pc.getCurrentDungeon();
 		this.currentShop = pc.getCurrentShop();
 		this.day = pc.getDay();
@@ -76,37 +83,37 @@ public class PlayerCharacterExport {
 		this.currency = pc.getCurrency();
 		if(pc.getAbilityIds() != null) {
 			this.abilities = new HashSet<>();
-			pc.getAbilityIds().forEach(id->this.abilities.add(adao.findById(id)));
+			pc.getAbilityIds().forEach(id->this.abilities.add(aDao.findById(id)));
 		}
 		if(pc.getInventory() != null) {
 			this.inventory = pc.getInventory();
 			this.inventoryCache = new HashSet<>();
-			pc.getInventory().forEach((id,count)->this.inventoryCache.add(idao.findById(id)));
+			pc.getInventory().forEach((id,count)->this.inventoryCache.add(iDao.findById(id)));
 		}
 		if (pc.getEquippedHead() != null)
 			this.equippedHead = pc.getEquippedHead().equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))
 				? null
-				: idao.findById(pc.getEquippedHead());
+				: iDao.findById(pc.getEquippedHead());
 		if (pc.getEquippedBody() != null)
 			this.equippedBody = pc.getEquippedBody().equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))
 				? null
-				: idao.findById(pc.getEquippedBody());
+				: iDao.findById(pc.getEquippedBody());
 		if (pc.getEquippedBack() != null)
 			this.equippedBack = pc.getEquippedBack().equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))
 				? null
-				: idao.findById(pc.getEquippedBack());
+				: iDao.findById(pc.getEquippedBack());
 		if (pc.getEquippedNeck() != null)
 			this.equippedNeck = pc.getEquippedNeck().equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))
 				? null
-				: idao.findById(pc.getEquippedNeck());
+				: iDao.findById(pc.getEquippedNeck());
 		if (pc.getEquippedPrimary() != null)
 			this.equippedPrimary = pc.getEquippedPrimary().equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))
 				? null
-				: idao.findById(pc.getEquippedPrimary());
+				: iDao.findById(pc.getEquippedPrimary());
 		if (pc.getEquippedSecondary() != null)
 			this.equippedSecondary = pc.getEquippedSecondary().equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))
 				? null
-				: idao.findById(pc.getEquippedSecondary());
+				: iDao.findById(pc.getEquippedSecondary());
 		this.constitution = pc.getConstitution();
 		this.strength = pc.getStrength();
 		this.dexterity = pc.getDexterity();
@@ -142,6 +149,14 @@ public class PlayerCharacterExport {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	
+	public Set<Dungeon> getDungeonBoard() {
+		return dungeonBoard;
+	}
+
+	public void setDungeonBoard(Set<Dungeon> dungeonBoard) {
+		this.dungeonBoard = dungeonBoard;
 	}
 
 	public UUID getCurrentDungeon() {
@@ -452,10 +467,10 @@ public class PlayerCharacterExport {
 	public int hashCode() {
 		return Objects.hash(abilities, armorBonus, armorPenBonus, ate, attributePoints, characterClass, constitution,
 				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentHealth, currentShop,
-				day, dexterity, dexterityBonus, dodgeRatingBonus, energyBonus, energyRegenBonus, equippedBack,
-				equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary, experience, healthBonus,
-				healthRegenBonus, id, intelligence, intelligenceBonus, inventory, inventoryCache, level, location, name,
-				powerBonus, strength, strengthBonus);
+				day, dexterity, dexterityBonus, dodgeRatingBonus, dungeonBoard, energyBonus, energyRegenBonus,
+				equippedBack, equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary, experience,
+				healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, inventory, inventoryCache, level,
+				location, name, powerBonus, strength, strengthBonus);
 	}
 
 	@Override
@@ -475,9 +490,10 @@ public class PlayerCharacterExport {
 				&& currentEnergy == other.currentEnergy && currentHealth == other.currentHealth
 				&& Objects.equals(currentShop, other.currentShop) && day == other.day && dexterity == other.dexterity
 				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
-				&& energyBonus == other.energyBonus && energyRegenBonus == other.energyRegenBonus
-				&& Objects.equals(equippedBack, other.equippedBack) && Objects.equals(equippedBody, other.equippedBody)
-				&& Objects.equals(equippedHead, other.equippedHead) && Objects.equals(equippedNeck, other.equippedNeck)
+				&& Objects.equals(dungeonBoard, other.dungeonBoard) && energyBonus == other.energyBonus
+				&& energyRegenBonus == other.energyRegenBonus && Objects.equals(equippedBack, other.equippedBack)
+				&& Objects.equals(equippedBody, other.equippedBody) && Objects.equals(equippedHead, other.equippedHead)
+				&& Objects.equals(equippedNeck, other.equippedNeck)
 				&& Objects.equals(equippedPrimary, other.equippedPrimary)
 				&& Objects.equals(equippedSecondary, other.equippedSecondary) && experience == other.experience
 				&& healthBonus == other.healthBonus && healthRegenBonus == other.healthRegenBonus
@@ -490,21 +506,21 @@ public class PlayerCharacterExport {
 
 	@Override
 	public String toString() {
-		return "PlayerCharacterExport [id=" + id + ", location=" + location + ", currentDungeon=" + currentDungeon
-				+ ", currentShop=" + currentShop + ", day=" + day + ", ate=" + ate + ", name=" + name
-				+ ", characterClass=" + characterClass + ", experience=" + experience + ", level=" + level
-				+ ", attributePoints=" + attributePoints + ", currency=" + currency + ", abilities=" + abilities
-				+ ", inventory=" + inventory + ", inventoryCache=" + inventoryCache + ", equippedHead=" + equippedHead
-				+ ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck
-				+ ", equippedPrimary=" + equippedPrimary + ", equippedSecondary=" + equippedSecondary
-				+ ", constitution=" + constitution + ", strength=" + strength + ", dexterity=" + dexterity
-				+ ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus + ", strengthBonus="
-				+ strengthBonus + ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus=" + intelligenceBonus
-				+ ", powerBonus=" + powerBonus + ", healthBonus=" + healthBonus + ", healthRegenBonus="
-				+ healthRegenBonus + ", armorPenBonus=" + armorPenBonus + ", armorBonus=" + armorBonus
-				+ ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus + ", energyBonus="
-				+ energyBonus + ", energyRegenBonus=" + energyRegenBonus + ", currentHealth=" + currentHealth
-				+ ", currentEnergy=" + currentEnergy + "]";
+		return "PlayerCharacterExport [id=" + id + ", location=" + location + ", dungeonBoard=" + dungeonBoard
+				+ ", currentDungeon=" + currentDungeon + ", currentShop=" + currentShop + ", day=" + day + ", ate="
+				+ ate + ", name=" + name + ", characterClass=" + characterClass + ", experience=" + experience
+				+ ", level=" + level + ", attributePoints=" + attributePoints + ", currency=" + currency
+				+ ", abilities=" + abilities + ", inventory=" + inventory + ", inventoryCache=" + inventoryCache
+				+ ", equippedHead=" + equippedHead + ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack
+				+ ", equippedNeck=" + equippedNeck + ", equippedPrimary=" + equippedPrimary + ", equippedSecondary="
+				+ equippedSecondary + ", constitution=" + constitution + ", strength=" + strength + ", dexterity="
+				+ dexterity + ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus
+				+ ", strengthBonus=" + strengthBonus + ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus="
+				+ intelligenceBonus + ", powerBonus=" + powerBonus + ", healthBonus=" + healthBonus
+				+ ", healthRegenBonus=" + healthRegenBonus + ", armorPenBonus=" + armorPenBonus + ", armorBonus="
+				+ armorBonus + ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus
+				+ ", energyBonus=" + energyBonus + ", energyRegenBonus=" + energyRegenBonus + ", currentHealth="
+				+ currentHealth + ", currentEnergy=" + currentEnergy + "]";
 	}
 	
 	

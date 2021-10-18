@@ -8,9 +8,9 @@ class InnMenu extends React.Component {
 
     this.rest = "";
     this.eat = "";
-    this.restAvailable = <input className="rest-hover" type="image" src={this.props.props.images.restHover} alt="Rest" onClick={()=>{this.props.props.appState("rest")}}/>
+    this.restAvailable = <input className="rest-hover saturate-150" type="image" src={this.props.props.images.rest} alt="Rest" onClick={()=>{this.props.props.appState("rest")}}/>
     this.restUnavailable = <input className="rest gray-75" type="image" src={this.props.props.images.rest} alt="Rest"/>
-    this.eatAvailable = <input className="eat-hover" type="image" src={this.props.props.images.eatHover} alt="Eat" onClick={()=>{this.props.props.appState("eat")}}/>
+    this.eatAvailable = <input className="eat-hover saturate-150" type="image" src={this.props.props.images.eat} alt="Eat" onClick={()=>{this.props.props.appState("eat")}}/>
     this.eatUnavailable = <input className="eat gray-75" type="image" src={this.props.props.images.eat} alt="Eat"/>
 
     this.Rest = () => {
