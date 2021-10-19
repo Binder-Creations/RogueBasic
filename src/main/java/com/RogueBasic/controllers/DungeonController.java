@@ -28,7 +28,7 @@ public class DungeonController {
     }
 	
 	//returns a list of 3 dungeon shells for use on the quest board
-    @GetMapping("/new/{id}")
+    @GetMapping("/new/{pcId}")
     public List<Dungeon> getNewDungeon(@PathVariable String pcId) {
     	DungeonServices ds = new DungeonServices(CassandraConnector.getSession());
     	List<Dungeon> dungeons = new ArrayList<>();

@@ -138,6 +138,10 @@ public class PlayerCharacter {
 	public PlayerCharacter(PlayerCharacterExport pc) {
 		this.id = pc.getId();
 		this.location = pc.getLocation();
+		if(pc.getDungeonBoard() != null) {
+			this.dungeonBoard = new HashSet<>();
+			pc.getDungeonBoard().forEach(dungeon -> this.dungeonBoard.add(dungeon.getId()));
+		}
 		this.currentDungeon = pc.getCurrentDungeon();
 		this.currentShop = pc.getCurrentShop();
 		this.day = pc.getDay();

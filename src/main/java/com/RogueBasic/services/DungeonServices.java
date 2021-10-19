@@ -189,17 +189,17 @@ public class DungeonServices {
 		int roll = ThreadLocalRandom.current().nextInt(11);
 			switch(roll) {
 				case 0:
-					dungeon.setPrefixMod("trap-10");
+					dungeon.setPrefixMod("traps-10");
 					name.append(components.get(0)[ThreadLocalRandom.current().nextInt(components.get(0).length)]);
 					description.append(components.get(6)[ThreadLocalRandom.current().nextInt(components.get(6).length)]);
 					break;
 				case 1:
-					dungeon.setPrefixMod("trap-20");
+					dungeon.setPrefixMod("traps-20");
 					name.append(components.get(0)[ThreadLocalRandom.current().nextInt(components.get(0).length)]);
 					description.append(components.get(6)[ThreadLocalRandom.current().nextInt(components.get(6).length)]);
 					break;
 				case 2:
-					dungeon.setPrefixMod("trap-30");
+					dungeon.setPrefixMod("traps-30");
 					name.append(components.get(0)[ThreadLocalRandom.current().nextInt(components.get(0).length)]);
 					description.append(components.get(6)[ThreadLocalRandom.current().nextInt(components.get(6).length)]);
 					break;

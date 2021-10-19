@@ -136,21 +136,21 @@ class App extends React.Component {
           <this.HomeButton/>
         </>
       } else if(this.state.scene=="Tavern"){
-        if(this.state.pc.currentDungeon && (this.state.dungeon.id != this.state.pc.currentDungeon)){
+        if(this.state.pc.currentDungeon && (!this.state.dungeon || this.state.dungeon.id != this.state.pc.currentDungeon)){
           fetch('/dungeon/'+ this.state.pc.currentDungeon)
           .then(response => response.json())
           .then(data => {
             this.setState({dungeon: data});
           });
         }
-        if(!this.pc.dungeonBoard){
+        if(!this.state.pc.dungeonBoard){
           fetch('/dungeon/new/'+ this.state.pc.id)
           .then(response => response.json())
           .then(data => {
             let pc = {...this.state.pc};
             pc.dungeonBoard = data;
-            this.savePc(pc);
-            this.setState({pc: pc});
+            this.savePc(pc)
+              .then(this.setState({pc: pc}));
           });
         } 
 
@@ -187,8 +187,8 @@ class App extends React.Component {
             .then(response => response.json())
             .then(data => {
               this.state.pc.currentShop = data.id;
-              this.savePc(this.state.pc);
-              this.setState({shop: data});
+              this.savePc(this.state.pc)
+                .then(this.setState({shop: data}));
             });
         }
 
@@ -252,12 +252,19 @@ class App extends React.Component {
       let shop;
       let addItem = true;
       method: switch(method){
+        case "set-dungeon":
+          pc = {...this.state.pc};
+          pc.currentDungeon = key;
+          this.savePc(pc)
+            .then(()=>{this.setState({pc: pc})});
+          break method;
         case "rest":
           pc = {...this.state.pc};
           pc.currentHealth = pc.healthTotal;
           pc.currentEnergy = pc.energyTotal;
           pc.ate = false;
           pc.currentShop = null;
+          pc.dungeonBoard = null;
           pc.currentDungeon = null;
           pc.day += 1;
           pc.currency -= 250;

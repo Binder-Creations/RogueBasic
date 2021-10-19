@@ -531,6 +531,146 @@
 			.eat-hover:hover {
 				opacity:1.0;
 			}
+			.dungeon-portal-frame {
+				position:absolute;
+				left: 6.4228%;
+				top: 6.4444%;
+				width: 37.1405%;
+				height: 88.7222%;
+				pointer-events: none;
+			}
+			.dungeon-portal-active {
+				position:absolute;
+				left: 16.6668%;
+				top: 23.0778%;
+				width: 16.9758%;
+				height: 56%;
+			}
+			.dungeon-portal-active:hover {
+				filter: saturate(150%);
+			}
+			.dungeon-portal-inactive {
+				position: absolute;
+				left: 16.6668%;
+				top: 23.0778%;
+				width: 16.9758%;
+				height: 56%;
+			}
+			.dungeon-panel {
+				position: absolute;
+				left: 50.6004%;
+				width: 48.506%;
+				height: 27.7778%;		
+			}
+			.dungeon-panel:hover {
+				filter: saturate(150%);
+			}
+			.dungeon-panel-saturate {
+				position: absolute;
+				left: 50.6004%;
+				width: 48.506%;
+				height: 27.7778%;
+				filter: saturate(200%);	
+			}
+			.dungeon-menu .d1 {
+				top: 8.7778%;		
+			}
+			.dungeon-menu .d2 {
+				top: 36.5556%;			
+			}
+			.dungeon-menu .d3 {
+				top: 64.3333%;			
+			}
+			.dungeon-small {
+				position: absolute;
+				left: 0.1151%;
+				top: 16.2%;
+				width: 19.574%;
+				height: 68.0%;				
+			}
+			.dungeon-panel-name {
+				position: absolute;
+				left: 20.3224%;
+				top: 16.4%;
+				width: 72.4237%;
+				height: 23.0%;
+			}
+			.dungeon-panel-theme {
+				position: absolute;
+				left: 20.3224%;
+				top: 41.4%;
+				width: 22.6252%;
+				height: 19.6%;
+			}
+			.dungeon-panel-cr {
+				position: absolute;
+				left: 37.4657%;
+				top: 41.4%;
+				width: 12.0449%;
+				height: 19.6%;
+				text-align: right;
+			}
+			.dungeon-panel-floorcount {
+				position: absolute;
+				left: 20.3224%;
+				top: 59%;
+				width: 4.3178%;
+				height: 21%;
+				font-size: 130%;
+				text-align: right;
+			}
+			.dungeon-panel-floors {
+				position: absolute;
+				left: 25.2735%;
+				top: 62.0%;
+				width: 6.2176%;
+				height: 21.0%;
+			}
+			.dungeon-panel-miniboss {
+				position: absolute;
+				left: 31.9911%;
+				top: 62.6%;
+				width: 4.2026%;
+				height: 21.0%;
+			}
+			.dungeon-panel-boss {
+				position: absolute;
+				left: 36.1937%;
+				top: 62.4%;
+				width: 6.1025%;
+				height: 21.0%;
+			}
+			.dungeon-panel-prefix {
+				position: absolute;
+				left: 42.7962%;
+				top: 62.5%;
+				width: 5.5%;
+				height: 21.0%;
+			}
+			.dungeon-panel-postfix {
+				position: absolute;
+				left: 48.7962%;
+				top: 62.5%;
+				width: 5.5%;
+				height: 21.0%;
+			}
+			.dungeon-panel-quest {
+				position: absolute;
+				left: 52.5043%;
+				top: 44%;
+				width: 40.2418%;
+				height: 19.6%;
+				font-size: 75%;
+				text-align: right;
+			}
+			.dungeon-panel-reward {
+				position: absolute;
+				left: 52.5043%;
+				top: 63.0%;
+				width: 34.5423%;
+				height: 19.6%;
+				text-align: right;
+			}
 			.absolute-fill {
 				position: absolute;
 				top:0%;
