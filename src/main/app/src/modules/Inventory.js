@@ -157,9 +157,11 @@ class Inventory extends React.Component {
     let itemProps = this.props.props.itemServices.getProps(item);
     this.itemList.push(
       <div className="inventory-box-item item-tooltip" onClick={()=>{this.props.props.appState(this.props.type, item)}}>
-        <img src={itemProps.background} className="absolute-fill"/>
-        <img src={itemProps.image} className="item-image"/>
-        <img src={itemProps.frame} className="absolute-fill"/>
+        <div className="absolute-fill hover-saturate" style={{pointerEvents: "auto"}}>
+          <img src={itemProps.background} className="absolute-fill"/>
+          <img src={itemProps.image} className="item-image"/>
+          <img src={itemProps.frame} className="absolute-fill"/>
+        </div>
         <Count/>
         <ItemTooltip props={this.props.props} itemProps={itemProps} item={item} update={this.props.update} leftMod={0.7} costMult={1}/>
       </div>
@@ -181,7 +183,7 @@ class Inventory extends React.Component {
   pushTableUsable(item){
     let itemProps = this.props.props.itemServices.getProps(item);
     this.itemList.push(
-        <tr className="shop-box-item" onClick={()=>{this.props.props.appState(this.props.type, item)}} style={{backgroundImage: `url(${this.props.props.images.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
+        <tr className="hover-saturate shop-box-item" onClick={()=>{this.props.props.appState(this.props.type, item)}} style={{backgroundImage: `url(${this.props.props.images.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
           <td className="item-tooltip relative">
             <img src={itemProps.image} className="shop-image"/>
             <ItemTooltip props={this.props.props} itemProps={itemProps} item={item} update={this.props.update} leftMod={0.7} costMult={5}/>

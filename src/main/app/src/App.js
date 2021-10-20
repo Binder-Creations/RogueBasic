@@ -6,6 +6,7 @@ import InnMenu from "./modules/InnMenu";
 import TavernMenu from "./modules/TavernMenu";
 import PcServices from "./modules/PcServices";
 import ItemServices from "./modules/ItemServices";
+import AbilityServices from "./modules/AbilityServices";
 import * as images from "./images"
 import * as items from "./images/items";
 
@@ -44,6 +45,7 @@ class App extends React.Component {
       images: images, 
       items: items, 
       appState: this.appState,
+      abilityServices: new AbilityServices(this.appState),
       itemServices: new ItemServices({
         images: images, 
         items: items, 

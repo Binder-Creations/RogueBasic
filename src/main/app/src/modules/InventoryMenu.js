@@ -28,10 +28,7 @@ class InventoryMenu extends React.Component {
         <div className="menu">
           <img className="background" src={this.props.props.images.inventoryMenu} alt="Inventory Screen"/>
           <img className={this.silhouetteClass} src={this.silhouette} alt={this.props.props.pc.characterClass}/>
-          <input className="btn-close" type="image" src={this.props.props.images.buttonClose} alt="Close" onClick={this.props.toggle}
-            onMouseEnter={e => (e.currentTarget.src = this.props.props.images.buttonCloseHover)}
-            onMouseLeave={e => (e.currentTarget.src = this.props.props.images.buttonClose)}
-          />
+          <input className="btn-close hover-saturate" type="image" src={this.props.props.images.buttonClose} alt="Close" onClick={this.props.toggle}/>
           <p className="gold-count">{this.props.props.pc.currency}</p>
           <Equipped props={this.props.props} slot="Head"/>
           <Equipped props={this.props.props} slot="Body"/>

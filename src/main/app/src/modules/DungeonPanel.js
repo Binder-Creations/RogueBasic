@@ -32,8 +32,8 @@ class DungeonPanel extends React.Component {
       ? "70%"
       : "100%"
     let saturate = this.props.props.pc.dungeonBoard[this.props.number-1].id == this.props.props.pc.currentDungeon
-      ? "-saturate"
-      : ""
+      ? "saturate-200"
+      : "hover-saturate"
     let s = this.props.props.pc.dungeonBoard[this.props.number-1].floorCount > 1 ? "s" : "";
     let Prefix = this.props.props.pc.dungeonBoard[this.props.number-1].prefixMod
       ? () => {return(this.setPrefix())}
@@ -58,7 +58,7 @@ class DungeonPanel extends React.Component {
     this.miniboss = this.props.props.pc.dungeonBoard[this.props.number-1].miniboss ? this.minibossTrue : this.minibossFalse;
     
     return(
-      <div className={"dungeon-panel" + saturate + " d" + this.props.number} onClick={this.onClick}>
+      <div className={"dungeon-panel " + saturate + " d" + this.props.number} onClick={this.onClick}>
         <img className="background" src={this.props.props.images.dungeonPanel} alt="Dungeon Panel"/>
         <img className="dungeon-small" src={dungeonSmall} alt="Dungeon"/>
         <p className="dungeon-panel-name" style={{fontSize: fontSize}}>{this.props.props.pc.dungeonBoard[this.props.number-1].name}</p>

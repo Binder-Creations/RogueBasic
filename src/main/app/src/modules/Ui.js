@@ -12,21 +12,17 @@ class Ui extends React.Component {
     };
     if(this.props.props.pc.characterClass == "Rogue"){
       this.buttonAttack = this.props.props.images.buttonAttackRogue;
-      this.buttonAttackHover = this.props.props.images.buttonAttackRogueHover;
     } else if(this.props.props.pc.characterClass == "Wizard"){
       this.buttonAttack = this.props.props.images.buttonAttackWizard;
-      this.buttonAttackHover = this.props.props.images.buttonAttackWizardHover;
     } else {
       this.buttonAttack = this.props.props.images.buttonAttackWarrior;
-      this.buttonAttackHover = this.props.props.images.buttonAttackWarriorHover;   
     }
     this.toggleCharacterMenu = this.toggleCharacterMenu.bind(this);
     this.toggleInventoryMenu = this.toggleInventoryMenu.bind(this);
 
     this.Skill = (props) => {
       return(
-        <button className={"skill s-"+props.number}>
-          <img className="glow" src={this.props.props.images.skillGlow} alt="Skill"/>
+        <button className={"hover-saturate skill s-"+props.number}>
           <img className="frame" src={this.props.props.images.skillBackground} alt="Skill"/>
           <img className="frame" src={this.props.props.images.skillFrame} alt="Skill"/>
         </button>
@@ -64,18 +60,9 @@ class Ui extends React.Component {
         <this.Skill number="4"/>
         <img className="map-underlay" src={this.props.props.images.mapUnderlay} alt="Map"/>
         <img className="map-overlay" src={this.props.props.images.mapOverlay} alt="Map"/>
-        <input class="btn-attack" type="image" src={this.buttonAttack} alt="Attack"
-          onMouseEnter={e => (e.currentTarget.src=this.buttonAttackHover)}
-          onMouseLeave={e => (e.currentTarget.src=this.buttonAttack)}
-        />
-        <input class="btn-character" type="image" src={this.props.props.images.buttonCharacter} alt="Character" onClick={this.toggleCharacterMenu} 
-          onMouseEnter={e => (e.currentTarget.src=this.props.props.images.buttonCharacterHover)}
-          onMouseLeave={e => (e.currentTarget.src=this.props.props.images.buttonCharacter)}
-        />
-        <input class="btn-inventory" type="image" src={this.props.props.images.buttonInventory} alt="Inventory" onClick={this.toggleInventoryMenu} 
-          onMouseEnter={e => (e.currentTarget.src=this.props.props.images.buttonInventoryHover)}
-          onMouseLeave={e => (e.currentTarget.src=this.props.props.images.buttonInventory)}
-        />
+        <input class="btn-attack hover-saturate" type="image" src={this.buttonAttack} alt="Attack"/>
+        <input class="btn-character hover-saturate-250" type="image" src={this.props.props.images.buttonCharacter} alt="Character" onClick={this.toggleCharacterMenu}/>
+        <input class="btn-inventory hover-saturate-250" type="image" src={this.props.props.images.buttonInventory} alt="Inventory" onClick={this.toggleInventoryMenu}/>
         <CharacterMenu props={this.props.props} toggle={this.toggleCharacterMenu} on={this.state.characterMenu}/>
         <InventoryMenu props={this.props.props} toggle={this.toggleInventoryMenu} on={this.state.inventoryMenu}/>
       </>
@@ -101,3 +88,8 @@ class Ui extends React.Component {
 }
 
 export default Ui
+
+/* <input class="btn-inventory" type="image" src={this.props.props.images.buttonInventory} alt="Inventory" onClick={this.toggleInventoryMenu} 
+onMouseEnter={e => (e.currentTarget.src=this.props.props.images.buttonInventoryHover)}
+onMouseLeave={e => (e.currentTarget.src=this.props.props.images.buttonInventory)}
+/> */

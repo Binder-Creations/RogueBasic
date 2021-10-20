@@ -502,34 +502,12 @@
 				left:1.7768%;
 				top:12.6667%;
 			}
-			.rest-hover {
-				opacity:0;
-				position:absolute;
-				width:97.0572%;
-				height:37.4444%;
-				left:1.7768%;
-				top:12.6667%;
-			}
-			.rest-hover:hover {
-				opacity:1.0;
-			}
 			.eat {
 				position:absolute;
 				width:97.0572%;
 				height:37.4444%;
 				left:1.7768%;
 				top:50.1111%;
-			}
-			.eat-hover {
-				opacity:0;
-				position:absolute;
-				width:97.0572%;
-				height:37.4444%;
-				left:1.7768%;
-				top:50.1111%;
-			}
-			.eat-hover:hover {
-				opacity:1.0;
 			}
 			.dungeon-portal-frame {
 				position:absolute;
@@ -546,8 +524,11 @@
 				width: 16.9758%;
 				height: 56%;
 			}
-			.dungeon-portal-active:hover {
+			.hover-saturate:hover {
 				filter: saturate(150%);
+			}
+			.hover-saturate-250:hover {
+				filter: saturate(250%);
 			}
 			.dungeon-portal-inactive {
 				position: absolute;
@@ -561,16 +542,6 @@
 				left: 50.6004%;
 				width: 48.506%;
 				height: 27.7778%;		
-			}
-			.dungeon-panel:hover {
-				filter: saturate(150%);
-			}
-			.dungeon-panel-saturate {
-				position: absolute;
-				left: 50.6004%;
-				width: 48.506%;
-				height: 27.7778%;
-				filter: saturate(200%);	
 			}
 			.dungeon-menu .d1 {
 				top: 8.7778%;		
@@ -684,6 +655,9 @@
 			.saturate-150 {
 				filter: saturate(150%);
 			}
+			.saturate-200 {
+				filter: saturate(200%);
+			}
 			.item-image {
 				position: absolute;
 				top:5%;
@@ -732,6 +706,9 @@
 			}
 			.nopointer {
 				pointer-events: none;
+			}
+			.pointer {
+				pointer-events: auto;
 			}
 	    .inline-block {
 	    	display:inline-block;

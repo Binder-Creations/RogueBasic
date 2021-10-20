@@ -24,10 +24,7 @@ class CharacterMenu extends React.Component {
         <div className="menu">
           <img className="background" src={this.props.props.images.characterMenu} alt="Character Information Screen"/>
           <img className="badge" src={this.badge} alt={this.props.props.pc.characterClass}/>
-          <input className="btn-close" type="image" src={this.props.props.images.buttonClose} alt="Close" onClick={this.props.toggle}
-            onMouseEnter={e => (e.currentTarget.src = this.props.props.images.buttonCloseHover)}
-            onMouseLeave={e => (e.currentTarget.src = this.props.props.images.buttonClose)}
-          />
+          <input className="btn-close hover-saturate" type="image" src={this.props.props.images.buttonClose} alt="Close" onClick={this.props.toggle}/>
           <AttributeBuyButtons props={this.props.props}/>
           <div className="character-name">
             <p className="v-h-centered">{this.props.props.pc.name}</p>
