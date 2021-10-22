@@ -1,6 +1,7 @@
 import React from "react";
 import CharacterMenu from "./CharacterMenu";
 import InventoryMenu from "./InventoryMenu";
+import SkillTooltip from "./SkillTooltip";
 
 class Ui extends React.Component {
 
@@ -21,10 +22,26 @@ class Ui extends React.Component {
     this.toggleInventoryMenu = this.toggleInventoryMenu.bind(this);
 
     this.Skill = (props) => {
+      let className = "gray-100";
+      let onClick = "";
+
+      if(this.props.props.pc.level >= this.props.props.pc.abilities[props.number-1].level){
+        if(this.props.props.combat){
+          if(this.props.props.pc.currentEnergy >= this.props.props.pc.abilityCosts[props.number-1]){
+            className="hover-saturate"
+            onClick= () => this.props.props.appState("ability", props.number)
+          } else {
+            className="saturate-66"
+          }
+        } else {
+          className="saturate-66"
+        }
+      }
+
       return(
-        <button className={"hover-saturate skill s-"+props.number}>
-          <img className="frame" src={this.props.props.images.skillBackground} alt="Skill"/>
-          <img className="frame" src={this.props.props.images.skillFrame} alt="Skill"/>
+        <button className={className+" skill-tooltip skill s-"+props.number} onClick={onClick}>
+          <img className="absolute-fill" src={this.props.props.images["skill" + this.props.props.pc.characterClass + props.number]} alt="Skill"/>
+          <SkillTooltip props={this.props.props} number={props.number}/>
         </button>
       )
     }

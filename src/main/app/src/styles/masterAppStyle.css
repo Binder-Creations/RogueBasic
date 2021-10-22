@@ -3,6 +3,7 @@
       *, *:before, *:after {
 				margin:0;
         padding:0;
+				font-size: 2vw;
       	box-sizing:border-box;	
      	  font-family:"Copperplate", fantasy;
       }
@@ -25,7 +26,6 @@
 			}
       body {
     	  background-color:black;
-				font-size: 2vw;
 				color:#ffcc66;
 				-webkit-touch-callout: none;
 				-webkit-user-select: none;
@@ -177,23 +177,17 @@
 			.skill:hover .glow{
 				opacity: 1.0;
 			}
-			.skill .frame {
-				left: 6.7568%;
-				top: 6.7568%;
-				width: 86.4865%;
-				height: 86.4865%;
-			}
 			.s-1 {
-				left: 36.3096%;
+				left: 34.8096%;
 			}
 			.s-2 {
-				left: 43.4048%;
+				left: 42.9048%;
 			}
 			.s-3 {
-				left: 50.5%;
+				left: 51%;
 			}
 			.s-4 {
-				left: 57.5952%;
+				left: 59.0952%;
 			}
 			.map-overlay {
 				position: absolute;
@@ -527,6 +521,9 @@
 			.hover-saturate:hover {
 				filter: saturate(150%);
 			}
+			.hover-saturate:hover + .hover-saturate-secondary{
+				filter: saturate(150%);
+			}
 			.hover-saturate-250:hover {
 				filter: saturate(250%);
 			}
@@ -652,6 +649,12 @@
 			.gray-75 {
 				filter: grayscale(75%);
 			}
+			.gray-100 {
+				filter: grayscale(100%);
+			}
+			.saturate-66 {
+				filter: saturate(66%);
+			}
 			.saturate-150 {
 				filter: saturate(150%);
 			}
@@ -766,13 +769,23 @@
 			transition: opacity 0.3s;
 			z-index: 9;
 		}
-
-		.item-tooltip * {
+		.skill-tooltip-box{
+			position: absolute;
+			visibility: hidden;
+			bottom:100%;
+			left:-75%;
+			transition: visibility 0s linear 0s;
+			z-index: 9;
+		}
+		.item-tooltip *, .skill-toopltip * {
 			pointer-events: none
 		}
-
 		.item-tooltip:hover .item-tooltip-box{
 			visibility: visible;
+		}
+		.skill-tooltip:hover .skill-tooltip-box{
+			visibility: visible;
+			transition: visibility 0.3s linear 1s;
 		}
 
 		.top-left{
@@ -857,9 +870,9 @@
 		}
 		.item-tooltip-icon-value{
 			position: absolute;
-			left: 32.2571%;
+			left: 12.2571%;
 			top: 29.7143%;
-			width: 17.1429%;
+			width: 37.1429%;
 			height: 11.4286%;
 			font-size: 128%;
 			text-align: right;
@@ -880,6 +893,16 @@
 			height: 6.0%;
 			font-size: 62.5%;
 		}
+		.skill-tooltip-cost{
+			position: absolute;
+			left: 12.8571%;  
+			top: 85.9048%;   
+			width: 37.1429%; 
+			height: 11.4286%;
+			font-size: 128%;
+			text-align: right;
+			color: #2289c7;
+		}
 		.item-tooltip-description{
 			position: absolute;
 			left: 9.7143%;
@@ -897,6 +920,17 @@
 			height: 11.4286%;
 			color:#000000;
 			font-size: 80%;
+		}
+		.skill-tooltip-requirement{
+			position: absolute;
+			left: 21.7143%;
+			top: 11.6667%;
+			width: 56.5714%;
+			height: 11.4286%;
+			color:#920000;
+		}
+		.skill-tooltip-requirement p{
+			font-size: 75%;
 		}
 		.item-tooltip-statbox{
 			position: absolute;

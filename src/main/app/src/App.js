@@ -46,22 +46,26 @@ class App extends React.Component {
       items: items, 
       appState: this.appState,
       abilityServices: new AbilityServices(this.appState),
-      itemServices: new ItemServices({
-        images: images, 
-        items: items, 
-        colorArmor: {color: "#136f9b"},
-        colorPower: {color: "#a83a0e"},
-        colorHeal: {color: "#ce6eb9"},
-        colorCommon: "#39363a",
-        colorUncommon: "#4d610f",
-        colorRare: "#1e4d7a",
-        colorEpic: "#4e0f62",
-        colorShopCommon: "#d2d2d2",
-        colorShopUncommon: "#b4de31",
-        colorShopRare: "#3296f6",
-        colorShopEpic: "#c111f9"
-      })
+      colorArmor: {color: "#136f9b"},
+      colorPower: {color: "#a83a0e"},
+      colorHeal: {color: "#ce6eb9"}
     }
+
+    this.props.props.itemServices = new ItemServices({
+      images: images, 
+      items: items, 
+      colorArmor: this.props.props.colorArmor,
+      colorPower: this.props.props.colorPower,
+      colorHeal: this.props.props.colorHeal,
+      colorCommon: "#39363a",
+      colorUncommon: "#4d610f",
+      colorRare: "#1e4d7a",
+      colorEpic: "#4e0f62",
+      colorShopCommon: "#d2d2d2",
+      colorShopUncommon: "#b4de31",
+      colorShopRare: "#3296f6",
+      colorShopEpic: "#c111f9"
+    });
 
     this.disableUiMenus = false;
     this.backgroundSrc = "";
@@ -112,13 +116,13 @@ class App extends React.Component {
     if(!this.state.pc.name){
       return(<></>)
     }
-
-     if(!this.initialize){
-      this.pcServices.setPc(this.state.pc);
-      this.pcServices.updateStats()
-      window.addEventListener("resize", this.updateWidth)
-      this.initialize = true;
-     }
+    console.log(this.state.pc)
+    if(!this.initialize){
+    this.pcServices.setPc(this.state.pc);
+    this.pcServices.updateStats()
+    window.addEventListener("resize", this.updateWidth)
+    this.initialize = true;
+    }
 
     this.props.props.pc = this.state.pc;
     this.props.props.combat = this.state.combat;
@@ -254,6 +258,12 @@ class App extends React.Component {
       let shop;
       let addItem = true;
       method: switch(method){
+        case "to-dungeon":
+          pc = {...this.state.pc};
+          pc.location = "Dungeon";
+          this.savePc(pc)
+            .then(()=>{this.setState({pc: pc})});
+          break method;
         case "set-dungeon":
           pc = {...this.state.pc};
           pc.currentDungeon = key;
@@ -273,7 +283,7 @@ class App extends React.Component {
           pc.currency = pc.currency > 0 ? pc.currency : 0;
 
           this.savePc(pc)
-            .then(()=>{this.setState({pc: pc})});
+            .then(()=>{this.setState({pc: pc, dungeon: null})});
           break method;
         case "eat":
             pc = {...this.state.pc};

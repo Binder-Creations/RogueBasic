@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
@@ -31,7 +32,7 @@ public class PlayerCharacter {
 	private int level;
 	private int attributePoints;
 	private int currency;
-	private Set<UUID> abilityIds;
+	private Set<Ability> abilities;
 	private Map<UUID, Integer> inventory;
 	private UUID equippedHead;
 	private UUID equippedBody;
@@ -84,6 +85,11 @@ public class PlayerCharacter {
 				this.equippedPrimary = UUID.fromString("4eff0337-cae1-42c1-b1fe-6ac397f12c09");
 				this.equippedSecondary = UUID.fromString("5fb043b1-745d-4243-b22a-e8ecc69ddb81");
 				this.currency = 150 + currencyMetabonus;
+				this.abilities = new HashSet<>();
+				this.abilities.add(new Ability(1, "Deadeye", 10, 160, 1, "Power", "Shoot the back center enemy with unerring precision. This attack cannot be dodged."));
+				this.abilities.add(new Ability(2, "Shadowmeld", 20, 60, 1, "Armor", "Become one with the shadows, making it harder for enemies to track you. Increases your dodge and critical ratings until end of combat."));
+				this.abilities.add(new Ability(4, "Assassinate", 40, 260, 1, "Power", "Attack the highest-health enemy with a deadly strike. Your critical chance is doubled for this attack."));
+				this.abilities.add(new Ability(6, "Blade Dance", 80, 80, 8, "Power", "Unleash a flurry of attacks against the lowest-health enemies. This attack deals damage 8 times. If an enemy dies, it moves to the next lowest-health target."));
 				this.powerBonus = 15;
 				this.healthBonus = 20;
 				this.healthRegenBonus = 2;
@@ -99,6 +105,11 @@ public class PlayerCharacter {
 				this.equippedPrimary = UUID.fromString("2d139761-0d80-4be1-88dd-436c2c76c0a0");
 				this.equippedSecondary = UUID.fromString("9413a77b-a76a-4462-8e9e-a05b6a4e479f");
 				this.currency = 100 + currencyMetabonus;
+				this.abilities = new HashSet<>();
+				this.abilities.add(new Ability(1, "Heavy Strike", 8, 160, 1, "Power", "Attack the front right enemy with a mighty blow. 150% of Armor Penetration applies to this attack."));
+				this.abilities.add(new Ability(2, "Stunning Bash", 16, 140, 1, "Power", "Attack the front left enemy with a stunning shield strike. A non-boss enemy hit by this attack is stunned for 1 round."));
+				this.abilities.add(new Ability(4, "Wide Sweep", 32, 180, 1, "Power", "Attack all front-row enemies."));
+				this.abilities.add(new Ability(6, "Living Fortress", 64, 500, 1, "Armor", "Dramatically increases armor and provites immunity to critical hits until end of combat."));
 				this.powerBonus = 10;
 				this.healthBonus = 30;
 				this.healthRegenBonus = 4;
@@ -114,6 +125,11 @@ public class PlayerCharacter {
 				this.equippedPrimary = UUID.fromString("a3fc0e39-2baf-4729-9b14-28b6a8528d53");
 				this.equippedSecondary = UUID.fromString("d32c3382-3752-4244-9bf0-78d7a93946a5");
 				this.currency = 100 + currencyMetabonus;
+				this.abilities = new HashSet<>();
+				this.abilities.add(new Ability(1, "Ice Shards", 16, 75, 3, "Power", "Conjure 3 frozen knives and throw them at random enemies."));
+				this.abilities.add(new Ability(2, "Cone of Flame", 32, 90, 1, "Power", "Blast the front center enemy and all back-row enemies with fire."));
+				this.abilities.add(new Ability(4, "Death Circuit", 64, 120, 5, "Power", "Shock the back center enemy with a bolt of lightning that then jumps to another random enemy up to 4 times."));
+				this.abilities.add(new Ability(6, "Extinction Event", 128, 60, 20, "Power", "Call down a cataclysmic rain of 20 meteorites to damage random enemies."));
 				this.powerBonus = 20;
 				this.healthBonus = 10;
 				this.healthRegenBonus = 1;
@@ -152,10 +168,7 @@ public class PlayerCharacter {
 		this.level = pc.getLevel();
 		this.attributePoints = pc.getAttributePoints();
 		this.currency = pc.getCurrency();
-		if(pc.getAbilities() != null) {
-			this.abilityIds = new HashSet<>();
-			pc.getAbilities().forEach(ability->this.abilityIds.add(ability.getId()));
-		}
+		this.abilities = pc.getAbilities();
 		this.inventory = pc.getInventory();
 		this.equippedHead = pc.getEquippedHead() != null
 			? pc.getEquippedHead().getId()
@@ -295,15 +308,15 @@ public class PlayerCharacter {
 	public void setCurrency(int currency) {
 		this.currency = currency;
 	}
-	
-	public Set<UUID> getAbilityIds() {
-		return abilityIds;
+
+	public Set<Ability> getAbilities() {
+		return abilities;
 	}
-	
-	public void setAbilityIds(Set<UUID> abilityIds) {
-		this.abilityIds = abilityIds;
+
+	public void setAbilities(Set<Ability> abilities) {
+		this.abilities = abilities;
 	}
-	
+
 	public Map<UUID,Integer> getInventory() {
 		return inventory;
 	}
@@ -514,7 +527,7 @@ public class PlayerCharacter {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(abilityIds, armorBonus, armorPenBonus, ate, attributePoints, characterClass, constitution,
+		return Objects.hash(abilities, armorBonus, armorPenBonus, ate, attributePoints, characterClass, constitution,
 				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentHealth, currentShop,
 				day, dexterity, dexterityBonus, dodgeRatingBonus, dungeonBoard, energyBonus, energyRegenBonus,
 				equippedBack, equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary, experience,
@@ -531,7 +544,7 @@ public class PlayerCharacter {
 		if (getClass() != obj.getClass())
 			return false;
 		PlayerCharacter other = (PlayerCharacter) obj;
-		return Objects.equals(abilityIds, other.abilityIds) && armorBonus == other.armorBonus
+		return Objects.equals(abilities, other.abilities) && armorBonus == other.armorBonus
 				&& armorPenBonus == other.armorPenBonus && ate == other.ate && attributePoints == other.attributePoints
 				&& Objects.equals(characterClass, other.characterClass) && constitution == other.constitution
 				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
@@ -558,7 +571,7 @@ public class PlayerCharacter {
 				+ ", currentDungeon=" + currentDungeon + ", currentShop=" + currentShop + ", day=" + day + ", ate="
 				+ ate + ", name=" + name + ", characterClass=" + characterClass + ", experience=" + experience
 				+ ", level=" + level + ", attributePoints=" + attributePoints + ", currency=" + currency
-				+ ", abilityIds=" + abilityIds + ", inventory=" + inventory + ", equippedHead=" + equippedHead
+				+ ", abilities=" + abilities + ", inventory=" + inventory + ", equippedHead=" + equippedHead
 				+ ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck
 				+ ", equippedPrimary=" + equippedPrimary + ", equippedSecondary=" + equippedSecondary
 				+ ", constitution=" + constitution + ", strength=" + strength + ", dexterity=" + dexterity

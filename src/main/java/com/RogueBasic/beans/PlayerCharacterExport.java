@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import com.RogueBasic.data.AbilityDao;
 import com.RogueBasic.data.DungeonDao;
 import com.RogueBasic.data.ItemDao;
 import com.RogueBasic.util.CassandraConnector;
@@ -61,7 +60,6 @@ public class PlayerCharacterExport {
 	
 	public PlayerCharacterExport(PlayerCharacter pc) {
 		CqlSession session = CassandraConnector.getSession();
-		AbilityDao aDao = new AbilityDao(session);
 		ItemDao iDao = new ItemDao(session);
 		DungeonDao dDao = new DungeonDao(session);
 		
@@ -81,10 +79,7 @@ public class PlayerCharacterExport {
 		this.level = pc.getLevel();
 		this.attributePoints = pc.getAttributePoints();
 		this.currency = pc.getCurrency();
-		if(pc.getAbilityIds() != null) {
-			this.abilities = new HashSet<>();
-			pc.getAbilityIds().forEach(id->this.abilities.add(aDao.findById(id)));
-		}
+		this.abilities = pc.getAbilities();
 		if(pc.getInventory() != null) {
 			this.inventory = pc.getInventory();
 			this.inventoryCache = new HashSet<>();

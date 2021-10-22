@@ -28,6 +28,8 @@ public class CassandraUtilities {
 	public void initialize() {
 		//creates the tables required for our database, from the Tables.rbt document
 		log.trace("CassandraUtilities.initialize() calling RogueUtilities.readFileToList() for Tables.rbt");
+		session.execute("CREATE TYPE IF NOT EXISTS rogue.ability (level int, name text, cost int, modifier int, hits int, type text, description text);");
+		log.debug("Ability UDT created");
 		ru.readFileToList("source/tables.rbt")
 		  .forEach((s)->session.execute("CREATE TABLE IF NOT EXISTS " + s));
 		log.debug("Database tables created");

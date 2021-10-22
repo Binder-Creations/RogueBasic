@@ -88,7 +88,7 @@ class PcServices {
 	}
 	
 	healthTotal() {
-		return this.conTotal()*4 + this.pc.healthBonus*1;
+		return this.conTotal()*(4+(this.pc.level-1)/2) + this.pc.healthBonus*1;
 	}
 	
 	healthRegenTotal() {
@@ -112,7 +112,7 @@ class PcServices {
 	}
 	
 	energyTotal() {
-		return this.intTotal()*6 + this.pc.energyBonus*1;
+		return (this.intTotal()+this.pc.level-1)*6 + this.pc.energyBonus*1;
 	}
 	
 	energyRegenTotal() {
@@ -133,6 +133,10 @@ class PcServices {
   dodgeChanceCalc(){
     return Math.round((95-(95*(1-(((this.dodgeRatingTotal()*(1/((13+this.pc.level)/14)))**0.7)/100))) + Number.EPSILON)*10)/10
   }
+  baseDamageCalc(){
+    return 8+this.pc.level*2
+  }
+
   updateStats(){
     let head = this.pc.equippedHead ? this.pc.equippedHead : this.emptySlot
     let body = this.pc.equippedBody ? this.pc.equippedBody : this.emptySlot
@@ -168,6 +172,7 @@ class PcServices {
     this.pc.magResist = this.magResistCalc();
     this.pc.critChance = this.critChanceCalc();
     this.pc.dodgeChance = this.dodgeChanceCalc();
+    this.pc.baseDamage = this.baseDamageCalc();
 
     if(this.pc.currentHealth === -1){
       this.pc.currentHealth = this.healthTotal();
