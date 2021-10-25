@@ -733,12 +733,11 @@
    		}
       	.btn-home {
       	  position: absolute;
-      	  top: 5%;
-      	  right: 2.3809%;
-      	  z-index: 5;
+      	  top: 3%;
+      	  right: 1.4286%;
       	  text-align: center;
-      	  width: 6.5%;
-      		height: 13.65%;
+      	  width: 4.5%;
+      		height: 9.45%;
       		background-color: #55555588;
       		border: 1% solid #69696988;
       		border-radius: 100%;

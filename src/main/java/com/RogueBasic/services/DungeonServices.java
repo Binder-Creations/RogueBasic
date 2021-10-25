@@ -84,40 +84,10 @@ public class DungeonServices {
 		//and returning the id
 		log.trace("DungeonServices.addFloors() calling FloorServices.generate()");
 		dungeon.setFloorIds(fs.generate(dungeon));
+		
 		log.trace("DungeonServices.addFloors() calling DungeonDao.save()");
 		dao.save(dungeon);
 		
-		//log our dungeon and all of its enumerated objects
-		if(log.isDebugEnabled()) {
-			log.debug(dungeon.toString());
-			FloorDao fdao = new FloorDao(session);
-			RoomDao rdao = new RoomDao(session);
-			MonsterDao mdao = new MonsterDao(session);
-			ItemDao idao = new ItemDao(session);
-			TrapDao tdao = new TrapDao(session);
-			
-			for(UUID id: dungeon.getFloorIds()) {
-				Floor floor = fdao.findById(id);
-				log.debug(floor.toString());
-				for(UUID rid: floor.getRoomIds()) {
-					Room room = rdao.findById(rid);
-					log.debug(room.toString());
-					if(room.getMonsterIds()!=null) {
-						for(UUID u : room.getMonsterIds()) {
-							log.debug(mdao.findById(u).toString());
-						}
-					}
-//					if(room.getLoot()!=null) {
-//						for(UUID u : room.getLoot()) {
-//							log.debug(idao.findById(u).toString());
-//						}
-//					}
-					if(room.getTrapId()!=null) {
-						log.debug(tdao.findById(room.getTrapId()).toString());
-					}
-				}
-			}
-		}
 		log.trace("DungeonServices.addFloors() returning UUID" );
 		return dungeon;
 	}
@@ -129,7 +99,7 @@ public class DungeonServices {
 		modifier = modifier > 3 ? 3 : modifier;
 		int challengeRating = level - modifier + ThreadLocalRandom.current().nextInt(3*modifier);
 		log.trace("DungeonServices.genChallengeRating() returning int");
-		return challengeRating > 0 ? challengeRating :0;
+		return challengeRating > 0 ? challengeRating :1;
 	}
 	
 	public int genFloorCount(int challengeRating) {

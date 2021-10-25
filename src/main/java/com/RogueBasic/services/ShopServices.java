@@ -1,5 +1,6 @@
 package com.RogueBasic.services;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -27,33 +28,32 @@ public class ShopServices {
 	public Map<UUID, Integer> genInventory(UUID shopID, UUID pcId) {
 		Map<UUID, Integer> inventory = new HashMap<>();
 		CqlSession session = CassandraConnector.getSession();
-		PlayerCharacterDao pcdao = new PlayerCharacterDao(session);
-		ItemDao idao = new ItemDao(session);
-		ItemServices iservice = new ItemServices(session);
-		PlayerCharacter pc = pcdao.findById(pcId);
+		PlayerCharacterDao pcDao = new PlayerCharacterDao(session);
+		ItemDao iDao = new ItemDao(session);
+		ItemServices iService = new ItemServices(session);
+		PlayerCharacter pc = pcDao.findById(pcId);
 		
 		pc.setCurrentShop(shopID);
-		pcdao.save(pc);
-		
-		String[] exceptions;
-		if(pc.getCharacterClass() == "Rogue") {
+		pcDao.save(pc);
+		String[] exceptions = null;
+		if(pc.getCharacterClass().equals("Rogue")) {
 			String[] rogueExceptions = {"headLight", "headHeavy", "bodyLight", "bodyHeavy", "sword", "staff", "shield", "spellbook"};
 			exceptions = rogueExceptions;
 		}
-		if(pc.getCharacterClass() == "Wizard") {
+		if(pc.getCharacterClass().equals("Wizard")) {
 			String[] wizardExceptions = {"headMedium", "headHeavy", "bodyMedium", "bodyHeavy", "sword", "bow", "shield", "dagger"};
 			exceptions = wizardExceptions;
-		} else {
+		}
+		if(pc.getCharacterClass().equals("Warrior"))  {
 			String[] warriorExceptions = {"headLight", "headMedium", "bodyLight", "bodyMedium", "bow", "staff", "dagger", "spellbook"};
 			exceptions = warriorExceptions;
 		}
 		
 		inventory.put(UUID.fromString("d822106a-e753-40db-898d-d438d1592baa"), 3);
 		inventory.put(UUID.fromString("ab0d75df-8457-4dde-adfe-77c9b37d262d"), 5);
-		
 		for(int i = 0; i < 23; i++) {
-			Item item = iservice.genEquipment(exceptions, pc.getLevel());
-			idao.save(item);
+			Item item = iService.genEquipment(exceptions, pc.getLevel());
+			iDao.save(item);
 			inventory.put(item.getId(), 1);
 		}
 		

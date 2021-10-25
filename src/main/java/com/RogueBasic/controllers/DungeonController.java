@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.RogueBasic.beans.Dungeon;
+import com.RogueBasic.beans.DungeonExport;
 import com.RogueBasic.data.DungeonDao;
 import com.RogueBasic.services.DungeonServices;
 import com.RogueBasic.util.CassandraConnector;
@@ -39,9 +40,19 @@ public class DungeonController {
     }
 
     //returns a finished dungeon from a shell
-    @GetMapping
-    public Dungeon getCompleteDungeon(@RequestBody Dungeon dungeon) {
+    @GetMapping("/complete/{id}")
+    public DungeonExport getCompleteDungeon(@PathVariable String id) {
     	DungeonServices ds = new DungeonServices(CassandraConnector.getSession());
-        return ds.addFloors(dungeon);
+        DungeonDao dDao = new DungeonDao(CassandraConnector.getSession());
+        
+    	return new DungeonExport(ds.addFloors(dDao.findById(UUID.fromString(id))));
+    }
+    
+    @GetMapping("/convert/{id}")
+    public DungeonExport getConvertedDungeon(@PathVariable String id) {
+    	DungeonServices ds = new DungeonServices(CassandraConnector.getSession());
+        DungeonDao dDao = new DungeonDao(CassandraConnector.getSession());
+        
+    	return new DungeonExport(dDao.findById(UUID.fromString(id)));
     }
 }

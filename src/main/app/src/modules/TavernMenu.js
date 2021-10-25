@@ -9,7 +9,6 @@ class TavernMenu extends React.Component {
   }
 
   render(){
-    console.log(this.props.props.pc)
     let dungeon = this.props.props.images.dungeonEmpty;
     let className = "dungeon-portal-inactive";
     let onClick = "";

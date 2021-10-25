@@ -106,14 +106,6 @@ public class ItemServices {
 		return loot;
 	}
 	
-	private List<Item> genEquipmentList(String[] exceptions, int count, int challengeRating){
-		List<Item> equipment = new ArrayList<>();
-		for(int i = 0; i < count; i++) {
-			equipment.add(genEquipment(exceptions, challengeRating));
-		}
-		return equipment;
-	}
-	
 	public Item genEquipment(String[] exceptions, int challengeRating){
 		String[] defaultTypes = {"headLight", "headMedium", "headHeavy", "bodyLight", "bodyMedium", "bodyHeavy", "back", "neck", "sword", "bow", "staff", "shield", "dagger", "spellbook"};
 		List<String> types = new ArrayList<>(Arrays.asList(defaultTypes));
@@ -121,7 +113,6 @@ public class ItemServices {
 		for(String exception: exceptions) {
 			types.remove(exception);
 		}
-		
 		String type = types.get(ThreadLocalRandom.current().nextInt(types.size()));
 		List<String[]> components = ru.readFileToArrays("source/itemTypes/" + type + ".rbt");
 

@@ -26,15 +26,6 @@ class App extends React.Component {
       fetch('/pc/'+ this.state.character_id)
       .then(response => response.json())
       .then(data => this.setState({pc: data}))
-        // .then(this.setState(state => state.pc.location == "Town"
-        //   ? {room: null}
-        //   : {room: fetch('/room/'+ state.pc.location)
-        //     .then(response => response.json())}))
-        // .then(data => this.state.pc = JSON.parse(data))
-        // .then(this.state.room = this.state.pc.location == "Town"
-        //   ? null
-        //   : JSON.parse(fetch('/room/'+ this.state.pc.location)
-        //     .then(response => response.json())))
       
     };
     this.pcServices = new PcServices(this.state.pc.characterClass);
@@ -77,20 +68,6 @@ class App extends React.Component {
     this.OuterElements = () => {
       return(this.outerElements);
     }
-    this.TownButton = () => {
-      return(
-      <button className="btn-home" onClick={ () => { this.setState({scene:"Default"})} }>
-        <img src={this.props.props.images.townIcon} alt="Town"/>
-      </button>
-      );
-    }
-    this.HomeButton = () => {
-      return(
-      <button className="btn-home" onClick={ () => { this.setState({scene:"Home"})} }>
-        <img src={this.props.props.images.scrollIcon} alt="Home"/>
-      </button>
-      );
-    }
   }
 
   render(){
@@ -116,12 +93,11 @@ class App extends React.Component {
     if(!this.state.pc.name){
       return(<></>)
     }
-    console.log(this.state.pc)
     if(!this.initialize){
-    this.pcServices.setPc(this.state.pc);
-    this.pcServices.updateStats()
-    window.addEventListener("resize", this.updateWidth)
-    this.initialize = true;
+      this.pcServices.setPc(this.state.pc);
+      this.pcServices.updateStats()
+      window.addEventListener("resize", this.updateWidth)
+      this.initialize = true;
     }
 
     this.props.props.pc = this.state.pc;
@@ -131,15 +107,16 @@ class App extends React.Component {
     this.innerElements = <></>
     this.outerElements = <></>
     this.disableUiMenus = false;
+    let button = "TownButton";
 
     if (this.state.pc.location == "Town"){
       if(this.state.scene=="Default"){
         this.backgroundSrc = this.props.props.images.town
+        button = "HomeButton"
         this.innerElements = <>
           <input className="tavern" type="image" src={this.props.props.images.tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
           <input className="inn" type="image" src={this.props.props.images.innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
           <input className="shop" type="image" src={this.props.props.images.shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
-          <this.HomeButton/>
         </>
       } else if(this.state.scene=="Tavern"){
         if(this.state.pc.currentDungeon && (!this.state.dungeon || this.state.dungeon.id != this.state.pc.currentDungeon)){
@@ -164,14 +141,12 @@ class App extends React.Component {
         this.backgroundSrc = this.props.props.images.tavern
         this.outerElements = <>
           <TavernMenu props={this.props.props} dungeon={this.state.dungeon}/>
-          <this.TownButton/>
         </>
       } else if(this.state.scene=="Inn"){
         this.disableUiMenus = true;
         this.backgroundSrc = this.props.props.images.inn
         this.outerElements = <>
           <InnMenu props={this.props.props}/>
-          <this.TownButton/>
         </>
       } else if(this.state.scene=="Shop"){
         if(this.state.pc.currentShop){
@@ -202,18 +177,32 @@ class App extends React.Component {
         this.backgroundSrc = this.props.props.images.shop
         this.outerElements = <>
           <ShopMenu props={this.props.props} shop={this.state.shop}/>
-          <this.TownButton/>
         </>
       }
-    }else{
-      this.backgroundSrc = this.props.props.images.town
+    } else if(this.state.pc.location == "Dungeon") {
+      if(!this.state.dungeon.floors && !this.state.dungeon.floorIds){
+        fetch('/dungeon/complete/' + this.state.dungeon.id)
+          .then(response => response.json())
+          .then(data => {
+            this.setState({dungeon: data});
+        });
+      } else if(!this.state.dungeon.floors){
+        fetch('/dungeon/convert/' + this.state.dungeon.id)
+          .then(response => response.json())
+          .then(data => {
+            this.setState({dungeon: data});
+        });
       }
+      this.backgroundSrc = this.props.props.images[this.state.dungeon.theme.toLowerCase()]
+    } else {
+      this.backgroundSrc = this.props.props.images.town
+    }
 
     return(
     <div className="app-container">
       <img className="background" src={this.backgroundSrc} alt="Background"/>
       <this.InnerElements/>
-      <Ui props={this.props.props} disableUiMenus={this.disableUiMenus}/>
+      <Ui props={this.props.props} button={button} disableUiMenus={this.disableUiMenus}/>
       <this.OuterElements/>
     </div>
     );
@@ -258,6 +247,16 @@ class App extends React.Component {
       let shop;
       let addItem = true;
       method: switch(method){
+        case "scene":
+          if(this.state.pc.location == value) {
+            this.setState({scene: key})
+          } else {
+            pc = {...this.state.pc}
+            pc.location = value
+            this.savePc(pc)
+              .then(()=>{this.setState({pc: pc, scene: key})})
+          }
+          break method;
         case "to-dungeon":
           pc = {...this.state.pc};
           pc.location = "Dungeon";

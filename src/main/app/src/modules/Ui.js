@@ -45,9 +45,26 @@ class Ui extends React.Component {
         </button>
       )
     }
+
+    this.TownButton = () => {
+      return(
+      <button className="btn-home" onClick={ () => {this.props.props.appState("scene", "Default", "Town")} }>
+        <img src={this.props.props.images.townIcon} alt="Town"/>
+      </button>
+      );
+    }
+
+    this.HomeButton = () => {
+      return(
+      <button className="btn-home" onClick={ () => {this.props.props.appState("scene", "Home", "Town")} }>
+        <img src={this.props.props.images.scrollIcon} alt="Home"/>
+      </button>
+      );
+    }
   }
 
   render(){
+    this.Button = this[this.props.button];
     this.healthStyle = {
       width: 20*(this.props.props.pc.currentHealth/this.props.props.pc.healthTotal) + "%"
     }
@@ -82,6 +99,7 @@ class Ui extends React.Component {
         <input class="btn-inventory hover-saturate-250" type="image" src={this.props.props.images.buttonInventory} alt="Inventory" onClick={this.toggleInventoryMenu}/>
         <CharacterMenu props={this.props.props} toggle={this.toggleCharacterMenu} on={this.state.characterMenu}/>
         <InventoryMenu props={this.props.props} toggle={this.toggleInventoryMenu} on={this.state.inventoryMenu}/>
+        <this.Button/>
       </>
     )
   }
