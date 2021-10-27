@@ -193,6 +193,16 @@ class App extends React.Component {
             this.setState({dungeon: data});
         });
       }
+      if(this.state.dungeon.floors && this.state.pc.currentFloor === -1){ 
+        this.state.dungeon.floors.some(floor=>{
+          this.state.pc.currentFloor++
+          return floor.level === 1
+        });
+        this.state.dungeon.floors[this.state.pc.currentFloor].rooms.some(room=>{
+          this.state.pc.currentRoom++
+          return room.stairsPrevious
+        });
+      }
       this.backgroundSrc = this.props.props.images[this.state.dungeon.theme.toLowerCase()]
     } else {
       this.backgroundSrc = this.props.props.images.town
@@ -202,7 +212,7 @@ class App extends React.Component {
     <div className="app-container">
       <img className="background" src={this.backgroundSrc} alt="Background"/>
       <this.InnerElements/>
-      <Ui props={this.props.props} button={button} disableUiMenus={this.disableUiMenus}/>
+      <Ui props={this.props.props} dungeon={this.state.dungeon} button={button} disableUiMenus={this.disableUiMenus}/>
       <this.OuterElements/>
     </div>
     );
@@ -277,6 +287,8 @@ class App extends React.Component {
           pc.currentShop = null;
           pc.dungeonBoard = null;
           pc.currentDungeon = null;
+          pc.currentFloor = -1;
+          pc.currentRoom = -1;
           pc.day += 1;
           pc.currency -= 250;
           pc.currency = pc.currency > 0 ? pc.currency : 0;

@@ -62,8 +62,8 @@ public class FloorServices {
 	}
 	
 	public void genXAndY(Floor floor, int challengeRating) {
-		int modifier = 2 + challengeRating/6 + floor.getLevel()/4;
-		modifier = modifier > 5 ? 5 : modifier;
+		int modifier = 1 + challengeRating/6 + floor.getLevel()/4;
+		modifier = modifier > 4 ? 4 : modifier;
 		int base = 3;
 		floor.setXLength(base + ThreadLocalRandom.current().nextInt(modifier));
 		floor.setYLength(base + ThreadLocalRandom.current().nextInt(modifier));

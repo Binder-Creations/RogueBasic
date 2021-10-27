@@ -26,6 +26,7 @@ public class Room {
 	private Set<UUID> monsterIds;
 	private boolean miniboss;
 	private boolean boss;
+	private boolean cleared;
 	
 	public Room() {}
 
@@ -158,9 +159,17 @@ public class Room {
 		this.boss = boss;
 	}
 
+	public boolean isCleared() {
+		return cleared;
+	}
+
+	public void setCleared(boolean cleared) {
+		this.cleared = cleared;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(boss, dungeonId, eastRoomId, floorId, id, loot, miniboss, monsterIds, northRoomId,
+		return Objects.hash(boss, cleared, dungeonId, eastRoomId, floorId, id, loot, miniboss, monsterIds, northRoomId,
 				southRoomId, stairsNext, stairsPrevious, trapId, westRoomId, xCoord, yCoord);
 	}
 
@@ -173,7 +182,7 @@ public class Room {
 		if (getClass() != obj.getClass())
 			return false;
 		Room other = (Room) obj;
-		return boss == other.boss && Objects.equals(dungeonId, other.dungeonId)
+		return boss == other.boss && cleared == other.cleared && Objects.equals(dungeonId, other.dungeonId)
 				&& Objects.equals(eastRoomId, other.eastRoomId) && Objects.equals(floorId, other.floorId)
 				&& Objects.equals(id, other.id) && Objects.equals(loot, other.loot) && miniboss == other.miniboss
 				&& Objects.equals(monsterIds, other.monsterIds) && Objects.equals(northRoomId, other.northRoomId)
@@ -188,7 +197,7 @@ public class Room {
 				+ ", yCoord=" + yCoord + ", stairsPrevious=" + stairsPrevious + ", stairsNext=" + stairsNext
 				+ ", northRoomId=" + northRoomId + ", southRoomId=" + southRoomId + ", eastRoomId=" + eastRoomId
 				+ ", westRoomId=" + westRoomId + ", trapId=" + trapId + ", loot=" + loot + ", monsterIds=" + monsterIds
-				+ ", miniboss=" + miniboss + ", boss=" + boss + "]";
+				+ ", miniboss=" + miniboss + ", boss=" + boss + ", cleared=" + cleared + "]";
 	}
 	
 }

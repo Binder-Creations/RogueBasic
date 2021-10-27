@@ -33,10 +33,9 @@ public class RoomExport {
 	private Set<Monster> monsters;
 	private boolean miniboss;
 	private boolean boss;
+	private boolean cleared;
 	
 	public RoomExport() {}
-
-	
 	
 	public RoomExport(Room room) {
 		super();
@@ -69,9 +68,8 @@ public class RoomExport {
 		}		
 		this.miniboss = room.isMiniboss();
 		this.boss = room.isBoss();
+		this.cleared = room.isCleared();
 	}
-
-
 
 	public UUID getId() {
 		return id;
@@ -208,11 +206,19 @@ public class RoomExport {
 	public void setBoss(boolean boss) {
 		this.boss = boss;
 	}
+	
+	public boolean isCleared() {
+		return cleared;
+	}
+
+	public void setCleared(boolean cleared) {
+		this.cleared = cleared;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(boss, dungeonId, eastRoomId, floorId, id, loot, lootCache, miniboss, monsters, northRoomId,
-				southRoomId, stairsNext, stairsPrevious, trap, westRoomId, xCoord, yCoord);
+		return Objects.hash(boss, cleared, dungeonId, eastRoomId, floorId, id, loot, lootCache, miniboss, monsters,
+				northRoomId, southRoomId, stairsNext, stairsPrevious, trap, westRoomId, xCoord, yCoord);
 	}
 
 	@Override
@@ -224,7 +230,7 @@ public class RoomExport {
 		if (getClass() != obj.getClass())
 			return false;
 		RoomExport other = (RoomExport) obj;
-		return boss == other.boss && Objects.equals(dungeonId, other.dungeonId)
+		return boss == other.boss && cleared == other.cleared && Objects.equals(dungeonId, other.dungeonId)
 				&& Objects.equals(eastRoomId, other.eastRoomId) && Objects.equals(floorId, other.floorId)
 				&& Objects.equals(id, other.id) && Objects.equals(loot, other.loot)
 				&& Objects.equals(lootCache, other.lootCache) && miniboss == other.miniboss
@@ -240,7 +246,7 @@ public class RoomExport {
 				+ ", yCoord=" + yCoord + ", stairsPrevious=" + stairsPrevious + ", stairsNext=" + stairsNext
 				+ ", northRoomId=" + northRoomId + ", southRoomId=" + southRoomId + ", eastRoomId=" + eastRoomId
 				+ ", westRoomId=" + westRoomId + ", trap=" + trap + ", loot=" + loot + ", lootCache=" + lootCache
-				+ ", monsters=" + monsters + ", miniboss=" + miniboss + ", boss=" + boss + "]";
+				+ ", monsters=" + monsters + ", miniboss=" + miniboss + ", boss=" + boss + ", cleared=" + cleared + "]";
 	}
 	
 }

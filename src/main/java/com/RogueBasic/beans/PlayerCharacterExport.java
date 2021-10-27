@@ -18,6 +18,8 @@ public class PlayerCharacterExport {
 	private String location;
 	private Set<Dungeon> dungeonBoard;
 	private UUID currentDungeon;
+	private int currentFloor;
+	private int currentRoom;
 	private UUID currentShop;
 	private int day;
 	private boolean ate;
@@ -70,6 +72,8 @@ public class PlayerCharacterExport {
 			pc.getDungeonBoard().forEach(id->this.dungeonBoard.add(dDao.findById(id)));
 		}
 		this.currentDungeon = pc.getCurrentDungeon();
+		this.currentFloor = pc.getCurrentFloor();
+		this.currentRoom = pc.getCurrentRoom();
 		this.currentShop = pc.getCurrentShop();
 		this.day = pc.getDay();
 		this.ate = pc.isAte();
@@ -160,6 +164,22 @@ public class PlayerCharacterExport {
 
 	public void setCurrentDungeon(UUID currentDungeon) {
 		this.currentDungeon = currentDungeon;
+	}
+
+	public int getCurrentFloor() {
+		return currentFloor;
+	}
+
+	public void setCurrentFloor(int currentFloor) {
+		this.currentFloor = currentFloor;
+	}
+
+	public int getCurrentRoom() {
+		return currentRoom;
+	}
+
+	public void setCurrentRoom(int currentRoom) {
+		this.currentRoom = currentRoom;
 	}
 
 	public UUID getCurrentShop() {
@@ -461,11 +481,11 @@ public class PlayerCharacterExport {
 	@Override
 	public int hashCode() {
 		return Objects.hash(abilities, armorBonus, armorPenBonus, ate, attributePoints, characterClass, constitution,
-				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentHealth, currentShop,
-				day, dexterity, dexterityBonus, dodgeRatingBonus, dungeonBoard, energyBonus, energyRegenBonus,
-				equippedBack, equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary, experience,
-				healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, inventory, inventoryCache, level,
-				location, name, powerBonus, strength, strengthBonus);
+				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentFloor,
+				currentHealth, currentRoom, currentShop, day, dexterity, dexterityBonus, dodgeRatingBonus, dungeonBoard,
+				energyBonus, energyRegenBonus, equippedBack, equippedBody, equippedHead, equippedNeck, equippedPrimary,
+				equippedSecondary, experience, healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus,
+				inventory, inventoryCache, level, location, name, powerBonus, strength, strengthBonus);
 	}
 
 	@Override
@@ -482,7 +502,8 @@ public class PlayerCharacterExport {
 				&& Objects.equals(characterClass, other.characterClass) && constitution == other.constitution
 				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
 				&& currency == other.currency && Objects.equals(currentDungeon, other.currentDungeon)
-				&& currentEnergy == other.currentEnergy && currentHealth == other.currentHealth
+				&& currentEnergy == other.currentEnergy && currentFloor == other.currentFloor
+				&& currentHealth == other.currentHealth && currentRoom == other.currentRoom
 				&& Objects.equals(currentShop, other.currentShop) && day == other.day && dexterity == other.dexterity
 				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
 				&& Objects.equals(dungeonBoard, other.dungeonBoard) && energyBonus == other.energyBonus
@@ -502,20 +523,21 @@ public class PlayerCharacterExport {
 	@Override
 	public String toString() {
 		return "PlayerCharacterExport [id=" + id + ", location=" + location + ", dungeonBoard=" + dungeonBoard
-				+ ", currentDungeon=" + currentDungeon + ", currentShop=" + currentShop + ", day=" + day + ", ate="
-				+ ate + ", name=" + name + ", characterClass=" + characterClass + ", experience=" + experience
-				+ ", level=" + level + ", attributePoints=" + attributePoints + ", currency=" + currency
-				+ ", abilities=" + abilities + ", inventory=" + inventory + ", inventoryCache=" + inventoryCache
-				+ ", equippedHead=" + equippedHead + ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack
-				+ ", equippedNeck=" + equippedNeck + ", equippedPrimary=" + equippedPrimary + ", equippedSecondary="
-				+ equippedSecondary + ", constitution=" + constitution + ", strength=" + strength + ", dexterity="
-				+ dexterity + ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus
-				+ ", strengthBonus=" + strengthBonus + ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus="
-				+ intelligenceBonus + ", powerBonus=" + powerBonus + ", healthBonus=" + healthBonus
-				+ ", healthRegenBonus=" + healthRegenBonus + ", armorPenBonus=" + armorPenBonus + ", armorBonus="
-				+ armorBonus + ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus
-				+ ", energyBonus=" + energyBonus + ", energyRegenBonus=" + energyRegenBonus + ", currentHealth="
-				+ currentHealth + ", currentEnergy=" + currentEnergy + "]";
+				+ ", currentDungeon=" + currentDungeon + ", currentFloor=" + currentFloor + ", currentRoom="
+				+ currentRoom + ", currentShop=" + currentShop + ", day=" + day + ", ate=" + ate + ", name=" + name
+				+ ", characterClass=" + characterClass + ", experience=" + experience + ", level=" + level
+				+ ", attributePoints=" + attributePoints + ", currency=" + currency + ", abilities=" + abilities
+				+ ", inventory=" + inventory + ", inventoryCache=" + inventoryCache + ", equippedHead=" + equippedHead
+				+ ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck
+				+ ", equippedPrimary=" + equippedPrimary + ", equippedSecondary=" + equippedSecondary
+				+ ", constitution=" + constitution + ", strength=" + strength + ", dexterity=" + dexterity
+				+ ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus + ", strengthBonus="
+				+ strengthBonus + ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus=" + intelligenceBonus
+				+ ", powerBonus=" + powerBonus + ", healthBonus=" + healthBonus + ", healthRegenBonus="
+				+ healthRegenBonus + ", armorPenBonus=" + armorPenBonus + ", armorBonus=" + armorBonus
+				+ ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus + ", energyBonus="
+				+ energyBonus + ", energyRegenBonus=" + energyRegenBonus + ", currentHealth=" + currentHealth
+				+ ", currentEnergy=" + currentEnergy + "]";
 	}
 	
 	

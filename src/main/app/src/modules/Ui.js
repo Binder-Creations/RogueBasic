@@ -2,6 +2,7 @@ import React from "react";
 import CharacterMenu from "./CharacterMenu";
 import InventoryMenu from "./InventoryMenu";
 import SkillTooltip from "./SkillTooltip";
+import MiniMap from "./MiniMap";
 
 class Ui extends React.Component {
 
@@ -93,6 +94,7 @@ class Ui extends React.Component {
         <this.Skill number="3"/>
         <this.Skill number="4"/>
         <img className="map-underlay" src={this.props.props.images.mapUnderlay} alt="Map"/>
+        <MiniMap props={this.props.props} dungeon={this.props.dungeon}/>
         <img className="map-overlay" src={this.props.props.images.mapOverlay} alt="Map"/>
         <input class="btn-attack hover-saturate" type="image" src={this.buttonAttack} alt="Attack"/>
         <input class="btn-character hover-saturate-250" type="image" src={this.props.props.images.buttonCharacter} alt="Character" onClick={this.toggleCharacterMenu}/>
