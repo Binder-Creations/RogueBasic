@@ -31,6 +31,7 @@ class App extends React.Component {
     this.pcServices = new PcServices(this.state.pc.characterClass);
     this.appState = this.appState.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
+    this.sortDungeon = this.sortDungeon.bind(this);
 
     this.props.props = {
       images: images, 
@@ -131,16 +132,25 @@ class App extends React.Component {
           .then(response => response.json())
           .then(data => {
             let pc = {...this.state.pc};
-            pc.dungeonBoard = data;
-            this.savePc(pc)
-              .then(this.setState({pc: pc}));
+            pc.dungeonBoard = [];
+            data.forEach(dungeon => pc.dungeonBoard.push(dungeon.id))
+            this.save("pc", pc)
+              .then(this.setState({pc: pc, dungeonBoard: data}));
           });
         } 
+        if(this.state.pc.dungeonBoard && !this.state.dungeonBoard){
+          fetch('/dungeon/getBoard/'+ this.state.pc.id)
+          .then(response => response.json())
+          .then(data => {
+            this.state.dungeonBoard = data;
+            this.setState({dungeonBoard: data});
+          });
+        }
 
         this.disableUiMenus = true;
         this.backgroundSrc = this.props.props.images.tavern
         this.outerElements = <>
-          <TavernMenu props={this.props.props} dungeon={this.state.dungeon}/>
+          <TavernMenu props={this.props.props} dungeonBoard={this.state.dungeonBoard} dungeon={this.state.dungeon}/>
         </>
       } else if(this.state.scene=="Inn"){
         this.disableUiMenus = true;
@@ -168,7 +178,7 @@ class App extends React.Component {
             .then(response => response.json())
             .then(data => {
               this.state.pc.currentShop = data.id;
-              this.savePc(this.state.pc)
+              this.save("pc", this.state.pc)
                 .then(this.setState({shop: data}));
             });
         }
@@ -180,27 +190,25 @@ class App extends React.Component {
         </>
       }
     } else if(this.state.pc.location == "Dungeon") {
+      if(!this.state.dungeon){
+        fetch('/dungeon/' + this.state.pc.currentDungeon)
+          .then(response => response.json())
+          .then(data => {
+            this.setState({dungeon: this.sortDungeon(data)});
+        });
+        return(<></>)
+      }
       if(!this.state.dungeon.floors && !this.state.dungeon.floorIds){
         fetch('/dungeon/complete/' + this.state.dungeon.id)
           .then(response => response.json())
           .then(data => {
-            this.setState({dungeon: data});
+            this.setState({dungeon: this.sortDungeon(data)});
         });
       } else if(!this.state.dungeon.floors){
         fetch('/dungeon/convert/' + this.state.dungeon.id)
           .then(response => response.json())
           .then(data => {
-            this.setState({dungeon: data});
-        });
-      }
-      if(this.state.dungeon.floors && this.state.pc.currentFloor === -1){ 
-        this.state.dungeon.floors.some(floor=>{
-          this.state.pc.currentFloor++
-          return floor.level === 1
-        });
-        this.state.dungeon.floors[this.state.pc.currentFloor].rooms.some(room=>{
-          this.state.pc.currentRoom++
-          return room.stairsPrevious
+            this.setState({dungeon: this.sortDungeon(data)});
         });
       }
       this.backgroundSrc = this.props.props.images[this.state.dungeon.theme.toLowerCase()]
@@ -229,54 +237,65 @@ class App extends React.Component {
       });
     }
 
-    async savePc(pc){
-      await fetch('/pc/', {
+    sortDungeon(dungeon){
+      dungeon.floors.forEach(floor=>floor.rooms.sort((a,b) => (a.stairsPrevious) ? -1 : ((b.stairsPrevious) ? 1 : 0)));
+      dungeon.floors.sort((a,b) => (a.level < b.level) ? -1 : ((b.level < a.level ? 1 : 0)));
+      return dungeon;
+    }
+
+    async save(type, object){
+      await fetch('/'+type+'/', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(pc)
+        body: JSON.stringify(object)
       });
       return;
     }
-    async saveShop(shop){
-      await fetch('/shop/', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(shop)
-      });
-      return;
-    }
+
     updateWidth(){
       this.setState({widthChange: ++this.state.widthChange});
     }
+
     appState(method, key, value){
       let pc;
+      let dungeon;
       let shop;
       let addItem = true;
       method: switch(method){
+        case "move-room":
+          dungeon = {...this.state.dungeon};
+          dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared = true;
+          dungeon.floors[dungeon.currentFloor].rooms.some(room => {
+            if(room.id == key){
+              dungeon.currentRoom = dungeon.floors[dungeon.currentFloor].rooms.indexOf(room);
+              return true;
+            }
+          });
+          this.save("dungeon", dungeon)
+            .then(()=>{this.setState({dungeon: dungeon})})
+          break method;
         case "scene":
           if(this.state.pc.location == value) {
             this.setState({scene: key})
           } else {
             pc = {...this.state.pc}
             pc.location = value
-            this.savePc(pc)
+            this.save("pc", pc)
               .then(()=>{this.setState({pc: pc, scene: key})})
           }
           break method;
         case "to-dungeon":
           pc = {...this.state.pc};
           pc.location = "Dungeon";
-          this.savePc(pc)
+          this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
           break method;
         case "set-dungeon":
           pc = {...this.state.pc};
           pc.currentDungeon = key;
-          this.savePc(pc)
+          this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
           break method;
         case "rest":
@@ -293,7 +312,7 @@ class App extends React.Component {
           pc.currency -= 250;
           pc.currency = pc.currency > 0 ? pc.currency : 0;
 
-          this.savePc(pc)
+          this.save("pc", pc)
             .then(()=>{this.setState({pc: pc, dungeon: null})});
           break method;
         case "eat":
@@ -304,14 +323,13 @@ class App extends React.Component {
             pc.currency -= 100;
             pc.currency = pc.currency > 0 ? pc.currency : 0;
 
-            this.savePc(pc)
+            this.save("pc", pc)
               .then(()=>{this.setState({pc: pc})});
             break method;
         case "shop-store":
           pc = {...this.state.pc};
           shop = {...this.state.shop};
           if(key.type != "potion" && key.type != "consumable"){
-            delete shop.inventory[key.id]
             var index = shop.inventoryCache.indexOf(key);
             if (index !== -1)
               shop.inventoryCache.splice(index, 1);
@@ -334,8 +352,8 @@ class App extends React.Component {
           if(addItem){
             pc.inventoryCache.push(key);
           }
-          this.savePc(pc)
-            .then(this.saveShop(shop))
+          this.save("pc", pc)
+            .then(this.save("shop", shop))
             .then(()=>{this.setState({pc: pc, shop: shop})});
           break method;
         case "shop-player":
@@ -353,12 +371,11 @@ class App extends React.Component {
           pc.currency += key.cost;
           
           if(key.type != "potion" && key.type != "consumable"){
-            shop.inventory[key.id] = 1;
             shop.inventoryCache.push(key);
           }
 
-          this.savePc(pc)
-            .then(this.saveShop(shop))
+          this.save("pc", pc)
+            .then(this.save("shop", shop))
             .then(()=>{this.setState({pc: pc, shop: shop})});
         break method;
         case "inventory":  
@@ -401,7 +418,7 @@ class App extends React.Component {
           }
           this.pcServices.setPc(pc);
           this.pcServices.updateStats();
-          this.savePc(pc)
+          this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
           break method;
         case "unequip":  
@@ -423,7 +440,7 @@ class App extends React.Component {
           }
           this.pcServices.setPc(pc);
           this.pcServices.updateStats();
-          this.savePc(pc)
+          this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
           break method;
         case "pointbuy":
@@ -449,7 +466,7 @@ class App extends React.Component {
           }
           this.pcServices.setPc(pc);
           this.pcServices.updateStats();
-          this.savePc(pc)
+          this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
           break method;
       }

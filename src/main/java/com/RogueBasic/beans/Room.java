@@ -5,12 +5,11 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
-@Table
+@UserDefinedType(value = "room")
 public class Room {
-	@PrimaryKey private UUID id;
+	private UUID id;
 	private UUID floorId;
 	private UUID dungeonId;
 	private int xCoord;
@@ -21,9 +20,10 @@ public class Room {
 	private UUID southRoomId;
 	private UUID eastRoomId;
 	private UUID westRoomId;
-	private UUID trapId;
+	private Trap trap;
 	private Map<UUID, Integer> loot;
-	private Set<UUID> monsterIds;
+	private Set<Item> lootCache;
+	private Set<Monster> monsters;
 	private boolean miniboss;
 	private boolean boss;
 	private boolean cleared;
@@ -117,15 +117,14 @@ public class Room {
 	public void setWestRoomId(UUID westRoomId) {
 		this.westRoomId = westRoomId;
 	}
-	
-	public UUID getTrapId() {
-		return trapId;
+
+	public Trap getTrap() {
+		return trap;
 	}
-	
-	public void setTrapId(UUID trapId) {
-		this.trapId = trapId;
+
+	public void setTrap(Trap trap) {
+		this.trap = trap;
 	}
-	
 
 	public Map<UUID, Integer> getLoot() {
 		return loot;
@@ -135,12 +134,20 @@ public class Room {
 		this.loot = loot;
 	}
 
-	public Set<UUID> getMonsterIds() {
-		return monsterIds;
+	public Set<Item> getLootCache() {
+		return lootCache;
 	}
-	
-	public void setMonsterIds(Set<UUID> monsterIds) {
-		this.monsterIds = monsterIds;
+
+	public void setLootCache(Set<Item> lootCache) {
+		this.lootCache = lootCache;
+	}
+
+	public Set<Monster> getMonsters() {
+		return monsters;
+	}
+
+	public void setMonsters(Set<Monster> monsters) {
+		this.monsters = monsters;
 	}
 
 	public boolean isMiniboss() {
@@ -158,7 +165,7 @@ public class Room {
 	public void setBoss(boolean boss) {
 		this.boss = boss;
 	}
-
+	
 	public boolean isCleared() {
 		return cleared;
 	}
@@ -169,8 +176,8 @@ public class Room {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(boss, cleared, dungeonId, eastRoomId, floorId, id, loot, miniboss, monsterIds, northRoomId,
-				southRoomId, stairsNext, stairsPrevious, trapId, westRoomId, xCoord, yCoord);
+		return Objects.hash(boss, cleared, dungeonId, eastRoomId, floorId, id, loot, lootCache, miniboss, monsters,
+				northRoomId, southRoomId, stairsNext, stairsPrevious, trap, westRoomId, xCoord, yCoord);
 	}
 
 	@Override
@@ -184,20 +191,21 @@ public class Room {
 		Room other = (Room) obj;
 		return boss == other.boss && cleared == other.cleared && Objects.equals(dungeonId, other.dungeonId)
 				&& Objects.equals(eastRoomId, other.eastRoomId) && Objects.equals(floorId, other.floorId)
-				&& Objects.equals(id, other.id) && Objects.equals(loot, other.loot) && miniboss == other.miniboss
-				&& Objects.equals(monsterIds, other.monsterIds) && Objects.equals(northRoomId, other.northRoomId)
+				&& Objects.equals(id, other.id) && Objects.equals(loot, other.loot)
+				&& Objects.equals(lootCache, other.lootCache) && miniboss == other.miniboss
+				&& Objects.equals(monsters, other.monsters) && Objects.equals(northRoomId, other.northRoomId)
 				&& Objects.equals(southRoomId, other.southRoomId) && stairsNext == other.stairsNext
-				&& stairsPrevious == other.stairsPrevious && Objects.equals(trapId, other.trapId)
+				&& stairsPrevious == other.stairsPrevious && Objects.equals(trap, other.trap)
 				&& Objects.equals(westRoomId, other.westRoomId) && xCoord == other.xCoord && yCoord == other.yCoord;
 	}
 
 	@Override
 	public String toString() {
-		return "Room [id=" + id + ", floorId=" + floorId + ", dungeonId=" + dungeonId + ", xCoord=" + xCoord
+		return "RoomExport [id=" + id + ", floorId=" + floorId + ", dungeonId=" + dungeonId + ", xCoord=" + xCoord
 				+ ", yCoord=" + yCoord + ", stairsPrevious=" + stairsPrevious + ", stairsNext=" + stairsNext
 				+ ", northRoomId=" + northRoomId + ", southRoomId=" + southRoomId + ", eastRoomId=" + eastRoomId
-				+ ", westRoomId=" + westRoomId + ", trapId=" + trapId + ", loot=" + loot + ", monsterIds=" + monsterIds
-				+ ", miniboss=" + miniboss + ", boss=" + boss + ", cleared=" + cleared + "]";
+				+ ", westRoomId=" + westRoomId + ", trap=" + trap + ", loot=" + loot + ", lootCache=" + lootCache
+				+ ", monsters=" + monsters + ", miniboss=" + miniboss + ", boss=" + boss + ", cleared=" + cleared + "]";
 	}
 	
 }

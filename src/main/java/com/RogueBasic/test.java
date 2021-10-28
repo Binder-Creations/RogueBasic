@@ -6,19 +6,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.Floor;
 import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.Player;
 import com.RogueBasic.beans.PlayerCharacter;
-import com.RogueBasic.beans.PlayerCharacterExport;
 import com.RogueBasic.beans.Room;
-import com.RogueBasic.data.FloorDao;
-import com.RogueBasic.data.ItemDao;
 import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.data.PlayerDao;
-import com.RogueBasic.data.RoomDao;
 import com.RogueBasic.data.ShopDao;
 import com.RogueBasic.services.DungeonServices;
 import com.RogueBasic.services.PlayerCharacterServices;
@@ -66,7 +64,12 @@ public class test {
 //				}
 //			}
 //		}
-	
+//		Pattern name = Pattern.compile("(\\w+)\\s+");
+//		ru.readFileToList("source/tables.rbt")
+//		  .forEach((s)->{
+//			  Matcher m = name.matcher(s);
+//			  m.find();
+//			  System.out.println(m.group(1));});
 		cu.dropAllTables();
 		cu.initialize();
 		cu.populate();

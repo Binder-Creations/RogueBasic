@@ -12,24 +12,21 @@ import org.apache.logging.log4j.Logger;
 
 import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.Floor;
-import com.RogueBasic.data.FloorDao;
 import com.datastax.oss.driver.api.core.CqlSession;
 
 public class FloorServices {
 	public CqlSession session;
-	public FloorDao dao;
 	private static final Logger log = LogManager.getLogger(FloorServices.class);
 
 	public FloorServices(CqlSession session) {
 		super();
 		this.session = session;
-		this.dao = new FloorDao(session);
 	}
 	
-	public Set<UUID> generate(Dungeon dungeon) {
+	public Set<Floor> generate(Dungeon dungeon) {
 		RoomServices rs = new RoomServices(session);
 		List<Floor> floors = new ArrayList<>();
-		Set<UUID> ids = new HashSet<>();
+		Set<Floor> floorSet = new HashSet<>();
 		
 		int floorCount = dungeon.getFloorCount();
 		
@@ -41,7 +38,6 @@ public class FloorServices {
 		
 		for(int i = 0; i< floors.size(); i++) {
 			Floor floor = floors.get(i);
-			ids.add(floor.getId());
 			
 			floor.setLevel(i+1);
 			floor.setDungeonId(dungeon.getId());
@@ -52,13 +48,11 @@ public class FloorServices {
 			if(i<floors.size()-1)
 				floor.setNextFloorId(floors.get(i+1).getId());
 			
-			floor.setRoomIds(rs.generate(dungeon, floor));
-			
-			dao.save(floor);
-			
+			floor.setRooms(rs.generate(dungeon, floor));
+			floorSet.add(floor);
 		}
 		
-		return ids;
+		return floorSet;
 	}
 	
 	public void genXAndY(Floor floor, int challengeRating) {

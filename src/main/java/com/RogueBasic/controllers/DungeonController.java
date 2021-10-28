@@ -8,13 +8,14 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.RogueBasic.beans.Dungeon;
-import com.RogueBasic.beans.DungeonExport;
 import com.RogueBasic.data.DungeonDao;
+import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.services.DungeonServices;
 import com.RogueBasic.util.CassandraConnector;
 
@@ -39,20 +40,32 @@ public class DungeonController {
     	return dungeons;
     }
 
-    //returns a finished dungeon from a shell
-    @GetMapping("/complete/{id}")
-    public DungeonExport getCompleteDungeon(@PathVariable String id) {
+    @GetMapping("/getBoard/{pcId}")
+    public List<Dungeon> getDungeonBoard(@PathVariable String pcId) {
     	DungeonServices ds = new DungeonServices(CassandraConnector.getSession());
-        DungeonDao dDao = new DungeonDao(CassandraConnector.getSession());
-        
-    	return new DungeonExport(ds.addFloors(dDao.findById(UUID.fromString(id))));
+    	PlayerCharacterDao pcDao = new PlayerCharacterDao(CassandraConnector.getSession());
+    	DungeonDao dDao = new DungeonDao(CassandraConnector.getSession());
+    	
+    	List<Dungeon> dungeons = new ArrayList<>();
+    	pcDao.findById(UUID.fromString(pcId)).getDungeonBoard().forEach(dungeonId ->{
+    		dungeons.add(dDao.findById(dungeonId));
+    	});
+    	return dungeons;
     }
     
-    @GetMapping("/convert/{id}")
-    public DungeonExport getConvertedDungeon(@PathVariable String id) {
+    //returns a finished dungeon from a shell
+    @GetMapping("/complete/{id}")
+    public Dungeon getCompleteDungeon(@PathVariable String id) {
     	DungeonServices ds = new DungeonServices(CassandraConnector.getSession());
         DungeonDao dDao = new DungeonDao(CassandraConnector.getSession());
         
-    	return new DungeonExport(dDao.findById(UUID.fromString(id)));
+    	return ds.addFloors(dDao.findById(UUID.fromString(id)));
+    }
+    
+    @PutMapping
+    public ResponseEntity updateDungeon(@RequestBody Dungeon dungeon) {
+    	DungeonDao dDao = new DungeonDao(CassandraConnector.getSession());
+    	dDao.save(dungeon);
+        return ResponseEntity.ok().build();
     }
 }

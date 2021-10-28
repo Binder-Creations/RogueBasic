@@ -12,7 +12,7 @@ class TavernMenu extends React.Component {
     let dungeon = this.props.props.images.dungeonEmpty;
     let className = "dungeon-portal-inactive";
     let onClick = "";
-    if(this.props.props.pc.dungeonBoard) {
+    if(this.props.dungeonBoard) {
       if(this.props.dungeon){
         className = "dungeon-portal-active hover-saturate";
         onClick = () => this.props.props.appState("to-dungeon")
@@ -34,9 +34,9 @@ class TavernMenu extends React.Component {
           <img className="background" src={this.props.props.images.tavernMenu} alt="Tavern Menu"/>
           <img className={className} src={dungeon} alt="Dungeon Portal"  onClick={onClick}/>
           <img className="dungeon-portal-frame hover-saturate-secondary" src={this.props.props.images.dungeonPortal} alt="Dungeon Portal"/>
-          <DungeonPanel props={this.props.props} number="1"/>
-          <DungeonPanel props={this.props.props} number="2"/>
-          <DungeonPanel props={this.props.props} number="3"/>
+          <DungeonPanel props={this.props.props} dungeonBoard={this.props.dungeonBoard} number="1"/>
+          <DungeonPanel props={this.props.props} dungeonBoard={this.props.dungeonBoard} number="2"/>
+          <DungeonPanel props={this.props.props} dungeonBoard={this.props.dungeonBoard} number="3"/>
         </div>
       );
     } else {

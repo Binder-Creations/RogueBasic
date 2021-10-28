@@ -15,7 +15,7 @@ class Inventory extends React.Component {
       this.inventory = this.props.props.pc.inventory;
       this.inventoryCache = this.props.props.pc.inventoryCache;
     } else if (this.props.type == "shop-store") {
-      this.inventory = this.props.shop.inventory;
+      this.inventory = null;
       this.inventoryCache = this.props.shop.inventoryCache;
     }
     this.push = this.push.bind(this);

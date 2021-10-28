@@ -1,14 +1,11 @@
 package com.RogueBasic.beans;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-import com.RogueBasic.data.FloorDao;
-import com.RogueBasic.util.CassandraConnector;
 
 @Table
 public class Dungeon {
@@ -20,34 +17,16 @@ public class Dungeon {
 	private String prefixMod;
 	private String postfixMod;
 	private int floorCount;
-	private Set<UUID> floorIds;
+	private Set<Floor> floors;
 	private int challengeRating;
 	private boolean miniboss;
 	private boolean boss;
 	private int reward;
-
+	private int currentFloor;
+	private int currentRoom;
 	
 	public Dungeon() {}
-	
-	public Dungeon(DungeonExport dungeon) {
-		super();
-		FloorDao fDao = new FloorDao(CassandraConnector.getSession());
-		
-		this.id = dungeon.getId();
-		this.name = dungeon.getName();
-		this.description = dungeon.getDescription();
-		this.theme = dungeon.getTheme();
-		this.prefixMod = dungeon.getPrefixMod();
-		this.postfixMod = dungeon.getPostfixMod();
-		this.floorCount = dungeon.getFloorCount();
-		this.floorIds = new HashSet<>();
-		dungeon.getFloors().forEach(floor->this.floorIds.add(floor.getId()));
-		this.challengeRating = dungeon.getChallengeRating();
-		this.miniboss = dungeon.isMiniboss();
-		this.boss = dungeon.isBoss();
-		this.reward = dungeon.getReward();
-	}
-	
+
 	public UUID getId() {
 		return id;
 	}
@@ -104,14 +83,14 @@ public class Dungeon {
 		this.floorCount = floorCount;
 	}
 	
-	public Set<UUID> getFloorIds() {
-		return floorIds;
+	public Set<Floor> getFloors() {
+		return floors;
 	}
-	
-	public void setFloorIds(Set<UUID> floorIds) {
-		this.floorIds = floorIds;
+
+	public void setFloors(Set<Floor> floors) {
+		this.floors = floors;
 	}
-	
+
 	public int getChallengeRating() {
 		return challengeRating;
 	}
@@ -144,10 +123,26 @@ public class Dungeon {
 		this.reward = reward;
 	}
 
+	public int getCurrentFloor() {
+		return currentFloor;
+	}
+
+	public void setCurrentFloor(int currentFloor) {
+		this.currentFloor = currentFloor;
+	}
+
+	public int getCurrentRoom() {
+		return currentRoom;
+	}
+
+	public void setCurrentRoom(int currentRoom) {
+		this.currentRoom = currentRoom;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(boss, challengeRating, description, floorCount, floorIds, id, miniboss, name, postfixMod,
-				prefixMod, theme);
+		return Objects.hash(boss, challengeRating, currentFloor, currentRoom, description, floorCount, floors, id,
+				miniboss, name, postfixMod, prefixMod, reward, theme);
 	}
 	
 	@Override
@@ -159,20 +154,20 @@ public class Dungeon {
 		if (getClass() != obj.getClass())
 			return false;
 		Dungeon other = (Dungeon) obj;
-		return boss == other.boss && challengeRating == other.challengeRating
-				&& Objects.equals(description, other.description) && floorCount == other.floorCount
-				&& Objects.equals(floorIds, other.floorIds) && Objects.equals(id, other.id)
-				&& miniboss == other.miniboss && Objects.equals(name, other.name)
+		return boss == other.boss && challengeRating == other.challengeRating && currentFloor == other.currentFloor
+				&& currentRoom == other.currentRoom && Objects.equals(description, other.description)
+				&& floorCount == other.floorCount && Objects.equals(floors, other.floors)
+				&& Objects.equals(id, other.id) && miniboss == other.miniboss && Objects.equals(name, other.name)
 				&& Objects.equals(postfixMod, other.postfixMod) && Objects.equals(prefixMod, other.prefixMod)
-				&& Objects.equals(theme, other.theme);
+				&& reward == other.reward && Objects.equals(theme, other.theme);
 	}
 	
 	@Override
 	public String toString() {
-		return "Dungeon [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme
-				+ ", prefixMod=" + prefixMod + ", postfixMod=" + postfixMod + ", floorCount=" + floorCount
-				+ ", floorIds=" + floorIds + ", challengeRating=" + challengeRating + ", miniboss=" + miniboss
-				+ ", boss=" + boss + "]";
+		return "DungeonExport [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme
+				+ ", prefixMod=" + prefixMod + ", postfixMod=" + postfixMod + ", floorCount=" + floorCount + ", floors="
+				+ floors + ", challengeRating=" + challengeRating + ", miniboss=" + miniboss + ", boss=" + boss
+				+ ", reward=" + reward + ", currentFloor=" + currentFloor + ", currentRoom=" + currentRoom + "]";
 	}
 	
 	

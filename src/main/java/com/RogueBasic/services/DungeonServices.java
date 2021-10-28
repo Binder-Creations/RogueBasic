@@ -1,28 +1,16 @@
 package com.RogueBasic.services;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.RogueBasic.beans.Dungeon;
-import com.RogueBasic.beans.Floor;
-import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.PlayerCharacter;
-import com.RogueBasic.beans.Room;
 import com.RogueBasic.data.DungeonDao;
-import com.RogueBasic.data.FloorDao;
-import com.RogueBasic.data.ItemDao;
-import com.RogueBasic.data.MonsterDao;
 import com.RogueBasic.data.PlayerCharacterDao;
-import com.RogueBasic.data.RoomDao;
-import com.RogueBasic.data.TrapDao;
 import com.RogueBasic.util.RogueUtilities;
 import com.datastax.oss.driver.api.core.CqlSession;
 
@@ -83,7 +71,7 @@ public class DungeonServices {
 		//to generate the contents of the dungeon, before saving it to our database
 		//and returning the id
 		log.trace("DungeonServices.addFloors() calling FloorServices.generate()");
-		dungeon.setFloorIds(fs.generate(dungeon));
+		dungeon.setFloors(fs.generate(dungeon));
 		
 		log.trace("DungeonServices.addFloors() calling DungeonDao.save()");
 		dao.save(dungeon);

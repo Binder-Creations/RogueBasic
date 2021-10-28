@@ -5,11 +5,12 @@ import java.util.UUID;
 
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
-@Table
+@UserDefinedType(value = "item")
 public class Item {
 	
-	@PrimaryKey private UUID id;
+	private UUID id;
 	private String name;
 	private String description;
 	private String type;

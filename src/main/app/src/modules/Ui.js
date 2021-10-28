@@ -2,7 +2,7 @@ import React from "react";
 import CharacterMenu from "./CharacterMenu";
 import InventoryMenu from "./InventoryMenu";
 import SkillTooltip from "./SkillTooltip";
-import MiniMap from "./MiniMap";
+import Minimap from "./Minimap";
 
 class Ui extends React.Component {
 
@@ -65,7 +65,7 @@ class Ui extends React.Component {
   }
 
   render(){
-    this.Button = this[this.props.button];
+    this.ReturnButton = this[this.props.button];
     this.healthStyle = {
       width: 20*(this.props.props.pc.currentHealth/this.props.props.pc.healthTotal) + "%"
     }
@@ -92,16 +92,14 @@ class Ui extends React.Component {
         <this.Skill number="1"/>
         <this.Skill number="2"/>
         <this.Skill number="3"/>
-        <this.Skill number="4"/>
-        <img className="map-underlay" src={this.props.props.images.mapUnderlay} alt="Map"/>
-        <MiniMap props={this.props.props} dungeon={this.props.dungeon}/>
-        <img className="map-overlay" src={this.props.props.images.mapOverlay} alt="Map"/>
+        <this.Skill number="4"/>  
+        <Minimap props={this.props.props} dungeon={this.props.dungeon}/>
         <input class="btn-attack hover-saturate" type="image" src={this.buttonAttack} alt="Attack"/>
         <input class="btn-character hover-saturate-250" type="image" src={this.props.props.images.buttonCharacter} alt="Character" onClick={this.toggleCharacterMenu}/>
         <input class="btn-inventory hover-saturate-250" type="image" src={this.props.props.images.buttonInventory} alt="Inventory" onClick={this.toggleInventoryMenu}/>
         <CharacterMenu props={this.props.props} toggle={this.toggleCharacterMenu} on={this.state.characterMenu}/>
         <InventoryMenu props={this.props.props} toggle={this.toggleInventoryMenu} on={this.state.inventoryMenu}/>
-        <this.Button/>
+        <this.ReturnButton/>
       </>
     )
   }

@@ -15,11 +15,9 @@ import org.apache.logging.log4j.Logger;
 import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.Floor;
 import com.RogueBasic.beans.Room;
-import com.RogueBasic.data.RoomDao;
 import com.datastax.oss.driver.api.core.CqlSession;
 
 public class RoomServices {
-	public RoomDao dao;
 	private static final Logger log = LogManager.getLogger(RoomServices.class);
 	private CqlSession session;
 	private Queue<Room> queue;
@@ -27,20 +25,20 @@ public class RoomServices {
 	public RoomServices(CqlSession session) {
 		super();
 		this.session = session;
-		this.dao = new RoomDao(session);
 		this.queue = new LinkedList<>();
 	}
 	
-	public Set<UUID> generate (Dungeon dungeon, Floor floor) {
+	public Set<Room> generate (Dungeon dungeon, Floor floor) {
 		MonsterServices ms = new MonsterServices(session);
 		ItemServices is = new ItemServices(session);
 		TrapServices ts = new TrapServices(session);
 		
-		List<Room> rooms = new ArrayList<>();
-		Set<UUID> ids = new HashSet<>();
+		Set<Room> rooms = new HashSet<>();
 		boolean stairsGenerated = false;
 		int xLength = floor.getXLength();
 		int yLength = floor.getYLength();
+		int xModifier = ThreadLocalRandom.current().nextInt(7-xLength);
+		int yModifier = ThreadLocalRandom.current().nextInt(7-yLength);
 		genStart(xLength, yLength);
 		
 		while(!queue.isEmpty()) {
@@ -53,18 +51,20 @@ public class RoomServices {
 				stairsGenerated = stairsCheck(room, rooms, xLength, yLength);			
 				genBossMiniboss(room, dungeon, floor.getLevel());
 				if(containsMonsters(room.isBoss(), room.isMiniboss(), dungeon.getChallengeRating()))
-					room.setMonsterIds(ms.generate(dungeon, floor.getLevel(), room.isBoss(), room.isMiniboss()));
-				if(containsTrap(room.getMonsterIds() != null, dungeon.getChallengeRating()))
-					room.setTrapId(ts.generate(dungeon, floor.getLevel()));
-				if(containsItems(room.isBoss(), room.isMiniboss(), room.getMonsterIds() != null, room.getTrapId() != null, dungeon.getChallengeRating()))
+					room.setMonsters(ms.generate(dungeon, floor.getLevel(), room.isBoss(), room.isMiniboss()));
+				if(containsTrap(room.getMonsters() != null, dungeon.getChallengeRating()))
+					room.setTrap(ts.generate(dungeon, floor.getLevel()));
+				if(containsItems(room.isBoss(), room.isMiniboss(), room.getMonsters() != null, room.getTrap() != null, dungeon.getChallengeRating()))
 					is.generate(dungeon, room, floor.getLevel());
 				rooms.add(room);
-				ids.add(room.getId());
 			}
 		}
 		
-		rooms.forEach((r)->dao.save(r));
-		return ids;
+		rooms.forEach((r)->{
+			r.setxCoord(r.getxCoord()+xModifier);
+			r.setyCoord(r.getyCoord()+yModifier);
+		});
+		return rooms;
 	}
 
 	private void genStart(int xLength, int yLength) {
@@ -76,7 +76,7 @@ public class RoomServices {
 		queue.add(room);
 	}
 	
-	private List<Character> genConnections(Room room, List<Room> rooms, int xLength, int yLength){
+	private List<Character> genConnections(Room room, Set<Room> rooms, int xLength, int yLength){
 		List<Character> connections = new ArrayList<>();
 		if(room.getxCoord()>1 
 				&& !rooms.stream()
@@ -198,7 +198,7 @@ public class RoomServices {
 		}
 	}
 	
-	private boolean stairsCheck(Room room, List<Room> rooms, int xLength, int yLength) {
+	private boolean stairsCheck(Room room, Set<Room> rooms, int xLength, int yLength) {
 		if( queue.isEmpty()
 				|| ( rooms.size()>(xLength*yLength)/3
 				&& ThreadLocalRandom.current().nextInt(101)<(100*rooms.size())/(2*xLength*yLength))) {

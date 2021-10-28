@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,26 +17,36 @@ import org.apache.logging.log4j.Logger;
 import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.Room;
-import com.RogueBasic.data.ItemDao;
+import com.RogueBasic.util.CassandraConnector;
 import com.RogueBasic.util.RogueUtilities;
 import com.datastax.oss.driver.api.core.CqlSession;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ItemServices {
-	private ItemDao dao;
 	private RogueUtilities ru;
 	private static final Logger log = LogManager.getLogger(ItemServices.class);
 
 	public ItemServices(CqlSession session) {
 		super();
-		this.dao = new ItemDao(session);
 		this.ru = new RogueUtilities();
 	}
 
+	public Item getPremade(int index) {
+		ObjectMapper mapper = new ObjectMapper();
+		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Items.rbt");
+		try {	
+			return mapper.readValue(ru.readFileToList("source/items.rbt").get(index), Item.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public void generate(Dungeon dungeon, Room room, int level){
-		int lootValue = genLV(dungeon.getChallengeRating(), level, dungeon.getPrefixMod(), room.isMiniboss(), room.isBoss(), room.getMonsterIds() != null, room.getTrapId() != null);	
+		int lootValue = genLV(dungeon.getChallengeRating(), level, dungeon.getPrefixMod(), room.isMiniboss(), room.isBoss(), room.getMonsters() != null, room.getTrap() != null);	
 		if (lootValue == 0)
 			return;
-		room.setLoot(genLoot(lootValue, dungeon.getChallengeRating(), room.isMiniboss(), room.isBoss()));
+		genLoot(room, lootValue, dungeon.getChallengeRating(), room.isMiniboss(), room.isBoss());
 	}
 	
 	private int genLV(int challengeRating, int level, String prefixMod, boolean miniboss, boolean boss, boolean monsters,boolean trapped) {
@@ -58,10 +67,11 @@ public class ItemServices {
 		return lootValue > 0 ? lootValue : 0;
 	}
 	
-	private Map<UUID, Integer> genLoot(int lootValue, int challengeRating, boolean miniboss, boolean boss) {
-		
+	private void genLoot(Room room, int lootValue, int challengeRating, boolean miniboss, boolean boss) {
 		
 		Map<UUID, Integer> loot = new HashMap<>();
+		Set<Item> lootCache = new HashSet<>();
+		ItemServices iService =  new ItemServices(CassandraConnector.connect());
 		
 		if(miniboss) {
 			loot.put(UUID.fromString("7fc49a0c-ec99-4afa-9913-584ecdde409f"), 1);
@@ -75,35 +85,41 @@ public class ItemServices {
 		while(lootValue >= averageCost) {
 			int roll = ThreadLocalRandom.current().nextInt(1, 13);
 			if(roll == 1) {
-				loot.put(UUID.fromString("d822106a-e753-40db-898d-d438d1592baa"), 1);
+				Item potion = iService.getPremade(2);
+				loot.put(potion.getId(), 1);
+				lootCache.add(potion);
 				lootValue -= 50;
 			}
 			if(roll == 2) {
-				loot.put(UUID.fromString("ab0d75df-8457-4dde-adfe-77c9b37d262d"), 1);
+				Item ration = iService.getPremade(2);
+				loot.put(ration.getId(), 1);
+				lootCache.add(ration);
 				lootValue -= 25;
 			}
 			if(roll >= 3 && roll < 8) {
-				UUID gold = UUID.fromString("ce0c5d64-a685-4c0e-97d4-56d4a83edf08");
-				int goldCount = loot.containsKey(gold)
-					? loot.get(gold)
+				Item gold = iService.getPremade(0);
+				int goldCount = loot.containsKey(gold.getId())
+					? loot.get(gold.getId())
 					: 0;
 				int addedGold = ThreadLocalRandom.current().nextInt(averageCost/2, averageCost*2);
-				loot.put(gold, goldCount+addedGold);
+				loot.put(gold.getId(), goldCount+addedGold);
+				lootCache.add(gold);
 				lootValue -= addedGold;
 				
 			}
 			if(roll >= 8) {
 				String[] exceptions = {};
 				Item equipment = genEquipment(exceptions, challengeRating);
-				dao.save(equipment);
 				loot.put(equipment.getId(), 1);
+				lootCache.add(equipment);
 				lootValue -= equipment.getCost();
 			}
 
 		}
 
 		
-		return loot;
+		room.setLoot(loot);
+		room.setLootCache(lootCache);
 	}
 	
 	public Item genEquipment(String[] exceptions, int challengeRating){

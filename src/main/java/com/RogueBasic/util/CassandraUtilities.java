@@ -1,95 +1,61 @@
 package com.RogueBasic.util;
 
-import java.util.UUID;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.RogueBasic.beans.Item;
-import com.RogueBasic.beans.Monster;
-import com.RogueBasic.beans.Trap;
-import com.RogueBasic.data.ItemDao;
-import com.RogueBasic.data.MonsterDao;
-import com.RogueBasic.data.TrapDao;
 import com.datastax.oss.driver.api.core.CqlSession;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CassandraUtilities {
 	private CqlSession session;
 	private RogueUtilities ru;
 	private static final Logger log = LogManager.getLogger(CassandraUtilities.class);
+	private String keyspace;
 	
 	public CassandraUtilities (CqlSession session){
 		super();
 		this.session = session;
 		this.ru = new RogueUtilities();
+		this.keyspace = "rogue";
 	}
 	
 	public void initialize() {
 		//creates the tables required for our database, from the Tables.rbt document
 		log.trace("CassandraUtilities.initialize() calling RogueUtilities.readFileToList() for Tables.rbt");
-		session.execute("CREATE TYPE IF NOT EXISTS rogue.ability (level int, name text, cost int, modifier int, hits int, type text, description text);");
-		log.debug("Ability UDT created");
+		ru.readFileToList("source/usertypes.rbt")
+		  .forEach((s)->session.execute("CREATE TYPE IF NOT EXISTS " + this.keyspace + "." + s));
+		log.debug("UDTs created");
 		ru.readFileToList("source/tables.rbt")
-		  .forEach((s)->session.execute("CREATE TABLE IF NOT EXISTS " + s));
+		  .forEach((s)->session.execute("CREATE TABLE IF NOT EXISTS " + this.keyspace + "." + s));
 		log.debug("Database tables created");
 	}
 	
 	public void populate() {
-		ObjectMapper mapper = new ObjectMapper();
-		MonsterDao mdao = new MonsterDao(session);
-		ItemDao idao = new ItemDao(session);
-		TrapDao tdao = new TrapDao(session);
-		
-		//populates our tables with predefined game objects:
-		//Monsters, Items, Equipment, Traps
-		//Each from their respectively named document
-		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Monsters.rbt");
-		for(String s : ru.readFileToList("source/Monsters.rbt")) {
-			try {
-				Monster m = mapper.readValue(s, Monster.class);
-				m.setId(UUID.randomUUID());
-				log.trace("CassandraUtilities.populate() calling MonsterDao.save()");
-				mdao.save(m);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Items.rbt");
-		for(String s : ru.readFileToList("source/items.rbt")) {
-			try {
-				Item i = mapper.readValue(s, Item.class);
-				if(i.getId() == null) {
-					i.setId(UUID.randomUUID());
-				}
-				log.trace("CassandraUtilities.populate() calling ItemDao.save()");
-				idao.save(i);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		log.trace("CassandraUtilities.populate() calling RogueUtilities.readFileToList() for Traps.rbt");
-		for(String s : ru.readFileToList("source/traps.rbt")) {
-			try {
-				Trap t = mapper.readValue(s, Trap.class);
-				t.setId(UUID.randomUUID());
-				log.trace("CassandraUtilities.populate() calling TrapDao.save()");
-				tdao.save(t);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		log.debug("Database tables populated");
+		//no longer necessary?
 	}
 
 	public void dropAllTables() {
 		//drops all of our database's tables, as listed in TableList.rbt
+		Pattern name = Pattern.compile("(\\w+)\\s+");
 		log.trace("CassandraUtilities.dropAllTables() calling RogueUtilities.readFileToList()");
-		ru.readFileToList("source/tableList.rbt")
-		  .forEach((s)->session.execute("DROP TABLE IF EXISTS " + s));
+		ru.readFileToList("source/tables.rbt")
+		  .forEach((s)->{
+			  Matcher m = name.matcher(s);
+			  if(m.find())
+				  session.execute("DROP TABLE IF EXISTS "  + this.keyspace + "." + m.group(1));});
 		log.debug("Database tables dropped");
+		List<String> usertypes = ru.readFileToList("source/usertypes.rbt");
+		Collections.reverse(usertypes);
+		usertypes
+		  .forEach((s)->{
+			  Matcher m = name.matcher(s);
+			  if(m.find())
+				  session.execute("DROP TYPE IF EXISTS " + this.keyspace + "." + m.group(1));});
+		log.debug("Database types dropped");
 	}
 	
 }

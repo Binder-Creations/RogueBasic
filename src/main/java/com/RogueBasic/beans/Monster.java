@@ -5,11 +5,11 @@ import java.util.Set;
 import java.util.UUID;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
-@Table
+@UserDefinedType(value = "monster")
 public class Monster {
-	
-	@PrimaryKey private UUID id;
+	private UUID id;
 	private String name;
 	private String description;
 	private String theme;
@@ -21,7 +21,7 @@ public class Monster {
 	private int armor;
 	private int dodgeRating;
 	private int critRating;
-	private Set<UUID> abilityIds;
+	private Set<Ability> abilities;
 	
 	public Monster() {};
 	
@@ -40,7 +40,7 @@ public class Monster {
 		this.armor = armor;
 		this.dodgeRating = dodgeRating;
 		this.critRating = critRating;
-		this.abilityIds = abilityIds;
+		this.abilities = abilities;
 	}
 
 	public UUID getId() {
@@ -138,18 +138,18 @@ public class Monster {
 	public void setCritRating(int critRating) {
 		this.critRating = critRating;
 	}
-	
-	public Set<UUID> getAbilityIds() {
-		return abilityIds;
+
+	public Set<Ability> getAbilities() {
+		return abilities;
 	}
-	
-	public void setAbilityIds(Set<UUID> abilityIds) {
-		this.abilityIds = abilityIds;
+
+	public void setAbilities(Set<Ability> abilities) {
+		this.abilities = abilities;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(abilityIds, armor, boss, critRating, description, dodgeRating, health, id, level, miniboss,
+		return Objects.hash(abilities, armor, boss, critRating, description, dodgeRating, health, id, level, miniboss,
 				name, power, theme);
 	}
 
@@ -162,7 +162,7 @@ public class Monster {
 		if (getClass() != obj.getClass())
 			return false;
 		Monster other = (Monster) obj;
-		return Objects.equals(abilityIds, other.abilityIds) && armor == other.armor && boss == other.boss
+		return Objects.equals(abilities, other.abilities) && armor == other.armor && boss == other.boss
 				&& critRating == other.critRating && Objects.equals(description, other.description)
 				&& dodgeRating == other.dodgeRating && health == other.health && Objects.equals(id, other.id)
 				&& level == other.level && miniboss == other.miniboss && Objects.equals(name, other.name)
@@ -173,8 +173,8 @@ public class Monster {
 	public String toString() {
 		return "Monster [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme + ", boss="
 				+ boss + ", miniboss=" + miniboss + ", level=" + level + ", health=" + health + ", power=" + power
-				+ ", armor=" + armor + ", dodgeRating=" + dodgeRating + ", critRating=" + critRating + ", abilityIds="
-				+ abilityIds + "]";
+				+ ", armor=" + armor + ", dodgeRating=" + dodgeRating + ", critRating=" + critRating + ", abilities="
+				+ abilities + "]";
 	}
 	
 	

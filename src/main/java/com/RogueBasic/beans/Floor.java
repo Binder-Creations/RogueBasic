@@ -3,20 +3,20 @@ package com.RogueBasic.beans;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
 
-@Table
+import org.springframework.data.cassandra.core.mapping.UserDefinedType;
+
+
+@UserDefinedType(value = "floor")
 public class Floor {
-	
-	@PrimaryKey private UUID id;
+	private UUID id;
 	private int level;
 	private int xLength;
 	private int yLength;
 	private UUID previousFloorId;
 	private UUID nextFloorId;
 	private UUID dungeonId;
-	private Set<UUID> roomIds;
+	private Set<Room> rooms;
 	
 	public Floor() {}
 
@@ -75,18 +75,18 @@ public class Floor {
 	public void setDungeonId(UUID dungeonId) {
 		this.dungeonId = dungeonId;
 	}
-	
-	public Set<UUID> getRoomIds() {
-		return roomIds;
+
+	public Set<Room> getRooms() {
+		return rooms;
 	}
-	
-	public void setRoomIds(Set<UUID> roomIds) {
-		this.roomIds = roomIds;
+
+	public void setRooms(Set<Room> rooms) {
+		this.rooms = rooms;
 	}
-	
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(dungeonId, id, level, nextFloorId, previousFloorId, roomIds, xLength, yLength);
+		return Objects.hash(dungeonId, id, level, nextFloorId, previousFloorId, rooms, xLength, yLength);
 	}
 	
 	@Override
@@ -100,15 +100,15 @@ public class Floor {
 		Floor other = (Floor) obj;
 		return Objects.equals(dungeonId, other.dungeonId) && Objects.equals(id, other.id) && level == other.level
 				&& Objects.equals(nextFloorId, other.nextFloorId)
-				&& Objects.equals(previousFloorId, other.previousFloorId) && Objects.equals(roomIds, other.roomIds)
+				&& Objects.equals(previousFloorId, other.previousFloorId) && Objects.equals(rooms, other.rooms)
 				&& xLength == other.xLength && yLength == other.yLength;
 	}
 
 	@Override
 	public String toString() {
-		return "Floor [id=" + id + ", level=" + level + ", xLength=" + xLength + ", yLength=" + yLength
+		return "FloorExport [id=" + id + ", level=" + level + ", xLength=" + xLength + ", yLength=" + yLength
 				+ ", previousFloorId=" + previousFloorId + ", nextFloorId=" + nextFloorId + ", dungeonId=" + dungeonId
-				+ ", roomIds=" + roomIds + "]";
+				+ ", rooms=" + rooms + "]";
 	}
 	
 }

@@ -2,7 +2,9 @@ package com.RogueBasic.services;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.PlayerCharacter;
-import com.RogueBasic.data.ItemDao;
 import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.data.ShopDao;
 import com.RogueBasic.util.CassandraConnector;
@@ -25,11 +26,10 @@ public class ShopServices {
 		dao = new ShopDao(session);
 	}
 	
-	public Map<UUID, Integer> genInventory(UUID shopID, UUID pcId) {
-		Map<UUID, Integer> inventory = new HashMap<>();
+	public Set<Item> genInventoryCache(UUID shopID, UUID pcId) {
+		Set<Item> inventory = new HashSet<>();
 		CqlSession session = CassandraConnector.getSession();
 		PlayerCharacterDao pcDao = new PlayerCharacterDao(session);
-		ItemDao iDao = new ItemDao(session);
 		ItemServices iService = new ItemServices(session);
 		PlayerCharacter pc = pcDao.findById(pcId);
 		
@@ -49,12 +49,9 @@ public class ShopServices {
 			exceptions = warriorExceptions;
 		}
 		
-		inventory.put(UUID.fromString("d822106a-e753-40db-898d-d438d1592baa"), 3);
-		inventory.put(UUID.fromString("ab0d75df-8457-4dde-adfe-77c9b37d262d"), 5);
 		for(int i = 0; i < 23; i++) {
 			Item item = iService.genEquipment(exceptions, pc.getLevel());
-			iDao.save(item);
-			inventory.put(item.getId(), 1);
+			inventory.add(item);
 		}
 		
 		return inventory;

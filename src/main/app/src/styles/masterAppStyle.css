@@ -189,20 +189,6 @@
 			.s-4 {
 				left: 59.0952%;
 			}
-			.map-overlay {
-				position: absolute;
-				right: 1.8459%;
-				bottom: 3.8765%;
-				width: 13.5%;
-				height: 28.35%;
-			}
-			.map-underlay {
-				position: absolute;
-				right: 2.4415%;
-				bottom: 5.0515%;
-				width: 12.3089%;
-				height: 26%;
-			}
 			.btn-attack {
 				position:absolute;
 				left: 1.8459%;
@@ -638,6 +624,63 @@
 				width: 34.5423%;
 				height: 19.6%;
 				text-align: right;
+			}
+			.minimap-overlay {
+				position: absolute;
+				right: 4.2269%;
+				bottom: 8.8765%;
+				width: 13.5%;
+				height: 28.35%;
+			}
+			.minimap-underlay {
+				position: absolute;
+				right: 4.8225%;
+				bottom: 10.0515%;
+				width: 12.3089%;
+				height: 26%;
+			}
+			.minimap-room {
+				position: absolute;
+				width: 1.5238%;
+				height: 3.2%; 
+			}
+			.minimap-connector-vertical {
+				position: absolute;
+				width: 0.3333%;
+				height: 1.6%;
+			}
+			.minimap-connector-horizontal {
+				position: absolute;
+				width: 0.7619%;
+				height: 0.7%;
+			}
+			.minimap-north {
+				position: absolute;
+				left: 86.2857%;
+				top: 54.7%;
+				width: 5.4762%;
+				height: 7.55%;
+			}
+			.minimap-south {
+				position: absolute;
+				left: 86.2857%;
+				top: 91.6%;
+				width: 5.4762%;
+				height: 7.55%;
+			}
+			.minimap-east {
+				position: absolute;
+				width: 3.5952%;
+				height: 11.5%;
+				left: 96.0714%;
+				top: 71.2%;
+			}
+			.minimap-west {
+				position: absolute;
+				width: 3.5952%;
+				height: 11.5%;
+				left: 78.381%;
+				top: 71.2%;
 			}
 			.absolute-fill {
 				position: absolute;

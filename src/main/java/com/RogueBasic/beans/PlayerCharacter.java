@@ -7,24 +7,16 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import org.springframework.data.cassandra.core.mapping.CassandraType;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
-
-import com.RogueBasic.data.ItemDao;
 import com.RogueBasic.services.ItemServices;
 import com.RogueBasic.util.CassandraConnector;
 
 
-@Table
 public class PlayerCharacter {
 	
-	@PrimaryKey private UUID id;
+	private UUID id;
 	private String location;
 	private Set<UUID> dungeonBoard;
 	private UUID currentDungeon;
-	private int currentFloor;
-	private int currentRoom;
 	private UUID currentShop;
 	private int day;
 	private boolean ate;
@@ -36,12 +28,13 @@ public class PlayerCharacter {
 	private int currency;
 	private Set<Ability> abilities;
 	private Map<UUID, Integer> inventory;
-	private UUID equippedHead;
-	private UUID equippedBody;
-	private UUID equippedBack;
-	private UUID equippedNeck;
-	private UUID equippedPrimary;
-	private UUID equippedSecondary;
+	private Set<Item> inventoryCache;
+	private Item equippedHead;
+	private Item equippedBody;
+	private Item equippedBack;
+	private Item equippedNeck;
+	private Item equippedPrimary;
+	private Item equippedSecondary;
 	private int constitution;
 	private int strength;
 	private int dexterity;
@@ -76,18 +69,24 @@ public class PlayerCharacter {
 		this.dexterity = dexterity;
 		this.intelligence = intelligence;
 		this.level = 1;
-		this.currentFloor = -1;
-		this.currentRoom = -1;
 		this.currentHealth = -1;
 		this.currentEnergy = -1;
 		this.inventory = new HashMap<>();
-		this.inventory.put(UUID.fromString("d822106a-e753-40db-898d-d438d1592baa"), 1);
-		this.inventory.put(UUID.fromString("ab0d75df-8457-4dde-adfe-77c9b37d262d"), 2);
+		this.inventoryCache = new HashSet<>();
+		
+		ItemServices iservice = new ItemServices(CassandraConnector.connect());
+		Item potion = iservice.getPremade(2);
+		Item ration = iservice.getPremade(3);
+		this.inventory.put(potion.getId(), 1);
+		this.inventory.put(ration.getId(), 2);
+		this.inventoryCache.add(potion);
+		this.inventoryCache.add(ration);
+		
 		switch(characterClass) {
 			case "Rogue":
-				this.equippedBody = UUID.fromString("4013e206-1991-458b-b998-7c8536ad4af3");
-				this.equippedPrimary = UUID.fromString("4eff0337-cae1-42c1-b1fe-6ac397f12c09");
-				this.equippedSecondary = UUID.fromString("5fb043b1-745d-4243-b22a-e8ecc69ddb81");
+				this.equippedBody = iservice.getPremade(7);
+				this.equippedPrimary = iservice.getPremade(8);
+				this.equippedSecondary = iservice.getPremade(9);
 				this.currency = 150 + currencyMetabonus;
 				this.abilities = new HashSet<>();
 				this.abilities.add(new Ability(1, "Deadeye", 10, 160, 1, "Power", "Shoot the back center enemy with unerring precision. This attack cannot be dodged."));
@@ -105,9 +104,9 @@ public class PlayerCharacter {
 				this.energyRegenBonus = 4;	
 				break;
 			case "Warrior":
-				this.equippedBody = UUID.fromString("914f823f-2691-4f39-bd8f-27381ccfb556");
-				this.equippedPrimary = UUID.fromString("2d139761-0d80-4be1-88dd-436c2c76c0a0");
-				this.equippedSecondary = UUID.fromString("9413a77b-a76a-4462-8e9e-a05b6a4e479f");
+				this.equippedBody = iservice.getPremade(10);
+				this.equippedPrimary = iservice.getPremade(11);
+				this.equippedSecondary = iservice.getPremade(12);
 				this.currency = 100 + currencyMetabonus;
 				this.abilities = new HashSet<>();
 				this.abilities.add(new Ability(1, "Heavy Strike", 8, 160, 1, "Power", "Attack the front right enemy with a mighty blow. 150% of Armor Penetration applies to this attack."));
@@ -125,9 +124,9 @@ public class PlayerCharacter {
 				this.energyRegenBonus = 3;
 				break;
 			case "Wizard":
-				this.equippedBody = UUID.fromString("111e072e-0c47-49b3-8cd6-7ddbffd025ea");
-				this.equippedPrimary = UUID.fromString("a3fc0e39-2baf-4729-9b14-28b6a8528d53");
-				this.equippedSecondary = UUID.fromString("d32c3382-3752-4244-9bf0-78d7a93946a5");
+				this.equippedBody = iservice.getPremade(4);
+				this.equippedPrimary = iservice.getPremade(5);
+				this.equippedSecondary = iservice.getPremade(6);
 				this.currency = 100 + currencyMetabonus;
 				this.abilities = new HashSet<>();
 				this.abilities.add(new Ability(1, "Ice Shards", 16, 75, 3, "Power", "Conjure 3 frozen knives and throw them at random enemies."));
@@ -146,77 +145,20 @@ public class PlayerCharacter {
 				break;
 		}
 		ItemServices iss = new ItemServices(CassandraConnector.getSession());
-		ItemDao id = new ItemDao(CassandraConnector.getSession());
 		for(int i = 0; i < 30; i++) {
 			String[] exceptions = {};
 			Item item = iss.genEquipment(exceptions, 8);
-			id.save(item);
 			inventory.put(item.getId(), 1);
+			inventoryCache.add(item);
 		}
 	}
-	
-	public PlayerCharacter(PlayerCharacterExport pc) {
-		this.id = pc.getId();
-		this.location = pc.getLocation();
-		if(pc.getDungeonBoard() != null) {
-			this.dungeonBoard = new HashSet<>();
-			pc.getDungeonBoard().forEach(dungeon -> this.dungeonBoard.add(dungeon.getId()));
-		}
-		this.currentDungeon = pc.getCurrentDungeon();
-		this.currentFloor = pc.getCurrentFloor();
-		this.currentRoom = pc.getCurrentRoom();
-		this.currentShop = pc.getCurrentShop();
-		this.day = pc.getDay();
-		this.ate = pc.isAte();
-		this.name = pc.getName();
-		this.characterClass = pc.getCharacterClass();
-		this.experience = pc.getExperience();
-		this.level = pc.getLevel();
-		this.attributePoints = pc.getAttributePoints();
-		this.currency = pc.getCurrency();
-		this.abilities = pc.getAbilities();
-		this.inventory = pc.getInventory();
-		this.equippedHead = pc.getEquippedHead() != null
-			? pc.getEquippedHead().getId()
-			: UUID.fromString("00000000-0000-0000-0000-000000000000");
-		this.equippedBody = pc.getEquippedBody() != null
-			? pc.getEquippedBody().getId()
-			: UUID.fromString("00000000-0000-0000-0000-000000000000");
-		this.equippedBack = pc.getEquippedBack() != null
-			? pc.getEquippedBack().getId()
-			: UUID.fromString("00000000-0000-0000-0000-000000000000");
-		this.equippedNeck = pc.getEquippedNeck() != null
-			? pc.getEquippedNeck().getId()
-			: UUID.fromString("00000000-0000-0000-0000-000000000000");
-		this.equippedPrimary = pc.getEquippedPrimary() != null
-			? pc.getEquippedPrimary().getId()
-			: UUID.fromString("00000000-0000-0000-0000-000000000000");
-		this.equippedSecondary = pc.getEquippedSecondary() != null
-			? pc.getEquippedSecondary().getId()
-			: UUID.fromString("00000000-0000-0000-0000-000000000000");
-		this.constitution = pc.getConstitution();
-		this.strength = pc.getStrength();
-		this.dexterity = pc.getDexterity();
-		this.intelligence = pc.getIntelligence();
-		this.constitutionBonus = pc.getConstitutionBonus();
-		this.strengthBonus = pc.getStrengthBonus();
-		this.dexterityBonus = pc.getDexterityBonus();
-		this.intelligenceBonus = pc.getIntelligenceBonus();
-		this.powerBonus = pc.getPowerBonus();
-		this.healthBonus = pc.getHealthBonus();
-		this.healthRegenBonus = pc.getHealthRegenBonus();
-		this.armorPenBonus = pc.getArmorPenBonus();
-		this.armorBonus = pc.getArmorBonus();
-		this.dodgeRatingBonus = pc.getDodgeRatingBonus();
-		this.critRatingBonus = pc.getCritRatingBonus();
-		this.energyBonus = pc.getEnergyBonus();
-		this.energyRegenBonus = pc.getEnergyRegenBonus();
-		this.currentHealth = pc.getCurrentHealth();
-		this.currentEnergy = pc.getCurrentEnergy();
-	}
-	
+
 	public UUID getId() {
 		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
 	}
 
 	public String getLocation() {
@@ -241,22 +183,6 @@ public class PlayerCharacter {
 
 	public void setCurrentDungeon(UUID currentDungeon) {
 		this.currentDungeon = currentDungeon;
-	}
-
-	public int getCurrentFloor() {
-		return currentFloor;
-	}
-
-	public void setCurrentFloor(int currentFloor) {
-		this.currentFloor = currentFloor;
-	}
-
-	public int getCurrentRoom() {
-		return currentRoom;
-	}
-
-	public void setCurrentRoom(int currentRoom) {
-		this.currentRoom = currentRoom;
 	}
 
 	public UUID getCurrentShop() {
@@ -286,11 +212,11 @@ public class PlayerCharacter {
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getCharacterClass() {
 		return characterClass;
 	}
@@ -302,19 +228,19 @@ public class PlayerCharacter {
 	public int getExperience() {
 		return experience;
 	}
-	
+
 	public void setExperience(int experience) {
 		this.experience = experience;
 	}
-	
+
 	public int getLevel() {
 		return level;
 	}
-	
+
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	
+
 	public int getAttributePoints() {
 		return attributePoints;
 	}
@@ -326,7 +252,7 @@ public class PlayerCharacter {
 	public int getCurrency() {
 		return currency;
 	}
-	
+
 	public void setCurrency(int currency) {
 		this.currency = currency;
 	}
@@ -339,150 +265,158 @@ public class PlayerCharacter {
 		this.abilities = abilities;
 	}
 
-	public Map<UUID,Integer> getInventory() {
+	public Map<UUID, Integer> getInventory() {
 		return inventory;
 	}
-	
-	public void setInventory(Map<UUID,Integer> inventory) {
+
+	public void setInventory(Map<UUID, Integer> inventory) {
 		this.inventory = inventory;
 	}
 	
-	public UUID getEquippedHead() {
+	public Set<Item> getInventoryCache() {
+		return inventoryCache;
+	}
+
+	public void setInventoryCache(Set<Item> inventoryCache) {
+		this.inventoryCache = inventoryCache;
+	}
+
+	public Item getEquippedHead() {
 		return equippedHead;
 	}
 
-	public void setEquippedHead(UUID equippedHead) {
+	public void setEquippedHead(Item equippedHead) {
 		this.equippedHead = equippedHead;
 	}
 
-	public UUID getEquippedBody() {
+	public Item getEquippedBody() {
 		return equippedBody;
 	}
 
-	public void setEquippedBody(UUID equippedBody) {
+	public void setEquippedBody(Item equippedBody) {
 		this.equippedBody = equippedBody;
 	}
 
-	public UUID getEquippedBack() {
+	public Item getEquippedBack() {
 		return equippedBack;
 	}
 
-	public void setEquippedBack(UUID equippedBack) {
+	public void setEquippedBack(Item equippedBack) {
 		this.equippedBack = equippedBack;
 	}
 
-	public UUID getEquippedNeck() {
+	public Item getEquippedNeck() {
 		return equippedNeck;
 	}
 
-	public void setEquippedNeck(UUID equippedNeck) {
+	public void setEquippedNeck(Item equippedNeck) {
 		this.equippedNeck = equippedNeck;
 	}
 
-	public UUID getEquippedPrimary() {
+	public Item getEquippedPrimary() {
 		return equippedPrimary;
 	}
 
-	public void setEquippedPrimary(UUID equippedPrimary) {
+	public void setEquippedPrimary(Item equippedPrimary) {
 		this.equippedPrimary = equippedPrimary;
 	}
 
-	public UUID getEquippedSecondary() {
+	public Item getEquippedSecondary() {
 		return equippedSecondary;
 	}
 
-	public void setEquippedSecondary(UUID equippedSecondary) {
+	public void setEquippedSecondary(Item equippedSecondary) {
 		this.equippedSecondary = equippedSecondary;
 	}
 
 	public int getConstitution() {
 		return constitution;
 	}
-	
+
 	public void setConstitution(int constitution) {
 		this.constitution = constitution;
 	}
-	
+
 	public int getStrength() {
 		return strength;
 	}
-	
+
 	public void setStrength(int strength) {
 		this.strength = strength;
 	}
-	
+
 	public int getDexterity() {
 		return dexterity;
 	}
-	
+
 	public void setDexterity(int dexterity) {
 		this.dexterity = dexterity;
 	}
-	
+
 	public int getIntelligence() {
 		return intelligence;
 	}
-	
+
 	public void setIntelligence(int intelligence) {
 		this.intelligence = intelligence;
 	}
-	
+
 	public int getConstitutionBonus() {
 		return constitutionBonus;
 	}
-	
+
 	public void setConstitutionBonus(int constitutionBonus) {
 		this.constitutionBonus = constitutionBonus;
 	}
-	
+
 	public int getStrengthBonus() {
 		return strengthBonus;
 	}
-	
+
 	public void setStrengthBonus(int strengthBonus) {
 		this.strengthBonus = strengthBonus;
 	}
-	
+
 	public int getDexterityBonus() {
 		return dexterityBonus;
 	}
-	
+
 	public void setDexterityBonus(int dexterityBonus) {
 		this.dexterityBonus = dexterityBonus;
 	}
-	
+
 	public int getIntelligenceBonus() {
 		return intelligenceBonus;
 	}
-	
+
 	public void setIntelligenceBonus(int intelligenceBonus) {
 		this.intelligenceBonus = intelligenceBonus;
 	}
-	
+
 	public int getPowerBonus() {
 		return powerBonus;
 	}
-	
+
 	public void setPowerBonus(int powerBonus) {
 		this.powerBonus = powerBonus;
 	}
-	
+
 	public int getHealthBonus() {
 		return healthBonus;
 	}
-	
+
 	public void setHealthBonus(int healthBonus) {
 		this.healthBonus = healthBonus;
 	}
-	
+
 	public int getHealthRegenBonus() {
 		return healthRegenBonus;
 	}
-	
+
 	public void setHealthRegenBonus(int healthRegenBonus) {
 		this.healthRegenBonus = healthRegenBonus;
 	}
-	
+
 	public int getArmorPenBonus() {
 		return armorPenBonus;
 	}
@@ -502,61 +436,61 @@ public class PlayerCharacter {
 	public int getDodgeRatingBonus() {
 		return dodgeRatingBonus;
 	}
-	
+
 	public void setDodgeRatingBonus(int dodgeRatingBonus) {
 		this.dodgeRatingBonus = dodgeRatingBonus;
 	}
-	
+
 	public int getCritRatingBonus() {
 		return critRatingBonus;
 	}
-	
+
 	public void setCritRatingBonus(int critRatingBonus) {
 		this.critRatingBonus = critRatingBonus;
 	}
-	
+
 	public int getEnergyBonus() {
 		return energyBonus;
 	}
+
 	public void setEnergyBonus(int energyBonus) {
 		this.energyBonus = energyBonus;
 	}
-	
+
 	public int getEnergyRegenBonus() {
 		return energyRegenBonus;
 	}
-	
+
 	public void setEnergyRegenBonus(int energyRegenBonus) {
 		this.energyRegenBonus = energyRegenBonus;
 	}
-	
+
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
-	
+
 	public void setCurrentHealth(int currentHealth) {
 		this.currentHealth = currentHealth;
 	}
-	
+
 	public int getCurrentEnergy() {
 		return currentEnergy;
 	}
-	
+
 	public void setCurrentEnergy(int currentEnergy) {
 		this.currentEnergy = currentEnergy;
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(abilities, armorBonus, armorPenBonus, ate, attributePoints, characterClass, constitution,
-				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentFloor,
-				currentHealth, currentRoom, currentShop, day, dexterity, dexterityBonus, dodgeRatingBonus, dungeonBoard,
-				energyBonus, energyRegenBonus, equippedBack, equippedBody, equippedHead, equippedNeck, equippedPrimary,
-				equippedSecondary, experience, healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus,
-				inventory, level, location, name, powerBonus, strength, strengthBonus);
+				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentHealth, currentShop,
+				day, dexterity, dexterityBonus, dodgeRatingBonus, dungeonBoard, energyBonus, energyRegenBonus,
+				equippedBack, equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary, experience,
+				healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, inventory, inventoryCache, level,
+				location, name, powerBonus, strength, strengthBonus);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -571,8 +505,7 @@ public class PlayerCharacter {
 				&& Objects.equals(characterClass, other.characterClass) && constitution == other.constitution
 				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
 				&& currency == other.currency && Objects.equals(currentDungeon, other.currentDungeon)
-				&& currentEnergy == other.currentEnergy && currentFloor == other.currentFloor
-				&& currentHealth == other.currentHealth && currentRoom == other.currentRoom
+				&& currentEnergy == other.currentEnergy && currentHealth == other.currentHealth
 				&& Objects.equals(currentShop, other.currentShop) && day == other.day && dexterity == other.dexterity
 				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
 				&& Objects.equals(dungeonBoard, other.dungeonBoard) && energyBonus == other.energyBonus
@@ -584,26 +517,29 @@ public class PlayerCharacter {
 				&& healthBonus == other.healthBonus && healthRegenBonus == other.healthRegenBonus
 				&& Objects.equals(id, other.id) && intelligence == other.intelligence
 				&& intelligenceBonus == other.intelligenceBonus && Objects.equals(inventory, other.inventory)
-				&& level == other.level && Objects.equals(location, other.location) && Objects.equals(name, other.name)
+				&& Objects.equals(inventoryCache, other.inventoryCache) && level == other.level
+				&& Objects.equals(location, other.location) && Objects.equals(name, other.name)
 				&& powerBonus == other.powerBonus && strength == other.strength && strengthBonus == other.strengthBonus;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "PlayerCharacter [id=" + id + ", location=" + location + ", dungeonBoard=" + dungeonBoard
-				+ ", currentDungeon=" + currentDungeon + ", currentFloor=" + currentFloor + ", currentRoom="
-				+ currentRoom + ", currentShop=" + currentShop + ", day=" + day + ", ate=" + ate + ", name=" + name
-				+ ", characterClass=" + characterClass + ", experience=" + experience + ", level=" + level
-				+ ", attributePoints=" + attributePoints + ", currency=" + currency + ", abilities=" + abilities
-				+ ", inventory=" + inventory + ", equippedHead=" + equippedHead + ", equippedBody=" + equippedBody
-				+ ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck + ", equippedPrimary="
-				+ equippedPrimary + ", equippedSecondary=" + equippedSecondary + ", constitution=" + constitution
-				+ ", strength=" + strength + ", dexterity=" + dexterity + ", intelligence=" + intelligence
-				+ ", constitutionBonus=" + constitutionBonus + ", strengthBonus=" + strengthBonus + ", dexterityBonus="
-				+ dexterityBonus + ", intelligenceBonus=" + intelligenceBonus + ", powerBonus=" + powerBonus
-				+ ", healthBonus=" + healthBonus + ", healthRegenBonus=" + healthRegenBonus + ", armorPenBonus="
-				+ armorPenBonus + ", armorBonus=" + armorBonus + ", dodgeRatingBonus=" + dodgeRatingBonus
-				+ ", critRatingBonus=" + critRatingBonus + ", energyBonus=" + energyBonus + ", energyRegenBonus="
-				+ energyRegenBonus + ", currentHealth=" + currentHealth + ", currentEnergy=" + currentEnergy + "]";
+		return "PlayerCharacterExport [id=" + id + ", location=" + location + ", dungeonBoard=" + dungeonBoard
+				+ ", currentDungeon=" + currentDungeon + ", currentShop=" + currentShop + ", day=" + day + ", ate="
+				+ ate + ", name=" + name + ", characterClass=" + characterClass + ", experience=" + experience
+				+ ", level=" + level + ", attributePoints=" + attributePoints + ", currency=" + currency
+				+ ", abilities=" + abilities + ", inventory=" + inventory + ", inventoryCache=" + inventoryCache
+				+ ", equippedHead=" + equippedHead + ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack
+				+ ", equippedNeck=" + equippedNeck + ", equippedPrimary=" + equippedPrimary + ", equippedSecondary="
+				+ equippedSecondary + ", constitution=" + constitution + ", strength=" + strength + ", dexterity="
+				+ dexterity + ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus
+				+ ", strengthBonus=" + strengthBonus + ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus="
+				+ intelligenceBonus + ", powerBonus=" + powerBonus + ", healthBonus=" + healthBonus
+				+ ", healthRegenBonus=" + healthRegenBonus + ", armorPenBonus=" + armorPenBonus + ", armorBonus="
+				+ armorBonus + ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus
+				+ ", energyBonus=" + energyBonus + ", energyRegenBonus=" + energyRegenBonus + ", currentHealth="
+				+ currentHealth + ", currentEnergy=" + currentEnergy + "]";
 	}
+	
+	
 }
