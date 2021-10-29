@@ -211,7 +211,13 @@ class App extends React.Component {
             this.setState({dungeon: this.sortDungeon(data)});
         });
       }
-      this.backgroundSrc = this.props.props.images[this.state.dungeon.theme.toLowerCase()]
+
+      if(this.state.dungeon && this.state.dungeon.floors && (this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].stairsPrevious || this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].stairsNext)){
+        this.innerElements = <img src={images["dungeon"+this.state.dungeon.theme+"Stairs"]} className="dungeon-stairs hover-saturate" onClick={() => this.appState("stairs", this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].stairsPrevious)}/>
+      }
+      
+      this.backgroundSrc = this.props.props.images[this.state.dungeon.theme.toLowerCase()];
+
     } else {
       this.backgroundSrc = this.props.props.images.town
     }
@@ -238,8 +244,10 @@ class App extends React.Component {
     }
 
     sortDungeon(dungeon){
-      dungeon.floors.forEach(floor=>floor.rooms.sort((a,b) => (a.stairsPrevious) ? -1 : ((b.stairsPrevious) ? 1 : 0)));
-      dungeon.floors.sort((a,b) => (a.level < b.level) ? -1 : ((b.level < a.level ? 1 : 0)));
+      console.log(dungeon)
+      dungeon.floors.forEach(floor=>floor.rooms.sort((a,b)=>(a.stairsPrevious) ? -1 : (b.stairsNext ? -1 : 0)));
+      console.log(dungeon)
+      dungeon.floors.sort((a,b) => (a.level < b.level) ? -1 : (b.level < a.level ? 1 : 0));
       return dungeon;
     }
 
@@ -264,6 +272,29 @@ class App extends React.Component {
       let shop;
       let addItem = true;
       method: switch(method){
+        case "stairs":
+          dungeon = {...this.state.dungeon};
+          dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared = true;
+          if(key){
+            if(dungeon.currentFloor == 0){
+              pc = {...this.state.pc};
+              pc.location = "Town";
+              this.save("dungeon", dungeon)
+                .then(this.save("pc", pc))
+                .then(()=>{this.setState({dungeon: dungeon, pc:pc, scene:"Default"})})
+            } else {
+              dungeon.currentFloor -= 1;
+              dungeon.currentRoom = dungeon.floors[dungeon.currentFloor].rooms.length-1;
+              this.save("dungeon", dungeon)
+                .then(()=>{this.setState({dungeon: dungeon})})
+            }
+          } else {
+            dungeon.currentFloor += 1;
+            dungeon.currentRoom = 0;
+            this.save("dungeon", dungeon)
+              .then(()=>{this.setState({dungeon: dungeon})})
+          }
+          break method;
         case "move-room":
           dungeon = {...this.state.dungeon};
           dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared = true;

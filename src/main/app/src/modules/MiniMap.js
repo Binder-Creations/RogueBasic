@@ -9,12 +9,10 @@ class Minimap extends React.Component {
     this.connectors = [];
     this.alreadyConnected = [];
     this.components = [];
-    this.underlay = <img className="minimap-underlay" src={this.props.props.images.mapUnderlay} alt="Minimap"/>;
-    this.overlay = <img className="minimap-overlay" src={this.props.props.images.mapOverlay} alt="Minimap"/>
-
+    this.Components = () => {return this.components}
     this.addComponents = this.addComponents.bind(this);
     this.addConnector = this.addConnector.bind(this);
-    this.addArrows = this.addArrows.bind(this);
+    this.Arrows = this.Arrows.bind(this);
   }
 
   render(){
@@ -33,11 +31,14 @@ class Minimap extends React.Component {
 
   addComponents(){
     this.rooms = [];
-    this.components = [this.underlay];
+    this.components = [];
     this.connectors = [];
     this.alreadyConnected = [];
+    let xLength = this.props.dungeon.floors[this.props.dungeon.currentFloor].xlength;
+    let yLength = this.props.dungeon.floors[this.props.dungeon.currentFloor].ylength;
+    let longest = xLength > yLength ? xLength : yLength;
+    let roomsize = (100-2*(longest-1))/longest;
     let src;
-    console.log(this.props.dungeon)
 
     this.props.dungeon.floors[this.props.dungeon.currentFloor].rooms.forEach(room => {
       if(room.cleared || room.id === this.props.dungeon.floors[this.props.dungeon.currentFloor].rooms[this.props.dungeon.currentRoom].id){
@@ -59,69 +60,81 @@ class Minimap extends React.Component {
           }
         }
 
-        let style = {left: (3536+(room.xCoord-1)*68)/42+"%", top: (1338+(6-room.yCoord)*68)/20+"%"}
-        this.rooms.push(<img src={src} className="minimap-room"  style={style}/>);
+        let style = {position: "absolute", width: roomsize + "%", height: roomsize + "%", left: (roomsize+2)*(room.xCoord-1)+"%", bottom: (roomsize+2)*(room.yCoord-1)+"%"}
+        
+        this.rooms.push(<img src={src} style={style}/>);
         
         if(room.northRoomId){
-          this.addConnector(room.xCoord, room.yCoord, "Vertical")
+          this.addConnector(room.xCoord, room.yCoord+1, "Vertical", roomsize)
         }
         if(room.southRoomId){
-          this.addConnector(room.xCoord, room.yCoord-1, "Vertical")
+          this.addConnector(room.xCoord, room.yCoord, "Vertical", roomsize)
         }
         if(room.eastRoomId){
-          this.addConnector(room.xCoord, room.yCoord, "Horizontal")
+          this.addConnector(room.xCoord+1, room.yCoord, "Horizontal", roomsize)
         }
         if(room.westRoomId){
-          this.addConnector(room.xCoord-1, room.yCoord, "Horizontal")
+          this.addConnector(room.xCoord, room.yCoord, "Horizontal", roomsize)
         }
       }
     });
 
     this.components = this.components.concat(this.rooms).concat(this.connectors);
-    this.components.push(this.overlay);
-    this.addArrows(this.props.dungeon.floors[this.props.dungeon.currentFloor].rooms[this.props.dungeon.currentRoom]);
 
-    return this.components;
+    return (
+      <>
+        <img className="minimap-underlay" src={this.props.props.images.mapUnderlay} alt="Minimap"/>
+        <div className="minimap-room-box">
+          <this.Components/>
+        </div>
+        <img className="minimap-overlay" src={this.props.props.images.mapOverlay} alt="Minimap"/>
+        <this.Arrows/>
+      </>
+    );
   }
 
-  addConnector(xCoord, yCoord, orientation){
+  addConnector(xCoord, yCoord, orientation, roomsize){
     let connector = xCoord.toString() + yCoord.toString() + orientation[0];
     
     if(!this.alreadyConnected.includes(connector)){
       this.alreadyConnected.push(connector);
       let style;
 
-      if(orientation == "Vertical"){
-        style = {left: (3562+(xCoord-1)*68)/42+"%", top: (1388+(5-yCoord)*68)/20+"%"}
-      } else {
-        style = {left: (3586+(xCoord-1)*68)/42+"%", top: (1363+(6-yCoord)*68)/20+"%"}
-      }
+        if(orientation == "Vertical"){
+          style = {position: "absolute", width: (roomsize*7)/32 + "%", height: roomsize/2 + "%", left: ((roomsize+2)*(xCoord-1)+((roomsize/2)-(roomsize*7)/64))+"%", bottom: ((roomsize+2)*(yCoord-1))-(1+roomsize/4)+"%"}
+        } else {
+          style = {position: "absolute", width: roomsize/2 + "%", height: (roomsize*7)/32 + "%", left: ((roomsize+2)*(xCoord-1))-(1+roomsize/4)+"%", bottom: ((roomsize+2)*(yCoord-1)+((roomsize/2)-(roomsize*7)/64))+"%"}
+        }
 
-      this.connectors.push(<img src={this.props.props.images["minimapConnector"+orientation]} className={"minimap-connector-" + orientation.toLowerCase()} style={style}/>)
+      this.connectors.push(<img src={this.props.props.images["minimapConnector"+orientation]} style={style}/>)
     } 
   }
 
-  addArrows(room){
+  Arrows(){
+    let arrows = []
+    let room = this.props.dungeon.floors[this.props.dungeon.currentFloor].rooms[this.props.dungeon.currentRoom];
+
     if(room.northRoomId){
-      this.components.push(
+      arrows.push(
         <img src={this.props.props.images.minimapNorth} className="minimap-north hover-saturate" onClick={()=>this.props.props.appState("move-room", room.northRoomId)}/>
       )
     }
     if(room.southRoomId){
-      this.components.push(
+      arrows.push(
         <img src={this.props.props.images.minimapSouth} className="minimap-south hover-saturate" onClick={()=>this.props.props.appState("move-room", room.southRoomId)}/>
       )
     }
     if(room.eastRoomId){
-      this.components.push(
+      arrows.push(
         <img src={this.props.props.images.minimapEast} className="minimap-east hover-saturate" onClick={()=>this.props.props.appState("move-room", room.eastRoomId)}/>
       )
     }
     if(room.westRoomId){
-      this.components.push(
+      arrows.push(
         <img src={this.props.props.images.minimapWest} className="minimap-west hover-saturate" onClick={()=>this.props.props.appState("move-room", room.westRoomId)}/>
       )
     }
+    return arrows;
   }
 }
 

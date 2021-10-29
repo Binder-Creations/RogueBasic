@@ -21,6 +21,7 @@ public class RoomServices {
 	private static final Logger log = LogManager.getLogger(RoomServices.class);
 	private CqlSession session;
 	private Queue<Room> queue;
+	private int roomsQueued;
 	
 	public RoomServices(CqlSession session) {
 		super();
@@ -37,18 +38,18 @@ public class RoomServices {
 		boolean stairsGenerated = false;
 		int xLength = floor.getXLength();
 		int yLength = floor.getYLength();
-		int xModifier = ThreadLocalRandom.current().nextInt(7-xLength);
-		int yModifier = ThreadLocalRandom.current().nextInt(7-yLength);
+		int maxRooms = ThreadLocalRandom.current().nextInt((xLength*yLength+1)/2, xLength*yLength+1);
 		genStart(xLength, yLength);
 		
 		while(!queue.isEmpty()) {
 			Room room = queue.poll();
 			
-			if(stairsGenerated == false) {
 				List<Character> connections = genConnections(room, rooms, xLength, yLength);
-				int newConnections = genNewConnectionsInt(room, connections);	
-				genConnectedRooms(room, connections, newConnections);
-				stairsGenerated = stairsCheck(room, rooms, xLength, yLength);			
+				int newConnections = genNewConnectionsInt(room, connections, maxRooms);	
+				if(roomsQueued < maxRooms)
+					genConnectedRooms(room, connections, newConnections);
+				if(stairsGenerated == false && floor.getLevel() < dungeon.getFloorCount()) 
+					stairsGenerated = stairsCheck(room, rooms, xLength, yLength);
 				genBossMiniboss(room, dungeon, floor.getLevel());
 				if(containsMonsters(room.isBoss(), room.isMiniboss(), dungeon.getChallengeRating()))
 					room.setMonsters(ms.generate(dungeon, floor.getLevel(), room.isBoss(), room.isMiniboss()));
@@ -57,13 +58,8 @@ public class RoomServices {
 				if(containsItems(room.isBoss(), room.isMiniboss(), room.getMonsters() != null, room.getTrap() != null, dungeon.getChallengeRating()))
 					is.generate(dungeon, room, floor.getLevel());
 				rooms.add(room);
-			}
 		}
 		
-		rooms.forEach((r)->{
-			r.setxCoord(r.getxCoord()+xModifier);
-			r.setyCoord(r.getyCoord()+yModifier);
-		});
 		return rooms;
 	}
 
@@ -74,6 +70,7 @@ public class RoomServices {
 		room.setyCoord(ThreadLocalRandom.current().nextInt(yLength)+1);	
 		room.setStairsPrevious(true);
 		queue.add(room);
+		roomsQueued = 0;
 	}
 	
 	private List<Character> genConnections(Room room, Set<Room> rooms, int xLength, int yLength){
@@ -145,12 +142,19 @@ public class RoomServices {
 		return connections;
 	}
 	
-	private int genNewConnectionsInt(Room room, List<Character> connections) {
+	private int genNewConnectionsInt(Room room, List<Character> connections, int maxRooms) {
+		int connectionCount = ThreadLocalRandom.current().nextInt(connections.size()+1);
+		connectionCount = connectionCount + roomsQueued > maxRooms 
+			? maxRooms - roomsQueued
+			: connectionCount;
+		
 		return room.isStairsNext()
 		? 0
 		: queue.isEmpty()
-				? 1 + ThreadLocalRandom.current().nextInt(connections.size()+1)
-			    : ThreadLocalRandom.current().nextInt(connections.size() + 1);
+				? connectionCount > 0
+					? connectionCount
+					: 1
+			    : connectionCount;
 	}
 	
 	private void genConnectedRooms(Room room, List<Character> connections, int newConnections) {
@@ -167,6 +171,7 @@ public class RoomServices {
 						newRoom.setxCoord(room.getxCoord()-1);
 						newRoom.setyCoord(room.getyCoord());
 						queue.add(newRoom);
+						roomsQueued++;
 						break;
 					case 'E':
 						room.setEastRoomId(newRoom.getId());
@@ -174,6 +179,7 @@ public class RoomServices {
 						newRoom.setxCoord(room.getxCoord()+1);
 						newRoom.setyCoord(room.getyCoord());
 						queue.add(newRoom);
+						roomsQueued++;
 						break;
 					case 'S':
 						room.setSouthRoomId(newRoom.getId());
@@ -181,6 +187,7 @@ public class RoomServices {
 						newRoom.setxCoord(room.getxCoord());
 						newRoom.setyCoord(room.getyCoord()-1);
 						queue.add(newRoom);
+						roomsQueued++;
 						break;
 					case 'N':
 						room.setNorthRoomId(newRoom.getId());
@@ -188,6 +195,7 @@ public class RoomServices {
 						newRoom.setxCoord(room.getxCoord());
 						newRoom.setyCoord(room.getyCoord()+1);
 						queue.add(newRoom);
+						roomsQueued++;
 						break;
 				}
 				

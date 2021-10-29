@@ -625,6 +625,13 @@
 				height: 19.6%;
 				text-align: right;
 			}
+			.dungeon-stairs {
+				position: absolute;
+				left: 36.4286%;
+				top: 32.0%;
+				width: 27.1429%;
+				height: 57.0%;
+			}
 			.minimap-overlay {
 				position: absolute;
 				right: 4.2269%;
@@ -639,20 +646,12 @@
 				width: 12.3089%;
 				height: 26%;
 			}
-			.minimap-room {
+			.minimap-room-box {
 				position: absolute;
-				width: 1.5238%;
-				height: 3.2%; 
-			}
-			.minimap-connector-vertical {
-				position: absolute;
-				width: 0.3333%;
-				height: 1.6%;
-			}
-			.minimap-connector-horizontal {
-				position: absolute;
-				width: 0.7619%;
-				height: 0.7%;
+				left: 84.2381%;
+				top: 66.9%;    
+				width: 9.5238%;
+				height: 20.0%; 
 			}
 			.minimap-north {
 				position: absolute;
