@@ -524,7 +524,7 @@ public class PlayerCharacter {
 
 	@Override
 	public String toString() {
-		return "PlayerCharacterExport [id=" + id + ", location=" + location + ", dungeonBoard=" + dungeonBoard
+		return "PlayerCharacter [id=" + id + ", location=" + location + ", dungeonBoard=" + dungeonBoard
 				+ ", currentDungeon=" + currentDungeon + ", currentShop=" + currentShop + ", day=" + day + ", ate="
 				+ ate + ", name=" + name + ", characterClass=" + characterClass + ", experience=" + experience
 				+ ", level=" + level + ", attributePoints=" + attributePoints + ", currency=" + currency

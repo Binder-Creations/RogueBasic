@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import com.RogueBasic.beans.Player;
 import com.RogueBasic.data.PlayerDao;
 import com.RogueBasic.util.CassandraConnector;
+import com.RogueBasic.util.CassandraGC;
 import com.RogueBasic.util.CassandraUtilities;
 import com.datastax.oss.driver.api.core.CqlSession;
 
@@ -30,6 +31,8 @@ public class Application {
 			System.out.println("Application started.");
 			try {
 				CqlSession service = CassandraConnector.connect();
+				CassandraGC gc = new CassandraGC();
+				gc.start();
 //				PlayerDao pdao = new PlayerDao(service);
 //				Player p = new Player("Test5000", "supreme");
 //				p.setMetacurrency(5000);

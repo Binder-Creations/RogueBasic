@@ -9,6 +9,7 @@ import ItemServices from "./modules/ItemServices";
 import AbilityServices from "./modules/AbilityServices";
 import * as images from "./images"
 import * as items from "./images/items";
+import * as monsters from "./images/monsters";
 
 
 class App extends React.Component {
@@ -35,7 +36,8 @@ class App extends React.Component {
 
     this.props.props = {
       images: images, 
-      items: items, 
+      items: items,
+      monsters: monsters, 
       appState: this.appState,
       abilityServices: new AbilityServices(this.appState),
       colorArmor: {color: "#136f9b"},
@@ -46,6 +48,7 @@ class App extends React.Component {
     this.props.props.itemServices = new ItemServices({
       images: images, 
       items: items, 
+      monsters: monsters,
       colorArmor: this.props.props.colorArmor,
       colorPower: this.props.props.colorPower,
       colorHeal: this.props.props.colorHeal,
@@ -215,9 +218,11 @@ class App extends React.Component {
       if(this.state.dungeon && this.state.dungeon.floors && (this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].stairsPrevious || this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].stairsNext)){
         this.innerElements = <img src={images["dungeon"+this.state.dungeon.theme+"Stairs"]} className="dungeon-stairs hover-saturate" onClick={() => this.appState("stairs", this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].stairsPrevious)}/>
       }
-      
-      this.backgroundSrc = this.props.props.images[this.state.dungeon.theme.toLowerCase()];
-
+      if(this.state.dungeon && this.state.dungeon.floors){
+        this.backgroundSrc = this.props.props.images[this.state.dungeon.theme.toLowerCase() + this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].variant];
+      } else {
+        this.backgroundSrc = this.props.props.images.tavern
+      }
     } else {
       this.backgroundSrc = this.props.props.images.town
     }
@@ -241,12 +246,15 @@ class App extends React.Component {
           new Image().src = this.props.props.items[type][item];
         });
       });
+      Object.keys(this.props.props.monsters).forEach((type) => {
+        Object.keys(this.props.props.monsters[type]).forEach((item) => {
+          new Image().src = this.props.props.monsters[type][item];
+        });
+      });
     }
 
     sortDungeon(dungeon){
-      console.log(dungeon)
       dungeon.floors.forEach(floor=>floor.rooms.sort((a,b)=>(a.stairsPrevious) ? -1 : (b.stairsNext ? -1 : 0)));
-      console.log(dungeon)
       dungeon.floors.sort((a,b) => (a.level < b.level) ? -1 : (b.level < a.level ? 1 : 0));
       return dungeon;
     }

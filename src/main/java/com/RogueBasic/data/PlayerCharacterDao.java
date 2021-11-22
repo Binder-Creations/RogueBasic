@@ -58,7 +58,7 @@ public class PlayerCharacterDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("PlayerCharacterDao.save() calling CassandraOperations.delete()");
+		log.trace("PlayerCharacterDao.deleteById() calling CassandraOperations.delete()");
 		try {
 			template.delete(Query.query(Criteria.where("id").is(id)), PlayerCharacter.class);
 			return true;

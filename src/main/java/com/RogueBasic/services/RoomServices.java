@@ -30,7 +30,6 @@ public class RoomServices {
 	}
 	
 	public Set<Room> generate (Dungeon dungeon, Floor floor) {
-		MonsterServices ms = new MonsterServices(session);
 		ItemServices is = new ItemServices(session);
 		TrapServices ts = new TrapServices(session);
 		
@@ -52,11 +51,12 @@ public class RoomServices {
 					stairsGenerated = stairsCheck(room, rooms, xLength, yLength);
 				genBossMiniboss(room, dungeon, floor.getLevel());
 				if(containsMonsters(room.isBoss(), room.isMiniboss(), dungeon.getChallengeRating()))
-					room.setMonsters(ms.generate(dungeon, floor.getLevel(), room.isBoss(), room.isMiniboss()));
+					room.setMonsters(MonsterServices.generate(dungeon.getChallengeRating(), dungeon.getTheme(), floor.getLevel(), room.isBoss(), room.isMiniboss()));
 				if(containsTrap(room.getMonsters() != null, dungeon.getChallengeRating()))
 					room.setTrap(ts.generate(dungeon, floor.getLevel()));
 				if(containsItems(room.isBoss(), room.isMiniboss(), room.getMonsters() != null, room.getTrap() != null, dungeon.getChallengeRating()))
 					is.generate(dungeon, room, floor.getLevel());
+				room.setVariant(ThreadLocalRandom.current().nextInt(1,5));
 				rooms.add(room);
 		}
 		

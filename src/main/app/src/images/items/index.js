@@ -15,25 +15,3 @@ export * as bow from "./bow";
 export * as dagger from "./dagger";
 export * as sword from "./sword";
 export * as shield from "./shield";
-
-// const items = {
-//   currency,
-//   consumable,
-//   potion,
-//   headLight,
-//   headMedium,
-//   headHeavy,
-//   bodyLight,
-//   bodyMedium,
-//   bodyHeavy,
-//   back,
-//   neck,
-//   staff,
-//   spellbook,
-//   bow,
-//   dagger,
-//   sword,
-//   shield
-// }
-
-// export default items;

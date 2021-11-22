@@ -164,7 +164,7 @@ public class Dungeon {
 	
 	@Override
 	public String toString() {
-		return "DungeonExport [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme
+		return "Dungeon [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme
 				+ ", prefixMod=" + prefixMod + ", postfixMod=" + postfixMod + ", floorCount=" + floorCount + ", floors="
 				+ floors + ", challengeRating=" + challengeRating + ", miniboss=" + miniboss + ", boss=" + boss
 				+ ", reward=" + reward + ", currentFloor=" + currentFloor + ", currentRoom=" + currentRoom + "]";

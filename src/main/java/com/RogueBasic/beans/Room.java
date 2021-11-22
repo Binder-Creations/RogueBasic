@@ -12,6 +12,7 @@ public class Room {
 	private UUID id;
 	private UUID floorId;
 	private UUID dungeonId;
+	private int variant;
 	private int xCoord;
 	private int yCoord;
 	private boolean stairsPrevious;
@@ -52,6 +53,14 @@ public class Room {
 
 	public void setDungeonId(UUID dungeonId) {
 		this.dungeonId = dungeonId;
+	}
+
+	public int getVariant() {
+		return variant;
+	}
+
+	public void setVariant(int variant) {
+		this.variant = variant;
 	}
 
 	public int getxCoord() {
@@ -177,7 +186,7 @@ public class Room {
 	@Override
 	public int hashCode() {
 		return Objects.hash(boss, cleared, dungeonId, eastRoomId, floorId, id, loot, lootCache, miniboss, monsters,
-				northRoomId, southRoomId, stairsNext, stairsPrevious, trap, westRoomId, xCoord, yCoord);
+				northRoomId, southRoomId, stairsNext, stairsPrevious, trap, variant, westRoomId, xCoord, yCoord);
 	}
 
 	@Override
@@ -196,16 +205,18 @@ public class Room {
 				&& Objects.equals(monsters, other.monsters) && Objects.equals(northRoomId, other.northRoomId)
 				&& Objects.equals(southRoomId, other.southRoomId) && stairsNext == other.stairsNext
 				&& stairsPrevious == other.stairsPrevious && Objects.equals(trap, other.trap)
-				&& Objects.equals(westRoomId, other.westRoomId) && xCoord == other.xCoord && yCoord == other.yCoord;
+				&& variant == other.variant && Objects.equals(westRoomId, other.westRoomId) && xCoord == other.xCoord
+				&& yCoord == other.yCoord;
 	}
 
 	@Override
 	public String toString() {
-		return "RoomExport [id=" + id + ", floorId=" + floorId + ", dungeonId=" + dungeonId + ", xCoord=" + xCoord
-				+ ", yCoord=" + yCoord + ", stairsPrevious=" + stairsPrevious + ", stairsNext=" + stairsNext
-				+ ", northRoomId=" + northRoomId + ", southRoomId=" + southRoomId + ", eastRoomId=" + eastRoomId
-				+ ", westRoomId=" + westRoomId + ", trap=" + trap + ", loot=" + loot + ", lootCache=" + lootCache
-				+ ", monsters=" + monsters + ", miniboss=" + miniboss + ", boss=" + boss + ", cleared=" + cleared + "]";
+		return "Room [id=" + id + ", floorId=" + floorId + ", dungeonId=" + dungeonId + ", variant=" + variant
+				+ ", xCoord=" + xCoord + ", yCoord=" + yCoord + ", stairsPrevious=" + stairsPrevious + ", stairsNext="
+				+ stairsNext + ", northRoomId=" + northRoomId + ", southRoomId=" + southRoomId + ", eastRoomId="
+				+ eastRoomId + ", westRoomId=" + westRoomId + ", trap=" + trap + ", loot=" + loot + ", lootCache="
+				+ lootCache + ", monsters=" + monsters + ", miniboss=" + miniboss + ", boss=" + boss + ", cleared="
+				+ cleared + "]";
 	}
 	
 }

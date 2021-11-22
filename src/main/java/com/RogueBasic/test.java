@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
@@ -12,6 +13,7 @@ import java.util.regex.Pattern;
 import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.Floor;
 import com.RogueBasic.beans.Item;
+import com.RogueBasic.beans.Monster;
 import com.RogueBasic.beans.Player;
 import com.RogueBasic.beans.PlayerCharacter;
 import com.RogueBasic.beans.Room;
@@ -19,6 +21,7 @@ import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.data.PlayerDao;
 import com.RogueBasic.data.ShopDao;
 import com.RogueBasic.services.DungeonServices;
+import com.RogueBasic.services.MonsterServices;
 import com.RogueBasic.services.PlayerCharacterServices;
 import com.RogueBasic.util.CassandraConnector;
 import com.RogueBasic.util.CassandraUtilities;
@@ -27,7 +30,31 @@ import com.datastax.oss.driver.api.core.CqlSession;
 
 public class test {
 	public static void main(String[] args) {
+		CqlSession session = CassandraConnector.connect();
+		CassandraUtilities cu = new CassandraUtilities(session);
 		RogueUtilities ru = new RogueUtilities();
+		cu.dropAllTables();
+		cu.initialize();
+		cu.populate();
+		
+//		Set<Monster> monsters = MonsterServices.generate(3, "Cave", 2, true, false);
+//		
+//		monsters.forEach(monster -> {
+//			System.out.println("Id: "+monster.getId());
+//			System.out.println("Name: "+monster.getName());
+//			System.out.println("Level: "+monster.getLevel());
+//			System.out.println("Rank: "+(monster.isBoss() ? "Boss" : monster.isMiniboss() ? "Miniboss" : "Normal"));
+//			System.out.println("Species: "+monster.getSpecies());
+//			System.out.println("Type: "+monster.getType());
+//			System.out.println("Position: "+monster.getPosition());
+//			System.out.println("Variant: "+monster.getVariant());
+//			System.out.println("Health: "+monster.getHealth());
+//			System.out.println("Power: "+monster.getPower());
+//			System.out.println("Armor: "+monster.getArmor());
+//			System.out.println("Crit: "+monster.getCritRating());
+//			System.out.println("Dodge: "+monster.getDodgeRating());
+//			System.out.println("Abilities: "+monster.getAbilities().toString());
+//		});
 		
 //		test test = new test();
 //		System.out.println(test.genLV(1, 1, null, false, false, true, false));
@@ -35,9 +62,6 @@ public class test {
 //		test.genEquipment(exceptions, 50, 1).forEach(i ->{System.out.println(i.toString()); System.out.println("~~~");});
 //		for(int i = 0; i < 50; i++) {
 //		}
-		CqlSession session = CassandraConnector.connect();
-//		System.out.println(session);
-		CassandraUtilities cu = new CassandraUtilities(session);
 //		ShopDao sDao = new ShopDao(session);
 //		System.out.println(sDao.findById(UUID.fromString("db56131c-9248-46cc-8b6a-0d022228aa10")));
 //		sDao.getAll().forEach(item -> System.out.println(item));
@@ -70,9 +94,6 @@ public class test {
 //			  Matcher m = name.matcher(s);
 //			  m.find();
 //			  System.out.println(m.group(1));});
-		cu.dropAllTables();
-		cu.initialize();
-		cu.populate();
 ////
 //		ItemDao id = new ItemDao(session);
 //		List<Item> ilist = id.getAll();

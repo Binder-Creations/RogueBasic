@@ -11,10 +11,12 @@ import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 public class Monster {
 	private UUID id;
 	private String name;
-	private String description;
-	private String theme;
+	private String type;
+	private String species;
+	private String position;
 	private boolean boss;
 	private boolean miniboss;
+	private int variant;
 	private int level;
 	private int health;
 	private int power;
@@ -25,16 +27,18 @@ public class Monster {
 	
 	public Monster() {};
 	
-	public Monster(String name, String description, String theme, boolean boss, boolean miniboss, int level, int health,
-			int power, int armor, int dodgeRating, int critRating, Set<UUID> abilityIds) {
+	public Monster(String name, String type, String species, String position, boolean boss, boolean miniboss, int level, int variant, int health,
+			int power, int armor, int dodgeRating, int critRating, Set<Ability> abilities) {
 		super();
 		this.id = UUID.randomUUID();
 		this.name = name;
-		this.description = description;
-		this.theme = theme;
+		this.type = type;
+		this.species = species;
+		this.position = position;
 		this.boss = boss;
 		this.miniboss = miniboss;
 		this.level = level;
+		this.variant = variant;
 		this.health = health;
 		this.power = power;
 		this.armor = armor;
@@ -59,20 +63,28 @@ public class Monster {
 		this.name = name;
 	}
 	
-	public String getDescription() {
-		return description;
-	}
-	
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	public String getTheme() {
-		return theme;
+	public String getType() {
+		return type;
 	}
 
-	public void setTheme(String theme) {
-		this.theme = theme;
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	public String getSpecies() {
+		return species;
+	}
+
+	public void setSpecies(String species) {
+		this.species = species;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 	public boolean isBoss() {
@@ -89,6 +101,14 @@ public class Monster {
 
 	public void setMiniboss(boolean miniboss) {
 		this.miniboss = miniboss;
+	}
+
+	public int getVariant() {
+		return variant;
+	}
+
+	public void setVariant(int variant) {
+		this.variant = variant;
 	}
 
 	public int getLevel() {
@@ -149,8 +169,8 @@ public class Monster {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(abilities, armor, boss, critRating, description, dodgeRating, health, id, level, miniboss,
-				name, power, theme);
+		return Objects.hash(abilities, armor, boss, critRating, dodgeRating, health, id, level, miniboss, name,
+				position, power, species, type, variant);
 	}
 
 	@Override
@@ -163,18 +183,19 @@ public class Monster {
 			return false;
 		Monster other = (Monster) obj;
 		return Objects.equals(abilities, other.abilities) && armor == other.armor && boss == other.boss
-				&& critRating == other.critRating && Objects.equals(description, other.description)
-				&& dodgeRating == other.dodgeRating && health == other.health && Objects.equals(id, other.id)
-				&& level == other.level && miniboss == other.miniboss && Objects.equals(name, other.name)
-				&& power == other.power && Objects.equals(theme, other.theme);
+				&& critRating == other.critRating && dodgeRating == other.dodgeRating && health == other.health
+				&& Objects.equals(id, other.id) && level == other.level && miniboss == other.miniboss
+				&& Objects.equals(name, other.name) && Objects.equals(position, other.position) && power == other.power
+				&& Objects.equals(species, other.species) && Objects.equals(type, other.type)
+				&& variant == other.variant;
 	}
 
 	@Override
 	public String toString() {
-		return "Monster [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme + ", boss="
-				+ boss + ", miniboss=" + miniboss + ", level=" + level + ", health=" + health + ", power=" + power
-				+ ", armor=" + armor + ", dodgeRating=" + dodgeRating + ", critRating=" + critRating + ", abilities="
-				+ abilities + "]";
+		return "Monster [id=" + id + ", name=" + name + ", type=" + type + ", species=" + species + ", position="
+				+ position + ", boss=" + boss + ", miniboss=" + miniboss + ", variant=" + variant + ", level=" + level
+				+ ", health=" + health + ", power=" + power + ", armor=" + armor + ", dodgeRating=" + dodgeRating
+				+ ", critRating=" + critRating + ", abilities=" + abilities + "]";
 	}
 	
 	
