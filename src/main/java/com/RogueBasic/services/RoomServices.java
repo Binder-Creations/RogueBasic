@@ -50,7 +50,7 @@ public class RoomServices {
 				if(stairsGenerated == false && floor.getLevel() < dungeon.getFloorCount()) 
 					stairsGenerated = stairsCheck(room, rooms, xLength, yLength);
 				genBossMiniboss(room, dungeon, floor.getLevel());
-				if(containsMonsters(room.isBoss(), room.isMiniboss(), dungeon.getChallengeRating()))
+				if(containsMonsters(room.isStairsPrevious(), room.isBoss(), room.isMiniboss(), dungeon.getChallengeRating()))
 					room.setMonsters(MonsterServices.generate(dungeon.getChallengeRating(), dungeon.getTheme(), floor.getLevel(), room.isBoss(), room.isMiniboss()));
 				if(containsTrap(room.getMonsters() != null, dungeon.getChallengeRating()))
 					room.setTrap(ts.generate(dungeon, floor.getLevel()));
@@ -240,14 +240,16 @@ public class RoomServices {
 			  : false);
 	}
 	
-	private boolean containsMonsters(boolean boss, boolean miniboss, int challengeRating) {
-		return boss
-				? true
-				: miniboss
+	private boolean containsMonsters(boolean stairsPrevious, boolean boss, boolean miniboss, int challengeRating) {
+		return stairsPrevious
+				? false
+				: boss
 					? true
-					: ThreadLocalRandom.current().nextInt(100) < 37 + challengeRating/2
+					: miniboss
 						? true
-						: false;
+						: ThreadLocalRandom.current().nextInt(100) < 37 + challengeRating/2
+							? true
+							: false;
 	}
 	
 	private boolean containsTrap(boolean monsters, int challengeRating) {

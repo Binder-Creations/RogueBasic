@@ -1,6 +1,6 @@
 export {default as archer1} from "./archer-1.png";
 export {default as archer2} from "./archer-2.png";
-export {default as boss} from "./boss.png";
+export {default as boss1} from "./boss-1.png";
 export {default as miniboss1} from "./miniboss-1.png";
 export {default as miniboss2} from "./miniboss-2.png";
 export {default as rogue1} from "./rogue-1.png";

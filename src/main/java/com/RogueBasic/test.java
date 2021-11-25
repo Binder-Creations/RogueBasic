@@ -32,12 +32,12 @@ public class test {
 	public static void main(String[] args) {
 		CqlSession session = CassandraConnector.connect();
 		CassandraUtilities cu = new CassandraUtilities(session);
-		RogueUtilities ru = new RogueUtilities();
+//		RogueUtilities ru = new RogueUtilities();
 		cu.dropAllTables();
 		cu.initialize();
 		cu.populate();
 		
-//		Set<Monster> monsters = MonsterServices.generate(3, "Cave", 2, true, false);
+//		Set<Monster> monsters = MonsterServices.generate(6, "Castle", 1, true, false);
 //		
 //		monsters.forEach(monster -> {
 //			System.out.println("Id: "+monster.getId());
@@ -48,7 +48,7 @@ public class test {
 //			System.out.println("Type: "+monster.getType());
 //			System.out.println("Position: "+monster.getPosition());
 //			System.out.println("Variant: "+monster.getVariant());
-//			System.out.println("Health: "+monster.getHealth());
+//			System.out.println("Health: "+monster.getHealthTotal());
 //			System.out.println("Power: "+monster.getPower());
 //			System.out.println("Armor: "+monster.getArmor());
 //			System.out.println("Crit: "+monster.getCritRating());

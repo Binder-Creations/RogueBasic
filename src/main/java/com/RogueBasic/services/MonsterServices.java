@@ -27,13 +27,13 @@ public class MonsterServices {
 		int encounterBase = encounterValue;
 		int monsterMinimum = Math.round((float)encounterValue/6f);
 		List<String> backPositions = new ArrayList<>();
-		backPositions.add("backLeft");
-		backPositions.add("backCenter");
-		backPositions.add("backRight");
+		backPositions.add("back-left");
+		backPositions.add("back-center");
+		backPositions.add("back-right");
 		List<String> frontPositions = new ArrayList<>();
-		frontPositions.add("frontLeft");
-		frontPositions.add("frontCenter");
-		frontPositions.add("frontRight");
+		frontPositions.add("front-left");
+		frontPositions.add("front-center");
+		frontPositions.add("front-right");
 		boolean bossGenerated = false;
 		boolean minibossGenerated = false;
 		
@@ -59,7 +59,7 @@ public class MonsterServices {
 			
 			encounterValue -= monsterValue;
 			
-			monster.setVariant(monster.isBoss() ? 0 : ThreadLocalRandom.current().nextInt(1,3));
+			monster.setVariant(monster.isBoss() ? 1 : ThreadLocalRandom.current().nextInt(1,3));
 			genSpecies(theme, monster);
 			genTypePosition(monster, backPositions, frontPositions);
 			String modifier = genStatsModifier(monster, monsterValue);
@@ -102,8 +102,8 @@ public class MonsterServices {
 					break;
 				case "ogre":
 					monster.setType("warrior");
-					monster.setPosition("frontCenter");
-					frontPositions.remove("frontCenter");
+					monster.setPosition("front-center");
+					frontPositions.remove("front-center");
 					break;
 				case "human1":
 					monster.setType("wizard");
@@ -112,8 +112,8 @@ public class MonsterServices {
 					break;
 				case "human2":
 					monster.setType("rogue");
-					monster.setPosition("frontCenter");
-					frontPositions.remove("frontCenter");
+					monster.setPosition("front-center");
+					frontPositions.remove("front-center");
 					break;
 				case "skeleton":
 					monster.setType("wizard");
@@ -122,8 +122,8 @@ public class MonsterServices {
 					break;
 				case "golem":
 					monster.setType("warrior");
-					monster.setPosition("frontCenter");
-					frontPositions.remove("frontCenter");
+					monster.setPosition("front-center");
+					frontPositions.remove("front-center");
 					break;
 			}
 			return;
@@ -137,13 +137,13 @@ public class MonsterServices {
 					break;
 				case "ogre":
 					monster.setType("rogue");
-					monster.setPosition("frontCenter");
-					frontPositions.remove("frontCenter");
+					monster.setPosition("front-center");
+					frontPositions.remove("front-center");
 					break;
 				case "human1":
 					monster.setType("warrior");
-					monster.setPosition("frontCenter");
-					frontPositions.remove("frontCenter");
+					monster.setPosition("front-center");
+					frontPositions.remove("front-center");
 					break;
 				case "human2":
 					monster.setType("wizard");
@@ -152,8 +152,8 @@ public class MonsterServices {
 					break;
 				case "skeleton":
 					monster.setType("warrior");
-					monster.setPosition("frontCenter");
-					frontPositions.remove("frontCenter");
+					monster.setPosition("front-center");
+					frontPositions.remove("front-center");
 					break;
 				case "golem":
 					monster.setType("archer");
@@ -350,7 +350,8 @@ public class MonsterServices {
 				break;
 		}
 		
-		monster.setHealth(Math.round(monsterValue*baseHealth*healthMod));
+		monster.setHealthTotal(Math.round(monsterValue*baseHealth*healthMod));
+		monster.setCurrentHealth(monster.getHealthTotal());
 		monster.setPower(Math.round(monsterValue*basePower*powerMod));
 		monster.setArmor(Math.round(monsterValue*baseArmor*armorMod));
 		monster.setDodgeRating(Math.round(monsterValue*baseDodge*dodgeMod));

@@ -7,6 +7,7 @@ import TavernMenu from "./modules/TavernMenu";
 import PcServices from "./modules/PcServices";
 import ItemServices from "./modules/ItemServices";
 import AbilityServices from "./modules/AbilityServices";
+import Dungeon from "./modules/Dungeon";
 import * as images from "./images"
 import * as items from "./images/items";
 import * as monsters from "./images/monsters";
@@ -127,7 +128,8 @@ class App extends React.Component {
           fetch('/dungeon/'+ this.state.pc.currentDungeon)
           .then(response => response.json())
           .then(data => {
-            this.setState({dungeon: data});
+            console.log(data);
+            this.setState({dungeon: this.sortDungeon(data)});
           });
         }
         if(!this.state.pc.dungeonBoard){
@@ -202,7 +204,7 @@ class App extends React.Component {
         return(<></>)
       }
       if(!this.state.dungeon.floors && !this.state.dungeon.floorIds){
-        fetch('/dungeon/complete/' + this.state.dungeon.id)
+        fetch('/dungeon/' + this.state.dungeon.id)
           .then(response => response.json())
           .then(data => {
             this.setState({dungeon: this.sortDungeon(data)});
@@ -215,11 +217,9 @@ class App extends React.Component {
         });
       }
 
-      if(this.state.dungeon && this.state.dungeon.floors && (this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].stairsPrevious || this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].stairsNext)){
-        this.innerElements = <img src={images["dungeon"+this.state.dungeon.theme+"Stairs"]} className="dungeon-stairs hover-saturate" onClick={() => this.appState("stairs", this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].stairsPrevious)}/>
-      }
       if(this.state.dungeon && this.state.dungeon.floors){
         this.backgroundSrc = this.props.props.images[this.state.dungeon.theme.toLowerCase() + this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].variant];
+        this.innerElements = <Dungeon props={this.props.props} dungeon={this.state.dungeon}/>
       } else {
         this.backgroundSrc = this.props.props.images.tavern
       }

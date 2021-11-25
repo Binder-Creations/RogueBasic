@@ -25,8 +25,10 @@ public class DungeonController {
 
     @GetMapping("/{id}")
     public Dungeon getDungeon(@PathVariable String id) {
+    	DungeonServices ds = new DungeonServices(CassandraConnector.getSession());
     	DungeonDao dDao = new DungeonDao(CassandraConnector.getSession());
-    	return dDao.findById(UUID.fromString(id));
+    	Dungeon dungeon = dDao.findById(UUID.fromString(id));
+    	return dungeon.getFloors() != null ? dungeon : ds.addFloors(dungeon);
     }
 	
 	//returns a list of 3 dungeon shells for use on the quest board
@@ -52,16 +54,7 @@ public class DungeonController {
     	});
     	return dungeons;
     }
-    
-    //returns a finished dungeon from a shell
-    @GetMapping("/complete/{id}")
-    public Dungeon getCompleteDungeon(@PathVariable String id) {
-    	DungeonServices ds = new DungeonServices(CassandraConnector.getSession());
-        DungeonDao dDao = new DungeonDao(CassandraConnector.getSession());
-        
-    	return ds.addFloors(dDao.findById(UUID.fromString(id)));
-    }
-    
+
     @PutMapping
     public ResponseEntity updateDungeon(@RequestBody Dungeon dungeon) {
     	DungeonDao dDao = new DungeonDao(CassandraConnector.getSession());

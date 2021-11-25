@@ -3,7 +3,6 @@
       *, *:before, *:after {
 				margin:0;
         padding:0;
-				font-size: 2vw;
       	box-sizing:border-box;	
      	  font-family:"Copperplate", fantasy;
       }
@@ -27,6 +26,7 @@
       body {
     	  background-color:black;
 				color:#ffcc66;
+				font-size: 2vw;
 				-webkit-touch-callout: none;
 				-webkit-user-select: none;
 				-khtml-user-select: none;
@@ -631,6 +631,71 @@
 				top: 32.0%;
 				width: 27.1429%;
 				height: 57.0%;
+			}
+			.dungeon-arena {
+				position: absolute;
+				left: 7.1094%;
+				top: 39.6721%;
+				width: 85.9375%;
+				height: 41.6393%;
+			}
+			.monster {
+				position: absolute;
+				width: 23.4375%;
+				height: 49.1803%;
+			}
+			.monster.back-left {
+				left: 20.8594%;    
+				top: 4.0984%;
+			}
+			.monster.back-center {
+				left: 44.4531%;
+				top: 4.0984%;				
+			}
+			.monster.back-right {
+				left: 68.0469%;
+				top: 4.0984%;
+			}
+			.monster.front-left {
+				left: 13.2031%;
+				top: 21.6393%;
+			}
+			.monster.front-center {
+				left: 36.7969%;
+				top: 21.6393%;
+			}
+			.monster.front-right {
+				left: 60.3906%;
+				top: 21.6393%;
+			}
+			.monster-bar {
+				position: absolute;
+				width: 19.5312%;
+				height: 4.918%;
+			}
+			.monster-bar.back-left {
+				left: 22.8906%;
+				top: 1.6393%;
+			}
+			.monster-bar.back-center {
+				left: 46.4062%;
+				top: 1.6393%;				
+			}
+			.monster-bar.back-right {
+				left: 70.0%;
+				top: 1.6393%;				
+			}
+			.monster-bar.front-left {
+				left: 15.1562%;
+				top: 71.1475%;				
+			}
+			.monster-bar.front-center {
+				left: 38.75%;
+				top: 71.1475%;				
+			}
+			.monster-bar.front-right {
+				left: 62.3438%;
+				top: 71.1475%;				
 			}
 			.minimap-overlay {
 				position: absolute;
