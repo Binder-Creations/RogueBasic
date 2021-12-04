@@ -1,5 +1,5 @@
-ABILITY (level int, name text, cost int, modifier int, hits int, type text, description text)
-MONSTER (id uuid, name text, type text, species text, position text, boss boolean, miniboss boolean, variant int, level int, healthTotal int, currentHealth int, power int, armor int, dodgeRating int, critRating int, abilities set<frozen<ability>>)
+ABILITY (level int, name text, cost int, modifier float, factor int, hits int, target text, type text, icon text, description text, flags text, buffs text, debuffs text)
+MONSTER (id uuid, name text, type text, species text, position text, boss boolean, miniboss boolean, variant int, level int, health int, currentHealth int, power int, armor int, dodgeRating int, critRating int, abilities set<frozen<ability>>)
 TRAP (id uuid, name text, description text, theme text, level int, action text)
 ITEM (id uuid, name text, description text, type text, rarity text, image text, cost int, actionType text, actionValue int, constitutionBonus int, strengthBonus int, dexterityBonus int, intelligenceBonus int, powerBonus int, healthBonus int, healthRegenBonus int, armorBonus int, armorPenBonus int, dodgeRatingBonus int, critRatingBonus int, energyBonus int, energyRegenBonus int)
 ROOM (id uuid, floorID uuid, dungeonId uuid, variant int, xCoord int, yCoord int, stairsPrevious boolean, stairsNext boolean, northRoomId uuid, southRoomId uuid, eastRoomId uuid, westRoomId uuid, trap frozen<trap>, loot map<uuid, int>, lootCache set<frozen<item>>, monsters set<frozen<monster>>, miniboss boolean, boss boolean, cleared boolean)

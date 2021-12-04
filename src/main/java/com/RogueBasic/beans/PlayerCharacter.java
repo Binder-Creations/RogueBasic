@@ -109,10 +109,11 @@ public class PlayerCharacter {
 				this.equippedSecondary = iservice.getPremade(12);
 				this.currency = 100 + currencyMetabonus;
 				this.abilities = new HashSet<>();
-				this.abilities.add(new Ability(1, "Heavy Strike", 8, 160, 1, "Power", "Attack the front right enemy with a mighty blow. 150% of Armor Penetration applies to this attack."));
-				this.abilities.add(new Ability(2, "Stunning Bash", 16, 140, 1, "Power", "Attack the front left enemy with a stunning shield strike. A non-boss enemy hit by this attack is stunned for 1 round."));
-				this.abilities.add(new Ability(4, "Wide Sweep", 32, 180, 1, "Power", "Attack all front-row enemies."));
-				this.abilities.add(new Ability(6, "Living Fortress", 64, 500, 1, "Armor", "Dramatically increases armor and provites immunity to critical hits until end of combat."));
+				this.abilities.add(new Ability(1, "Straight Slash", 0, 1f, 25, 1, "frontCenter", "Attack", "Power", "Make a basic attack."));
+				this.abilities.add(new Ability(1, "Heavy Strike", 8, 1.6f, 35, 1, "frontRight", "Attack", "Power", "Attack with a mighty blow. 150% of Armor Penetration applies.", "{\"pc\": {\"highPen\": 1}}"));
+				this.abilities.add(new Ability(2, "Stunning Bash", 16, 1.4f, 20, 1, "frontLeft", "Attack", "Power", "Attack with a stunning shield strike. Stuns non-boss enemies for 1 round.", "{\"monster\": {\"stun\": 1}}"));
+				this.abilities.add(new Ability(4, "Wide Sweep", 32, 1.8f, 30, 1, "frontRow", "Attack", "Power", "Attack all enemie in a row."));
+				this.abilities.add(new Ability(6, "Living Fortress", 64, 5f, 0, 1, "self", "Buff", "Armor", "Dramatically increases armor and provites immunity to critical hits until end of combat.", "{\"pc\": {\"fortress\": true}}", "{\"fortress\": {\"stat\": \"armor\", \"duration\": true}}", null));
 				this.powerBonus = 10;
 				this.healthBonus = 30;
 				this.healthRegenBonus = 4;

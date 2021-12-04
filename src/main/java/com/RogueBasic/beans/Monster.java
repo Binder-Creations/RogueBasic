@@ -18,7 +18,7 @@ public class Monster {
 	private boolean miniboss;
 	private int variant;
 	private int level;
-	private int healthTotal;
+	private int health;
 	private int currentHealth;
 	private int power;
 	private int armor;
@@ -28,7 +28,7 @@ public class Monster {
 	
 	public Monster() {};
 	
-	public Monster(String name, String type, String species, String position, boolean boss, boolean miniboss, int level, int variant, int healthTotal,
+	public Monster(String name, String type, String species, String position, boolean boss, boolean miniboss, int level, int variant, int health,
 			int power, int armor, int dodgeRating, int critRating, Set<Ability> abilities) {
 		super();
 		this.id = UUID.randomUUID();
@@ -40,7 +40,7 @@ public class Monster {
 		this.miniboss = miniboss;
 		this.level = level;
 		this.variant = variant;
-		this.healthTotal = healthTotal;
+		this.health = health;
 		this.power = power;
 		this.armor = armor;
 		this.dodgeRating = dodgeRating;
@@ -120,12 +120,12 @@ public class Monster {
 		this.level = level;
 	}
 	
-	public int getHealthTotal() {
-		return healthTotal;
+	public int getHealth() {
+		return health;
 	}
 	
-	public void setHealthTotal(int healthTotal) {
-		this.healthTotal = healthTotal;
+	public void setHealth(int health) {
+		this.health = health;
 	}
 	
 	public int getCurrentHealth() {
@@ -178,7 +178,7 @@ public class Monster {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(abilities, armor, boss, critRating, currentHealth, dodgeRating, healthTotal, id, level, miniboss,
+		return Objects.hash(abilities, armor, boss, critRating, currentHealth, dodgeRating, health, id, level, miniboss,
 				name, position, power, species, type, variant);
 	}
 
@@ -193,7 +193,7 @@ public class Monster {
 		Monster other = (Monster) obj;
 		return Objects.equals(abilities, other.abilities) && armor == other.armor && boss == other.boss
 				&& critRating == other.critRating && currentHealth == other.currentHealth
-				&& dodgeRating == other.dodgeRating && healthTotal == other.healthTotal && Objects.equals(id, other.id)
+				&& dodgeRating == other.dodgeRating && health == other.health && Objects.equals(id, other.id)
 				&& level == other.level && miniboss == other.miniboss && Objects.equals(name, other.name)
 				&& Objects.equals(position, other.position) && power == other.power
 				&& Objects.equals(species, other.species) && Objects.equals(type, other.type)
@@ -204,7 +204,7 @@ public class Monster {
 	public String toString() {
 		return "Monster [id=" + id + ", name=" + name + ", type=" + type + ", species=" + species + ", position="
 				+ position + ", boss=" + boss + ", miniboss=" + miniboss + ", variant=" + variant + ", level=" + level
-				+ ", healthTotal=" + healthTotal + ", currentHealth=" + currentHealth + ", power=" + power + ", armor=" + armor
+				+ ", health=" + health + ", currentHealth=" + currentHealth + ", power=" + power + ", armor=" + armor
 				+ ", dodgeRating=" + dodgeRating + ", critRating=" + critRating + ", abilities=" + abilities + "]";
 	}
 	

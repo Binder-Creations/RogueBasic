@@ -16,6 +16,7 @@ import com.RogueBasic.data.ShopDao;
 
 public class CassandraGC implements Runnable{
 	private Thread t;
+	private boolean collect;
 	private static final Logger log = LogManager.getLogger(CassandraGC.class);
 	
 	public void run() {
@@ -40,12 +41,12 @@ public class CassandraGC implements Runnable{
 	    	    
 	    	    int counter = 0;
 	    	    for(PlayerCharacter character : characters) {
-    	    		Boolean collect = true;
+    	    		this.collect = true;
     	    		for (Player player : players) {
 		    			if(player.getCharacterIds().contains(character.getId()))
-		    				collect = false;
+		    				this.collect = false;
     	    		}
-    	    		if(collect) {
+    	    		if(this.collect) {
     	    			pcDao.deleteById(character.getId());
     	    			counter++;
     	    		}
@@ -56,12 +57,19 @@ public class CassandraGC implements Runnable{
 	    	    
 	    	    counter = 0;
 	    	    for(Dungeon dungeon : dungeons) {
-    	    		Boolean collect = true;
+    	    		this.collect = true;
     	    		for (PlayerCharacter character : charactersPostGC) {
     	    			if(character.getCurrentDungeon() != null && character.getCurrentDungeon().equals(dungeon.getId()))
-    	    				collect = false;
+    	    				this.collect = false;
+    	    			if(character.getDungeonBoard() != null) {
+	    	    			character.getDungeonBoard().forEach(id -> {
+	    	    				if(id.equals(dungeon.getId())) {
+	    	    					this.collect = false;
+	    	    				}
+	    	    			});
+    	    			};
     	    		}
-    	    		if(collect) {
+    	    		if(this.collect) {
     	    			dDao.deleteById(dungeon.getId());
     	    			counter++;
     	    		}
@@ -70,12 +78,12 @@ public class CassandraGC implements Runnable{
 	    	    
 	    	    counter = 0;
 	    	    for(Shop shop : shops) {
-    	    		Boolean collect = true;
+    	    		this.collect = true;
     	    		for (PlayerCharacter character : charactersPostGC) {
     	    			if(character.getCurrentShop() != null && character.getCurrentShop().equals(shop.getId()))
-    	    				collect = false;
+    	    				this.collect = false;
     	    		}
-    	    		if(collect) {
+    	    		if(this.collect) {
     	    			sDao.deleteById(shop.getId());
     	    			counter++;
     	    		}

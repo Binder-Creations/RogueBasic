@@ -27,13 +27,13 @@ public class MonsterServices {
 		int encounterBase = encounterValue;
 		int monsterMinimum = Math.round((float)encounterValue/6f);
 		List<String> backPositions = new ArrayList<>();
-		backPositions.add("back-left");
-		backPositions.add("back-center");
-		backPositions.add("back-right");
+		backPositions.add("backLeft");
+		backPositions.add("backCenter");
+		backPositions.add("backRight");
 		List<String> frontPositions = new ArrayList<>();
-		frontPositions.add("front-left");
-		frontPositions.add("front-center");
-		frontPositions.add("front-right");
+		frontPositions.add("frontLeft");
+		frontPositions.add("frontCenter");
+		frontPositions.add("frontRight");
 		boolean bossGenerated = false;
 		boolean minibossGenerated = false;
 		
@@ -102,8 +102,8 @@ public class MonsterServices {
 					break;
 				case "ogre":
 					monster.setType("warrior");
-					monster.setPosition("front-center");
-					frontPositions.remove("front-center");
+					monster.setPosition("frontCenter");
+					frontPositions.remove("frontCenter");
 					break;
 				case "human1":
 					monster.setType("wizard");
@@ -112,8 +112,8 @@ public class MonsterServices {
 					break;
 				case "human2":
 					monster.setType("rogue");
-					monster.setPosition("front-center");
-					frontPositions.remove("front-center");
+					monster.setPosition("frontCenter");
+					frontPositions.remove("frontCenter");
 					break;
 				case "skeleton":
 					monster.setType("wizard");
@@ -122,8 +122,8 @@ public class MonsterServices {
 					break;
 				case "golem":
 					monster.setType("warrior");
-					monster.setPosition("front-center");
-					frontPositions.remove("front-center");
+					monster.setPosition("frontCenter");
+					frontPositions.remove("frontCenter");
 					break;
 			}
 			return;
@@ -137,13 +137,13 @@ public class MonsterServices {
 					break;
 				case "ogre":
 					monster.setType("rogue");
-					monster.setPosition("front-center");
-					frontPositions.remove("front-center");
+					monster.setPosition("frontCenter");
+					frontPositions.remove("frontCenter");
 					break;
 				case "human1":
 					monster.setType("warrior");
-					monster.setPosition("front-center");
-					frontPositions.remove("front-center");
+					monster.setPosition("frontCenter");
+					frontPositions.remove("frontCenter");
 					break;
 				case "human2":
 					monster.setType("wizard");
@@ -152,8 +152,8 @@ public class MonsterServices {
 					break;
 				case "skeleton":
 					monster.setType("warrior");
-					monster.setPosition("front-center");
-					frontPositions.remove("front-center");
+					monster.setPosition("frontCenter");
+					frontPositions.remove("frontCenter");
 					break;
 				case "golem":
 					monster.setType("archer");
@@ -350,8 +350,8 @@ public class MonsterServices {
 				break;
 		}
 		
-		monster.setHealthTotal(Math.round(monsterValue*baseHealth*healthMod));
-		monster.setCurrentHealth(monster.getHealthTotal());
+		monster.setHealth(Math.round(monsterValue*baseHealth*healthMod));
+		monster.setCurrentHealth(-1);
 		monster.setPower(Math.round(monsterValue*basePower*powerMod));
 		monster.setArmor(Math.round(monsterValue*baseArmor*armorMod));
 		monster.setDodgeRating(Math.round(monsterValue*baseDodge*dodgeMod));
@@ -469,10 +469,10 @@ public class MonsterServices {
 							abilities.add(new Ability(0, "Take Aim", 0, monsterValue, 0, "buff-aim", "locks you in their sights."));
 							break;
 						case 'D':
-							abilities.add(new Ability(0, "Tri-Shot", 0, monsterValue, 0, "attack-triple", "fires three quick shots at you."));
+							abilities.add(new Ability(0, "Triple Shot", 0, monsterValue, 0, "attack-triple", "fires three quick shots at you."));
 							break;
 						case 'E':
-							abilities.add(new Ability(0, "Aim for the Soul", 0, monsterValue, 0, "attack-energy", "launches an ephemeral attack upon your soul directly."));
+							abilities.add(new Ability(0, "Soul Sight", 0, monsterValue, 0, "attack-energy", "launches an ephemeral attack upon your soul directly."));
 							break;
 						case 'F':
 							abilities.add(new Ability(0, "Pin Down", 0, monsterValue, 0, "debuff-pin", "shoots at your feet, pinning you to the ground."));

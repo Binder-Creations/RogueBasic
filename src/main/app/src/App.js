@@ -6,11 +6,11 @@ import InnMenu from "./modules/InnMenu";
 import TavernMenu from "./modules/TavernMenu";
 import PcServices from "./modules/PcServices";
 import ItemServices from "./modules/ItemServices";
-import AbilityServices from "./modules/AbilityServices";
 import Dungeon from "./modules/Dungeon";
 import * as images from "./images"
 import * as items from "./images/items";
 import * as monsters from "./images/monsters";
+import CombatEngine from "./modules/CombatEngine";
 
 
 class App extends React.Component {
@@ -20,27 +20,32 @@ class App extends React.Component {
     this.state = {
       pc: {name: null},
       scene: "Default",
-      combat: false, 
+      combat: false,
+      combatUpdates: [], 
       character_id: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
       widthChange: 0
     };
     if(this.state.character_id){
       fetch('/pc/'+ this.state.character_id)
       .then(response => response.json())
-      .then(data => this.setState({pc: data}))
+      .then(data => {
+        this.setState({pc: data})
+      });
       
-    };
+    }
+    this.combat = false;
     this.pcServices = new PcServices(this.state.pc.characterClass);
     this.appState = this.appState.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
     this.sortDungeon = this.sortDungeon.bind(this);
 
     this.props.props = {
+      pc: this.state.pc,
+      combat: this.state.combat,
       images: images, 
       items: items,
       monsters: monsters, 
       appState: this.appState,
-      abilityServices: new AbilityServices(this.appState),
       colorArmor: {color: "#136f9b"},
       colorPower: {color: "#a83a0e"},
       colorHeal: {color: "#ce6eb9"}
@@ -76,6 +81,7 @@ class App extends React.Component {
   }
 
   render(){
+    this.checkCombat();
     if (!this.state.character_id)
       return(
         <Router>
@@ -99,14 +105,14 @@ class App extends React.Component {
       return(<></>)
     }
     if(!this.initialize){
-      this.pcServices.setPc(this.state.pc);
-      this.pcServices.updateStats()
+      this.pcServices.updateStats(this.state.pc);
       window.addEventListener("resize", this.updateWidth)
       this.initialize = true;
     }
 
     this.props.props.pc = this.state.pc;
     this.props.props.combat = this.state.combat;
+    this.props.props.combatUpdates = this.state.combatUpdates;
     this.props.props.widthChange = this.state.widthChange;
       
     this.innerElements = <></>
@@ -128,7 +134,6 @@ class App extends React.Component {
           fetch('/dungeon/'+ this.state.pc.currentDungeon)
           .then(response => response.json())
           .then(data => {
-            console.log(data);
             this.setState({dungeon: this.sortDungeon(data)});
           });
         }
@@ -143,13 +148,13 @@ class App extends React.Component {
               .then(this.setState({pc: pc, dungeonBoard: data}));
           });
         } 
-        if(this.state.pc.dungeonBoard && !this.state.dungeonBoard){
+        if(this.state.pc.dungeonBoard && (!this.state.dungeonBoard)){
           fetch('/dungeon/getBoard/'+ this.state.pc.id)
-          .then(response => response.json())
-          .then(data => {
-            this.state.dungeonBoard = data;
-            this.setState({dungeonBoard: data});
-          });
+            .then(response => response.json())
+            .then(data => {
+              this.state.dungeonBoard = data;
+              this.setState({dungeonBoard: data});
+            });
         }
 
         this.disableUiMenus = true;
@@ -219,7 +224,7 @@ class App extends React.Component {
 
       if(this.state.dungeon && this.state.dungeon.floors){
         this.backgroundSrc = this.props.props.images[this.state.dungeon.theme.toLowerCase() + this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].variant];
-        this.innerElements = <Dungeon props={this.props.props} dungeon={this.state.dungeon}/>
+        this.innerElements = <Dungeon props={this.props.props} dungeon={this.state.dungeon} pcServices={this.pcServices}/>
       } else {
         this.backgroundSrc = this.props.props.images.tavern
       }
@@ -253,6 +258,12 @@ class App extends React.Component {
       });
     }
 
+    checkCombat(){
+      if(!this.state.combat && this.state.pc.location === "Dungeon" && this.state.dungeon && this.state.dungeon.floors && this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters && this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters.length){
+        this.appState("combat");
+      }
+    }
+
     sortDungeon(dungeon){
       dungeon.floors.forEach(floor=>floor.rooms.sort((a,b)=>(a.stairsPrevious) ? -1 : (b.stairsNext ? -1 : 0)));
       dungeon.floors.sort((a,b) => (a.level < b.level) ? -1 : (b.level < a.level ? 1 : 0));
@@ -280,6 +291,35 @@ class App extends React.Component {
       let shop;
       let addItem = true;
       method: switch(method){
+        case "ability":
+          dungeon = {...this.state.dungeon}
+          this.combatEngine.runRound(pc.abilities[key]);
+          dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
+          this.setState({
+            pc: this.combatEngine.pc,
+            dungeon: dungeon
+          });
+        case "combat":
+          if(!this.state.combat){
+              dungeon = {...this.state.dungeon}
+              this.combatEngine = new CombatEngine(this.state.pc, this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters, this.state.dungeon.postFix);
+              dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
+              this.setState({
+                combat: true,
+                dungeon: dungeon
+              });
+              break method;
+          } else {
+            pc = {...this.state.pc}
+            this.pcServices.resetTempStats(pc);
+            this.pcServices.updateStats(pc);
+            this.combatEngine = null;
+            this.save("pc", this.state.pc)
+              .then(this.save("dungeon", this.state.dungeon))
+              .then(() => this.setState({pc: pc, combat: false}));
+            break method;
+          }
+          
         case "stairs":
           dungeon = {...this.state.dungeon};
           dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared = true;
@@ -416,7 +456,7 @@ class App extends React.Component {
           this.save("pc", pc)
             .then(this.save("shop", shop))
             .then(()=>{this.setState({pc: pc, shop: shop})});
-        break method;
+          break method;
         case "inventory":  
           pc = {...this.state.pc};
           if(pc.inventory[key.id] > 1){
@@ -455,8 +495,7 @@ class App extends React.Component {
               pc["equipped" + slot] = key;
               break key;
           }
-          this.pcServices.setPc(pc);
-          this.pcServices.updateStats();
+          this.pcServices.updateStats(pc);
           this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
           break method;
@@ -477,8 +516,7 @@ class App extends React.Component {
           } else {
             pc.equippedSecondary = null;
           }
-          this.pcServices.setPc(pc);
-          this.pcServices.updateStats();
+          this.pcServices.updateStats(pc);
           this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
           break method;
@@ -503,8 +541,7 @@ class App extends React.Component {
             default:
               break key;
           }
-          this.pcServices.setPc(pc);
-          this.pcServices.updateStats();
+          this.pcServices.updateStats(pc);
           this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
           break method;

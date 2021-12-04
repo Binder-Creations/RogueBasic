@@ -644,27 +644,27 @@
 				width: 23.4375%;
 				height: 49.1803%;
 			}
-			.monster.back-left {
+			.monster.backLeft {
 				left: 20.8594%;    
 				top: 4.0984%;
 			}
-			.monster.back-center {
+			.monster.backCenter {
 				left: 44.4531%;
 				top: 4.0984%;				
 			}
-			.monster.back-right {
+			.monster.backRight {
 				left: 68.0469%;
 				top: 4.0984%;
 			}
-			.monster.front-left {
+			.monster.frontLeft {
 				left: 13.2031%;
 				top: 21.6393%;
 			}
-			.monster.front-center {
+			.monster.frontCenter {
 				left: 36.7969%;
 				top: 21.6393%;
 			}
-			.monster.front-right {
+			.monster.frontRight {
 				left: 60.3906%;
 				top: 21.6393%;
 			}
@@ -673,27 +673,27 @@
 				width: 19.5312%;
 				height: 4.918%;
 			}
-			.monster-bar.back-left {
+			.monster-bar.backLeft {
 				left: 22.8906%;
-				top: 1.6393%;
+				top: 6.6393%;
 			}
-			.monster-bar.back-center {
+			.monster-bar.backCenter {
 				left: 46.4062%;
-				top: 1.6393%;				
+				top: 6.6393%;				
 			}
-			.monster-bar.back-right {
+			.monster-bar.backRight {
 				left: 70.0%;
-				top: 1.6393%;				
+				top: 6.6393%;				
 			}
-			.monster-bar.front-left {
+			.monster-bar.frontLeft {
 				left: 15.1562%;
 				top: 71.1475%;				
 			}
-			.monster-bar.front-center {
+			.monster-bar.frontCenter {
 				left: 38.75%;
 				top: 71.1475%;				
 			}
-			.monster-bar.front-right {
+			.monster-bar.frontRight {
 				left: 62.3438%;
 				top: 71.1475%;				
 			}
@@ -1053,6 +1053,10 @@
 			left:50%;
 			transform: translate(-50%, -50%);
 			-ms-transform: translateY(-50%) translateX(-50%);
+		}
+		.nowrap{
+			white-space: nowrap;
+			overflow: hidden;
 		}
 		.relative{
 			position:relative;

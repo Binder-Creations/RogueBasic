@@ -66,78 +66,21 @@ class PcServices {
         strengthBonus: 0
       };
 
-  }
-  
-  setPc(pc){
+  } 
+  updateStats(pc){
     this.pc = pc;
-  }
-  conTotal(){
-    return this.pc.constitution*1 + this.pc.constitutionBonus*1;
-  }
-  strTotal(){
-    return this.pc.strength*1 + this.pc.strengthBonus*1;
-  }
-  dexTotal(){
-    return this.pc.dexterity*1 + this.pc.dexterityBonus*1;
-  }
-  intTotal(){
-    return this.pc.intelligence*1 + this.pc.intelligenceBonus*1;
-  }
-  powerTotal() {
-		return (Math.round(this.strTotal()/2) + Math.round(this.dexTotal()/2) + Math.round(this.intTotal()/2) + this.pc.powerBonus*1);
-	}
-	
-	healthTotal() {
-		return this.conTotal()*(4+(this.pc.level-1)/2) + this.pc.healthBonus*1;
-	}
-	
-	healthRegenTotal() {
-		return Math.round(this.conTotal()/3) + this.pc.healthRegenBonus*1;
-	}
-	
-	armorPenTotal() {
-		return this.strTotal()*2 + this.pc.armorPenBonus*1;
-	}
-	
-	armorTotal() {
-		return this.strTotal()*2 + this.pc.armorBonus*1;
-	}
-	
-	dodgeRatingTotal() {
-		return this.dexTotal()*2 + this.pc.dodgeRatingBonus*1;
-	}
-	
-  critRatingTotal() {
-		return this.dexTotal()*2 + this.pc.critRatingBonus*1;
-	}
-	
-	energyTotal() {
-		return (this.intTotal()+this.pc.level-1)*6 + this.pc.energyBonus*1;
-	}
-	
-	energyRegenTotal() {
-		return Math.round(this.intTotal()/2) + this.pc.energyRegenBonus*1;
-	}
-  experienceNeededCalc(){
-    return Math.round(this.pc.level**1.5)*100;
-  }
-  physResistCalc(){
-    return Math.round((95-95**(1-(((this.armorTotal()*(1/((13+this.pc.level)/14)))**0.55)/100)) + Number.EPSILON)*10)/10
-  }
-  magResistCalc(){
-    return Math.round((75-75**(1-(((this.armorTotal()*(1/((13+this.pc.level)/14)))**0.4)/100)) + Number.EPSILON)*10)/10
-  }
-  critChanceCalc(){
-    return Math.round(((this.critRatingTotal()*(1/((13+this.pc.level)/14)))**0.78 + Number.EPSILON)*10)/10
-  }
-  dodgeChanceCalc(){
-    return Math.round((95-(95*(1-(((this.dodgeRatingTotal()*(1/((13+this.pc.level)/14)))**0.7)/100))) + Number.EPSILON)*10)/10
-  }
-  baseDamageCalc(){
-    return 8+this.pc.level*2
-  }
+    if(!this.pc.hasOwnProperty('tempStats')){
+      this.resetTempStats(this.pc);
+    }
 
-  updateStats(){
+    if(Object.keys(this.pc.buffs).length){
+      this.parseBuffs();
+    }
+
+    if(Object.keys(this.pc.debuffs).length){
+      this.parseDebuffs();
+    }
+    
     let head = this.pc.equippedHead ? this.pc.equippedHead : this.emptySlot
     let body = this.pc.equippedBody ? this.pc.equippedBody : this.emptySlot
     let back = this.pc.equippedBack ? this.pc.equippedBack : this.emptySlot
@@ -163,13 +106,15 @@ class PcServices {
     this.pc.healthTotal = this.healthTotal();
     this.pc.healthRegenTotal = this.healthRegenTotal();
     this.pc.armorTotal = this.armorTotal();
-    this.pc.armorPenTotal = this.armorTotal();
+    this.pc.armorPenTotal = this.armorPenTotal();
     this.pc.critRatingTotal = this.critRatingTotal();
     this.pc.dodgeRatingTotal = this.dodgeRatingTotal();
     this.pc.energyTotal = this.energyTotal();
     this.pc.energyRegenTotal = this.energyRegenTotal();
     this.pc.physResist = this.physResistCalc();
     this.pc.magResist = this.magResistCalc();
+    this.pc.physResistReduction = this.physResistReductionCalc();
+    this.pc.magResistReduction = this.magResistReductionCalc();
     this.pc.critChance = this.critChanceCalc();
     this.pc.dodgeChance = this.dodgeChanceCalc();
     this.pc.baseDamage = this.baseDamageCalc();
@@ -213,6 +158,111 @@ class PcServices {
     }
     this.healthTotalPrevious = this.healthTotal();
     this.energyTotalPrevious = this.energyTotal();
+  }
+
+  resetTempStats(pc){
+    pc.flags = {};
+    pc.buffs = {};
+    pc.debuffs = {};
+    pc.tempStats = {
+      constitution: 0,
+      strength: 0,
+      dexterity: 0,
+      intelligence: 0,
+      power: 0,
+      health: 0,
+      healthRegen: 0,
+      armorPen: 0,
+      armor: 0,
+      dodgeRating: 0,
+      critRating: 0,
+      energy: 0,
+      energyRegen: 0
+    }
+  }
+
+  parseBuffs(){
+    for(let buff in this.pc.buffs){
+      this.pc.tempStats[buff.stat] += buff.value;
+    }
+  }
+
+  parseDebuffs(){
+    for(let debuff in this.pc.debuffs){
+      this.pc.tempStats[debuff.stat] -= debuff.value;
+    }
+  }
+
+  conTotal(){
+    return this.pc.constitution*1 + this.pc.constitutionBonus*1 + this.pc.tempStats.constitution;
+  }
+  strTotal(){
+    return this.pc.strength*1 + this.pc.strengthBonus*1  + this.pc.tempStats.strength;
+  }
+  dexTotal(){
+    return this.pc.dexterity*1 + this.pc.dexterityBonus*1  + this.pc.tempStats.dexterity;
+  }
+  intTotal(){
+    return this.pc.intelligence*1 + this.pc.intelligenceBonus*1  + this.pc.tempStats.intelligence;
+  }
+  powerTotal() {
+		return (Math.round(this.strTotal()/2) + Math.round(this.dexTotal()/2) + Math.round(this.intTotal()/2) + this.pc.powerBonus*1  + this.pc.tempStats.power);
+	}
+	
+	healthTotal() {
+		return this.conTotal()*(4+(this.pc.level-1)/2) + this.pc.healthBonus*1 +  + this.pc.tempStats.health;
+	}
+	
+	healthRegenTotal() {
+		return Math.round(this.conTotal()/3) + this.pc.healthRegenBonus*1 +  + this.pc.tempStats.healthRegen;
+	}
+	
+	armorPenTotal() {
+		return this.strTotal()*2 + this.pc.armorPenBonus*1 +  + this.pc.tempStats.armorPen;
+	}
+	
+	armorTotal() {
+		return this.strTotal()*2 + this.pc.armorBonus*1  + this.pc.tempStats.armor;
+	}
+	
+	dodgeRatingTotal() {
+		return this.dexTotal()*2 + this.pc.dodgeRatingBonus*1  + this.pc.tempStats.dodgeRating;
+	}
+	
+  critRatingTotal() {
+		return this.dexTotal()*2 + this.pc.critRatingBonus*1 + this.pc.tempStats.critRating;
+	}
+	
+	energyTotal() {
+		return (this.intTotal()+this.pc.level-1)*6 + this.pc.energyBonus*1  + this.pc.tempStats.energy;
+	}
+	
+	energyRegenTotal() {
+		return Math.round(this.intTotal()/2) + this.pc.energyRegenBonus*1 + this.pc.tempStats.energyRegen;
+	}
+  experienceNeededCalc(){
+    return Math.round(this.pc.level**1.5)*100;
+  }
+  physResistCalc(){
+    return Math.round((95-95**(1-(((this.armorTotal()*(1/((13+this.pc.level)/14)))**0.55)/100)) + Number.EPSILON)*10)/10
+  }
+  magResistCalc(){
+    return Math.round((75-75**(1-(((this.armorTotal()*(1/((13+this.pc.level)/14)))**0.4)/100)) + Number.EPSILON)*10)/10
+  }
+  physResistReductionCalc(){
+    return Math.round((95-95**(1-(((this.armorPenTotal()*(1/((13+this.pc.level)/14)))**0.55)/100)) + Number.EPSILON)*10)/10
+  }
+  magResistReductionCalc(){
+    return Math.round((75-75**(1-(((this.armorPenTotal()*(1/((13+this.pc.level)/14)))**0.4)/100)) + Number.EPSILON)*10)/10
+  }
+  critChanceCalc(){
+    return Math.round(((this.critRatingTotal()*(1/((13+this.pc.level)/14)))**0.78 + Number.EPSILON)*10)/10
+  }
+  dodgeChanceCalc(){
+    return Math.round((95-(95*(1-(((this.dodgeRatingTotal()*(1/((13+this.pc.level)/14)))**0.7)/100))) + Number.EPSILON)*10)/10
+  }
+  baseDamageCalc(){
+    return 8+this.pc.level*2
   }
 }
 

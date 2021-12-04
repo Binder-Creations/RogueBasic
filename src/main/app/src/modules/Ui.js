@@ -28,9 +28,9 @@ class Ui extends React.Component {
 
       if(this.props.props.pc.level >= this.props.props.pc.abilities[props.number-1].level){
         if(this.props.props.combat){
-          if(this.props.props.pc.currentEnergy >= this.props.props.pc.abilityCosts[props.number-1]){
+          if(this.props.props.pc.currentEnergy >= this.props.props.pc.abilities[props.number-1].cost){
             className="hover-saturate"
-            onClick= () => this.props.props.appState("ability", props.number)
+            onClick= () => this.props.props.appState("ability", this.props.number)
           } else {
             className="saturate-66"
           }
@@ -62,6 +62,11 @@ class Ui extends React.Component {
       </button>
       );
     }
+
+    this.attackButton = <></>;
+    this.AttackButton = () => {
+      return(this.attackButton);
+    }
   }
 
   render(){
@@ -79,6 +84,12 @@ class Ui extends React.Component {
       this.setState({characterMenu: false, inventoryMenu: false})
     }
     
+    if(this.props.props.combat){
+      this.attackButton = <input class="btn-attack hover-saturate" type="image" src={this.buttonAttack} alt="Attack" onClick={() => this.props.props.appState("ability", 0)}/>
+    } else {
+      this.attackButton = <input class="btn-attack" type="image" src={this.buttonAttack} alt="Attack"/>
+    }
+
     return(
       <>
         <img className="bar-health-background" src={this.props.props.images.barBackground} alt="Health" title={this.healthHover}/>
@@ -94,7 +105,7 @@ class Ui extends React.Component {
         <this.Skill number="3"/>
         <this.Skill number="4"/>  
         <Minimap props={this.props.props} dungeon={this.props.dungeon}/>
-        <input class="btn-attack hover-saturate" type="image" src={this.buttonAttack} alt="Attack"/>
+        <this.AttackButton/>
         <input class="btn-character hover-saturate-250" type="image" src={this.props.props.images.buttonCharacter} alt="Character" onClick={this.toggleCharacterMenu}/>
         <input class="btn-inventory hover-saturate-250" type="image" src={this.props.props.images.buttonInventory} alt="Inventory" onClick={this.toggleInventoryMenu}/>
         <CharacterMenu props={this.props.props} toggle={this.toggleCharacterMenu} on={this.state.characterMenu}/>
