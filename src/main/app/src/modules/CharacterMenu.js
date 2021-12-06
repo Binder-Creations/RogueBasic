@@ -5,9 +5,9 @@ class CharacterMenu extends React.Component {
 
   constructor(props){
     super(props);
-    if(this.props.props.pc.characterClass == "Rogue"){
+    if(this.props.props.pc.characterClass === "Rogue"){
       this.badge = this.props.props.images.badgeRogue;
-    } else if(this.props.props.pc.characterClass == "Wizard"){
+    } else if(this.props.props.pc.characterClass === "Wizard"){
       this.badge = this.props.props.images.badgeWizard;
     } else {
       this.badge = this.props.props.images.badgeWarrior;
@@ -34,7 +34,7 @@ class CharacterMenu extends React.Component {
           </div>
           <img className="bar-experience" src={this.props.props.images.barExperience} alt="Experience" title={this.experienceHover} style={this.experienceStyle}/>
           <img className="bar-experience-frame" src={this.props.props.images.barFrame} alt="Experience" title={this.experienceHover}/>
-          <img className="character-level-background" src={this.props.props.images.characterLevelBackground}></img>
+          <img className="character-level-background" src={this.props.props.images.characterLevelBackground} alt=""></img>
           <div className="character-level">
             <p className="v-h-centered">{this.props.props.pc.level}</p>
           </div>
@@ -49,13 +49,13 @@ class CharacterMenu extends React.Component {
             <p>{"+" + Math.round(this.props.props.pc.conTotal/3)+" Health Regen"}</p>
             <p className="spacer-xs"></p>
             <p>{"+"+Math.round(this.props.props.pc.strTotal/2)+" Power"}</p>
-            <p>{"+"+this.props.props.pc.strTotal*2+" Armor" + " +"+(this.props.props.pc.strTotal)*2+" Armor Pen"}</p>
+            <p>{"+"+this.props.props.pc.strTotal*2+" Armor +"+(this.props.props.pc.strTotal)*2+" Armor Pen"}</p>
             <p className="spacer-xs"></p>
             <p>{"+"+Math.round(this.props.props.pc.dexTotal/2)+" Power"}</p>
-            <p>{"+"+this.props.props.pc.dexTotal*2+" Dodge Rating" + " +"+this.props.props.pc.dexTotal*2+" Crit Rating"}</p>
+            <p>{"+"+this.props.props.pc.dexTotal*2+" Dodge Rating +"+this.props.props.pc.dexTotal*2+" Crit Rating"}</p>
             <p className="spacer-xs"></p>
             <p>{"+"+Math.round(this.props.props.pc.intTotal/2)+" Power"}</p>
-            <p>{"+"+this.props.props.pc.intTotal*6+" Energy" + " +"+Math.round(this.props.props.pc.intTotal/2)+" Energy Regen"}</p>
+            <p>{"+"+this.props.props.pc.intTotal*6+" Energy +"+Math.round(this.props.props.pc.intTotal/2)+" Energy Regen"}</p>
           </div>
           <div className="der-stats-1">
             <p title="All Damage Increases by 1% per Power">Power:</p>

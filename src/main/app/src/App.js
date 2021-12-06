@@ -22,7 +22,7 @@ class App extends React.Component {
       scene: "Default",
       combat: false,
       combatUpdates: [], 
-      character_id: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
+      character_id: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*=\s*([^;]*).*$)|^.*$/, "$1"),
       widthChange: 0
     };
     if(this.state.character_id){
@@ -91,7 +91,7 @@ class App extends React.Component {
           }}/>
         </Router>
       );
-    if(this.state.scene=="Home"){
+    if(this.state.scene==="Home"){
         return(
           <Router>
             <Route path='/' component={() => { 
@@ -109,6 +109,7 @@ class App extends React.Component {
       window.addEventListener("resize", this.updateWidth)
       this.initialize = true;
     }
+    console.log(this.state.pc)
 
     this.props.props.pc = this.state.pc;
     this.props.props.combat = this.state.combat;
@@ -120,8 +121,8 @@ class App extends React.Component {
     this.disableUiMenus = false;
     let button = "TownButton";
 
-    if (this.state.pc.location == "Town"){
-      if(this.state.scene=="Default"){
+    if (this.state.pc.location === "Town"){
+      if(this.state.scene === "Default"){
         this.backgroundSrc = this.props.props.images.town
         button = "HomeButton"
         this.innerElements = <>
@@ -129,8 +130,8 @@ class App extends React.Component {
           <input className="inn" type="image" src={this.props.props.images.innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
           <input className="shop" type="image" src={this.props.props.images.shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
         </>
-      } else if(this.state.scene=="Tavern"){
-        if(this.state.pc.currentDungeon && (!this.state.dungeon || this.state.dungeon.id != this.state.pc.currentDungeon)){
+      } else if(this.state.scene === "Tavern"){
+        if(this.state.pc.currentDungeon && (!this.state.dungeon || this.state.dungeon.id !== this.state.pc.currentDungeon)){
           fetch('/dungeon/'+ this.state.pc.currentDungeon)
           .then(response => response.json())
           .then(data => {
@@ -152,7 +153,6 @@ class App extends React.Component {
           fetch('/dungeon/getBoard/'+ this.state.pc.id)
             .then(response => response.json())
             .then(data => {
-              this.state.dungeonBoard = data;
               this.setState({dungeonBoard: data});
             });
         }
@@ -162,13 +162,13 @@ class App extends React.Component {
         this.outerElements = <>
           <TavernMenu props={this.props.props} dungeonBoard={this.state.dungeonBoard} dungeon={this.state.dungeon}/>
         </>
-      } else if(this.state.scene=="Inn"){
+      } else if(this.state.scene==="Inn"){
         this.disableUiMenus = true;
         this.backgroundSrc = this.props.props.images.inn
         this.outerElements = <>
           <InnMenu props={this.props.props}/>
         </>
-      } else if(this.state.scene=="Shop"){
+      } else if(this.state.scene==="Shop"){
         if(this.state.pc.currentShop){
           if(!this.state.shop){
             fetch('/shop/'+ this.state.pc.currentShop)
@@ -176,7 +176,7 @@ class App extends React.Component {
               .then(data => {
                 this.setState({shop: data});
               });
-          } else if(this.state.shop.id != this.state.pc.currentShop){
+          } else if(this.state.shop.id !== this.state.pc.currentShop){
             fetch('/shop/'+ this.state.pc.currentShop)
               .then(response => response.json())
               .then(data => {
@@ -187,9 +187,10 @@ class App extends React.Component {
           fetch('/shop/new/'+ this.state.pc.id)
             .then(response => response.json())
             .then(data => {
-              this.state.pc.currentShop = data.id;
+              let pc = {...this.state.pc}
+              pc.currentShop = data.id;
               this.save("pc", this.state.pc)
-                .then(this.setState({shop: data}));
+                .then(this.setState({shop: data, pc: pc}));
             });
         }
 
@@ -199,7 +200,7 @@ class App extends React.Component {
           <ShopMenu props={this.props.props} shop={this.state.shop}/>
         </>
       }
-    } else if(this.state.pc.location == "Dungeon") {
+    } else if(this.state.pc.location === "Dungeon") {
       if(!this.state.dungeon){
         fetch('/dungeon/' + this.state.pc.currentDungeon)
           .then(response => response.json())
@@ -282,7 +283,7 @@ class App extends React.Component {
     }
 
     updateWidth(){
-      this.setState({widthChange: ++this.state.widthChange});
+      this.setState({widthChange: this.state.widthChange + 1});
     }
 
     appState(method, key, value){
@@ -290,7 +291,7 @@ class App extends React.Component {
       let dungeon;
       let shop;
       let addItem = true;
-      method: switch(method){
+      switch(method){
         case "ability":
           dungeon = {...this.state.dungeon}
           this.combatEngine.runRound(pc.abilities[key]);
@@ -299,6 +300,7 @@ class App extends React.Component {
             pc: this.combatEngine.pc,
             dungeon: dungeon
           });
+          break;
         case "combat":
           if(!this.state.combat){
               dungeon = {...this.state.dungeon}
@@ -308,7 +310,7 @@ class App extends React.Component {
                 combat: true,
                 dungeon: dungeon
               });
-              break method;
+              break;
           } else {
             pc = {...this.state.pc}
             this.pcServices.resetTempStats(pc);
@@ -317,14 +319,14 @@ class App extends React.Component {
             this.save("pc", this.state.pc)
               .then(this.save("dungeon", this.state.dungeon))
               .then(() => this.setState({pc: pc, combat: false}));
-            break method;
+            break;
           }
           
         case "stairs":
           dungeon = {...this.state.dungeon};
           dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared = true;
           if(key){
-            if(dungeon.currentFloor == 0){
+            if(dungeon.currentFloor === 0){
               pc = {...this.state.pc};
               pc.location = "Town";
               this.save("dungeon", dungeon)
@@ -342,21 +344,22 @@ class App extends React.Component {
             this.save("dungeon", dungeon)
               .then(()=>{this.setState({dungeon: dungeon})})
           }
-          break method;
+          break;
         case "move-room":
           dungeon = {...this.state.dungeon};
           dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared = true;
           dungeon.floors[dungeon.currentFloor].rooms.some(room => {
-            if(room.id == key){
+            if(room.id === key){
               dungeon.currentRoom = dungeon.floors[dungeon.currentFloor].rooms.indexOf(room);
               return true;
             }
+            return false;
           });
           this.save("dungeon", dungeon)
             .then(()=>{this.setState({dungeon: dungeon})})
-          break method;
+          break;
         case "scene":
-          if(this.state.pc.location == value) {
+          if(this.state.pc.location === value) {
             this.setState({scene: key})
           } else {
             pc = {...this.state.pc}
@@ -364,19 +367,19 @@ class App extends React.Component {
             this.save("pc", pc)
               .then(()=>{this.setState({pc: pc, scene: key})})
           }
-          break method;
+          break;
         case "to-dungeon":
           pc = {...this.state.pc};
           pc.location = "Dungeon";
           this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
-          break method;
+          break;
         case "set-dungeon":
           pc = {...this.state.pc};
           pc.currentDungeon = key;
           this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
-          break method;
+          break;
         case "rest":
           pc = {...this.state.pc};
           pc.currentHealth = pc.healthTotal;
@@ -393,7 +396,7 @@ class App extends React.Component {
 
           this.save("pc", pc)
             .then(()=>{this.setState({pc: pc, dungeon: null})});
-          break method;
+          break;
         case "eat":
             pc = {...this.state.pc};
             pc.currentHealth = pc.healthTotal;
@@ -404,19 +407,19 @@ class App extends React.Component {
 
             this.save("pc", pc)
               .then(()=>{this.setState({pc: pc})});
-            break method;
+            break;
         case "shop-store":
           pc = {...this.state.pc};
           shop = {...this.state.shop};
-          if(key.type != "potion" && key.type != "consumable"){
+          if(key.type !== "potion" && key.type !== "consumable"){
             var index = shop.inventoryCache.indexOf(key);
             if (index !== -1)
               shop.inventoryCache.splice(index, 1);
           }
           pc.currency -= key.cost*5;
-          pc.currency < 0 
-            ? pc.currency = 0
-            : pc.currency = pc.currency
+          if(pc.currency < 0){
+            pc.currency = 0;
+          }
 
           if(pc.inventory[key.id]){
             pc.inventory[key.id] += 1;
@@ -424,7 +427,7 @@ class App extends React.Component {
             pc.inventory[key.id] = 1;
           }
           for(const item of pc.inventoryCache){
-            if(item.id == key.id){
+            if(item.id === key.id){
               addItem = false;
             }
           }
@@ -434,7 +437,7 @@ class App extends React.Component {
           this.save("pc", pc)
             .then(this.save("shop", shop))
             .then(()=>{this.setState({pc: pc, shop: shop})});
-          break method;
+          break;
         case "shop-player":
           pc = {...this.state.pc};
           shop = {...this.state.shop};
@@ -442,48 +445,48 @@ class App extends React.Component {
             pc.inventory[key.id] -= 1;
           }else{
             delete pc.inventory[key.id]
-            var index = pc.inventoryCache.indexOf(key);
+            let index = pc.inventoryCache.indexOf(key);
             if (index !== -1)
               pc.inventoryCache.splice(index, 1);
           }
 
           pc.currency += key.cost;
           
-          if(key.type != "potion" && key.type != "consumable"){
+          if(key.type !== "potion" && key.type !== "consumable"){
             shop.inventoryCache.push(key);
           }
 
           this.save("pc", pc)
             .then(this.save("shop", shop))
             .then(()=>{this.setState({pc: pc, shop: shop})});
-          break method;
+          break;
         case "inventory":  
           pc = {...this.state.pc};
           if(pc.inventory[key.id] > 1){
             pc.inventory[key.id] -= 1;
           }else{
             delete pc.inventory[key.id]
-            var index = pc.inventoryCache.indexOf(key);
+            let index = pc.inventoryCache.indexOf(key);
             if (index !== -1)
               pc.inventoryCache.splice(index, 1);
           }
-          key: switch (key.actionType){
+          switch (key.actionType){
             case "heal":
               pc.currentHealth = (pc.currentHealth + pc.healthTotal*(1+key.actionValue/100) > pc.healthTotal)
                 ? pc.healthTotal
                 : pc.currentHealth + pc.healthTotal*(1+key.actionValue/100);
-              break key;
+              break;
             default:
               var slot;
-              if(key.type == "headLight" || key.type == "headMedium" || key.type == "headHeavy"){
+              if(key.type === "headLight" || key.type === "headMedium" || key.type === "headHeavy"){
                 slot = "Head";
-              } else if (key.type == "bodyLight" || key.type == "bodyMedium" || key.type == "bodyHeavy"){
+              } else if (key.type === "bodyLight" || key.type === "bodyMedium" || key.type === "bodyHeavy"){
                 slot = "Body"
-              } else if (key.type == "neck"){
+              } else if (key.type === "neck"){
                 slot = "Neck"
-              } else if (key.type == "back"){
+              } else if (key.type === "back"){
                 slot = "Back"
-              } else if (key.type == "bow" || key.type == "staff" || key.type == "sword"){
+              } else if (key.type === "bow" || key.type === "staff" || key.type === "sword"){
                 slot = "Primary"
               } else {
                 slot = "Secondary"
@@ -493,25 +496,25 @@ class App extends React.Component {
                 pc.inventoryCache.push(pc["equipped" + slot])
               }
               pc["equipped" + slot] = key;
-              break key;
+              break;
           }
           this.pcServices.updateStats(pc);
           this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
-          break method;
+          break;
         case "unequip":  
           pc = {...this.state.pc};
           pc.inventory[key.id] = 1;
           pc.inventoryCache.push(key);
-          if(key.type == "headLight" || key.type == "headMedium" || key.type == "headHeavy"){
+          if(key.type === "headLight" || key.type === "headMedium" || key.type === "headHeavy"){
             pc.equippedHead = null;
-          } else if (key.type == "bodyLight" || key.type == "bodyMedium" || key.type == "bodyHeavy"){
+          } else if (key.type === "bodyLight" || key.type === "bodyMedium" || key.type === "bodyHeavy"){
             pc.equippedBody = null;
-          } else if (key.type == "neck"){
+          } else if (key.type === "neck"){
             pc.equippedNeck = null;
-          } else if (key.type == "back"){
+          } else if (key.type === "back"){
             pc.equippedBack = null;
-          } else if (key.type == "bow" || key.type == "staff" || key.type == "sword"){
+          } else if (key.type === "bow" || key.type === "staff" || key.type === "sword"){
             pc.equippedPrimary = null;
           } else {
             pc.equippedSecondary = null;
@@ -519,32 +522,34 @@ class App extends React.Component {
           this.pcServices.updateStats(pc);
           this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
-          break method;
+          break;
         case "pointbuy":
           pc = {...this.state.pc};
           pc.attributePoints > 0
             ? pc.attributePoints -= 1
             : pc.attributePoints = 0;
-          key: switch(key){ 
+          switch(key){ 
             case "con":
               pc.constitution += 1;
-              break key;
+              break;
             case "str":
               pc.strength += 1;
-              break key;
+              break;
             case "dex":
               pc.dexterity += 1;
-              break key;
+              break;
             case "int":
               pc.intelligence += 1;
-              break key;
+              break;
             default:
-              break key;
+              break;
           }
           this.pcServices.updateStats(pc);
           this.save("pc", pc)
             .then(()=>{this.setState({pc: pc})});
-          break method;
+          break;
+        default:
+          break;
       }
     }
 

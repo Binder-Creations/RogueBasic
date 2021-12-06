@@ -21,17 +21,17 @@ class ItemServices {
         itemProps.badgeClass = "badge-generic";
         itemProps.typeName = "Potion";
         itemProps.iconValue = item.actionValue;
-        actionType: switch(item.actionType){
+        switch(item.actionType){
           case "heal":
             itemProps.icon = this.props.images.iconHeal;
             itemProps.iconClass = "icon-heal";
             itemProps.iconValueColor = this.props.colorHeal
-            break actionType;
+            break;
           default:
             itemProps.icon = this.props.images.iconHeal;
             itemProps.iconClass = "icon-heal";
             itemProps.iconValueColor = this.props.colorHeal;
-            break actionType;
+            break;
         }
         break;
       case "consumable":
@@ -39,17 +39,17 @@ class ItemServices {
         itemProps.badgeClass = "badge-generic";
         itemProps.typeName = "Consumable";
         itemProps.iconValue = item.actionValue;
-        actionType: switch(item.actionType){
+        switch(item.actionType){
           case "heal":
             itemProps.icon = this.props.images.iconHeal;
             itemProps.iconClass = "icon-heal";
             itemProps.iconValueColor = this.props.colorHeal
-            break actionType;
+            break;
           default:
             itemProps.icon = this.props.images.iconHeal;
             itemProps.iconClass = "icon-heal";
             itemProps.iconValueColor = this.props.colorHeal
-            break actionType;
+            break;
         }
         break;
       case "headLight":
@@ -177,6 +177,8 @@ class ItemServices {
         itemProps.iconValue = item.armorBonus;
         itemProps.iconValueColor = this.props.colorArmor;
         itemProps.typeName = "Shield";
+        break;
+      default:
         break;
       }
 

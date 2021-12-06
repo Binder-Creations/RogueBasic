@@ -20,7 +20,7 @@ class CombatEngine {
     AbilityServices["pc"+ability.type](this.ability, this.pc, this.monsters, this.combatUpdates);
     // this.pcAbility(abilityName);
     this.monsters.forEach(monster => {
-      if(!monster.flags.stun){
+      if(monster.boss || monster.miniboss || !monster.flags.stun){
         this.monsterAbility(monster, this.selectAbility(monster));
       } else {
         this.combatUpdates.push(new CombatUpdate(monster.position, {stun: false}));
@@ -47,7 +47,7 @@ class CombatEngine {
   }
 
   selectAbility(monster){
-    let abilityChance = (30 + monster.level + (monster.type == "Rogue" ? 5 : monster.type == "Wizard" ? 10 : 0))*(monster.boss ? 1.5 : monster.miniboss ? 1.25 : 1);
+    let abilityChance = (30 + monster.level + (monster.type === "Rogue" ? 5 : monster.type === "Wizard" ? 10 : 0))*(monster.boss ? 1.5 : monster.miniboss ? 1.25 : 1);
     if(Math.random()*100 < abilityChance){
       return monster.abilities[Math.floor(Math.random()*monster.abilities.length)].name.replace(" ", "");
     } else {

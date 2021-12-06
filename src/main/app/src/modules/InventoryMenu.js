@@ -8,10 +8,10 @@ class InventoryMenu extends React.Component {
   constructor(props){
     super(props);
     this.state = {update: 0};
-    if(this.props.props.pc.characterClass == "Rogue"){
+    if(this.props.props.pc.characterClass === "Rogue"){
       this.silhouette = this.props.props.images.silhouetteRogue;
       this.silhouetteClass = "silhouette-rogue";
-    } else if(this.props.props.pc.characterClass == "Wizard"){
+    } else if(this.props.props.pc.characterClass === "Wizard"){
       this.silhouette = this.props.props.images.silhouetteWizard;
       this.silhouetteClass = "silhouette-wizard";
     } else {
@@ -60,7 +60,7 @@ class InventoryMenu extends React.Component {
   }
 
   update() {
-    this.setState({update: ++this.state.update});
+    this.setState({update: this.state.update + 1});
   }
 }
 

@@ -57,11 +57,11 @@ class ShopMenu extends React.Component {
   }
 
   update() {
-    this.setState({update: ++this.state.update});
+    this.setState({update: this.state.update + 1});
   }
 
   updateShop() {
-    this.setState({updateShop: ++this.state.updateShop});
+    this.setState({updateShop: this.state.updateShop + 1});
   }
 }
 

@@ -10,17 +10,17 @@ class SkillTooltip extends React.Component {
   render(){
     this.setStyle();
 
-    let hits = this.props.props.pc.abilities[this.props.number-1].hits > 1
-      ? "x"+this.props.props.pc.abilities[this.props.number-1].hits
+    let hits = this.props.props.pc.abilities[this.props.number].hits > 1
+      ? "x"+this.props.props.pc.abilities[this.props.number].hits
       : ""
 
     let Level = () => {
       return(
-        this.props.props.pc.level >= this.props.props.pc.abilities[this.props.number-1].level
+        this.props.props.pc.level >= this.props.props.pc.abilities[this.props.number].level
           ? <></>
           : <>
               <p>Requires:</p>
-              <p>{"level " + this.props.props.pc.abilities[this.props.number-1].level}</p>
+              <p>{"level " + this.props.props.pc.abilities[this.props.number].level}</p>
             </>
       );
     }  
@@ -29,7 +29,7 @@ class SkillTooltip extends React.Component {
     let iconClass;
     let valueStyle;
 
-    if(this.props.props.pc.abilities[this.props.number-1].type == "Power"){
+    if(this.props.props.pc.abilities[this.props.number].type === "Power"){
       icon = this.props.props.images.iconPower
       iconClass = "item-tooltip-icon-power"
       valueStyle = this.props.props.colorPower
@@ -41,17 +41,17 @@ class SkillTooltip extends React.Component {
 
     return (
       <div className={"skill-tooltip-box"} style={this.style}>
-        <img className="absolute-fill" src={this.props.props.images.tooltipSkill}/>
+        <img className="absolute-fill" src={this.props.props.images.tooltipSkill} alt="background"/>
         <img className="item-tooltip-image" src={this.props.props.images["skill" + this.props.props.pc.characterClass + this.props.number]} alt="Skill"/>
-        <img className={"item-tooltip-badge-"+this.props.props.pc.characterClass.toLowerCase()} src={this.props.props.images["badge"+this.props.props.pc.characterClass+"Small"]}/>
-        <img className={iconClass} src={icon}/>
-        <p className="item-tooltip-icon-value" style={valueStyle}>{Math.round((this.props.props.pc.abilities[this.props.number-1].modifier*this.props.props.pc.baseDamage/100)*(1+(this.props.props.pc.powerBonus/100)))+hits}</p>
-        <p className="item-tooltip-name">{this.props.props.pc.abilities[this.props.number-1].name}</p>
-        <p className="skill-tooltip-cost">{this.props.props.pc.abilities[this.props.number-1].cost}</p>      
+        <img className={"item-tooltip-badge-"+this.props.props.pc.characterClass.toLowerCase()} src={this.props.props.images["badge"+this.props.props.pc.characterClass+"Small"]} alt="class"/>
+        <img className={iconClass} src={icon} alt="icon"/>
+        <p className="item-tooltip-icon-value" style={valueStyle}>{Math.round((this.props.props.pc.abilities[this.props.number].modifier*this.props.props.pc.baseDamage/100)*(1+(this.props.props.pc.powerBonus/100)))+hits}</p>
+        <p className="item-tooltip-name">{this.props.props.pc.abilities[this.props.number].name}</p>
+        <p className="skill-tooltip-cost">{this.props.props.pc.abilities[this.props.number].cost}</p>      
         <div className="skill-tooltip-requirement">
           <Level/>
         </div>
-        <div className="item-tooltip-statbox">{this.props.props.pc.abilities[this.props.number-1].description}</div>
+        <div className="item-tooltip-statbox">{this.props.props.pc.abilities[this.props.number].description}</div>
       </div>
     )
   }

@@ -22,7 +22,7 @@ class Minimap extends React.Component {
     if(!this.props.dungeon.floors){
       return(<></>)
     }
-    if(this.props.props.pc.location != "Dungeon"){
+    if(this.props.props.pc.location !== "Dungeon"){
       return(<></>)
     }
 
@@ -62,7 +62,7 @@ class Minimap extends React.Component {
 
         let style = {position: "absolute", width: roomsize + "%", height: roomsize + "%", left: (roomsize+2)*(room.xCoord-1)+"%", bottom: (roomsize+2)*(room.yCoord-1)+"%"}
         
-        this.rooms.push(<img src={src} style={style}/>);
+        this.rooms.push(<img src={src} style={style} alt="room"/>);
         
         if(room.northRoomId){
           this.addConnector(room.xCoord, room.yCoord+1, "Vertical", roomsize)
@@ -100,13 +100,13 @@ class Minimap extends React.Component {
       this.alreadyConnected.push(connector);
       let style;
 
-        if(orientation == "Vertical"){
+        if(orientation === "Vertical"){
           style = {position: "absolute", width: (roomsize*7)/32 + "%", height: roomsize/2 + "%", left: ((roomsize+2)*(xCoord-1)+((roomsize/2)-(roomsize*7)/64))+"%", bottom: ((roomsize+2)*(yCoord-1))-(1+roomsize/4)+"%"}
         } else {
           style = {position: "absolute", width: roomsize/2 + "%", height: (roomsize*7)/32 + "%", left: ((roomsize+2)*(xCoord-1))-(1+roomsize/4)+"%", bottom: ((roomsize+2)*(yCoord-1)+((roomsize/2)-(roomsize*7)/64))+"%"}
         }
 
-      this.connectors.push(<img src={this.props.props.images["minimapConnector"+orientation]} style={style}/>)
+      this.connectors.push(<img src={this.props.props.images["minimapConnector"+orientation]} style={style} alt=""/>)
     } 
   }
 
@@ -116,22 +116,22 @@ class Minimap extends React.Component {
 
     if(room.northRoomId){
       arrows.push(
-        <img src={this.props.props.images.minimapNorth} className="minimap-north hover-saturate" onClick={()=>this.props.props.appState("move-room", room.northRoomId)}/>
+        <img src={this.props.props.images.minimapNorth} className="minimap-north hover-saturate" onClick={()=>this.props.props.appState("move-room", room.northRoomId)} alt="North"/>
       )
     }
     if(room.southRoomId){
       arrows.push(
-        <img src={this.props.props.images.minimapSouth} className="minimap-south hover-saturate" onClick={()=>this.props.props.appState("move-room", room.southRoomId)}/>
+        <img src={this.props.props.images.minimapSouth} className="minimap-south hover-saturate" onClick={()=>this.props.props.appState("move-room", room.southRoomId)} alt="South"/>
       )
     }
     if(room.eastRoomId){
       arrows.push(
-        <img src={this.props.props.images.minimapEast} className="minimap-east hover-saturate" onClick={()=>this.props.props.appState("move-room", room.eastRoomId)}/>
+        <img src={this.props.props.images.minimapEast} className="minimap-east hover-saturate" onClick={()=>this.props.props.appState("move-room", room.eastRoomId)} alt="East"/>
       )
     }
     if(room.westRoomId){
       arrows.push(
-        <img src={this.props.props.images.minimapWest} className="minimap-west hover-saturate" onClick={()=>this.props.props.appState("move-room", room.westRoomId)}/>
+        <img src={this.props.props.images.minimapWest} className="minimap-west hover-saturate" onClick={()=>this.props.props.appState("move-room", room.westRoomId)} alt="West"/>
       )
     }
     return arrows;

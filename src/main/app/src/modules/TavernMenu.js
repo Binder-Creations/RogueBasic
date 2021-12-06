@@ -4,10 +4,6 @@ import DungeonPanel from "./DungeonPanel";
 
 class TavernMenu extends React.Component {
 
-  constructor(props){
-    super(props);
-  }
-
   render(){
     let dungeon = this.props.props.images.dungeonEmpty;
     let className = "dungeon-portal-inactive";
@@ -25,6 +21,8 @@ class TavernMenu extends React.Component {
             break;
           case "Cave":
             dungeon = this.props.props.images.dungeonCave;
+            break;
+          default:
             break;
         }
       }

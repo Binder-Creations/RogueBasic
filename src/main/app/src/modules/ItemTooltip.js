@@ -25,10 +25,10 @@ class ItemTooltip extends React.Component {
 
     return (
       <div className={"item-tooltip-box " + this.tooltipQuadrant} style={this.style} ref={this.tooltipBox}>
-        <img className="absolute-fill" src={this.props.props.images.tooltipItem}/>
-        <img className="item-tooltip-image" src={this.props.itemProps.image}/>
-        <img className={"item-tooltip-"+this.props.itemProps.badgeClass} src={this.props.itemProps.badge}/>
-        <img className={"item-tooltip-"+this.props.itemProps.iconClass} src={this.props.itemProps.icon}/>
+        <img className="absolute-fill" src={this.props.props.images.tooltipItem} alt=""/>
+        <img className="item-tooltip-image" src={this.props.itemProps.image} alt="item"/>
+        <img className={"item-tooltip-"+this.props.itemProps.badgeClass} src={this.props.itemProps.badge} alt="badge"/>
+        <img className={"item-tooltip-"+this.props.itemProps.iconClass} src={this.props.itemProps.icon} alt="icon"/>
         <p className="item-tooltip-icon-value" style={this.props.itemProps.iconValueColor}>{this.props.itemProps.iconValue}</p>
         <p className="item-tooltip-name" style={this.props.itemProps.nameStyle}>{this.props.item.name}</p>
         <p className="item-tooltip-cost">{this.props.item.cost*this.props.costMult}</p>
@@ -52,7 +52,7 @@ class ItemTooltip extends React.Component {
   }
 
   setTooltipQuadrant(){
-    if(this.state.boundingRect != ""){
+    if(this.state.boundingRect !== ""){
       let centerPointX = 0;
       let centerPointY = 0;
       let blackSpace = (window.innerHeight - window.innerWidth*0.4286) > 0 
@@ -82,6 +82,8 @@ class ItemTooltip extends React.Component {
         case "bottom-right":
           centerPointY = this.state.boundingRect.bottom - blackSpace - this.state.boundingRect.height*0.1238;
           centerPointX = this.state.boundingRect.right + this.state.boundingRect.width*0.1857;
+          break;
+        default:
           break;
       }
 

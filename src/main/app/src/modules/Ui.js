@@ -12,9 +12,9 @@ class Ui extends React.Component {
       characterMenu: false,
       inventoryMenu: false
     };
-    if(this.props.props.pc.characterClass == "Rogue"){
+    if(this.props.props.pc.characterClass === "Rogue"){
       this.buttonAttack = this.props.props.images.buttonAttackRogue;
-    } else if(this.props.props.pc.characterClass == "Wizard"){
+    } else if(this.props.props.pc.characterClass === "Wizard"){
       this.buttonAttack = this.props.props.images.buttonAttackWizard;
     } else {
       this.buttonAttack = this.props.props.images.buttonAttackWarrior;
@@ -26,9 +26,9 @@ class Ui extends React.Component {
       let className = "gray-100";
       let onClick = "";
 
-      if(this.props.props.pc.level >= this.props.props.pc.abilities[props.number-1].level){
+      if(this.props.props.pc.level >= this.props.props.pc.abilities[props.number].level){
         if(this.props.props.combat){
-          if(this.props.props.pc.currentEnergy >= this.props.props.pc.abilities[props.number-1].cost){
+          if(this.props.props.pc.currentEnergy >= this.props.props.pc.abilities[props.number].cost){
             className="hover-saturate"
             onClick= () => this.props.props.appState("ability", this.props.number)
           } else {

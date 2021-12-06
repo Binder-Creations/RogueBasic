@@ -31,7 +31,7 @@ class DungeonPanel extends React.Component {
     let fontSize = this.props.dungeonBoard[this.props.number-1].name.length > 28 
       ? "70%"
       : "100%"
-    let saturate = this.props.dungeonBoard[this.props.number-1].id == this.props.props.pc.currentDungeon
+    let saturate = this.props.dungeonBoard[this.props.number-1].id === this.props.props.pc.currentDungeon
       ? "saturate-200"
       : "hover-saturate"
     let s = this.props.dungeonBoard[this.props.number-1].floorCount > 1 ? "s" : "";
@@ -51,6 +51,8 @@ class DungeonPanel extends React.Component {
         break;
       case "Cave":
         dungeonSmall = this.props.props.images.dungeonCaveSmall;
+        break;
+      default:
         break;
     }
 
@@ -93,7 +95,7 @@ class DungeonPanel extends React.Component {
   }
 
   onClick(){
-    if(this.props.dungeonBoard[this.props.number-1].id != this.props.props.pc.currentDungeon){
+    if(this.props.dungeonBoard[this.props.number-1].id !== this.props.props.pc.currentDungeon){
       this.props.props.appState("set-dungeon", this.props.dungeonBoard[this.props.number-1].id);
     }
   }

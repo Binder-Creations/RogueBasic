@@ -18,7 +18,7 @@ class PcServices {
       powerBonus: 0,
       strengthBonus: 0}
     this.bonuses = ["constitution", "strength", "dexterity", "intelligence", "power", "health", "healthRegen", "armor", "armorPen", "critRating", "dodgeRating", "energy", "energyRegen"];
-    this.baseStats = characterClass == "Rogue" 
+    this.baseStats = characterClass === "Rogue" 
     ? {
       armorBonus: 0,
       armorPenBonus: 0,
@@ -34,7 +34,7 @@ class PcServices {
       intelligenceBonus: 0,
       strengthBonus: 0
     }
-    : characterClass == "Wizard"
+    : characterClass === "Wizard"
       ? {
         armorBonus: 0,
         armorPenBonus: 0,

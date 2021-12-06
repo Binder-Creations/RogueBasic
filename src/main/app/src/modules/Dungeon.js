@@ -27,7 +27,7 @@ class Dungeon extends React.Component {
 
   pushMonstersByPosition(components, char){
     this.currentRoom.monsters.forEach(monster =>{
-      if(monster.position[0] == char){
+      if(monster.position[0] === char){
         let healthStyle = {
           width: 19.512*(monster.currentHealth/monster.healthTotal) + "%"
         }

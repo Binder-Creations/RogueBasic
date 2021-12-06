@@ -17,13 +17,26 @@ class AbilityServices {
     }
   }
 
+  static pcChain(ability, pc, monsters, combatUpdates){
+    let tempAbility = {...ability};
+    let bounces = tempAbility.hits - 1;
+    
+    tempAbility.hits = 1;
+    this.pcAttack(tempAbility, pc, monsters, combatUpdates);
+    
+    tempAbility.hits = bounces;
+    tempAbility.target = "random";
+    this.pcAttack(tempAbility, pc, monsters, combatUpdates);
+  }
+
   static pcBuff(ability, pc, combatUpdates){
     if(ability.flags){
       this.parseFlags(ability, pc);
     }
     
-    ability.buffs = JSON.parse(ability.buffs);
-    
+    if(ability.buffs){
+      ability.buffs = JSON.parse(ability.buffs);
+    }
     for(let buff in ability.buffs){
       buff.value = this.calcValue(this.randomize(pc.baseDamage*ability.modifier, ability.factor), pc);
       combatUpdates.push(new CombatUpdate("pc", {name: ability.name, stat: buff.stat}));
@@ -47,7 +60,7 @@ class AbilityServices {
 
   static monsterBuffAll(ability, monsters, combatUpdates){
     if(ability.flags){
-      this.parseFlags(ability, null, monster);
+      this.parseFlags(ability, null, null, monsters);
     }
     
     ability.buffs = JSON.parse(ability.buffs);
@@ -72,15 +85,15 @@ class AbilityServices {
     targets.forEach(monster => { 
       for(let debuff in ability.debuffs){
         debuff.value = this.lv(this.calcValue(this.randomize(pc.baseDamage*ability.modifier, ability.factor), pc.level - monster.level));
-        combatUpdates.push(new CombatUpdate(monster.position, {name: ability.name, stat: buff.stat}));
+        combatUpdates.push(new CombatUpdate(monster.position, {name: ability.name, stat: debuff.stat}));
       }
       monster.debuffs = Object.assign(monster.debuffs, ability.debuffs);
     }); 
   }
 
-  static monsterDebuff(ability, pc, monsters, combatUpdates){
+  static monsterDebuff(ability, pc, monster, combatUpdates){
     if(ability.flags){
-      this.parseFlags(ability, pc, targets, monsters);
+      this.parseFlags(ability, pc);
     }
     
     ability.debuffs = JSON.parse(ability.debuffs);
@@ -88,7 +101,7 @@ class AbilityServices {
       debuff.value = this.lv(this.calcValue(this.randomize(monster.baseDamage*ability.modifier, ability.factor), monster.level - pc.level));
       combatUpdates.push(new CombatUpdate("pc", {name: ability.name, stat: debuff.stat}));
     }
-    player.debuffs = Object.assign(player.debuffs, ability.debuffs);
+    pc.debuffs = Object.assign(pc.debuffs, ability.debuffs);
   }
 
   static randomTarget(monsters){
@@ -120,24 +133,41 @@ class AbilityServices {
   }
 
   static frontRowTarget(monsters){
-    return targetByRow(monsters, 'f');
+    return this.targetByRow(monsters, 'f', 'b');
+  }
+
+  static coneTarget(monsters){
+    let targets = this.targetByRow(monsters, 'b', 'f'); 
+
+    if(!targets.find(monster => monster.position === "frontCenter")){
+      targets.push(monsters.find(monster => monster.position === "frontCenter"));
+    }
+
+    return targets;
   }
 
   static lowHealthTarget(monsters){
-    return [this.targetByLowStat(monsters, "healthTotal")];
+    return [this.targetByLowStat(monsters, "currentHealth")];
   }
 
   static highHealthTarget(monsters){
-    return [this.targetByHighStat(monsters, "healthTotal")]
+    return [this.targetByHighStat(monsters, "currentHealth")]
   }
 
-  static targetByRow(monsters, row){
+  static targetByRow(monsters, row, alternate){
     let targets = [];
       monsters.forEach(monster => {
-        if(monster.position[0] == row){
+        if(monster.position[0] === row){
           targets.push(monster);
         }
       });
+      if(!targets.length && alternate){
+        monsters.forEach(monster => {
+          if(monster.position[0] === alternate){
+            targets.push(monster);
+          }
+        });  
+      }
   }
 
   static targetByPosition(monsters, rowPriority, columnPriority){
@@ -219,7 +249,7 @@ class AbilityServices {
     let crit = pc.flags.crit ? true : (monster.flags.fortress ? false : (Math.random()*100 <= this.lv(pc.critChance, pDiff) ? true : false));
     let resist = pc.flags.fullPen ? 0 : (pc.flags.magic ? (this.lv(monster.magResist, mDiff) - this.lv(pc.magResistReduction, pDiff)*(pc.flags.highPen ? 1.5 : 1)) : (this.lv(monster.physResist, mDiff) - this.lv(pc.physResistReduction, pDiff)*(pc.flags.highPen ? 1.5 : 1)));
     resist = resist < 0 ? 0 : resist;
-    return Math.round(base*(1+this.lv(pc.powerTotal, pDiff)/100)*(1-resist/100)*(crit ? 2 : 1) + Number.EPSILON);
+    return Math.round(base*(1+this.lv(pc.powerTotal, pDiff)/100)*(1-resist/100)*(crit ? pc.flags.critDoubleDmg ? 4 : 2 : 1) + Number.EPSILON);
   }
 
   static calcDamageMonster(base, pc, monster){
@@ -269,11 +299,11 @@ class AbilityServices {
   }
 
   static min(pc, factor){
-    return Math.round(pc.baseDamage*(1-(factor/100))*(1+pc.powerTotal/100) + Number.EPSILON);
+    return Math.floor(pc.baseDamage*(1-(factor/100))*(1+pc.powerTotal/100));
   }
 
   static max(pc, factor){
-    return Math.round(pc.baseDamage*(1+(factor/100))*(1+pc.powerTotal/100) + Number.EPSILON);
+    return Math.ceil(pc.baseDamage*(1+(factor/100))*(1+pc.powerTotal/100));
   }
 }
 
