@@ -162,8 +162,8 @@ class PcServices {
 
   resetTempStats(pc){
     pc.flags = {};
-    pc.buffs = {};
-    pc.debuffs = {};
+    pc.buffs = [];
+    pc.debuffs = [];
     pc.tempStats = {
       constitution: 0,
       strength: 0,

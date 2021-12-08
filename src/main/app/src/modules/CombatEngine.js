@@ -12,24 +12,32 @@ class CombatEngine {
     this.pcServices = new PcServices(pc.characterClass);
     this.updateMonsterStats();
     this.combatUpdates = [];
-    this.abilityServices = null;
   }
 
   runRound(ability){
     this.combatUpdates = [];
-    AbilityServices["pc"+ability.type](this.ability, this.pc, this.monsters, this.combatUpdates);
-    // this.pcAbility(abilityName);
+    AbilityServices["pc"+ability.type](ability, this.pc, this.monsters, this.combatUpdates);
     this.monsters.forEach(monster => {
       if(monster.boss || monster.miniboss || !monster.flags.stun){
-        this.monsterAbility(monster, this.selectAbility(monster));
+        // let monsterAbility = this.selectAbility(monster);
+        // AbilityServices["monster"+monsterAbility.type](monsterAbility, this.pc, monster, this.monsters, this.combatUpdates);
       } else {
         this.combatUpdates.push(new CombatUpdate(monster.position, {stun: false}));
       }
     });
-    this.decrementFlags();
-    this.decrementBuffs();
-    this.decrementDebuffs();
-    this.pcServices.updateStats(this.pc);   
+    this.updateFlags(this.pc.flags);
+    this.decrementBuffs(this.pc.buffs);
+    this.decrementBuffs(this.pc.debuffs);
+    for(let monster of this.monsters){
+      this.updateFlags(monster.flags);
+      this.decrementBuffs(monster.buffs);
+      this.decrementBuffs(monster.debuffs);
+    }
+    
+    this.pcServices.updateStats(this.pc);
+    this.updateMonsterStats();
+    AbilityServices.corpseCollector(this.monsters, this.combatUpdates);
+    AbilityServices.pcCorpseCollector(this.pc, this.combatUpdates);
   }
 
   updateMonsterStats(){
@@ -38,82 +46,36 @@ class CombatEngine {
     })
   }
 
-  pcAbility(abilityName){
-    abilities[abilityName].use(this.pc, this.monsters, this.combatUpdates);
-  }
-
-  monsterAbility(monster, abilityName){
-    abilities[abilityName].use(this.pc, this.monsters, monster, this.combatUpdates)
-  }
-
   selectAbility(monster){
     let abilityChance = (30 + monster.level + (monster.type === "Rogue" ? 5 : monster.type === "Wizard" ? 10 : 0))*(monster.boss ? 1.5 : monster.miniboss ? 1.25 : 1);
     if(Math.random()*100 < abilityChance){
-      return monster.abilities[Math.floor(Math.random()*monster.abilities.length)].name.replace(" ", "");
+      return monster.abilities[Math.floor(Math.random()*monster.abilities.length)+1];
     } else {
-      return "MonsterAttack";
+      return monster.abilities[0];
     }
   }
 
-  decrementFlags(){
-    for(let flag in this.pc.flags){
-      if(flag && !isNaN(flag)){
-        flag -= 1;
+  updateFlags(flags){
+    for(let flag in flags){
+      if(flag === 1){
+        flag = -1;
+        continue;
+      }
+      if (flag === -1){
+        flag = 0;
+        continue;
       }
     }
-    this.monsters.forEach(monster => {
-      for(let flag in monster.flags){
-        if(flag && !isNaN(flag)){
-          flag -= 1;
-        }  
-      }
-    });
   }
 
-  decrementBuffs(){
-    for(let buff in this.pc.buffs){
-      if(buff.duration){
-        if(!isNaN(buff.duration)){
-          buff.duration -= 1;
-        }
-      } else {
-        delete this.pc.buffs[buff];
+  decrementBuffs(buffs){
+    for(let buff of buffs){
+      if(buff.duration > 0){
+        buff.duration -= 1;
+      } else if (!buff.duration) {
+        delete buffs[buff];
       }
     }
-    this.monsters.forEach(monster => {
-      for(let buff in monster.buffs){
-        if(buff.duration){
-          if(!isNaN(buff.duration)){
-            buff.duration -= 1;
-          }
-        } else {
-          delete this.monster.buffs[buff];
-        } 
-      }
-    });
-  }
-
-  decrementDebuffs(){
-    for(let debuff in this.pc.debuffs){
-      if(debuff.duration){
-        if(!isNaN(debuff.duration)){
-          debuff.duration -= 1;
-        }
-      } else {
-        delete this.pc.debuffs[debuff];
-      }
-    }
-    this.monsters.forEach(monster => {
-      for(let debuff in monster.debuffs){
-        if(debuff.duration){
-          if(!isNaN(debuff.duration)){
-            debuff.duration -= 1;
-          }
-        } else {
-          delete this.monster.debuffs[debuff];
-        } 
-      }
-    });
   }
 
 }

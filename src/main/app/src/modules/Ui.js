@@ -42,7 +42,7 @@ class Ui extends React.Component {
       return(
         <button className={className+" skill-tooltip skill s-"+props.number} onClick={onClick}>
           <img className="absolute-fill" src={this.props.props.images["skill" + this.props.props.pc.characterClass + props.number]} alt="Skill"/>
-          <SkillTooltip props={this.props.props} number={props.number}/>
+          <SkillTooltip props={this.props.props} number={props.number*1}/>
         </button>
       )
     }
@@ -100,10 +100,10 @@ class Ui extends React.Component {
         <img className="bar-energy" src={this.props.props.images.barEnergy} alt="Energy" title={this.energyHover} style={this.energyStyle}/>
         <img className="bar-energy-frame" src={this.props.props.images.barFrame} alt="Energy" title={this.energyHover}/>
         <img className="swirl" src={this.props.props.images.swirl} alt="Energy" title={this.energyHover}/>
-        <this.Skill number="1"/>
-        <this.Skill number="2"/>
-        <this.Skill number="3"/>
-        <this.Skill number="4"/>  
+        <this.Skill number={1}/>
+        <this.Skill number={2}/>
+        <this.Skill number={3}/>
+        <this.Skill number={4}/>  
         <Minimap props={this.props.props} dungeon={this.props.dungeon}/>
         <this.AttackButton/>
         <input class="btn-character hover-saturate-250" type="image" src={this.props.props.images.buttonCharacter} alt="Character" onClick={this.toggleCharacterMenu}/>

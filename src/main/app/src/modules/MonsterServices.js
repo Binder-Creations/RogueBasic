@@ -11,6 +11,14 @@ class MonsterServices {
       this.resetTempStats(this.monster);
     }
 
+    if(Object.keys(this.monster.buffs).length){
+      this.parseBuffs();
+    }
+
+    if(Object.keys(this.monster.debuffs).length){
+      this.parseDebuffs();
+    }
+
     this.monster.healthTotal = this.calcHealthTotal();
     if(this.monster.currentHealth === -1){
       this.monster.currentHealth = this.monster.healthTotal;
@@ -27,8 +35,13 @@ class MonsterServices {
   }
 
   resetTempStats(monster){
-    monster.flags = {}
+    monster.flags = {};
+    monster.buffs = [];
+    monster.debuffs = [];
     monster.tempStats = {
+      poison: 0,
+      bleed: 0,
+      burn: 0,
       power: 0,
       armor: 0,
       dodgeRating: 0,
@@ -36,6 +49,17 @@ class MonsterServices {
     }
   }
 
+  parseBuffs(){
+    for(let buff of this.monster.buffs){
+      this.monster.tempStats[buff.stat] += buff.value;
+    }
+  }
+
+  parseDebuffs(){
+    for(let debuff in this.monster.debuffs){
+      this.monster.tempStats[debuff.stat] -= debuff.value;
+    }
+  }
 
   powerTotal(){
     return this.monster.power*1 + this.monster.tempStats.power;

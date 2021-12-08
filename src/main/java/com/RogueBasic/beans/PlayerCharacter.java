@@ -81,18 +81,22 @@ public class PlayerCharacter {
 		this.inventory.put(ration.getId(), 2);
 		this.inventoryCache.add(potion);
 		this.inventoryCache.add(ration);
+		this.abilities = new HashSet<>();
 		
+		Set<Buff> buffs = new HashSet<>();
+		Set<Buff> debuffs = new HashSet<>();
 		switch(characterClass) {
 			case "Rogue":
 				this.equippedBody = iservice.getPremade(7);
 				this.equippedPrimary = iservice.getPremade(8);
 				this.equippedSecondary = iservice.getPremade(9);
 				this.currency = 150 + currencyMetabonus;
-				this.abilities = new HashSet<>();
 				this.abilities.add(new Ability(1, "Steady Shot", 0, 1f, 10, 1, "lowHealth", "Attack", "Power", "Fire off a basic shot."));
 				this.abilities.add(new Ability(1, "Deadeye", 10, 1.6f, 0, 1, "backCenter", "Attack", "Power", "Shoot the back center enemy with unerring precision. This attack cannot be dodged."));
-				this.abilities.add(new Ability(2, "Shadowmeld", 20, 12f, 0, 1, "self", "Buff", "Armor", "Become one with the shadows, making it harder for enemies to hit you. Dramatically increases your dodge and critical ratings for one round.", "{\"shadowmeldCrit\": {\"stat\": \"criticalRating\", \"duration\": 2}, \"shadowmeldDodge\": {\"stat\": \"dodgeRating\", \"duration\": 1}}", null));
-				this.abilities.add(new Ability(4, "Assassinate", 40, 2.6f, 15, 1, "highHealth", "Attack", "Power", "Attack an enemy with a deadly strike. Your critical multiplier is doubled for this attack.", "{\"pc\": {\"critDoubleDmg\": true}}"));
+				buffs.add(new Buff("shadowmeldCrit", 2, "critRating"));
+				buffs.add(new Buff("shadowmeldDodge", 1, "dodgeRating"));
+				this.abilities.add(new Ability(2, "Shadowmeld", 20, 12f, 0, 1, "self", "Buff", "Armor", "Become one with the shadows, making it harder for enemies to hit you. Dramatically increases your dodge and critical ratings for one round.", buffs, null));
+				this.abilities.add(new Ability(4, "Assassinate", 40, 2.6f, 15, 1, "highHealth", "Attack", "Power", "Attack an enemy with a deadly strike. Your critical multiplier is doubled for this attack.", new Flags("critDoubleDamage")));
 				this.abilities.add(new Ability(6, "Blade Dance", 80, 0.8f, 20, 8, "lowHealth", "Power", "Attack", "Unleash a deadly flurry of attacks."));
 				this.powerBonus = 15;
 				this.healthBonus = 20;
@@ -109,12 +113,12 @@ public class PlayerCharacter {
 				this.equippedPrimary = iservice.getPremade(11);
 				this.equippedSecondary = iservice.getPremade(12);
 				this.currency = 100 + currencyMetabonus;
-				this.abilities = new HashSet<>();
 				this.abilities.add(new Ability(1, "Straight Slash", 0, 1f, 25, 1, "frontCenter", "Attack", "Power", "Make a basic attack."));
-				this.abilities.add(new Ability(1, "Heavy Strike", 8, 1.6f, 35, 1, "frontRight", "Attack", "Power", "Attack with a mighty blow. 150% of Armor Penetration applies.", "{\"pc\": {\"highPen\": 1}}"));
-				this.abilities.add(new Ability(2, "Stunning Bash", 16, 1.4f, 20, 1, "frontLeft", "Attack", "Power", "Attack with a stunning shield strike. Stuns normal enemies for 1 round.", "{\"monster\": {\"stun\": 1}}"));
+				this.abilities.add(new Ability(1, "Heavy Strike", 8, 1.6f, 35, 1, "frontRight", "Attack", "Power", "Attack with a mighty blow. 150% of Armor Penetration applies.", new Flags("highPen")));
+				this.abilities.add(new Ability(2, "Stunning Bash", 16, 1.4f, 20, 1, "frontLeft", "Attack", "Power", "Attack with a stunning shield strike. Stuns normal enemies for 1 round.", null, new Flags("stun")));
 				this.abilities.add(new Ability(4, "Wide Sweep", 32, 1.8f, 30, 1, "frontRow", "Attack", "Power", "Attack all enemie in a row."));
-				this.abilities.add(new Ability(6, "Living Fortress", 64, 5f, 0, 1, "self", "Buff", "Armor", "Dramatically increases armor and provites immunity to critical hits until end of combat.", "{\"pc\": {\"fortress\": true}}", "{\"fortress\": {\"stat\": \"armor\", \"duration\": true}}", null));
+				buffs.add(new Buff("fortress", "armor"));
+				this.abilities.add(new Ability(6, "Living Fortress", 64, 5f, 0, 1, "self", "Buff", "Armor", "Dramatically increases armor and provites immunity to critical hits until end of combat.", new Flags("fortress"), buffs));
 				this.powerBonus = 10;
 				this.healthBonus = 30;
 				this.healthRegenBonus = 4;
@@ -130,12 +134,11 @@ public class PlayerCharacter {
 				this.equippedPrimary = iservice.getPremade(5);
 				this.equippedSecondary = iservice.getPremade(6);
 				this.currency = 100 + currencyMetabonus;
-				this.abilities = new HashSet<>();
-				this.abilities.add(new Ability(1, "Arcane Missile", 0, 1.2f, 40, 1, "random", "Attack", "Power", "Cast a basic spell.", "{\"pc\": {\"magic\": 1}}"));
-				this.abilities.add(new Ability(1, "Ice Shards", 16, 0.75f, 15, 3, "random", "Attack", "Power", "Conjure and launch 3 frozen knives.", "{\"pc\": {\"magic\": 1}}"));
-				this.abilities.add(new Ability(2, "Cone of Flame", 32, 0.9f, 30,  1, "cone", "Attack", "Power", "Blast outward with a spreading cone of fire.", "{\"pc\": {\"magic\": 1}}"));
-				this.abilities.add(new Ability(4, "Death Circuit", 64, 1.2f, 70, 5, "backCenter", "Chain", "Power", "Shock the back center enemy with a bolt of lightning that then jumps up to 4 times.", "{\"pc\": {\"magic\": 1}}"));
-				this.abilities.add(new Ability(6, "Extinction Event", 128, 0.6f, 30, 20, "random", "Attack", "Power", "Call down a cataclysmic rain of 20 meteorites.", "{\"pc\": {\"magic\": 1}}"));
+				this.abilities.add(new Ability(1, "Arcane Missile", 0, 1.2f, 40, 1, "random", "Attack", "Power", "Cast a basic spell.", new Flags("magic")));
+				this.abilities.add(new Ability(1, "Ice Shards", 16, 0.75f, 15, 3, "random", "Attack", "Power", "Conjure and launch 3 frozen knives.", new Flags("magic")));
+				this.abilities.add(new Ability(2, "Cone of Flame", 32, 0.9f, 30,  1, "cone", "Attack", "Power", "Blast outward with a spreading cone of fire.", new Flags("magic")));
+				this.abilities.add(new Ability(4, "Death Circuit", 64, 1.2f, 70, 5, "backCenter", "Chain", "Power", "Shock the back center enemy with a bolt of lightning that then jumps up to 4 times.", new Flags("magic")));
+				this.abilities.add(new Ability(6, "Extinction Event", 128, 0.6f, 30, 20, "random", "Attack", "Power", "Call down a cataclysmic rain of 20 meteorites.", new Flags("magic")));
 				this.powerBonus = 20;
 				this.healthBonus = 10;
 				this.healthRegenBonus = 1;

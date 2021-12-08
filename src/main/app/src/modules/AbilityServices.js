@@ -29,49 +29,45 @@ class AbilityServices {
     this.pcAttack(tempAbility, pc, monsters, combatUpdates);
   }
 
-  static pcBuff(ability, pc, combatUpdates){
+  static pcBuff(ability, pc, monsters, combatUpdates){
     if(ability.flags){
       this.parseFlags(ability, pc);
     }
-    
-    if(ability.buffs){
-      ability.buffs = JSON.parse(ability.buffs);
-    }
-    for(let buff in ability.buffs){
-      buff.value = this.calcValue(this.randomize(pc.baseDamage*ability.modifier, ability.factor), pc);
+
+    let value = this.calcValue(this.randomize(pc.baseDamage*ability.modifier, ability.factor), pc)
+    for(let buff of ability.buffs){
+      this.parseBuff(buff, value);
       combatUpdates.push(new CombatUpdate("pc", {name: ability.name, stat: buff.stat}));
     }
-    pc.buffs = Object.assign(pc.buffs, ability.buffs);
+    this.mergeBuffs(pc.buffs, ability.buffs);
   }
 
-  static monsterBuff(ability, monster, combatUpdates){
+  static monsterBuff(ability, monster, monsters, combatUpdates){
     if(ability.flags){
       this.parseFlags(ability, null, monster);
     }
     
-    ability.buffs = JSON.parse(ability.buffs);
-    
-    for(let buff in ability.buffs){
-      buff.value = this.calcValue(this.randomize(monster.baseDamage*ability.modifier, ability.factor), monster);
-      combatUpdates.push(new CombatUpdate(monster.position, {name: ability.name, stat: buff.stat}));
+    let value = this.calcValue(this.randomize(monster.baseDamage*ability.modifier, ability.factor), monster)
+    for(let buff of ability.buffs){
+      this.parseBuff(buff, value);
+      combatUpdates.push(new CombatUpdate("monster", {name: ability.name, stat: buff.stat}));
     }
-    monster.buffs = Object.assign(monster.buffs, ability.buffs);
+    this.mergeBuffs(monster.buffs, ability.buffs);
   }
 
-  static monsterBuffAll(ability, monsters, combatUpdates){
+  static monsterBuffAll(ability, source, monsters, combatUpdates){
     if(ability.flags){
       this.parseFlags(ability, null, null, monsters);
     }
-    
-    ability.buffs = JSON.parse(ability.buffs);
 
-    monsters.forEach(monster => { 
-      for(let buff in ability.buffs){
-        buff.value = this.calcValue(this.randomize(monster.baseDamage*ability.modifier, ability.factor), monster);
-        combatUpdates.push(new CombatUpdate(monster.position, {name: ability.name, stat: buff.stat}));
+    let value = this.calcValue(this.randomize(source.baseDamage*ability.modifier, ability.factor), source)
+    for(let monster of monsters){
+      for(let buff of ability.buffs){
+        this.parseBuff(buff, value);
+        combatUpdates.push(new CombatUpdate("monster", {name: ability.name, stat: buff.stat}));
       }
-      monster.buffs = Object.assign(monster.buffs, ability.buffs);
-    });
+      this.mergeBuffs(monster.buffs, ability.buffs);
+    };
   }
 
   static pcDebuff(ability, pc, monsters, combatUpdates){
@@ -91,7 +87,7 @@ class AbilityServices {
     }); 
   }
 
-  static monsterDebuff(ability, pc, monster, combatUpdates){
+  static monsterDebuff(ability, pc, monster, monsters, combatUpdates){
     if(ability.flags){
       this.parseFlags(ability, pc);
     }
@@ -223,17 +219,35 @@ class AbilityServices {
   }
 
   static parseFlags(ability, pc, monster, monsters){
-    ability.flags = JSON.parse(ability.flags);
-    if(pc && ability.flags.pc){
-      pc.flags = Object.assign(pc.flags, ability.flags.pc);
+    if(pc && ability.pcFlags){
+      pc.flags = Object.assign(pc.flags, ability.pcFlags);
     }
-    if(monster && ability.flags.monster){
-      monster.flags = Object.assign(monster.flags, ability.flags.monster);
+    if(monster && ability.monsterFlags){
+      monster.flags = Object.assign(monster.flags, ability.monsterFlags);
     }
-    if(monsters && ability.flags.allMonsters){
+    if(monsters && ability.allMonstersFlags){
       monsters.forEach(monster => {
-        monster.flags = Object.assign(monster.flags, ability.flags.allMonsters);
+        monster.flags = Object.assign(monster.flags, ability.allMonstersFlags);
       })
+    }
+  }
+
+  static parseBuff(buff, value){
+    for(let stat in buff){
+      if(stat === -1){
+        stat = value;
+      }
+    }
+  }
+
+  static mergeBuffs(actorBuffs, abilityBuffs){
+    for(let abilityBuff of abilityBuffs){
+      let actorMatch = actorBuffs.find(actorBuff => abilityBuff.name === actorBuff.name);
+      if(!actorMatch){
+        actorBuffs.push(abilityBuff);
+      } else {
+        actorBuffs[actorBuffs.indexOf(actorMatch)] = abilityBuff;
+      }
     }
   }
 

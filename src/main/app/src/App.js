@@ -294,7 +294,7 @@ class App extends React.Component {
       switch(method){
         case "ability":
           dungeon = {...this.state.dungeon}
-          this.combatEngine.runRound(pc.abilities[key]);
+          this.combatEngine.runRound(this.state.pc.abilities[key]);
           dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
           this.setState({
             pc: this.combatEngine.pc,

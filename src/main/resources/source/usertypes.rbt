@@ -1,4 +1,6 @@
-ABILITY (level int, name text, cost int, modifier float, factor int, hits int, target text, type text, icon text, description text, flags text, buffs text, debuffs text)
+FLAGS (critDoubleDamage int, crit int, dodge int, highPen int, hit int, fullPen int, stun int, fortress int, magic int)
+BUFF (name text, duration int, poison int, bleed int, burn int, constitution int, strength int, dexterity int, intelligence int, power int, health int, healthRegen int, armorPen int, armor int, dodgeRating int, critRating int, energy int, energyRegen int)
+ABILITY (level int, name text, cost int, modifier float, factor int, hits int, target text, type text, icon text, description text, pcFlags frozen <flags>, monsterFlags frozen <flags>, allMonstersFlags frozen <flags>, buffs set<frozen <buff>>, debuffs set<frozen <buff>>)
 MONSTER (id uuid, name text, type text, species text, position text, boss boolean, miniboss boolean, variant int, level int, health int, currentHealth int, power int, armor int, dodgeRating int, critRating int, abilities set<frozen<ability>>)
 TRAP (id uuid, name text, description text, theme text, level int, action text)
 ITEM (id uuid, name text, description text, type text, rarity text, image text, cost int, actionType text, actionValue int, constitutionBonus int, strengthBonus int, dexterityBonus int, intelligenceBonus int, powerBonus int, healthBonus int, healthRegenBonus int, armorBonus int, armorPenBonus int, dodgeRatingBonus int, critRatingBonus int, energyBonus int, energyRegenBonus int)

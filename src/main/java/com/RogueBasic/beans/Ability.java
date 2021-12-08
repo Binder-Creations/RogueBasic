@@ -1,6 +1,8 @@
 package com.RogueBasic.beans;
 
 import java.util.Objects;
+import java.util.Set;
+
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 @UserDefinedType(value = "ability")
@@ -15,9 +17,11 @@ public class Ability {
 	private String type;
 	private String icon;
 	private String description;
-	private String flags;
-	private String buffs;
-	private String debuffs;
+	private Flags pcFlags;
+	private Flags monsterFlags;
+	private Flags allMonstersFlags;
+	private Set<Buff> buffs;
+	private Set<Buff> debuffs;;
 	
 	public Ability() {}
 	
@@ -35,51 +39,58 @@ public class Ability {
 		this.description = description;
 	}
 	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, String flags) {
-		super();
-		this.level = level;
-		this.name = name;
-		this.cost = cost;
-		this.modifier = modifier;
-		this.factor = factor;
-		this.hits = hits;
-		this.target = target;
-		this.type = type;
-		this.icon = icon;
-		this.description = description;
-		this.flags = flags;
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags pcFlags) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description);
+		this.pcFlags = pcFlags;
 	}
 	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, String buffs, String debuffs) {
-		super();
-		this.level = level;
-		this.name = name;
-		this.cost = cost;
-		this.modifier = modifier;
-		this.factor = factor;
-		this.hits = hits;
-		this.target = target;
-		this.type = type;
-		this.icon = icon;
-		this.description = description;
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags pcFlags, Flags monsterFlags) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, pcFlags);
+		this.monsterFlags = monsterFlags;
+	}
+	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags pcFlags, Flags monsterFlags, Flags allMonstersFlags) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, pcFlags, monsterFlags);
+		this.allMonstersFlags = allMonstersFlags;
+	}
+	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Set<Buff> buffs) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description);
 		this.buffs = buffs;
+	}
+	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Set<Buff> buffs, Set<Buff> debuffs) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, buffs);
 		this.debuffs = debuffs;
 	}
 	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, String flags, String buffs, String debuffs) {
-		super();
-		this.level = level;
-		this.name = name;
-		this.cost = cost;
-		this.modifier = modifier;
-		this.factor = factor;
-		this.hits = hits;
-		this.target = target;
-		this.type = type;
-		this.icon = icon;
-		this.description = description;
-		this.flags = flags;
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags pcFlags, Set<Buff> buffs) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, pcFlags);
 		this.buffs = buffs;
+	}
+	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags pcFlags, Flags monsterFlags, Set<Buff> buffs) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, pcFlags, monsterFlags);
+		this.buffs = buffs;
+	}
+	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags pcFlags, Flags monsterFlags, Flags allMonstersFlags, Set<Buff> buffs) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, pcFlags, monsterFlags, allMonstersFlags);
+		this.buffs = buffs;
+	}
+	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags pcFlags, Set<Buff> buffs, Set<Buff> debuffs) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, pcFlags, buffs);
+		this.debuffs = debuffs;
+	}
+	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags pcFlags, Flags monsterFlags, Set<Buff> buffs, Set<Buff> debuffs) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, pcFlags, monsterFlags, buffs);
+		this.debuffs = debuffs;
+	}
+	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags pcFlags, Flags monsterFlags, Flags allMonstersFlags, Set<Buff> buffs, Set<Buff> debuffs) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, pcFlags, monsterFlags, allMonstersFlags, buffs);
 		this.debuffs = debuffs;
 	}
 
@@ -163,34 +174,50 @@ public class Ability {
 		this.description = description;
 	}
 
-	public String getFlags() {
-		return flags;
+	public Flags getPcFlags() {
+		return pcFlags;
 	}
 
-	public void setFlags(String flags) {
-		this.flags = flags;
+	public void setPcFlags(Flags pcFlags) {
+		this.pcFlags = pcFlags;
 	}
 
-	public String getBuffs() {
+	public Flags getMonsterFlags() {
+		return monsterFlags;
+	}
+
+	public void setMonsterFlags(Flags monsterFlags) {
+		this.monsterFlags = monsterFlags;
+	}
+
+	public Flags getAllMonstersFlags() {
+		return allMonstersFlags;
+	}
+
+	public void setAllMonstersFlags(Flags allMonstersFlags) {
+		this.allMonstersFlags = allMonstersFlags;
+	}
+
+	public Set<Buff> getBuffs() {
 		return buffs;
 	}
 
-	public void setBuffs(String buffs) {
+	public void setBuffs(Set<Buff> buffs) {
 		this.buffs = buffs;
 	}
 
-	public String getDebuffs() {
+	public Set<Buff> getDebuffs() {
 		return debuffs;
 	}
 
-	public void setDebuffs(String debuffs) {
+	public void setDebuffs(Set<Buff> debuffs) {
 		this.debuffs = debuffs;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(buffs, cost, debuffs, description, factor, flags, hits, icon, level, modifier, name, target,
-				type);
+		return Objects.hash(allMonstersFlags, buffs, cost, debuffs, description, factor, hits, icon, level, modifier,
+				monsterFlags, name, pcFlags, target, type);
 	}
 
 	@Override
@@ -202,11 +229,13 @@ public class Ability {
 		if (getClass() != obj.getClass())
 			return false;
 		Ability other = (Ability) obj;
-		return Objects.equals(buffs, other.buffs) && cost == other.cost && Objects.equals(debuffs, other.debuffs)
-				&& Objects.equals(description, other.description) && factor == other.factor
-				&& Objects.equals(flags, other.flags) && hits == other.hits && Objects.equals(icon, other.icon)
-				&& level == other.level && Float.floatToIntBits(modifier) == Float.floatToIntBits(other.modifier)
-				&& Objects.equals(name, other.name) && Objects.equals(target, other.target)
+		return Objects.equals(allMonstersFlags, other.allMonstersFlags) && Objects.equals(buffs, other.buffs)
+				&& cost == other.cost && Objects.equals(debuffs, other.debuffs)
+				&& Objects.equals(description, other.description) && factor == other.factor && hits == other.hits
+				&& Objects.equals(icon, other.icon) && level == other.level
+				&& Float.floatToIntBits(modifier) == Float.floatToIntBits(other.modifier)
+				&& Objects.equals(monsterFlags, other.monsterFlags) && Objects.equals(name, other.name)
+				&& Objects.equals(pcFlags, other.pcFlags) && Objects.equals(target, other.target)
 				&& Objects.equals(type, other.type);
 	}
 
@@ -214,8 +243,8 @@ public class Ability {
 	public String toString() {
 		return "Ability [level=" + level + ", name=" + name + ", cost=" + cost + ", modifier=" + modifier + ", factor="
 				+ factor + ", hits=" + hits + ", target=" + target + ", type=" + type + ", icon=" + icon
-				+ ", description=" + description + ", flags=" + flags + ", buffs=" + buffs + ", debuffs=" + debuffs
-				+ "]";
+				+ ", description=" + description + ", pcFlags=" + pcFlags + ", monsterFlags=" + monsterFlags
+				+ ", allMonstersFlags=" + allMonstersFlags + ", buffs=" + buffs + ", debuffs=" + debuffs + "]";
 	}
 	
 	
