@@ -50,14 +50,18 @@ class MonsterServices {
   }
 
   parseBuffs(){
-    for(let buff of this.monster.buffs){
-      this.monster.tempStats[buff.stat] += buff.value;
+    for(let buff in this.monster.buffs){
+      for(let stat in this.monster.tempStats){
+          stat += buff[stat];
+      }
     }
   }
 
   parseDebuffs(){
     for(let debuff in this.monster.debuffs){
-      this.monster.tempStats[debuff.stat] -= debuff.value;
+      for(let stat in this.monster.tempStats){
+        stat += debuff[stat];
+      }
     }
   }
 

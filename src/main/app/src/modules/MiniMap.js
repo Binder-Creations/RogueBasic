@@ -113,26 +113,29 @@ class Minimap extends React.Component {
   Arrows(){
     let arrows = []
     let room = this.props.dungeon.floors[this.props.dungeon.currentFloor].rooms[this.props.dungeon.currentRoom];
-
-    if(room.northRoomId){
-      arrows.push(
-        <img src={this.props.props.images.minimapNorth} className="minimap-north hover-saturate" onClick={()=>this.props.props.appState("move-room", room.northRoomId)} alt="North"/>
-      )
-    }
-    if(room.southRoomId){
-      arrows.push(
-        <img src={this.props.props.images.minimapSouth} className="minimap-south hover-saturate" onClick={()=>this.props.props.appState("move-room", room.southRoomId)} alt="South"/>
-      )
-    }
-    if(room.eastRoomId){
-      arrows.push(
-        <img src={this.props.props.images.minimapEast} className="minimap-east hover-saturate" onClick={()=>this.props.props.appState("move-room", room.eastRoomId)} alt="East"/>
-      )
-    }
-    if(room.westRoomId){
-      arrows.push(
-        <img src={this.props.props.images.minimapWest} className="minimap-west hover-saturate" onClick={()=>this.props.props.appState("move-room", room.westRoomId)} alt="West"/>
-      )
+    if(this.props.props.combat){
+      arrows.push(<></>)
+    } else {
+      if(room.northRoomId){
+        arrows.push(
+          <img src={this.props.props.images.minimapNorth} className="minimap-north hover-saturate" onClick={()=>this.props.props.appState("move-room", room.northRoomId)} alt="North"/>
+        )
+      }
+      if(room.southRoomId){
+        arrows.push(
+          <img src={this.props.props.images.minimapSouth} className="minimap-south hover-saturate" onClick={()=>this.props.props.appState("move-room", room.southRoomId)} alt="South"/>
+        )
+      }
+      if(room.eastRoomId){
+        arrows.push(
+          <img src={this.props.props.images.minimapEast} className="minimap-east hover-saturate" onClick={()=>this.props.props.appState("move-room", room.eastRoomId)} alt="East"/>
+        )
+      }
+      if(room.westRoomId){
+        arrows.push(
+          <img src={this.props.props.images.minimapWest} className="minimap-west hover-saturate" onClick={()=>this.props.props.appState("move-room", room.westRoomId)} alt="West"/>
+        )
+      }
     }
     return arrows;
   }

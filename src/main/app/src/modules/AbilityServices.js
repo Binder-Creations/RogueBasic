@@ -4,16 +4,20 @@ class AbilityServices {
 
   static pcAttack(ability, pc, monsters, combatUpdates){
     for(let i = 0; i < ability.hits; i++){
-      let targets = this[ability.target+"Target"](monsters);
-      if(ability.flags){
-        this.parseFlags(ability, pc, targets, monsters);
-      }
-      targets.forEach(monster => {
-        let damage = this.calcDamagePc(AbilityServices.randomize(pc.baseDamage*ability.modifier, ability.factor), pc, monster);
-        monster.currentHealth = (monster.currentHealth - damage) >= 0 ? (monster.currentHealth - damage) : 0;
-        combatUpdates.push(new CombatUpdate(monster.position, {name: ability.name, damage: damage}));
-      });
-      this.corpseCollector(monsters, combatUpdates);
+      if(monsters.length){
+        let targets = this[ability.target+"Target"](monsters);
+        if(ability.flags){
+          this.parseFlags(ability, pc, targets, monsters);
+        }
+        targets.forEach(monster => {
+          let damage = this.calcDamagePc(AbilityServices.randomize(pc.baseDamage*ability.modifier, ability.factor), pc, monster);
+          monster.currentHealth = (monster.currentHealth - damage) >= 0 ? (monster.currentHealth - damage) : 0;
+          combatUpdates.push(new CombatUpdate(monster.position, {name: ability.name, damage: damage}));
+        });
+        this.corpseCollector(monsters, combatUpdates);
+      } else {
+        break;
+     }
     }
   }
 
@@ -133,10 +137,11 @@ class AbilityServices {
   }
 
   static coneTarget(monsters){
-    let targets = this.targetByRow(monsters, 'b', 'f'); 
-
-    if(!targets.find(monster => monster.position === "frontCenter")){
-      targets.push(monsters.find(monster => monster.position === "frontCenter"));
+    let targets = this.targetByRow(monsters, 'b'); 
+    let frontCenter = monsters.find(monster => monster.position === "frontCenter");
+    
+    if(frontCenter){
+      targets.push(frontCenter);
     }
 
     return targets;
@@ -152,18 +157,19 @@ class AbilityServices {
 
   static targetByRow(monsters, row, alternate){
     let targets = [];
+    monsters.forEach(monster => {
+      if(monster.position[0] === row){
+        targets.push(monster);
+      }
+    });
+    if(!targets.length && alternate){
       monsters.forEach(monster => {
-        if(monster.position[0] === row){
+        if(monster.position[0] === alternate){
           targets.push(monster);
         }
-      });
-      if(!targets.length && alternate){
-        monsters.forEach(monster => {
-          if(monster.position[0] === alternate){
-            targets.push(monster);
-          }
-        });  
-      }
+      });  
+    }
+    return targets;
   }
 
   static targetByPosition(monsters, rowPriority, columnPriority){
@@ -288,7 +294,7 @@ class AbilityServices {
   static corpseCollector(monsters, combatUpdates){
     let i = monsters.length;
     while (i--){
-      if(!monsters[i].currentHealth){
+      if(monsters[i].currentHealth <= 0){
         combatUpdates.push(new CombatUpdate(monsters[i].position, {dies: true}));
         monsters.splice(i, 1);
       }
@@ -299,7 +305,7 @@ class AbilityServices {
   }
 
   static pcCorpseCollector(pc, combatUpdates){
-    if(!pc.currentHealth){
+    if(pc.currentHealth <= 0){
       combatUpdates.push(new CombatUpdate("pc", {dies: true}));
     }
   }
@@ -312,13 +318,20 @@ class AbilityServices {
     return Math.round(value*(1-(factor/100)+((Math.random()*factor)/50)) + Number.EPSILON);
   }
 
-  static min(pc, factor){
-    return Math.floor(pc.baseDamage*(1-(factor/100))*(1+pc.powerTotal/100));
+  static min(pc, modifier, factor){
+    return Math.floor(pc.baseDamage*(1-(factor/100))*modifier*(1+pc.powerTotal/100));
   }
 
-  static max(pc, factor){
-    return Math.ceil(pc.baseDamage*(1+(factor/100))*(1+pc.powerTotal/100));
+  static max(pc, modifier, factor){
+    return Math.ceil(pc.baseDamage*(1+(factor/100))*modifier*(1+pc.powerTotal/100));
+  }
+
+  static round(pc, modifier){
+    return Math.round(pc.baseDamage*modifier*(1+pc.powerTotal/100) + Number.EPSILON);
   }
 }
 
 export default AbilityServices;
+export const min = AbilityServices.min;
+export const max = AbilityServices.max;
+export const round = AbilityServices.round;

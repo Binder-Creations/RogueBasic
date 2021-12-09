@@ -82,6 +82,8 @@ class App extends React.Component {
 
   render(){
     this.checkCombat();
+    console.log(this.state.combat)
+
     if (!this.state.character_id)
       return(
         <Router>
@@ -109,7 +111,6 @@ class App extends React.Component {
       window.addEventListener("resize", this.updateWidth)
       this.initialize = true;
     }
-    console.log(this.state.pc)
 
     this.props.props.pc = this.state.pc;
     this.props.props.combat = this.state.combat;
@@ -260,7 +261,13 @@ class App extends React.Component {
     }
 
     checkCombat(){
+      console.log("here1")
       if(!this.state.combat && this.state.pc.location === "Dungeon" && this.state.dungeon && this.state.dungeon.floors && this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters && this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters.length){
+        console.log("here2")
+        this.appState("combat");
+      }
+      if(this.state.combat && (this.state.pc.location !== "Dungeon" || !this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters.length)){
+        console.log("here3")
         this.appState("combat");
       }
     }
@@ -303,8 +310,10 @@ class App extends React.Component {
           break;
         case "combat":
           if(!this.state.combat){
+              console.log("combatOn")
+              console.log(this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters)
               dungeon = {...this.state.dungeon}
-              this.combatEngine = new CombatEngine(this.state.pc, this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters, this.state.dungeon.postFix);
+              this.combatEngine = new CombatEngine(this.state.pc, this.pcServices, this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters, this.state.dungeon.postFix);
               dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
               this.setState({
                 combat: true,
@@ -312,6 +321,7 @@ class App extends React.Component {
               });
               break;
           } else {
+            console.log("combatOff")
             pc = {...this.state.pc}
             this.pcServices.resetTempStats(pc);
             this.pcServices.updateStats(pc);
@@ -355,8 +365,17 @@ class App extends React.Component {
             }
             return false;
           });
-          this.save("dungeon", dungeon)
-            .then(()=>{this.setState({dungeon: dungeon})})
+          if(!dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared){
+            pc = {...this.state.pc};
+            this.pcServices.regenHealth(pc);
+            this.pcServices.regenEnergy(pc);
+            this.save("dungeon", dungeon)
+              .then(this.save("pc", pc))
+              .then(()=>{this.setState({dungeon: dungeon, pc:pc})})
+          }else {
+            this.save("dungeon", dungeon)
+              .then(()=>{this.setState({dungeon: dungeon})})
+          }
           break;
         case "scene":
           if(this.state.pc.location === value) {
@@ -472,9 +491,14 @@ class App extends React.Component {
           }
           switch (key.actionType){
             case "heal":
-              pc.currentHealth = (pc.currentHealth + pc.healthTotal*(1+key.actionValue/100) > pc.healthTotal)
+              if(this.state.combat){
+                this.combatEngine.itemHeal(key.actionValue);
+                pc = this.combatEngine.pc;
+              } else {
+                pc.currentHealth = (pc.currentHealth + pc.healthTotal*(1+key.actionValue/100) > pc.healthTotal)
                 ? pc.healthTotal
                 : pc.currentHealth + pc.healthTotal*(1+key.actionValue/100);
+              }
               break;
             default:
               var slot;

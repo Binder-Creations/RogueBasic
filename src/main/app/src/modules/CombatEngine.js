@@ -1,15 +1,14 @@
-import * as abilities from "./abilities";
 import AbilityServices from "./AbilityServices";
 import CombatUpdate from "./CombatUpdate";
 import MonsterServices from "./MonsterServices";
 import PcServices from "./PcServices";
 
 class CombatEngine {
-  constructor(pc, monsters, dungeonMod){
+  constructor(pc, pcServices, monsters, dungeonMod){
     this.pc = JSON.parse(JSON.stringify(pc));
     this.monsters = JSON.parse(JSON.stringify(monsters));
     this.monsterServices = new MonsterServices(dungeonMod);
-    this.pcServices = new PcServices(pc.characterClass);
+    this.pcServices = pcServices;
     this.updateMonsterStats();
     this.combatUpdates = [];
   }
@@ -17,6 +16,8 @@ class CombatEngine {
   runRound(ability){
     this.combatUpdates = [];
     AbilityServices["pc"+ability.type](ability, this.pc, this.monsters, this.combatUpdates);
+    this.pc.currentEnergy = (this.pc.currentEnergy - ability.cost) < 0 ? 0 : this.pc.currentEnergy - ability.cost;
+    
     this.monsters.forEach(monster => {
       if(monster.boss || monster.miniboss || !monster.flags.stun){
         // let monsterAbility = this.selectAbility(monster);
@@ -76,6 +77,12 @@ class CombatEngine {
         delete buffs[buff];
       }
     }
+  }
+
+  itemHeal(value){
+    this.pc.currentHealth = (this.pc.currentHealth + this.pc.healthTotal*(1+value/100) > this.pc.healthTotal)
+      ? this.pc.healthTotal
+      : this.pc.currentHealth + this.pc.healthTotal*(1+value/100);
   }
 
 }

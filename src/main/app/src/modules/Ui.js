@@ -24,13 +24,16 @@ class Ui extends React.Component {
 
     this.Skill = (props) => {
       let className = "gray-100";
-      let onClick = "";
+      let onClick = null;
 
       if(this.props.props.pc.level >= this.props.props.pc.abilities[props.number].level){
         if(this.props.props.combat){
+          console.log(this.props.props.combat)
+          console.log(this.props.props.pc.currentEnergy)
+          console.log(this.props.props.pc.abilities[props.number].cost)
           if(this.props.props.pc.currentEnergy >= this.props.props.pc.abilities[props.number].cost){
             className="hover-saturate"
-            onClick= () => this.props.props.appState("ability", this.props.number)
+            onClick= () => this.props.props.appState("ability", props.number)
           } else {
             className="saturate-66"
           }
@@ -38,11 +41,10 @@ class Ui extends React.Component {
           className="saturate-66"
         }
       }
-
       return(
         <button className={className+" skill-tooltip skill s-"+props.number} onClick={onClick}>
           <img className="absolute-fill" src={this.props.props.images["skill" + this.props.props.pc.characterClass + props.number]} alt="Skill"/>
-          <SkillTooltip props={this.props.props} number={props.number*1}/>
+          <SkillTooltip props={this.props.props} number={props.number}/>
         </button>
       )
     }
@@ -63,6 +65,10 @@ class Ui extends React.Component {
       );
     }
 
+    this.NoButton = () => {
+      return(<></>);
+    }
+
     this.attackButton = <></>;
     this.AttackButton = () => {
       return(this.attackButton);
@@ -70,7 +76,7 @@ class Ui extends React.Component {
   }
 
   render(){
-    this.ReturnButton = this[this.props.button];
+    this.ReturnButton = this.props.props.combat ? this.NoButton : this[this.props.button];
     this.healthStyle = {
       width: 20*(this.props.props.pc.currentHealth/this.props.props.pc.healthTotal) + "%"
     }

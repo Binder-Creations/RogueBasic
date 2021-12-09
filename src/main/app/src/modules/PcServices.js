@@ -183,13 +183,17 @@ class PcServices {
 
   parseBuffs(){
     for(let buff in this.pc.buffs){
-      this.pc.tempStats[buff.stat] += buff.value;
+      for(let stat in this.pc.tempStats){
+          stat += buff[stat];
+      }
     }
   }
 
   parseDebuffs(){
     for(let debuff in this.pc.debuffs){
-      this.pc.tempStats[debuff.stat] -= debuff.value;
+      for(let stat in this.pc.tempStats){
+        stat += debuff[stat];
+      }
     }
   }
 
@@ -263,6 +267,12 @@ class PcServices {
   }
   baseDamageCalc(){
     return 8+this.pc.level*2
+  }
+  regenHealth(pc){
+    pc.currentHealth = (pc.currentHealth + pc.healthRegenTotal) > pc.healthTotal ? pc.healthTotal : pc.currentHealth + pc.healthRegenTotal;
+  }
+  regenEnergy(pc){
+    pc.currentEnergy = (pc.currentEnergy + pc.energyRegenTotal) > pc.energyTotal ? pc.energyTotal : pc.currentEnergy + pc.energyRegenTotal;
   }
 }
 
