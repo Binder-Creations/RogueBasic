@@ -45,7 +45,7 @@ class Minimap extends React.Component {
         if(room.id === this.props.dungeon.floors[this.props.dungeon.currentFloor].rooms[this.props.dungeon.currentRoom].id){
           if(room.stairsPrevious){
             src = this.props.props.images.minimapCurrentStairsPrevious
-          }else if(room.stairsNext){
+          }else if(room.stairsNext && (this.props.dungeon.currentFloor + 1 < this.props.dungeon.floorCount) && !this.props.props.combat){
             src = this.props.props.images.minimapCurrentStairsNext
           }else{
             src = this.props.props.images.minimapCurrent
@@ -53,7 +53,7 @@ class Minimap extends React.Component {
         }else if (room.cleared){
           if(room.stairsPrevious){
             src = this.props.props.images.minimapClearedStairsPrevious
-          }else if(room.stairsNext){
+          }else if(room.stairsNext && (this.props.dungeon.currentFloor + 1 < this.props.dungeon.floorCount)){
             src = this.props.props.images.minimapClearedStairsNext
           }else{
             src = this.props.props.images.minimapCleared

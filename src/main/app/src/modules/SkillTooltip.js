@@ -1,5 +1,6 @@
 import React from "react";
 import {min, max, round} from "./AbilityServices";
+import {camelCase} from "./GeneralUtilities";
 
 class SkillTooltip extends React.Component {
   
@@ -47,11 +48,11 @@ class SkillTooltip extends React.Component {
     } else {
       value = round(this.props.props.pc, ability.modifier)
     }
-
+    
     return (
       <div className={"skill-tooltip-box"} style={this.style}>
         <img className="absolute-fill" src={this.props.props.images.tooltipSkill} alt="background"/>
-        <img className="item-tooltip-image" src={this.props.props.images["skill" + this.props.props.pc.characterClass + this.props.number]} alt="Skill"/>
+        <img className="item-tooltip-image" src={this.props.props.abilities[camelCase(this.props.props.pc.abilities[this.props.number].name)]} alt="Skill"/>
         <img className={"item-tooltip-badge-"+this.props.props.pc.characterClass.toLowerCase()} src={this.props.props.images["badge"+this.props.props.pc.characterClass+"Small"]} alt="class"/>
         <img className={iconClass} src={icon} alt="icon"/>
         <p className="item-tooltip-icon-value" style={valueStyle}>{value+hits}</p>

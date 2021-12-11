@@ -12,7 +12,7 @@ class Dungeon extends React.Component {
     let components = [];
     this.currentRoom = this.props.dungeon.floors[this.props.dungeon.currentFloor].rooms[this.props.dungeon.currentRoom];
 
-    if(((this.currentRoom.stairsPrevious || this.currentRoom.stairsNext) && !(this.currentRoom.monsters && this.currentRoom.monsters.length > 0))){
+    if(((this.currentRoom.stairsPrevious || (this.currentRoom.stairsNext && (this.props.dungeon.currentFloor + 1 < this.props.dungeon.floorCount))) && !(this.currentRoom.monsters && this.currentRoom.monsters.length > 0))){
       components.push(<img src={this.props.props.images["dungeon"+this.props.dungeon.theme+"Stairs"]} className="dungeon-stairs hover-saturate" alt="Stairs" onClick={() => this.props.props.appState("stairs", this.currentRoom.stairsPrevious)}/>);
     }
     if(this.currentRoom.monsters && this.currentRoom.monsters.length > 0){

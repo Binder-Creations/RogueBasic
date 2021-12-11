@@ -1,91 +1,55 @@
 import React from "react";
+import {camelCase} from "./GeneralUtilities";
 // import GameOver from "./GameOver.js";
 
 class Combat extends React.Component {
   constructor(props){
     super(props);
-    this.components = [];
+    this.positions = ["pc", "frontLeft", "frontCenter", "frontRight", "backLeft", "backCenter", "backRight"];
   }
 
   render(){
+    let components = [];
+    console.log(this.props.props.combatUpdates)
+    let gameOver = this.props.props.combatUpdates.find(combatUpdate => combatUpdate.type === "gameOver");
+    if(gameOver){
 
-    if(!this.props.props.combatUpdates.length){
-      return(<></>);
+    } else {
+      for(let position of this.positions){
+        let updates = [];
+        let Updates = () => {
+          return updates.length > 0 ? updates : null;
+        }
+        for(let combatUpdate of this.props.props.combatUpdates){
+          if(combatUpdate.target === position){
+            updates.push(
+              <tr className="nowrap">
+                <td>
+                  <div className="right-align combat-div">
+                    <img className="combat-ability-image" src={this.props.props.abilities[camelCase(combatUpdate.abilityName)]} alt="ability"/>
+                  </div>
+                </td>
+                <td>
+                  <div className={"combat-div combat-text "+combatUpdate.type} style={combatUpdate.size}>
+                    {combatUpdate.text}
+                  </div>
+                </td>
+              </tr>);
+          }
+        }
+        if(updates.length > 0){
+          components.push(
+          <div className={"monster " + position}>
+            <table className="monster-update-box">
+              <Updates/>
+            </table>
+          </div>);
+        }
+      }
     }
 
-    //if combatUpdates includes "endCombat"
-    //  wait(500);
-    //  appState("combat");
-
-    this.components = [];
-
-    // playerAction();
-    // checkAliveMonsters();
-
-    // monsterActions();
-    // checkAlivePlayer();
-    return this.components;
+    return components;
   }
-
-  // playerAction(){
-  //   switch(this.props.props.pc.characterClass){
-  //     case "Rogue":
-  //       switch(this.props.props.combatAction){
-  //         case "attack":
-  //           break;
-  //         case "skill-1":
-  //           break;
-  //         case "skill-2":
-  //           break;
-  //         case "skill-3":
-  //           break;
-  //         case "skill-4":
-  //           break;
-  //       }
-  //       break;
-  //     case "Warrior":
-  //       switch(this.props.props.combatAction){
-  //         case "attack":
-  //           break;
-  //         case "skill-1":
-  //           break;
-  //         case "skill-2":
-  //           break;
-  //         case "skill-3":
-  //           break;
-  //         case "skill-4":
-  //           break;
-  //       }
-  //       break;
-  //     case "Wizard":
-  //       switch(this.props.props.combatAction){
-  //         case "attack":
-  //           break;
-  //         case "skill-1":
-  //           break;
-  //         case "skill-2":
-  //           break;
-  //         case "skill-3":
-  //           break;
-  //         case "skill-4":
-  //           break;
-  //       }
-  //       break;
-  //   }
-  // }
-
-  // checkAliveMonsters(){
-  //   this.props.monsters.forEach(function(monster, index, monsters){
-  //     if(monster.currentHealth <= 0){
-  //       monsters.splice(index, 1);
-  //     }
-  //   });
-
-  //   if(this.props.monsters.length === 0){
-  //     this.props.monsters = null;
-  //   }
-  // }
-
 }
 
 export default Combat;

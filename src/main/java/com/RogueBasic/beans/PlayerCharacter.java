@@ -75,21 +75,27 @@ public class PlayerCharacter {
 		this.inventoryCache = new HashSet<>();
 		
 		ItemServices iservice = new ItemServices(CassandraConnector.connect());
-		Item potion = iservice.getPremade(2);
-		Item ration = iservice.getPremade(3);
-		this.inventory.put(potion.getId(), 1);
+		Item healthPotion = iservice.getPremade(2);
+		Item energyPotion = iservice.getPremade(3);
+		Item ration = iservice.getPremade(4);
+		Item wine = iservice.getPremade(5);
+		this.inventory.put(healthPotion.getId(), 1);
+		this.inventory.put(energyPotion.getId(), 1);
 		this.inventory.put(ration.getId(), 2);
-		this.inventoryCache.add(potion);
+		this.inventory.put(wine.getId(), 2);
+		this.inventoryCache.add(healthPotion);
+		this.inventoryCache.add(energyPotion);
 		this.inventoryCache.add(ration);
+		this.inventoryCache.add(wine);
 		this.abilities = new HashSet<>();
 		
 		Set<Buff> buffs = new HashSet<>();
 		Set<Buff> debuffs = new HashSet<>();
 		switch(characterClass) {
 			case "Rogue":
-				this.equippedBody = iservice.getPremade(7);
-				this.equippedPrimary = iservice.getPremade(8);
-				this.equippedSecondary = iservice.getPremade(9);
+				this.equippedBody = iservice.getPremade(9);
+				this.equippedPrimary = iservice.getPremade(10);
+				this.equippedSecondary = iservice.getPremade(11);
 				this.currency = 150 + currencyMetabonus;
 				this.abilities.add(new Ability(0, "Steady Shot", 0, 1f, 10, 1, "lowHealth", "Attack", "Power", "Fire off a basic shot."));
 				this.abilities.add(new Ability(1, "Deadeye", 10, 1.6f, 0, 1, "backCenter", "Attack", "Power", "Shoot the back center enemy with unerring precision. This attack cannot be dodged."));
@@ -97,7 +103,7 @@ public class PlayerCharacter {
 				buffs.add(new Buff("shadowmeldDodge", 1, "dodgeRating"));
 				this.abilities.add(new Ability(2, "Shadowmeld", 20, 12f, 0, 1, "self", "Buff", "Armor", "Become one with the shadows, making it harder for enemies to hit you. Dramatically increases your dodge and critical ratings for one round.", buffs, null));
 				this.abilities.add(new Ability(4, "Assassinate", 40, 2.6f, 15, 1, "highHealth", "Attack", "Power", "Attack an enemy with a deadly strike. Your critical multiplier is doubled for this attack.", new Flags("critDoubleDamage")));
-				this.abilities.add(new Ability(6, "Blade Dance", 80, 0.8f, 20, 8, "lowHealth", "Power", "Attack", "Unleash a deadly flurry of attacks."));
+				this.abilities.add(new Ability(6, "Blade Dance", 80, 0.8f, 20, 8, "lowHealth", "Attack", "Power", "Unleash a deadly flurry of attacks."));
 				this.powerBonus = 15;
 				this.healthBonus = 20;
 				this.healthRegenBonus = 2;
@@ -109,9 +115,9 @@ public class PlayerCharacter {
 				this.energyRegenBonus = 4;	
 				break;
 			case "Warrior":
-				this.equippedBody = iservice.getPremade(10);
-				this.equippedPrimary = iservice.getPremade(11);
-				this.equippedSecondary = iservice.getPremade(12);
+				this.equippedBody = iservice.getPremade(12);
+				this.equippedPrimary = iservice.getPremade(13);
+				this.equippedSecondary = iservice.getPremade(14);
 				this.currency = 100 + currencyMetabonus;
 				this.abilities.add(new Ability(0, "Straight Slash", 0, 1f, 25, 1, "frontCenter", "Attack", "Power", "Make a basic attack."));
 				this.abilities.add(new Ability(1, "Heavy Strike", 8, 1.6f, 35, 1, "frontRight", "Attack", "Power", "Attack with a mighty blow. 150% of Armor Penetration applies.", new Flags("highPen")));
@@ -130,13 +136,13 @@ public class PlayerCharacter {
 				this.energyRegenBonus = 3;
 				break;
 			case "Wizard":
-				this.equippedBody = iservice.getPremade(4);
-				this.equippedPrimary = iservice.getPremade(5);
-				this.equippedSecondary = iservice.getPremade(6);
+				this.equippedBody = iservice.getPremade(6);
+				this.equippedPrimary = iservice.getPremade(7);
+				this.equippedSecondary = iservice.getPremade(8);
 				this.currency = 100 + currencyMetabonus;
-				this.abilities.add(new Ability(0, "Arcane Missile", 0, 1.2f, 40, 1, "random", "Attack", "Power", "Cast a basic spell.", new Flags("magic")));
+				this.abilities.add(new Ability(0, "Zap", 0, 1.2f, 55, 1, "random", "Attack", "Power", "Cast a basic spell.", new Flags("magic")));
 				this.abilities.add(new Ability(1, "Ice Shards", 16, 0.75f, 15, 3, "random", "Attack", "Power", "Conjure and launch 3 frozen knives.", new Flags("magic")));
-				this.abilities.add(new Ability(2, "Cone of Flame", 32, 0.9f, 30,  1, "cone", "Attack", "Power", "Blast outward with a spreading cone of fire.", new Flags("magic")));
+				this.abilities.add(new Ability(2, "Flame Cone", 32, 0.9f, 30,  1, "cone", "Attack", "Power", "Blast outward with a spreading cone of fire.", new Flags("magic")));
 				this.abilities.add(new Ability(4, "Death Circuit", 64, 1.2f, 70, 5, "backCenter", "Chain", "Power", "Shock the back center enemy with a bolt of lightning that then jumps up to 4 times.", new Flags("magic")));
 				this.abilities.add(new Ability(6, "Extinction Event", 128, 0.6f, 30, 20, "random", "Attack", "Power", "Call down a cataclysmic rain of 20 meteorites.", new Flags("magic")));
 				this.powerBonus = 20;

@@ -20,12 +20,17 @@ class ItemServices {
         itemProps.badge = this.props.images.badgeGenericSmall;
         itemProps.badgeClass = "badge-generic";
         itemProps.typeName = "Potion";
-        itemProps.iconValue = item.actionValue;
+        itemProps.iconValue = item.actionValue + "%";
         switch(item.actionType){
           case "heal":
             itemProps.icon = this.props.images.iconHeal;
             itemProps.iconClass = "icon-heal";
             itemProps.iconValueColor = this.props.colorHeal
+            break;
+          case "energize":
+            itemProps.icon = this.props.images.iconEnergize;
+            itemProps.iconClass = "icon-heal";
+            itemProps.iconValueColor = this.props.colorEnergize
             break;
           default:
             itemProps.icon = this.props.images.iconHeal;
@@ -38,12 +43,17 @@ class ItemServices {
         itemProps.badge = this.props.images.badgeGenericSmall;
         itemProps.badgeClass = "badge-generic";
         itemProps.typeName = "Consumable";
-        itemProps.iconValue = item.actionValue;
+        itemProps.iconValue = item.actionValue + "%";
         switch(item.actionType){
           case "heal":
             itemProps.icon = this.props.images.iconHeal;
             itemProps.iconClass = "icon-heal";
             itemProps.iconValueColor = this.props.colorHeal
+            break;
+          case "energize":
+            itemProps.icon = this.props.images.iconEnergize;
+            itemProps.iconClass = "icon-heal";
+            itemProps.iconValueColor = this.props.colorEnergize
             break;
           default:
             itemProps.icon = this.props.images.iconHeal;

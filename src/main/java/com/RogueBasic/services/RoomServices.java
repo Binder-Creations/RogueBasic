@@ -47,7 +47,7 @@ public class RoomServices {
 				int newConnections = genNewConnectionsInt(room, connections, maxRooms);	
 				if(roomsQueued < maxRooms)
 					genConnectedRooms(room, connections, newConnections);
-				if(stairsGenerated == false && floor.getLevel() < dungeon.getFloorCount()) 
+				if(stairsGenerated == false) 
 					stairsGenerated = stairsCheck(room, rooms, xLength, yLength);
 				genBossMiniboss(room, dungeon, floor.getLevel());
 				if(containsMonsters(room.isStairsPrevious(), room.isBoss(), room.isMiniboss(), dungeon.getChallengeRating()))

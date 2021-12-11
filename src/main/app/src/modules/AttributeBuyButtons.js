@@ -35,25 +35,25 @@ class AttributeBuyButtons extends React.Component {
         return(
           <>
             <div className="btn-atr con hover-saturate">
-              <input className="background" type="image" src={this.props.props.images.buttonConstitution} alt="Constitution" onClick={()=>{this.props.props.appState("pointbuy", "con", 1)}}/>
+              <input className="background" type="image" src={this.props.props.images.buttonConstitution} alt="Constitution" onClick={()=>{this.props.props.appState("pointbuy", "constitution", 1)}}/>
               <p className="v-h-centered nopointer">
                 +Con
               </p>
             </div>
             <div className="btn-atr str hover-saturate">
-              <input className="background" type="image" src={this.props.props.images.buttonStrength} alt="Strength" onClick={()=>{this.props.props.appState("pointbuy", "str", 1)}}/>
+              <input className="background" type="image" src={this.props.props.images.buttonStrength} alt="Strength" onClick={()=>{this.props.props.appState("pointbuy", "strength", 1)}}/>
               <p className="v-h-centered nopointer">
                 +Str
               </p>
             </div>      
             <div className="btn-atr dex hover-saturate">
-              <input className="background" type="image" src={this.props.props.images.buttonDexterity} alt="Dexterity" onClick={()=>{this.props.props.appState("pointbuy", "dex", 1)}}/>
+              <input className="background" type="image" src={this.props.props.images.buttonDexterity} alt="Dexterity" onClick={()=>{this.props.props.appState("pointbuy", "dexterity", 1)}}/>
               <p className="v-h-centered nopointer">
                 +Dex
               </p>
             </div> 
             <div className="btn-atr int hover-saturate">
-              <input className="background" type="image" src={this.props.props.images.buttonIntelligence} alt="Intelligence" onClick={()=>{this.props.props.appState("pointbuy", "int", 1)}}/>
+              <input className="background" type="image" src={this.props.props.images.buttonIntelligence} alt="Intelligence" onClick={()=>{this.props.props.appState("pointbuy", "intelligence", 1)}}/>
               <p className="v-h-centered nopointer">
                 +Int
               </p>

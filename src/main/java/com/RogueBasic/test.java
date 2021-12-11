@@ -33,9 +33,11 @@ public class test {
 		CqlSession session = CassandraConnector.connect();
 		CassandraUtilities cu = new CassandraUtilities(session);
 //		RogueUtilities ru = new RogueUtilities();
-		cu.dropAllTables();
-		cu.initialize();
-		cu.populate();
+//		cu.dropAllTables();
+//		cu.initialize();
+//		cu.populate();
+		System.out.println(UUID.randomUUID());
+		System.out.println(UUID.randomUUID());
 		
 //		Set<Monster> monsters = MonsterServices.generate(6, "Castle", 1, true, false);
 //		

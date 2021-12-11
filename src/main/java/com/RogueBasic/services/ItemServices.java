@@ -73,30 +73,45 @@ public class ItemServices {
 		Set<Item> lootCache = new HashSet<>();
 		ItemServices iService =  new ItemServices(CassandraConnector.connect());
 		
+		Item soul = iService.getPremade(1);
 		if(miniboss) {
-			loot.put(UUID.fromString("7fc49a0c-ec99-4afa-9913-584ecdde409f"), 1);
+			loot.put(soul.getId(), 1);
+			lootCache.add(soul);
 		}
 		if(boss) {
-			loot.put(UUID.fromString("7fc49a0c-ec99-4afa-9913-584ecdde409f"), 3);
+			loot.put(soul.getId(), 3);
+			lootCache.add(soul);
 		}
 		
 		int averageCost = (int)Math.round(Math.pow(challengeRating*5, 0.65)*10);
 		
 		while(lootValue >= averageCost) {
-			int roll = ThreadLocalRandom.current().nextInt(1, 13);
+			int roll = ThreadLocalRandom.current().nextInt(1, 15);
 			if(roll == 1) {
-				Item potion = iService.getPremade(2);
-				loot.put(potion.getId(), 1);
-				lootCache.add(potion);
+				Item healthPotion = iService.getPremade(2);
+				loot.put(healthPotion.getId(), 1);
+				lootCache.add(healthPotion);
 				lootValue -= 50;
 			}
 			if(roll == 2) {
-				Item ration = iService.getPremade(2);
+				Item energyPotion = iService.getPremade(3);
+				loot.put(energyPotion.getId(), 1);
+				lootCache.add(energyPotion);
+				lootValue -= 50;
+			}
+			if(roll == 3) {
+				Item ration = iService.getPremade(4);
 				loot.put(ration.getId(), 1);
 				lootCache.add(ration);
 				lootValue -= 25;
 			}
-			if(roll >= 3 && roll < 8) {
+			if(roll == 4) {
+				Item wine = iService.getPremade(5);
+				loot.put(wine.getId(), 1);
+				lootCache.add(wine);
+				lootValue -= 25;
+			}
+			if(roll >= 5 && roll < 10) {
 				Item gold = iService.getPremade(0);
 				int goldCount = loot.containsKey(gold.getId())
 					? loot.get(gold.getId())
@@ -107,7 +122,7 @@ public class ItemServices {
 				lootValue -= addedGold;
 				
 			}
-			if(roll >= 8) {
+			if(roll >= 10) {
 				String[] exceptions = {};
 				Item equipment = genEquipment(exceptions, challengeRating);
 				loot.put(equipment.getId(), 1);

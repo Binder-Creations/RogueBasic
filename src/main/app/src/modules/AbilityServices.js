@@ -10,9 +10,13 @@ class AbilityServices {
           this.parseFlags(ability, pc, targets, monsters);
         }
         targets.forEach(monster => {
-          let damage = this.calcDamagePc(AbilityServices.randomize(pc.baseDamage*ability.modifier, ability.factor), pc, monster);
+          let crit = this.crit(pc, monster);
+          let damage = this.calcDamagePc(AbilityServices.randomize(pc.baseDamage*ability.modifier, ability.factor), pc, monster, crit);
+          if(damage === 0){
+            crit = false;
+          }
           monster.currentHealth = (monster.currentHealth - damage) >= 0 ? (monster.currentHealth - damage) : 0;
-          combatUpdates.push(new CombatUpdate(monster.position, {name: ability.name, damage: damage}));
+          combatUpdates.push(new CombatUpdate(ability.type, ability.name, monster.position, "pc", damage, crit));
         });
         this.corpseCollector(monsters, combatUpdates);
       } else {
@@ -41,7 +45,7 @@ class AbilityServices {
     let value = this.calcValue(this.randomize(pc.baseDamage*ability.modifier, ability.factor), pc)
     for(let buff of ability.buffs){
       this.parseBuff(buff, value);
-      combatUpdates.push(new CombatUpdate("pc", {name: ability.name, stat: buff.stat}));
+      combatUpdates.push(new CombatUpdate(ability.type, ability.name, "pc", "pc", value));
     }
     this.mergeBuffs(pc.buffs, ability.buffs);
   }
@@ -54,7 +58,7 @@ class AbilityServices {
     let value = this.calcValue(this.randomize(monster.baseDamage*ability.modifier, ability.factor), monster)
     for(let buff of ability.buffs){
       this.parseBuff(buff, value);
-      combatUpdates.push(new CombatUpdate("monster", {name: ability.name, stat: buff.stat}));
+      combatUpdates.push(new CombatUpdate(ability.type, ability.name, monster.position, monster.name, value));
     }
     this.mergeBuffs(monster.buffs, ability.buffs);
   }
@@ -68,7 +72,7 @@ class AbilityServices {
     for(let monster of monsters){
       for(let buff of ability.buffs){
         this.parseBuff(buff, value);
-        combatUpdates.push(new CombatUpdate("monster", {name: ability.name, stat: buff.stat}));
+        combatUpdates.push(new CombatUpdate(ability.type, ability.name, monster.position, source.name, value));
       }
       this.mergeBuffs(monster.buffs, ability.buffs);
     };
@@ -85,7 +89,7 @@ class AbilityServices {
     targets.forEach(monster => { 
       for(let debuff in ability.debuffs){
         debuff.value = this.lv(this.calcValue(this.randomize(pc.baseDamage*ability.modifier, ability.factor), pc.level - monster.level));
-        combatUpdates.push(new CombatUpdate(monster.position, {name: ability.name, stat: debuff.stat}));
+        combatUpdates.push(new CombatUpdate(ability.type, ability.name, monster.position, "pc", debuff.value));
       }
       monster.debuffs = Object.assign(monster.debuffs, ability.debuffs);
     }); 
@@ -99,7 +103,7 @@ class AbilityServices {
     ability.debuffs = JSON.parse(ability.debuffs);
     for(let debuff in ability.debuffs){
       debuff.value = this.lv(this.calcValue(this.randomize(monster.baseDamage*ability.modifier, ability.factor), monster.level - pc.level));
-      combatUpdates.push(new CombatUpdate("pc", {name: ability.name, stat: debuff.stat}));
+      combatUpdates.push(new CombatUpdate(ability.type, ability.name, "pc", monster.name, debuff.value));
     }
     pc.debuffs = Object.assign(pc.debuffs, ability.debuffs);
   }
@@ -257,7 +261,11 @@ class AbilityServices {
     }
   }
 
-  static calcDamagePc(base, pc, monster){
+  static crit(source, target){
+    return source.flags.crit ? true : (target.flags.fortress ? false : (Math.random()*100 <= this.lv(source.critChance, source.level - target.level) ? true : false));
+  }
+
+  static calcDamagePc(base, pc, monster, crit){
     let pDiff = pc.level - monster.level;
     let mDiff = monster.level - pc.level;
 
@@ -265,14 +273,13 @@ class AbilityServices {
     if(!hit){
       return 0;
     }
-    
-    let crit = pc.flags.crit ? true : (monster.flags.fortress ? false : (Math.random()*100 <= this.lv(pc.critChance, pDiff) ? true : false));
+
     let resist = pc.flags.fullPen ? 0 : (pc.flags.magic ? (this.lv(monster.magResist, mDiff) - this.lv(pc.magResistReduction, pDiff)*(pc.flags.highPen ? 1.5 : 1)) : (this.lv(monster.physResist, mDiff) - this.lv(pc.physResistReduction, pDiff)*(pc.flags.highPen ? 1.5 : 1)));
     resist = resist < 0 ? 0 : resist;
     return Math.round(base*(1+this.lv(pc.powerTotal, pDiff)/100)*(1-resist/100)*(crit ? pc.flags.critDoubleDmg ? 4 : 2 : 1) + Number.EPSILON);
   }
 
-  static calcDamageMonster(base, pc, monster){
+  static calcDamageMonster(base, pc, monster, critProp){
     let pDiff = pc.level - monster.level;
     let mDiff = monster.level - pc.level;
 
@@ -282,6 +289,11 @@ class AbilityServices {
     }
     
     let crit = monster.flags.crit ? true : (pc.flags.fortress ? false : (Math.random()*100 <= this.lv(monster.critChance, mDiff) ? true : false));
+    
+    if(crit){
+      critProp = true;
+    }
+    
     let resist = monster.flags.fullPen ? 0 : (monster.flags.magic ? this.lv(pc.magResist, pDiff) : this.lv(pc.physResist, pDiff));
     resist = resist < 0 ? 0 : resist;
     return Math.round(base*(1+this.lv(monster.powerTotal, mDiff)/100)*(1-resist/100)*(crit ? 2 : 1) + Number.EPSILON);
@@ -295,18 +307,18 @@ class AbilityServices {
     let i = monsters.length;
     while (i--){
       if(monsters[i].currentHealth <= 0){
-        combatUpdates.push(new CombatUpdate(monsters[i].position, {dies: true}));
+        combatUpdates.push(new CombatUpdate("death", "death", monsters[i].position, monsters[i].name));
         monsters.splice(i, 1);
       }
     }
     if(!monsters.length){
-      combatUpdates.push(new CombatUpdate("global", {endCombat: true}));
+      combatUpdates.push(new CombatUpdate("endCombat"));
     }
   }
 
   static pcCorpseCollector(pc, combatUpdates){
     if(pc.currentHealth <= 0){
-      combatUpdates.push(new CombatUpdate("pc", {dies: true}));
+      combatUpdates.push(new CombatUpdate("gameOver"));
     }
   }
 

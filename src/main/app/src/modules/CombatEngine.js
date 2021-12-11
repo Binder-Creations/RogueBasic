@@ -1,7 +1,6 @@
 import AbilityServices from "./AbilityServices";
 import CombatUpdate from "./CombatUpdate";
 import MonsterServices from "./MonsterServices";
-import PcServices from "./PcServices";
 
 class CombatEngine {
   constructor(pc, pcServices, monsters, dungeonMod){
@@ -23,7 +22,7 @@ class CombatEngine {
         // let monsterAbility = this.selectAbility(monster);
         // AbilityServices["monster"+monsterAbility.type](monsterAbility, this.pc, monster, this.monsters, this.combatUpdates);
       } else {
-        this.combatUpdates.push(new CombatUpdate(monster.position, {stun: false}));
+        this.combatUpdates.push(new CombatUpdate("stun", "stun", monster.position));
       }
     });
     this.updateFlags(this.pc.flags);
@@ -83,6 +82,12 @@ class CombatEngine {
     this.pc.currentHealth = (this.pc.currentHealth + this.pc.healthTotal*(1+value/100) > this.pc.healthTotal)
       ? this.pc.healthTotal
       : this.pc.currentHealth + this.pc.healthTotal*(1+value/100);
+  }
+
+  itemEnergize(value){
+    this.pc.currentEnergy = (this.pc.currentEnergy + this.pc.energyTotal*(1+value/100) > this.pc.energyTotal)
+      ? this.pc.energyTotal
+      : this.pc.currentEnergy + this.pc.energyTotal*(1+value/100);
   }
 
 }

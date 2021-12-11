@@ -1,38 +1,46 @@
 function intializeAttributes(classname){
-	var attributes = document.getElementsByClassName(classname);
-	for(var i = 0; i<attributes.length; i++){
+	let attributes = document.getElementsByClassName(classname);
+	for(let i = 0; i<attributes.length; i++){
 		attributes.item(i).value = 8;
 	}
 }
 
 function increment(id){
-	if((document.getElementById(id).value < 13 && getCounterValue() > 0) || (document.getElementById(id).value < 17 && getCounterValue() > 1) || (document.getElementById(id).value < 18 && getCounterValue() > 2))  {
-		document.getElementById(id).value = parseInt(document.getElementById(id).value) + 1;
-		if(document.getElementById(id).value < 14){
-			setCounterValue(getCounterValue()-1);
-			return;
-		}
-		if(document.getElementById(id).value < 17){
-			setCounterValue(getCounterValue()-2);
-			return;
-		}
-		setCounterValue(getCounterValue()-3);
+	let value = getElementValue(id);
+	let counterValue = getCounterValue();
+	
+	if(value < 15 && counterValue >= 1) {
+		value = value*1 + 1*1;
+		setCounterValue(counterValue-1);
+	} else if(value >= 15 && value < 18 && counterValue > 1) {
+		value = value*1 + 1*1;
+		setCounterValue(counterValue-2);
 	}
+	
+	setElementValue(id, value);
 }
 
 function decrement(id){
-	if(document.getElementById(id).value > 8)  {
-		document.getElementById(id).value = parseInt(document.getElementById(id).value) - 1;
-		if(document.getElementById(id).value > 15){
-			setCounterValue(getCounterValue()+3);
-			return;
-		}
-		if(document.getElementById(id).value > 12){
-			setCounterValue(getCounterValue()+2);
-			return;
-		}
-		setCounterValue(getCounterValue()+1);
+	let value = getElementValue(id);
+	let counterValue = getCounterValue();
+	
+	if(value >= 16) {
+		value -= 1;
+		setCounterValue(counterValue*1+2*1);
+	} else if(value < 16 && value > 8) {
+		value -= 1;
+		setCounterValue(counterValue*1+1*1);
 	}
+	
+	setElementValue(id, value);
+}
+
+function getElementValue(id){
+	return document.getElementById(id).value;
+}
+
+function setElementValue(id, value){
+	document.getElementById(id).value = value;
 }
 
 function getCounterValue(){

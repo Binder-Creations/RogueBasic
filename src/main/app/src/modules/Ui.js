@@ -3,6 +3,7 @@ import CharacterMenu from "./CharacterMenu";
 import InventoryMenu from "./InventoryMenu";
 import SkillTooltip from "./SkillTooltip";
 import Minimap from "./Minimap";
+import {camelCase} from "./GeneralUtilities";
 
 class Ui extends React.Component {
 
@@ -28,9 +29,6 @@ class Ui extends React.Component {
 
       if(this.props.props.pc.level >= this.props.props.pc.abilities[props.number].level){
         if(this.props.props.combat){
-          console.log(this.props.props.combat)
-          console.log(this.props.props.pc.currentEnergy)
-          console.log(this.props.props.pc.abilities[props.number].cost)
           if(this.props.props.pc.currentEnergy >= this.props.props.pc.abilities[props.number].cost){
             className="hover-saturate"
             onClick= () => this.props.props.appState("ability", props.number)
@@ -43,7 +41,7 @@ class Ui extends React.Component {
       }
       return(
         <button className={className+" skill-tooltip skill s-"+props.number} onClick={onClick}>
-          <img className="absolute-fill" src={this.props.props.images["skill" + this.props.props.pc.characterClass + props.number]} alt="Skill"/>
+          <img className="absolute-fill" src={this.props.props.abilities[camelCase(this.props.props.pc.abilities[props.number].name)]} alt="Skill"/>
           <SkillTooltip props={this.props.props} number={props.number}/>
         </button>
       )

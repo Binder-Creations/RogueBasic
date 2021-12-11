@@ -697,6 +697,45 @@
 				left: 62.3438%;
 				top: 71.1475%;				
 			}
+			.monster-update-box {
+				position:absolute;
+				width: 100%;
+				height: 50%;
+				top: 25%;
+				transform: translate(0%, -75%);
+				-ms-transform: translateY(0%, -75%);
+				border-spacing: 0px;
+				table-layout: fixed;
+				margin-left:auto;
+				margin-right:auto;
+				/* animation: 2s ease-out 2s 1 combatText; */
+				pointer-events: none;
+			}
+			.combat-div {
+				height: 4vw;
+			}
+			.combat-text {
+				text-align: left;
+			}
+			.combat-text.Attack {
+				color:#920000;
+			}
+			.combat-text.Heal {
+				color:chartreuse;
+			}
+			.combat-text.Buff {
+				color:aqua;
+			}
+			.combat-text.Debuff {
+				color:indigo;
+			}
+			.combat-text.death {
+				color:rgb(29, 2, 2);
+			}
+			.combat-ability-image {
+				height: 100%;
+				width: auto;
+			}
 			.minimap-overlay {
 				position: absolute;
 				right: 4.2269%;
