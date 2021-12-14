@@ -57,37 +57,36 @@ class CombatEngine {
 
   updateFlags(flags){
     for(let flag in flags){
-      if(flag === 1){
-        flag = -1;
-        continue;
-      }
-      if (flag === -1){
-        flag = 0;
-        continue;
+      if(flags[flag] > 0){
+        flags[flag] -= 1;
       }
     }
   }
 
   decrementBuffs(buffs){
-    for(let buff of buffs){
-      if(buff.duration > 0){
-        buff.duration -= 1;
-      } else if (!buff.duration) {
-        delete buffs[buff];
+    let i = buffs.length;
+
+    while(i--){
+      if (!buffs[i].duration) {
+        buffs.splice(i, 1);
+        continue;
+      } 
+      if(buffs[i].duration > 0){
+        buffs[i].duration -= 1;
       }
     }
   }
 
   itemHeal(value){
-    this.pc.currentHealth = (this.pc.currentHealth + this.pc.healthTotal*(1+value/100) > this.pc.healthTotal)
+    this.pc.currentHealth = (this.pc.currentHealth + this.pc.healthTotal*(value/100)) > this.pc.healthTotal
       ? this.pc.healthTotal
-      : this.pc.currentHealth + this.pc.healthTotal*(1+value/100);
+      : this.pc.currentHealth + this.pc.healthTotal*(value/100);
   }
 
   itemEnergize(value){
-    this.pc.currentEnergy = (this.pc.currentEnergy + this.pc.energyTotal*(1+value/100) > this.pc.energyTotal)
+    this.pc.currentEnergy = (this.pc.currentEnergy + this.pc.energyTotal*(value/100)) > this.pc.energyTotal
       ? this.pc.energyTotal
-      : this.pc.currentEnergy + this.pc.energyTotal*(1+value/100);
+      : this.pc.currentEnergy + this.pc.energyTotal*(value/100);
   }
 
 }

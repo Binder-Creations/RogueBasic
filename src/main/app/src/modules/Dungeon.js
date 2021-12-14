@@ -10,6 +10,7 @@ class Dungeon extends React.Component {
 
   render(){
     let components = [];
+    console.log(this.props.dungeon);
     this.currentRoom = this.props.dungeon.floors[this.props.dungeon.currentFloor].rooms[this.props.dungeon.currentRoom];
 
     if(((this.currentRoom.stairsPrevious || (this.currentRoom.stairsNext && (this.props.dungeon.currentFloor + 1 < this.props.dungeon.floorCount))) && !(this.currentRoom.monsters && this.currentRoom.monsters.length > 0))){
@@ -19,7 +20,7 @@ class Dungeon extends React.Component {
       components.push(<img src={this.props.props.images["arena"+this.props.dungeon.theme]} className="dungeon-arena" alt="Arena"/>);
       this.pushMonstersByPosition(components, 'b');
       this.pushMonstersByPosition(components, 'f');
-      components.push(<Combat props={this.props.props}/>)
+      components.push(<Combat props={this.props.props} dungeon={this.props.dungeon}/>)
     }
 
     return components;

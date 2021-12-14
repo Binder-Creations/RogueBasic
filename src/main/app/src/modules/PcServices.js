@@ -69,10 +69,12 @@ class PcServices {
   } 
   updateStats(pc){
     this.pc = pc;
-    if(!this.pc.hasOwnProperty('tempStats')){
-      this.resetTempStats(this.pc);
+    this.resetTempStats(this.pc);
+    if(!this.pc.hasOwnProperty('flags')){
+      pc.flags = {};
+      pc.buffs = [];
+      pc.debuffs = [];
     }
-
     if(Object.keys(this.pc.buffs).length){
       this.parseBuffs();
     }
@@ -161,9 +163,6 @@ class PcServices {
   }
 
   resetTempStats(pc){
-    pc.flags = {};
-    pc.buffs = [];
-    pc.debuffs = [];
     pc.tempStats = {
       constitution: 0,
       strength: 0,
@@ -184,7 +183,7 @@ class PcServices {
   parseBuffs(){
     for(let buff in this.pc.buffs){
       for(let stat in this.pc.tempStats){
-          stat += buff[stat];
+          this.pc.tempStats[stat] += this.pc.buffs[buff][stat];
       }
     }
   }
@@ -192,7 +191,7 @@ class PcServices {
   parseDebuffs(){
     for(let debuff in this.pc.debuffs){
       for(let stat in this.pc.tempStats){
-        stat += debuff[stat];
+        this.pc.tempStats[stat] += this.pc.debuffs[debuff][stat];
       }
     }
   }

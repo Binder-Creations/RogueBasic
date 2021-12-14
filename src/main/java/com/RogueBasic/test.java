@@ -3,6 +3,7 @@ package com.RogueBasic;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -10,7 +11,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.RogueBasic.beans.Ability;
 import com.RogueBasic.beans.Dungeon;
+import com.RogueBasic.beans.Flags;
 import com.RogueBasic.beans.Floor;
 import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.Monster;
@@ -36,8 +39,20 @@ public class test {
 //		cu.dropAllTables();
 //		cu.initialize();
 //		cu.populate();
-		System.out.println(UUID.randomUUID());
-		System.out.println(UUID.randomUUID());
+//		PlayerCharacterDao pcd = new PlayerCharacterDao(session);
+//		Flags flags = new Flags("hit");
+//		Ability ability = new Ability();
+//		ability.setPcFlags(flags);
+//		PlayerCharacter pc = new PlayerCharacter();
+//		pc.setId(UUID.randomUUID());
+//		HashSet<Ability> abilities = new HashSet<>();
+//		abilities.add(ability);
+//		pc.setAbilities(abilities);
+//		System.out.println(pc.toString());
+//		pcd.save(pc);
+//		PlayerCharacter pcLoad = pcd.findById(pc.getId());
+//		System.out.println(pcLoad.toString());
+;		
 		
 //		Set<Monster> monsters = MonsterServices.generate(6, "Castle", 1, true, false);
 //		
@@ -68,7 +83,7 @@ public class test {
 //		System.out.println(sDao.findById(UUID.fromString("db56131c-9248-46cc-8b6a-0d022228aa10")));
 //		sDao.getAll().forEach(item -> System.out.println(item));
 //		DungeonServices du = new DungeonServices(session);
-//		PlayerCharacterServices pcs = new PlayerCharacterServices(session);
+
 //		PlayerCharacterDao pcd = new PlayerCharacterDao(session);
 //		PlayerCharacter pc = new PlayerCharacter("t", "Rogue", 10, 10, 10, 10, 10);
 //		FloorDao fd = new FloorDao(session);

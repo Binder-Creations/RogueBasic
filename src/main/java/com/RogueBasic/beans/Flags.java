@@ -18,90 +18,107 @@ public class Flags {
 	
 	public Flags() {}
 	
-	public Flags(String flag){
+	public Flags(String flag, int value){
 		switch(flag) {
 			case "magic":
-				this.magic = -1;
+				this.magic = value;
 				break;
 			case "critDoubleDamage":
-				this.critDoubleDamage = -1;
+				this.critDoubleDamage = value;
 				break;
 			case "crit":
-				this.crit = -1;
+				this.crit = value;
 				break;
 			case "dodge":
-				this.dodge = -1;
+				this.dodge = value;
 				break;
 			case "highPen":
-				this.highPen = -1;
+				this.highPen = value;
 				break;
 			case "hit":
-				this.hit = -1;
+				this.hit = value;
 				break;
 			case "fullPen":
-				this.fullPen = -1;
+				this.fullPen = value;
 				break;
 			case "stun":
-				this.stun = 1;
+				this.stun = value;
 				break;
 		}
 	}
 	
-	public int isCritDoubleDamage() {
+	public int getCritDoubleDamage() {
 		return critDoubleDamage;
 	}
+
 	public void setCritDoubleDamage(int critDoubleDamage) {
 		this.critDoubleDamage = critDoubleDamage;
 	}
-	public int isCrit() {
+
+	public int getCrit() {
 		return crit;
 	}
+
 	public void setCrit(int crit) {
 		this.crit = crit;
 	}
-	public int isDodge() {
+
+	public int getDodge() {
 		return dodge;
 	}
+
 	public void setDodge(int dodge) {
 		this.dodge = dodge;
 	}
-	public int isHighPen() {
+
+	public int getHighPen() {
 		return highPen;
 	}
+
 	public void setHighPen(int highPen) {
 		this.highPen = highPen;
 	}
-	public int isHit() {
+
+	public int getHit() {
 		return hit;
 	}
+
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
-	public int isFullPen() {
+
+	public int getFullPen() {
 		return fullPen;
 	}
+
 	public void setFullPen(int fullPen) {
 		this.fullPen = fullPen;
 	}
-	public int isStun() {
+
+	public int getStun() {
 		return stun;
 	}
+
 	public void setStun(int stun) {
 		this.stun = stun;
 	}
-	public int isFortress() {
+
+	public int getFortress() {
 		return fortress;
 	}
+
 	public void setFortress(int fortress) {
 		this.fortress = fortress;
 	}
-	public int isMagic() {
+
+	public int getMagic() {
 		return magic;
 	}
+
 	public void setMagic(int magic) {
 		this.magic = magic;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(crit, critDoubleDamage, dodge, fortress, fullPen, highPen, hit, magic, stun);

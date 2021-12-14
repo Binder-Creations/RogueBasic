@@ -6,7 +6,7 @@ class AbilityServices {
     for(let i = 0; i < ability.hits; i++){
       if(monsters.length){
         let targets = this[ability.target+"Target"](monsters);
-        if(ability.flags){
+        if(ability.pcFlags || ability.monsterFlags || ability.allMonstersFlags){
           this.parseFlags(ability, pc, targets, monsters);
         }
         targets.forEach(monster => {
@@ -38,7 +38,7 @@ class AbilityServices {
   }
 
   static pcBuff(ability, pc, monsters, combatUpdates){
-    if(ability.flags){
+    if(ability.pcFlags || ability.monsterFlags || ability.allMonstersFlags){
       this.parseFlags(ability, pc);
     }
 
@@ -51,7 +51,7 @@ class AbilityServices {
   }
 
   static monsterBuff(ability, monster, monsters, combatUpdates){
-    if(ability.flags){
+    if(ability.pcFlags || ability.monsterFlags || ability.allMonstersFlags){
       this.parseFlags(ability, null, monster);
     }
     
@@ -64,7 +64,7 @@ class AbilityServices {
   }
 
   static monsterBuffAll(ability, source, monsters, combatUpdates){
-    if(ability.flags){
+    if(ability.pcFlags || ability.monsterFlags || ability.allMonstersFlags){
       this.parseFlags(ability, null, null, monsters);
     }
 
@@ -80,7 +80,7 @@ class AbilityServices {
 
   static pcDebuff(ability, pc, monsters, combatUpdates){
     let targets = this[ability.target+"Target"](monsters);
-    if(ability.flags){
+    if(ability.pcFlags || ability.monsterFlags || ability.allMonstersFlags){
       this.parseFlags(ability, pc, targets, monsters);
     }
     
@@ -88,22 +88,22 @@ class AbilityServices {
 
     targets.forEach(monster => { 
       for(let debuff in ability.debuffs){
-        debuff.value = this.lv(this.calcValue(this.randomize(pc.baseDamage*ability.modifier, ability.factor), pc.level - monster.level));
-        combatUpdates.push(new CombatUpdate(ability.type, ability.name, monster.position, "pc", debuff.value));
+        ability.debuffs[debuff].value = this.lv(this.calcValue(this.randomize(pc.baseDamage*ability.modifier, ability.factor), pc.level - monster.level));
+        combatUpdates.push(new CombatUpdate(ability.type, ability.name, monster.position, "pc", ability.debuffs[debuff].value));
       }
       monster.debuffs = Object.assign(monster.debuffs, ability.debuffs);
     }); 
   }
 
   static monsterDebuff(ability, pc, monster, monsters, combatUpdates){
-    if(ability.flags){
+    if(ability.pcFlags || ability.monsterFlags || ability.allMonstersFlags){
       this.parseFlags(ability, pc);
     }
     
     ability.debuffs = JSON.parse(ability.debuffs);
     for(let debuff in ability.debuffs){
-      debuff.value = this.lv(this.calcValue(this.randomize(monster.baseDamage*ability.modifier, ability.factor), monster.level - pc.level));
-      combatUpdates.push(new CombatUpdate(ability.type, ability.name, "pc", monster.name, debuff.value));
+      ability.debuffs[debuff].value = this.lv(this.calcValue(this.randomize(monster.baseDamage*ability.modifier, ability.factor), monster.level - pc.level));
+      combatUpdates.push(new CombatUpdate(ability.type, ability.name, "pc", monster.name, ability.debuffs[debuff].value));
     }
     pc.debuffs = Object.assign(pc.debuffs, ability.debuffs);
   }
@@ -244,8 +244,8 @@ class AbilityServices {
 
   static parseBuff(buff, value){
     for(let stat in buff){
-      if(stat === -1){
-        stat = value;
+      if(buff[stat] === -1){
+        buff[stat] = value;
       }
     }
   }
@@ -268,7 +268,6 @@ class AbilityServices {
   static calcDamagePc(base, pc, monster, crit){
     let pDiff = pc.level - monster.level;
     let mDiff = monster.level - pc.level;
-
     let hit = pc.flags.hit ? true : (monster.flags.dodge ? false : (Math.random()*100 > this.lv(monster.dodgeChance, mDiff) ? true : false));
     if(!hit){
       return 0;
@@ -276,7 +275,7 @@ class AbilityServices {
 
     let resist = pc.flags.fullPen ? 0 : (pc.flags.magic ? (this.lv(monster.magResist, mDiff) - this.lv(pc.magResistReduction, pDiff)*(pc.flags.highPen ? 1.5 : 1)) : (this.lv(monster.physResist, mDiff) - this.lv(pc.physResistReduction, pDiff)*(pc.flags.highPen ? 1.5 : 1)));
     resist = resist < 0 ? 0 : resist;
-    return Math.round(base*(1+this.lv(pc.powerTotal, pDiff)/100)*(1-resist/100)*(crit ? pc.flags.critDoubleDmg ? 4 : 2 : 1) + Number.EPSILON);
+    return Math.round(base*(1+this.lv(pc.powerTotal, pDiff)/100)*(1-resist/100)*(crit ? pc.flags.critDoubleDamage ? 4 : 2 : 1) + Number.EPSILON);
   }
 
   static calcDamageMonster(base, pc, monster, critProp){

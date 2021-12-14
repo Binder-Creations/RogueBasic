@@ -486,13 +486,13 @@ class App extends React.Component {
           if(key.actionType === "heal"){
             if(this.state.combat){
               this.combatEngine.itemHeal(key.actionValue);
-              pc = this.combatEngine.pc;
-              this.pcServices.updateStats(pc);
+              this.pcServices.updateStats(this.combatEngine.pc);
+              this.setStateCustom({pc: this.combatEngine.pc});
               break;
             } else {
-              pc.currentHealth = (pc.currentHealth + pc.healthTotal*(1+key.actionValue/100) > pc.healthTotal)
-              ? pc.healthTotal
-              : pc.currentHealth + pc.healthTotal*(1+key.actionValue/100);
+              pc.currentHealth = (pc.currentHealth + pc.healthTotal*(key.actionValue/100)) > pc.healthTotal
+                ? pc.healthTotal
+                : pc.currentHealth + pc.healthTotal*(key.actionValue/100);
               this.pcServices.updateStats(pc);
               this.save(["pc"], [pc], {pc: pc});
             }
@@ -500,13 +500,13 @@ class App extends React.Component {
           } else if(key.actionType === "energize"){
             if(this.state.combat){
               this.combatEngine.itemEnergize(key.actionValue);
-              pc = this.combatEngine.pc;
-              this.pcServices.updateStats(pc);
+              this.pcServices.updateStats(this.combatEngine.pc);
+              this.setStateCustom({pc: this.combatEngine.pc});
               break;
             } else {
-              pc.currentEnergy = (pc.currentEnergy + pc.energyTotal*(1+key.actionValue/100) > pc.energyTotal)
-              ? pc.energyTotal
-              : pc.currentEnergy + pc.energyTotal*(1+key.actionValue/100);
+              pc.currentEnergy = (pc.currentEnergy + pc.energyTotal*(key.actionValue/100)) > pc.energyTotal
+                ? pc.energyTotal
+                : pc.currentEnergy + pc.energyTotal*(key.actionValue/100);
               this.pcServices.updateStats(pc);
               this.save(["pc"], [pc], {pc: pc});
             }

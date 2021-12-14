@@ -42,11 +42,23 @@ public class RoomServices {
 		
 		while(!queue.isEmpty()) {
 			Room room = queue.poll();
-			
+				Set<List<Integer>> coords = new HashSet<>();
+				queue.forEach(r->{
+					List<Integer> coordPair = new ArrayList<>();
+					coordPair.add(r.getxCoord());
+					coordPair.add(r.getyCoord());
+					coords.add(coordPair);
+				});
+				rooms.forEach(r->{
+					List<Integer> coordPair = new ArrayList<>();
+					coordPair.add(r.getxCoord());
+					coordPair.add(r.getyCoord());
+					coords.add(coordPair);
+				});
 				List<Character> connections = genConnections(room, rooms, xLength, yLength);
 				int newConnections = genNewConnectionsInt(room, connections, maxRooms);	
 				if(roomsQueued < maxRooms)
-					genConnectedRooms(room, connections, newConnections);
+					genConnectedRooms(room, coords, connections, newConnections);
 				if(stairsGenerated == false) 
 					stairsGenerated = stairsCheck(room, rooms, xLength, yLength);
 				genBossMiniboss(room, dungeon, floor.getLevel());
@@ -157,45 +169,56 @@ public class RoomServices {
 			    : connectionCount;
 	}
 	
-	private void genConnectedRooms(Room room, List<Character> connections, int newConnections) {
+	private void genConnectedRooms(Room room, Set<List<Integer>> coords , List<Character> connections, int newConnections) {
 		if(connections.size() > 0) {	   
 			for(int i = 0; i < newConnections; i++) {
 				int rand = ThreadLocalRandom.current().nextInt(connections.size()); 
 				Room newRoom = new Room();
-				newRoom.setId(UUID.randomUUID());
 				
 				switch(connections.get(rand)) {
 					case 'W':
-						room.setWestRoomId(newRoom.getId());
-						newRoom.setEastRoomId(room.getId());
-						newRoom.setxCoord(room.getxCoord()-1);
-						newRoom.setyCoord(room.getyCoord());
-						queue.add(newRoom);
-						roomsQueued++;
+						if(!roomExists(coords, room.getxCoord()-1, room.getyCoord())) {
+							newRoom.setId(UUID.randomUUID());
+							room.setWestRoomId(newRoom.getId());
+							newRoom.setEastRoomId(room.getId());
+							newRoom.setxCoord(room.getxCoord()-1);
+							newRoom.setyCoord(room.getyCoord());
+							queue.add(newRoom);
+							roomsQueued++;
+						}
 						break;
 					case 'E':
-						room.setEastRoomId(newRoom.getId());
-						newRoom.setWestRoomId(room.getId());
-						newRoom.setxCoord(room.getxCoord()+1);
-						newRoom.setyCoord(room.getyCoord());
-						queue.add(newRoom);
-						roomsQueued++;
+						if(!roomExists(coords, room.getxCoord()+1, room.getyCoord())) {
+							newRoom.setId(UUID.randomUUID());
+							room.setEastRoomId(newRoom.getId());
+							newRoom.setWestRoomId(room.getId());
+							newRoom.setxCoord(room.getxCoord()+1);
+							newRoom.setyCoord(room.getyCoord());
+							queue.add(newRoom);
+							roomsQueued++;
+						}
 						break;
 					case 'S':
-						room.setSouthRoomId(newRoom.getId());
-						newRoom.setNorthRoomId(room.getId());
-						newRoom.setxCoord(room.getxCoord());
-						newRoom.setyCoord(room.getyCoord()-1);
-						queue.add(newRoom);
-						roomsQueued++;
+						if(!roomExists(coords, room.getxCoord(), room.getyCoord()-1)) {
+							newRoom.setId(UUID.randomUUID());
+							room.setSouthRoomId(newRoom.getId());
+							newRoom.setNorthRoomId(room.getId());
+							newRoom.setxCoord(room.getxCoord());
+							newRoom.setyCoord(room.getyCoord()-1);
+							queue.add(newRoom);
+							roomsQueued++;
+						}
 						break;
 					case 'N':
-						room.setNorthRoomId(newRoom.getId());
-						newRoom.setSouthRoomId(room.getId());
-						newRoom.setxCoord(room.getxCoord());
-						newRoom.setyCoord(room.getyCoord()+1);
-						queue.add(newRoom);
-						roomsQueued++;
+						if(!roomExists(coords, room.getxCoord(), room.getyCoord()+1)) {
+							newRoom.setId(UUID.randomUUID());
+							room.setNorthRoomId(newRoom.getId());
+							newRoom.setSouthRoomId(room.getId());
+							newRoom.setxCoord(room.getxCoord());
+							newRoom.setyCoord(room.getyCoord()+1);
+							queue.add(newRoom);
+							roomsQueued++;
+						}
 						break;
 				}
 				
@@ -206,6 +229,12 @@ public class RoomServices {
 		}
 	}
 	
+	private boolean roomExists(Set<List<Integer>> coords, int xCoord, int yCoord) {	
+		return coords.stream()
+				.anyMatch((c)->c.get(0) == xCoord
+							&& c.get(1) == yCoord);
+	}
+
 	private boolean stairsCheck(Room room, Set<Room> rooms, int xLength, int yLength) {
 		if( queue.isEmpty()
 				|| ( rooms.size()>(xLength*yLength)/3

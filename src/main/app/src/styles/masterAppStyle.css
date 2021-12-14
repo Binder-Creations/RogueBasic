@@ -668,6 +668,10 @@
 				left: 60.3906%;
 				top: 21.6393%;
 			}
+			.monster.pc {
+				left:-5%;
+				top: 10%;
+			}
 			.monster-bar {
 				position: absolute;
 				width: 19.5312%;
@@ -700,10 +704,10 @@
 			.monster-update-box {
 				position:absolute;
 				width: 100%;
-				height: 50%;
-				top: 25%;
-				transform: translate(0%, -75%);
-				-ms-transform: translateY(0%, -75%);
+				height: 1%;
+				top: 50%;
+				transform: translate(0%, -50%);
+				-ms-transform: translateY(0%, -50%);
 				border-spacing: 0px;
 				table-layout: fixed;
 				margin-left:auto;
@@ -735,6 +739,75 @@
 			.combat-ability-image {
 				height: 100%;
 				width: auto;
+			}
+			.buff-icon {
+				height: 2vw;
+				width: auto;
+			}
+			.buff-box {
+				position: absolute;
+				height: 2vw;
+				width: 19.5312%;
+				display: flex;
+				flex-direction: row;
+				flex-wrap: nowrap;
+				justify-content: left;
+			}
+			.buff-box.pc.buff {
+				top: 17.4%;
+				left: 5.1235%;	
+			}
+			.buff-box.pc.debuff {
+				top: 22.9%;
+				left: 5.1235%;	
+			}
+			.buff-box.backLeft.buff {
+				left: 22.8906%;
+				top: 11.8393%;
+			}
+			.buff-box.backLeft.debuff {
+				left: 22.8906%;
+				top: 17.3393%;
+			}
+			.buff-box.backCenter.buff {
+				left: 46.4062%;
+				top: 11.8393%;				
+			}
+			.buff-box.backCenter.debuff {
+				left: 46.4062%;
+				top: 17.3393%;				
+			}
+			.buff-box.backRight.buff {
+				left: 70.0%;
+				top: 11.8393%;				
+			}
+			.buff-box.backRight.debuff {
+				left: 70.0%;
+				top: 17.3393%;				
+			}
+			.buff-box.frontLeft.buff {
+				left: 15.1562%;
+				top: 76.3475%;				
+			}
+			.buff-box.frontLeft.debuff {
+				left: 15.1562%;
+				top: 81.8475%;				
+			}
+			.buff-box.frontCenter.buff {
+				left: 38.75%;
+				top: 76.3475%;				
+			}
+			.buff-box.frontCenter.buff {
+				left: 38.75%;
+				top: 81.8475%;				
+			}
+			.buff-box.frontRight.buff {
+				left: 62.3438%;
+				top: 76.3475%;				
+			}
+			.buff-box.frontRight.buff {
+				left: 62.3438%;
+				top: 81.8475%;				
 			}
 			.minimap-overlay {
 				position: absolute;
@@ -877,36 +950,36 @@
    		.font-red {
        		color:#ff0000;
    		}
-      	.btn-home {
-      	  position: absolute;
-      	  top: 3%;
-      	  right: 1.4286%;
-      	  text-align: center;
-      	  width: 4.5%;
-      		height: 9.45%;
-      		background-color: #55555588;
-      		border: 1% solid #69696988;
-      		border-radius: 100%;
-      		transition-duration: 0.4s;
-      	}
-      	.btn-home:hover {
-      		background-color: #69696988;
-      		border: 1% solid #55555588;
-      	}
-      	.btn-home p {
-      		position:relative; 
-      		bottom:.2em;
-      	}
-				.btn-home img{
-					position:absolute;
-					width: 75%;
-					height: auto;
-					opacity: 0.5;
-      		top: 50%;
-      		left:50%;
-      		transform: translate(-50%, -50%);
-      		-ms-transform: translateY(-50%) translateX(-50%);
-				}
+			.btn-home {
+				position: absolute;
+				top: 3%;
+				right: 1.4286%;
+				text-align: center;
+				width: 4.5%;
+				height: 9.45%;
+				background-color: #55555588;
+				border: 1% solid #69696988;
+				border-radius: 100%;
+				transition-duration: 0.4s;
+			}
+			.btn-home:hover {
+				background-color: #69696988;
+				border: 1% solid #55555588;
+			}
+			.btn-home p {
+				position:relative; 
+				bottom:.2em;
+			}
+			.btn-home img{
+				position:absolute;
+				width: 75%;
+				height: auto;
+				opacity: 0.5;
+				top: 50%;
+				left:50%;
+				transform: translate(-50%, -50%);
+				-ms-transform: translateY(-50%) translateX(-50%);
+			}
 
 		.item-tooltip-box{
 			position: absolute;

@@ -407,7 +407,7 @@ public class MonsterServices {
 					break;
 			}	
 		}
-		if(!monster.isBoss() && !monster.isBoss()) {
+		if(!monster.isBoss() && !monster.isMiniboss()) {
 			List<String> types = new ArrayList<>();
 			switch(monster.getSpecies()) {
 				case "goblin":
@@ -430,19 +430,19 @@ public class MonsterServices {
 					break;
 			}
 			switch(monster.getType()) {
-			case "archer":
-				type = types.get(0);
-				break;
-			case "wizard":
-				type = types.get(1);
-				break;
-			case "rogue":
-				type = types.get(2);
-				break;
-			case "warrior":
-				type = types.get(3);
-				break;
-			}
+				case "archer":
+					type = types.get(0);
+					break;
+				case "wizard":
+					type = types.get(1);
+					break;
+				case "rogue":
+					type = types.get(2);
+					break;
+				case "warrior":
+					type = types.get(3);
+					break;
+				}
 		}
 		monster.setName((modifier != null ? modifier + " " : "") + type);
 	}
