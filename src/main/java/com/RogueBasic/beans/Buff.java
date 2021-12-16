@@ -9,6 +9,7 @@ import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 public class Buff {
 	private String name;
 	private int duration;
+	private int regenerate;
 	private int poison;
 	private int bleed;
 	private int burn;
@@ -33,6 +34,9 @@ public class Buff {
 		this.duration = duration;
 		stats.forEach((String k, Integer i) -> {
 			switch(k) {
+				case "regenerate":
+					this.regenerate = i;
+					break;
 				case "poison":
 					this.poison = i;
 					break;
@@ -89,6 +93,9 @@ public class Buff {
 		this.name = name;
 		this.duration = duration;
 		switch(stat) {
+			case "regenerate":
+				this.regenerate = statValue;
+				break;
 			case "poison":
 				this.poison = statValue;
 				break;
@@ -159,6 +166,12 @@ public class Buff {
 	}
 	public void setDuration(int duration) {
 		this.duration = duration;
+	}
+	public int getRegenerate() {
+		return regenerate;
+	}
+	public void setRegenerate(int regenerate) {
+		this.regenerate = regenerate;
 	}
 	public int getPoison() {
 		return poison;
@@ -259,7 +272,7 @@ public class Buff {
 	@Override
 	public int hashCode() {
 		return Objects.hash(armor, armorPen, bleed, burn, constitution, critRating, dexterity, dodgeRating, duration,
-				energy, energyRegen, health, healthRegen, intelligence, name, poison, power, strength);
+				energy, energyRegen, health, healthRegen, intelligence, name, poison, power, regenerate, strength);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -275,14 +288,15 @@ public class Buff {
 				&& dodgeRating == other.dodgeRating && duration == other.duration && energy == other.energy
 				&& energyRegen == other.energyRegen && health == other.health && healthRegen == other.healthRegen
 				&& intelligence == other.intelligence && Objects.equals(name, other.name) && poison == other.poison
-				&& power == other.power && strength == other.strength;
+				&& power == other.power && regenerate == other.regenerate && strength == other.strength;
 	}
 	@Override
 	public String toString() {
-		return "Buff [name=" + name + ", duration=" + duration + ", poison=" + poison + ", bleed=" + bleed + ", burn="
-				+ burn + ", constitution=" + constitution + ", strength=" + strength + ", dexterity=" + dexterity
-				+ ", intelligence=" + intelligence + ", power=" + power + ", health=" + health + ", healthRegen="
-				+ healthRegen + ", armorPen=" + armorPen + ", armor=" + armor + ", dodgeRating=" + dodgeRating
-				+ ", critRating=" + critRating + ", energy=" + energy + ", energyRegen=" + energyRegen + "]";
+		return "Buff [name=" + name + ", duration=" + duration + ", regenerate=" + regenerate + ", poison=" + poison
+				+ ", bleed=" + bleed + ", burn=" + burn + ", constitution=" + constitution + ", strength=" + strength
+				+ ", dexterity=" + dexterity + ", intelligence=" + intelligence + ", power=" + power + ", health="
+				+ health + ", healthRegen=" + healthRegen + ", armorPen=" + armorPen + ", armor=" + armor
+				+ ", dodgeRating=" + dodgeRating + ", critRating=" + critRating + ", energy=" + energy
+				+ ", energyRegen=" + energyRegen + "]";
 	}
 }

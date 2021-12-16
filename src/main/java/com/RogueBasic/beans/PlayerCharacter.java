@@ -99,8 +99,8 @@ public class PlayerCharacter {
 				this.currency = 150 + currencyMetabonus;
 				this.abilities.add(new Ability(0, "Steady Shot", 0, 1f, 10, 1, "lowHealth", "Attack", "Power", "Fire off a basic shot."));
 				this.abilities.add(new Ability(1, "Deadeye", 10, 1.6f, 0, 1, "backCenter", "Attack", "Power", "Shoot the back center enemy with unerring precision. This attack cannot be dodged.", new Flags("hit", 1)));
-				buffs.add(new Buff("shadowmeld", 2, "critRating"));
-				buffs.add(new Buff("shadowmeld", 1, "dodgeRating"));
+				buffs.add(new Buff("shadowmeld", 4, "critRating"));
+				buffs.add(new Buff("hasten", 2, "dodgeRating"));
 				this.abilities.add(new Ability(2, "Shadowmeld", 20, 8f, 0, 1, "self", "Buff", "Armor", "Become one with the shadows, making it harder for enemies to hit you. Dramatically increases your dodge and critical ratings for one round.", buffs, null));
 				this.abilities.add(new Ability(4, "Assassinate", 40, 2.6f, 15, 1, "highHealth", "Attack", "Power", "Attack an enemy with a deadly strike. Your critical multiplier is doubled for this attack.", new Flags("critDoubleDamage", 1)));
 				this.abilities.add(new Ability(6, "Blade Dance", 80, 0.8f, 20, 8, "lowHealth", "Attack", "Power", "Unleash a deadly flurry of attacks."));

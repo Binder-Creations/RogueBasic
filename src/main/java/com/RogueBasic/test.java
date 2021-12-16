@@ -36,9 +36,9 @@ public class test {
 		CqlSession session = CassandraConnector.connect();
 		CassandraUtilities cu = new CassandraUtilities(session);
 //		RogueUtilities ru = new RogueUtilities();
-//		cu.dropAllTables();
-//		cu.initialize();
-//		cu.populate();
+		cu.dropAllTables();
+		cu.initialize();
+		cu.populate();
 //		PlayerCharacterDao pcd = new PlayerCharacterDao(session);
 //		Flags flags = new Flags("hit");
 //		Ability ability = new Ability();

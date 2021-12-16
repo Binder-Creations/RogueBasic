@@ -8,8 +8,11 @@ class MonsterServices {
   updateStats(monster){
     this.monster = monster;
     if(!this.monster.hasOwnProperty('tempStats')){
-      this.resetTempStats(this.monster);
+      this.monster.flags = {};
+      this.monster.buffs = [];
+      this.monster.debuffs = [];
     }
+    this.resetTempStats(this.monster);
 
     if(Object.keys(this.monster.buffs).length){
       this.parseBuffs();
@@ -35,10 +38,8 @@ class MonsterServices {
   }
 
   resetTempStats(monster){
-    monster.flags = {};
-    monster.buffs = [];
-    monster.debuffs = [];
     monster.tempStats = {
+      regenerate: 0,
       poison: 0,
       bleed: 0,
       burn: 0,
@@ -52,7 +53,7 @@ class MonsterServices {
   parseBuffs(){
     for(let buff in this.monster.buffs){
       for(let stat in this.monster.tempStats){
-          stat += buff[stat];
+          this.monster.tempStats[stat] += this.monster.buffs[buff][stat];
       }
     }
   }
@@ -60,7 +61,7 @@ class MonsterServices {
   parseDebuffs(){
     for(let debuff in this.monster.debuffs){
       for(let stat in this.monster.tempStats){
-        stat += debuff[stat];
+        this.monster.tempStats[stat] += this.monster.debuffs[debuff][stat];
       }
     }
   }

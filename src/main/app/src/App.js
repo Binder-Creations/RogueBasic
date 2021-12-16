@@ -13,7 +13,6 @@ import * as items from "./images/items";
 import * as monsters from "./images/monsters";
 import CombatEngine from "./modules/CombatEngine";
 
-
 class App extends React.Component {
 
   constructor(props) {
@@ -24,7 +23,9 @@ class App extends React.Component {
       combat: false,
       combatUpdates: [], 
       character_id: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*=\s*([^;]*).*$)|^.*$/, "$1"),
-      widthChange: 0
+      widthChange: 0,
+      eaten: 0,
+      rested: 0
     };
     if(this.state.character_id){
       fetch('/pc/'+ this.state.character_id)
@@ -169,7 +170,7 @@ class App extends React.Component {
         this.disableUiMenus = true;
         this.backgroundSrc = this.props.props.images.inn
         this.outerElements = <>
-          <InnMenu props={this.props.props}/>
+          <InnMenu props={this.props.props} eaten={this.state.eaten} rested={this.state.rested}/>
         </>
       } else if(this.state.scene==="Shop"){
         if(this.state.pc.currentShop){
@@ -335,6 +336,7 @@ class App extends React.Component {
               break;
           } else {
             pc = {...this.state.pc}
+            this.pcServices.clearBuffs(pc);
             this.pcServices.resetTempStats(pc);
             this.pcServices.updateStats(pc);
             this.combatEngine = null;
@@ -413,7 +415,7 @@ class App extends React.Component {
           pc.currency -= 250;
           pc.currency = pc.currency > 0 ? pc.currency : 0;
 
-          this.save(["pc"], [pc], {pc: pc, dungeon: null});
+          this.save(["pc"], [pc], {pc: pc, dungeon: null, rested: this.state.rested +1});
           break;
         case "eat":
             pc = {...this.state.pc};
@@ -423,7 +425,7 @@ class App extends React.Component {
             pc.currency -= 100;
             pc.currency = pc.currency > 0 ? pc.currency : 0;
 
-            this.save(["pc"], [pc], {pc: pc});
+            this.save(["pc"], [pc], {pc: pc, eaten: this.state.eaten + 1});
             break;
         case "shop-store":
           pc = {...this.state.pc};

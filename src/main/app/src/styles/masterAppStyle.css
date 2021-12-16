@@ -712,14 +712,43 @@
 				table-layout: fixed;
 				margin-left:auto;
 				margin-right:auto;
-				/* animation: 2s ease-out 2s 1 combatText; */
-				pointer-events: none;
+			}
+			.fade-enter, .fade-appear, .fade-in-enter, .fade-in-appear {
+				opacity: 0.01;
+			}
+			.fade-enter.fade-enter-active, .fade-appear.fade-appear-active, .fade-in-enter.fade-in-enter-active, .fade-in-appear.fade-in-appear-active {
+				opacity: 1;
+				transition: opacity 200ms ease-in;
+			}
+			.fade-exit {
+				opacity: 1;
+			}
+			.fade-exit.fade-exit-active {
+				opacity: 0.01;
+				transition: opacity 1000ms ease-in;
+			}
+			.inn-float {
+				position: absolute;
+				width: 25%;
+				height: auto;
+				left: 37.5%;
+				top: 25%;
 			}
 			.combat-div {
 				height: 4vw;
 			}
 			.combat-text {
+				height: 4vw;
+				line-height: 4vw;
 				text-align: left;
+			}
+			.combat-text span {
+				display: inline-block;
+				vertical-align: middle;
+				line-height: normal;
+				background-color:rgba(214, 214, 184, 0.828);
+				border-radius: 1vw;
+
 			}
 			.combat-text.Attack {
 				color:#920000;
@@ -735,6 +764,9 @@
 			}
 			.combat-text.death {
 				color:rgb(29, 2, 2);
+			}
+			.combat-text.stun {
+				color:rgb(36, 35, 35);
 			}
 			.combat-ability-image {
 				height: 100%;

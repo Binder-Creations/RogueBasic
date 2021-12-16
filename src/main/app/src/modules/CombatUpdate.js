@@ -9,7 +9,7 @@ class CombatUpdate{
     if(target){
       this.target = target;
       if(source){
-        if(updateType !== "death"){
+        if(updateType !== "death" && updateType !== "stun"){
           if(source !== "pc"){
             source = " (" + source + ")";
           } else {
@@ -40,6 +40,8 @@ class CombatUpdate{
                 ? "--" + source
                   : updateType === "death"
                     ? source + " Dies!"
+                    : updateType === "stun"
+                      ? source + " is Stunned!"
                     : "";     
         this.size = {fontSize: 130*(1-(this.text.length - 14)/40) + "%"};
       }

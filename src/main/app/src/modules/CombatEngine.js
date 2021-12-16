@@ -22,7 +22,7 @@ class CombatEngine {
         // let monsterAbility = this.selectAbility(monster);
         // AbilityServices["monster"+monsterAbility.type](monsterAbility, this.pc, monster, this.monsters, this.combatUpdates);
       } else {
-        this.combatUpdates.push(new CombatUpdate("stun", "stun", monster.position));
+        this.combatUpdates.push(new CombatUpdate("stun", "stun", monster.position, monster.name));
       }
     });
     this.updateFlags(this.pc.flags);

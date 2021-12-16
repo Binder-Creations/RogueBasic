@@ -6,8 +6,8 @@ class AbilityServices {
     for(let i = 0; i < ability.hits; i++){
       if(monsters.length){
         let targets = this[ability.target+"Target"](monsters);
-        if(ability.pcFlags || ability.monsterFlags || ability.allMonstersFlags){
-          this.parseFlags(ability, pc, targets, monsters);
+        if(ability.selfFlags || ability.targetFlags){
+          this.parseFlags(ability, pc, targets);
         }
         targets.forEach(monster => {
           let crit = this.crit(pc, monster);
@@ -38,7 +38,7 @@ class AbilityServices {
   }
 
   static pcBuff(ability, pc, monsters, combatUpdates){
-    if(ability.pcFlags || ability.monsterFlags || ability.allMonstersFlags){
+    if(ability.selfFlags || ability.targetFlags){
       this.parseFlags(ability, pc);
     }
 
@@ -51,8 +51,8 @@ class AbilityServices {
   }
 
   static monsterBuff(ability, monster, monsters, combatUpdates){
-    if(ability.pcFlags || ability.monsterFlags || ability.allMonstersFlags){
-      this.parseFlags(ability, null, monster);
+    if(ability.selfFlags || ability.targetFlags){
+      this.parseFlags(ability, monster);
     }
     
     let value = this.calcValue(this.randomize(monster.baseDamage*ability.modifier, ability.factor), monster)
@@ -64,8 +64,8 @@ class AbilityServices {
   }
 
   static monsterBuffAll(ability, source, monsters, combatUpdates){
-    if(ability.pcFlags || ability.monsterFlags || ability.allMonstersFlags){
-      this.parseFlags(ability, null, null, monsters);
+    if(ability.selfFlags || ability.targetFlags){
+      this.parseFlags(ability, null, monsters);
     }
 
     let value = this.calcValue(this.randomize(source.baseDamage*ability.modifier, ability.factor), source)
@@ -80,8 +80,8 @@ class AbilityServices {
 
   static pcDebuff(ability, pc, monsters, combatUpdates){
     let targets = this[ability.target+"Target"](monsters);
-    if(ability.pcFlags || ability.monsterFlags || ability.allMonstersFlags){
-      this.parseFlags(ability, pc, targets, monsters);
+    if(ability.selfFlags || ability.targetFlags){
+      this.parseFlags(ability, pc, targets);
     }
     
     ability.debuffs = JSON.parse(ability.debuffs);
@@ -96,8 +96,8 @@ class AbilityServices {
   }
 
   static monsterDebuff(ability, pc, monster, monsters, combatUpdates){
-    if(ability.pcFlags || ability.monsterFlags || ability.allMonstersFlags){
-      this.parseFlags(ability, pc);
+    if(ability.selfFlags || ability.targetFlags){
+      this.parseFlags(ability, monster, [pc]);
     }
     
     ability.debuffs = JSON.parse(ability.debuffs);
@@ -178,9 +178,9 @@ class AbilityServices {
 
   static targetByPosition(monsters, rowPriority, columnPriority){
     for(let monster of monsters){
-      monster.priority = rowPriority.indexOf(monster.position[0])*10 + columnPriority.indexOf(monster.position.match(/[A-Z][a-z]*/)[0]);
+      monster.priority = rowPriority.indexOf(monster.position[0])*10 + columnPriority.indexOf(monster.position.match(/[A-Z][a-z]*/)[0][0]);
     }
-
+    
     let i = 0;
     let priority = 99;
     let iPriority = 0;
@@ -228,17 +228,22 @@ class AbilityServices {
     return monsters[iPriority]; 
   }
 
-  static parseFlags(ability, pc, monster, monsters){
-    if(pc && ability.pcFlags){
-      pc.flags = Object.assign(pc.flags, ability.pcFlags);
+  static parseFlags(ability, self, targets){
+    if(self && ability.selfFlags){
+      for(let flag in ability.selfFlags){
+        if(ability.selfFlags[flag]){
+          self.flags[flag] = ability.selfFlags[flag];
+        }
+      }
     }
-    if(monster && ability.monsterFlags){
-      monster.flags = Object.assign(monster.flags, ability.monsterFlags);
-    }
-    if(monsters && ability.allMonstersFlags){
-      monsters.forEach(monster => {
-        monster.flags = Object.assign(monster.flags, ability.allMonstersFlags);
-      })
+    if(targets && ability.targetFlags){
+      for(let target of targets){
+        for(let flag in ability.targetFlags){
+          if(ability.targetFlags[flag]){
+            target.flags[flag] = ability.targetFlags[flag];
+          }
+        }
+      }
     }
   }
 

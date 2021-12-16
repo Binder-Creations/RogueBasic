@@ -69,12 +69,10 @@ class PcServices {
   } 
   updateStats(pc){
     this.pc = pc;
-    this.resetTempStats(this.pc);
     if(!this.pc.hasOwnProperty('flags')){
-      pc.flags = {};
-      pc.buffs = [];
-      pc.debuffs = [];
+      this.clearBuffs(this.pc);
     }
+    this.resetTempStats(this.pc);
     if(Object.keys(this.pc.buffs).length){
       this.parseBuffs();
     }
@@ -162,8 +160,18 @@ class PcServices {
     this.energyTotalPrevious = this.energyTotal();
   }
 
+  clearBuffs(pc){
+    pc.flags = {};
+    pc.buffs = [];
+    pc.debuffs = [];
+  }
+
   resetTempStats(pc){
     pc.tempStats = {
+      regenerate: 0,
+      poison: 0,
+      bleed: 0,
+      burn: 0,
       constitution: 0,
       strength: 0,
       dexterity: 0,
