@@ -6,6 +6,7 @@ import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 @UserDefinedType(value = "flags")
 public class Flags {
+	private int attackEnergy;
 	private int critDoubleDamage;
 	private int crit;
 	private int dodge;
@@ -22,6 +23,9 @@ public class Flags {
 		switch(flag) {
 			case "magic":
 				this.magic = value;
+				break;
+			case "attackEnergy":
+				this.attackEnergy = value;
 				break;
 			case "critDoubleDamage":
 				this.critDoubleDamage = value;
@@ -47,6 +51,18 @@ public class Flags {
 		}
 	}
 	
+	public Flags(String flag) {
+		this(flag, 1);
+	}
+	
+	public int getAttackEnergy() {
+		return attackEnergy;
+	}
+
+	public void setAttackEnergy(int attackEnergy) {
+		this.attackEnergy = attackEnergy;
+	}
+
 	public int getCritDoubleDamage() {
 		return critDoubleDamage;
 	}
@@ -121,7 +137,7 @@ public class Flags {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(crit, critDoubleDamage, dodge, fortress, fullPen, highPen, hit, magic, stun);
+		return Objects.hash(attackEnergy, crit, critDoubleDamage, dodge, fortress, fullPen, highPen, hit, magic, stun);
 	}
 	
 	@Override
@@ -133,16 +149,16 @@ public class Flags {
 		if (getClass() != obj.getClass())
 			return false;
 		Flags other = (Flags) obj;
-		return crit == other.crit && critDoubleDamage == other.critDoubleDamage && dodge == other.dodge
-				&& fortress == other.fortress && fullPen == other.fullPen && highPen == other.highPen
-				&& hit == other.hit && magic == other.magic && stun == other.stun;
+		return attackEnergy == other.attackEnergy && crit == other.crit && critDoubleDamage == other.critDoubleDamage
+				&& dodge == other.dodge && fortress == other.fortress && fullPen == other.fullPen
+				&& highPen == other.highPen && hit == other.hit && magic == other.magic && stun == other.stun;
 	}
 	
 	@Override
 	public String toString() {
-		return "Flags [critDoubleDamage=" + critDoubleDamage + ", crit=" + crit + ", dodge=" + dodge + ", highPen="
-				+ highPen + ", hit=" + hit + ", fullPen=" + fullPen + ", stun=" + stun + ", fortress=" + fortress
-				+ ", magic=" + magic + "]";
+		return "Flags [attackEnergy=" + attackEnergy + ", critDoubleDamage=" + critDoubleDamage + ", crit=" + crit
+				+ ", dodge=" + dodge + ", highPen=" + highPen + ", hit=" + hit + ", fullPen=" + fullPen + ", stun="
+				+ stun + ", fortress=" + fortress + ", magic=" + magic + "]";
 	}
 
 }

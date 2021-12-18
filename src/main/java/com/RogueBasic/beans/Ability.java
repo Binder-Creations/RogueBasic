@@ -1,5 +1,6 @@
 package com.RogueBasic.beans;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -53,9 +54,27 @@ public class Ability {
 		this.buffs = buffs;
 	}
 	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Buff buff) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description);
+		if(buff != null) {
+			Set<Buff> buffs = new HashSet<>();
+			buffs.add(buff);
+			this.buffs = buffs;
+		}
+	}
+	
 	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Set<Buff> buffs, Set<Buff> debuffs) {
 		this(level, name, cost, modifier, factor, hits, target, type, icon, description, buffs);
 		this.debuffs = debuffs;
+	}
+	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Buff buff, Buff debuff) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, buff);
+		if(debuff != null) {
+			Set<Buff> debuffs = new HashSet<>();
+			debuffs.add(debuff);
+			this.debuffs = debuffs;
+		}
 	}
 	
 	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Set<Buff> buffs) {
@@ -63,9 +82,27 @@ public class Ability {
 		this.buffs = buffs;
 	}
 	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Buff buff) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags);
+		if(buff != null) {
+			Set<Buff> buffs = new HashSet<>();
+			buffs.add(buff);
+			this.buffs = buffs;
+		}
+	}
+	
 	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Flags targetFlags, Set<Buff> buffs) {
 		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags, targetFlags);
 		this.buffs = buffs;
+	}
+	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Flags targetFlags, Buff buff) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags, targetFlags);
+		if(buff != null) {
+			Set<Buff> buffs = new HashSet<>();
+			buffs.add(buff);
+			this.buffs = buffs;
+		}
 	}
 	
 	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Set<Buff> buffs, Set<Buff> debuffs) {
@@ -73,11 +110,28 @@ public class Ability {
 		this.debuffs = debuffs;
 	}
 	
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Buff buff, Buff debuff) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags, buff);
+		if(debuff != null) {
+			Set<Buff> debuffs = new HashSet<>();
+			debuffs.add(debuff);
+			this.debuffs = debuffs;
+		}
+	}
+	
 	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Flags targetFlags, Set<Buff> buffs, Set<Buff> debuffs) {
 		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags, targetFlags, buffs);
 		this.debuffs = debuffs;
 	}
-	
+
+	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Flags targetFlags, Buff buff, Buff debuff) {
+		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags, targetFlags, buff);
+		if(debuff != null) {
+			Set<Buff> debuffs = new HashSet<>();
+			debuffs.add(debuff);
+			this.debuffs = debuffs;
+		}
+	}
 
 	public int getLevel() {
 		return level;

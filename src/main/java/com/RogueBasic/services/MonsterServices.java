@@ -12,6 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.RogueBasic.beans.Ability;
+import com.RogueBasic.beans.Buff;
+import com.RogueBasic.beans.Flags;
 import com.RogueBasic.beans.Monster;
 
 public class MonsterServices {
@@ -460,88 +462,88 @@ public class MonsterServices {
 				case "archer":
 					switch(abilityChar) {
 						case 'A':
-							abilities.add(new Ability(0, "Precise Shot", 0, 2.6f, 10, 1, "pc", "Attack", null, "shoots you with unerring accuracy."));
+							abilities.add(new Ability(0, "Precise Shot", 0, 2.6f, 10, 1, "pc", "Attack", null, "shoots you with unerring accuracy.", new Flags("hit")));
 							break;
 						case 'B':
-							abilities.add(new Ability(0, "Apply Poison", 0, 2f, 0, 1, "self", "Buff", null, "applies a deadly poison to their weapon."));
+							abilities.add(new Ability(0, "Poison", 0, 0.8f, 0, 1, "pc", "Debuff", null, "inflicts you with a long-lasting poison.", null, null, null, new Buff("poison", -1, "poison")));
 							break;
 						case 'C':
-							abilities.add(new Ability(0, "Take Aim", 0, 5f, 0, 1, "self", "Buff", null, "locks you in their sights."));
+							abilities.add(new Ability(0, "Take Aim", 0, 3f, 0, 1, "self", "Buff", null, "locks you in their sights.", new Flags("hit", -1), new Buff("takeAim", -1, "critRating")));
 							break;
 						case 'D':
 							abilities.add(new Ability(0, "Triple Shot", 0, 0.9f, 30, 3, "pc", "Attack", null, "fires three quick shots at you."));
 							break;
 						case 'E':
-							abilities.add(new Ability(0, "Soul Sight", 0, 3f, 20, 1, "pc", "Attack", null, "launches an ephemeral attack upon your soul directly."));
+							abilities.add(new Ability(0, "Soul Sight", 0, 3f, 20, 1, "pc", "Attack", null, "launches an ephemeral attack upon your soul directly.", new Flags("attackEnergy")));
 							break;
 						case 'F':
-							abilities.add(new Ability(0, "Pin Down", 0, 5f, 0, 1, "pc", "Debuff", null, "shoots at your feet, pinning you to the ground."));
+							abilities.add(new Ability(0, "Pin Down", 0, 5f, 0, 1, "pc", "Debuff", null, "shoots at your feet, pinning you to the ground.", null, null, null, new Buff("pinDown", 3, new String[] {"dodgeRating", "critRating"})));
 							break;
 					}
 					break;
 				case "wizard":
 					switch(abilityChar) {
 						case 'A':
-							abilities.add(new Ability(0, "Gather Power", 0, 15f, 0, 1, "pc", "Buff", null, "gathers magical energy in preparation for a powerful spell."));
+							abilities.add(new Ability(0, "Gather Power", 0, 15f, 0, 1, "pc", "Buff", null, "gathers magical energy in preparation for a powerful spell.", new Buff("gatherPower", 2, "power")));
 							break;
 						case 'B':
-							abilities.add(new Ability(0, "Fireball", 0, 1.6f, 0, 1, "pc", "Debuff", null, "throws a ball of sticky, long-burning flame at you."));
+							abilities.add(new Ability(0, "Fireball", 0, 1.8f, 0, 1, "pc", "Debuff", null, "throws a ball of sticky, long-burning flame at you.", null, null, null, new Buff("fireball", 3, "burn")));
 							break;
 						case 'C':
 							abilities.add(new Ability(0, "Knit Together", 0, 4f, 15, 1, "allMonsters", "Heal", null, "releases a wave of rapid-healing magic."));
 							break;
 						case 'D':
-							abilities.add(new Ability(0, "Regeneration", 0, 1.2f, 0, 1, "allMonsters", "Buff", null, "wraps their allies in long-lasting healing magic."));
+							abilities.add(new Ability(0, "Regeneration", 0, 1.2f, 0, 1, "allMonsters", "Buff", null, "wraps their allies in long-lasting healing magic.", new Buff("regeneration", 4, "regenerate")));
 							break;
 						case 'E':
-							abilities.add(new Ability(0, "Arcane Barrage", 0, 1f, 25, 3, "pc", "Attack", null, "conjures three unavoidable missles to magically seek you out."));
+							abilities.add(new Ability(0, "Arcane Barrage", 0, 1.2f, 25, 3, "pc", "Attack", null, "conjures three unavoidable missles to magically seek you out.", new Flags("magic")));
 							break;
 						case 'F':
-							abilities.add(new Ability(0, "Deep Chill", 0, 4f, 0, 1, "pc", "Debuff", null, "blasts you with bone-penetrating cold."));
+							abilities.add(new Ability(0, "Deep Chill", 0, 2f, 0, 1, "pc", "Debuff", null, "blasts you with bone-penetrating cold.", null, null, null, new Buff("deepChill", 4, new String[] {"strength", "dexterity"})));
 							break;
 					}
 					break;
 				case "rogue":
 					switch(abilityChar) {
 						case 'A':
-							abilities.add(new Ability(0, "Vital Strike", 0, 1.2f, 10, 1, "pc", "Attack", null, "launches a vicious attack seeking your most vulnerable opening."));
+							abilities.add(new Ability(0, "Vital Strike", 0, 1.2f, 10, 1, "pc", "Attack", null, "launches a vicious attack seeking your most vulnerable opening.", new Flags("crit")));
 							break;
 						case 'B':
-							abilities.add(new Ability(0, "Hasten", 0, 5f, 0, 1, "self", "Buff", null, "concentrates, and their movements speed up."));
+							abilities.add(new Ability(0, "Hasten", 0, 5f, 0, 1, "self", "Buff", null, "concentrates, and their movements speed up.", new Buff("hasten", 4, new String[] {"dodgeRating", "critRating"})));
 							break;
 						case 'C':
-							abilities.add(new Ability(0, "Seamseek", 0, 1.5f, 15, 1, "pc", "Attack", null, "bypasses your armor with a carefully-placed attack."));
+							abilities.add(new Ability(0, "Seamseek", 0, 1.5f, 15, 1, "pc", "Attack", null, "bypasses your armor with a carefully-placed attack.", new Flags("fullPen")));
 							break;
 						case 'D':
-							abilities.add(new Ability(0, "Lacerate", 0, 0.7f, 0, 1, "pc", "Debuff", null, "opens your artery, causing your to bleed profusely."));
+							abilities.add(new Ability(0, "Lacerate", 0, 0.9f, 0, 1, "pc", "Debuff", null, "opens your artery, causing your to bleed profusely.", null, null, null, new Buff("lacerate", "bleed")));
 							break;
 						case 'E':
 							abilities.add(new Ability(0, "Flurry", 0, 0.7f, 25, 4, "pc", "Attack", null, "attacks you four times in a blur of motion."));
 							break;
 						case 'F':
-							abilities.add(new Ability(0, "Perfect Dodge", 0, 1f, 0, 1, "self", "Buff", null, "readies themself to dodge your next attack."));
+							abilities.add(new Ability(0, "Perfect Dodge", 0, 1f, 0, 1, "self", "Buff", null, "readies themself to dodge your next attack.", new Flags("dodge", 2)));
 							break;
 					}
 					break;
 				case "warrior":
 					switch(abilityChar) {
 						case 'A':
-							abilities.add(new Ability(0, "Fortify", 0, 5f, 0, 1, "self", "Buff", null, "enhances their defenses."));
+							abilities.add(new Ability(0, "Fortify", 0, 8f, 0, 1, "self", "Buff", null, "enhances their defenses.", new Buff("fortify", -1, "armor")));
 							break;
 						case 'B':
-							abilities.add(new Ability(0, "Rallying Cry", 0, 2.5f, 0, 1, "allMonsters", "Buff", null, "bolsters the morale of their allies."));
+							abilities.add(new Ability(0, "Rallying Cry", 0, 4f, 0, 1, "allMonsters", "Buff", null, "bolsters the morale of their allies.", new Buff("rallyingCry", 4, "power")));
 							break;
 						case 'C':
-							abilities.add(new Ability(0, "Sunder", 0, 4f, 0, 1, "pc", "Debuff", null, "pries open your armor, making you vulnerable to further attacks."));
+							abilities.add(new Ability(0, "Sunder", 0, 6f, 0, 1, "pc", "Debuff", null, "pries open your armor, making you vulnerable to further attacks.", null, null, null, new Buff("sunder", 4, "armor")));
 							break;
 						case 'D':
-							abilities.add(new Ability(0, "Dazing Blow", 0, 1.5f, 20, 1, "pc", "Debuff", null, "disorients you with a heavy, blunt strike."));
+							abilities.add(new Ability(0, "Dazing Blow", 0, 7f, 20, 1, "pc", "Debuff", null, "disorients you with a heavy, blunt strike.", null, null, null, new Buff("dazingBlow", 3, "power")));
 							break;
 						case 'E':
 							abilities.add(new Ability(0, "Inner Reserve", 0, 6f, 0, 1, "self", "Heal", null, "draws deeply from their inner resillence to shrug off wounds."));
 							break;
 						case 'F':
-							abilities.add(new Ability(0, "Power Strike", 0, 3f, 50, 1, "pc", "Attack", null, "makes a slightly clumsy but shatteringly powerful attack."));
+							abilities.add(new Ability(0, "Power Strike", 0, 3f, 50, 1, "pc", "Attack", null, "makes a shatteringly powerful attack."));
 							break;
 					}
 					break;

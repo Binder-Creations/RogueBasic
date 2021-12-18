@@ -1,5 +1,4 @@
 
-export {default as applyPoison} from "./apply-poison.png";
 export {default as arcaneBarrage} from "./arcane-barrage.png";
 export {default as assassinate} from "./assassinate.png";
 export {default as basicAttack} from "./basic-attack.png";
@@ -24,6 +23,7 @@ export {default as lacerate} from "./lacerate.png";
 export {default as livingFortress} from "./living-fortress.png";
 export {default as perfectDodge} from "./perfect-dodge.png";
 export {default as pinDown} from "./pin-down.png";
+export {default as poison} from "./poison.png";
 export {default as powerStrike} from "./power-strike.png";
 export {default as preciseShot} from "./precise-shot.png";
 export {default as rallyingCry} from "./rallying-cry.png";

@@ -28,6 +28,9 @@ class MonsterServices {
     }
     this.monster.experience = this.calcExperience();
     this.monster.powerTotal = this.powerTotal();
+    this.monster.armorTotal = this.armorTotal();
+    this.monster.critRatingTotal = this.critRatingTotal();
+    this.monster.dodgeRatingTotal = this.dodgeRatingTotal();
     this.monster.physResist = this.calcPhysResist();
     this.monster.magResist = this.calcMagResist();
     this.monster.critChance = this.calcCritChance();
@@ -61,13 +64,22 @@ class MonsterServices {
   parseDebuffs(){
     for(let debuff in this.monster.debuffs){
       for(let stat in this.monster.tempStats){
-        this.monster.tempStats[stat] += this.monster.debuffs[debuff][stat];
+        this.monster.tempStats[stat] -= this.monster.debuffs[debuff][stat];
       }
     }
   }
 
   powerTotal(){
-    return this.monster.power*1 + this.monster.tempStats.power;
+    return Math.max((this.monster.power*1 + this.monster.tempStats.power), 0);
+  }
+  armorTotal(){
+    return Math.max((this.monster.armor*1 + this.monster.tempStats.armor), 0);
+  }
+  critRatingTotal(){
+    return Math.max((this.monster.critRating*1 + this.monster.tempStats.critRating), 0);
+  }
+  dodgeRatingTotal(){
+    return Math.max((this.monster.dodgeRating*1 + this.monster.tempStats.dodgeRating), 0);
   }
   calcExperience(){
     return Math.round((10+this.monster.level*5)*(this.monster.boss ? 8 : this.monster.miniboss ? 4 : 1) + Number.EPSILON);
@@ -76,16 +88,16 @@ class MonsterServices {
     return Math.round(this.monster.health*this.healthMod + Number.EPSILON);
   }
   calcPhysResist(){
-    return Math.round((95-95**(1-(((((this.monster.armor + this.monster.tempStats.armor) >= 0 ? this.monster.armor : 0)*(1/((13+this.monster.level)/14)))**0.55)/100)) + Number.EPSILON)*10)/10
+    return Math.round((95-95**(1-(((this.armorTotal()*(1/((13+this.monster.level)/14)))**0.55)/100)) + Number.EPSILON)*10)/10
   }
   calcMagResist(){
-    return Math.round((75-75**(1-(((((this.monster.armor + this.monster.tempStats.armor) >= 0 ? this.monster.armor : 0)*(1/((13+this.monster.level)/14)))**0.4)/100)) + Number.EPSILON)*10)/10
+    return Math.round((75-75**(1-(((this.armorTotal()*(1/((13+this.monster.level)/14)))**0.4)/100)) + Number.EPSILON)*10)/10
   }
   calcCritChance(){
-    return Math.round((((this.monster.critRating + this.monster.tempStats.critRating)*(1/((13+this.monster.level)/14)))**0.78 + Number.EPSILON)*10)/10
+    return Math.round(((this.critRatingTotal()*(1/((13+this.monster.level)/14)))**0.78 + Number.EPSILON)*10)/10
   }
   calcDodgeChance(){
-    return Math.round((95-(95*(1-((((this.monster.dodgeRating  + this.monster.tempStats.dodgeRating)*(1/((13+this.monster.level)/14)))**0.7)/100))) + Number.EPSILON)*10)/10
+    return Math.round((95-(95*(1-(((this.dodgeRatingTotal()*(1/((13+this.monster.level)/14)))**0.7)/100))) + Number.EPSILON)*10)/10
   }
   calcBaseDamage(){
     return Math.round((4+this.monster.level)*(this.monster.boss ? 2 : this.monster.miniboss ? 1.5 : 1)*this.damageMod + Number.EPSILON)

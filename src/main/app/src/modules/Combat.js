@@ -25,12 +25,6 @@ class Combat extends React.Component {
     if(gameOver){
 
     } else {
-      components = components.concat(this.parseBuffs(this.props.props.pc))
-      
-      for(let monster of this.props.dungeon.floors[this.props.dungeon.currentFloor].rooms[this.props.dungeon.currentRoom].monsters){
-        components = components.concat(this.parseBuffs(monster));
-      }
-
       let key = 0;
       for(let position of this.positions){
         let updates = [];
@@ -46,7 +40,7 @@ class Combat extends React.Component {
                   </div>
                 </td>
                 <td>
-                  <div className={"combat-div combat-text "+combatUpdate.type} style={combatUpdate.size}>
+                  <div className={"combat-div combat-text " + combatUpdate.type} style={combatUpdate.size}>
                     <span>
                       {combatUpdate.text}
                     </span>
@@ -79,76 +73,6 @@ class Combat extends React.Component {
         {components}
       </TransitionGroup>  
     );
-  }
-
-  parseBuffs(entity){
-    let components = [];
-    let position = entity.position ? entity.position : "pc";
-    let buffs = [];
-    let debuffs = [];
-
-    let key = 0;
-    for(let buff of entity.buffs){
-      let statsLine = "";
-      for(let stat in buff){
-        if (buff[stat] > 0){
-          if(stat === "regenerate"){
-            statsLine += `heals ${buff[stat]} points of health each turn, `
-          } else if (stat !== "duration") {
-            statsLine += `increases ${stat[0].toUpperCase() + stat.substring(1).split(/(?=[A-Z])/).join(" ")} by ${buff[stat]}, `
-          }
-        }
-      }
-      statsLine = statsLine[0].toUpperCase() + statsLine.substring(1);
-      statsLine = statsLine.substring(0, statsLine.length - 2);
-      statsLine += "."
-
-      buffs.push(<img className="buff-icon" src={this.props.props.abilities[buff.name]} title={statsLine} alt="buff"/>);
-    }
-    if(buffs.length){
-      components.push(
-        <Fade 
-          key={key++} 
-          in={true} 
-        >
-          <div className={"buff-box buff " + position}>
-            {buffs}
-          </div>
-        </Fade>
-      );
-    }
-
-    key = 0;
-    for(let debuff of entity.debuffs){
-      let statsLine = "";
-      for(let stat in debuff){
-        if (debuff[stat] > 0){
-          if(stat === "bleed" || stat === "burn" || stat === "poison"){
-            statsLine += `inflicts ${debuff[stat]} points of ${stat[0].toUpperCase() + stat.substring(1)}, `
-          } else if (stat !== "duration") {
-            statsLine += `decreases ${stat[0].toUpperCase() + stat.substring(1).split(/(?=[A-Z])/).join(" ")} by ${debuff[stat]}, `
-          }   
-        }
-      }
-      statsLine = statsLine[0].toUpperCase() + statsLine.substring(1);
-      statsLine = statsLine.substring(0, statsLine.length - 2);
-      statsLine += "."
-
-      debuffs.push(<img className="debuff-icon" src={this.props.props.abilities[debuff.name]} title={statsLine} alt="debuff"/>);
-    }
-    if(debuffs.length){
-      components.push(
-        <Fade 
-          key={key++}
-          in={true}
-        >
-          <div className={"buff-box debuff " + position}>
-            {debuffs}
-          </div>
-        </Fade>
-      );
-    }
-    return components;
   }
 }
 

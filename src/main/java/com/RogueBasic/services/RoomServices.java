@@ -38,7 +38,9 @@ public class RoomServices {
 		int xLength = floor.getXLength();
 		int yLength = floor.getYLength();
 		int maxRooms = ThreadLocalRandom.current().nextInt((xLength*yLength+1)/2, xLength*yLength+1);
+		int count = 0;
 		genStart(xLength, yLength);
+		
 		
 		while(!queue.isEmpty()) {
 			Room room = queue.poll();
@@ -69,6 +71,7 @@ public class RoomServices {
 				if(containsItems(room.isBoss(), room.isMiniboss(), room.getMonsters() != null, room.getTrap() != null, dungeon.getChallengeRating()))
 					is.generate(dungeon, room, floor.getLevel());
 				room.setVariant(ThreadLocalRandom.current().nextInt(1,5));
+				room.setCount(count++);
 				rooms.add(room);
 		}
 		

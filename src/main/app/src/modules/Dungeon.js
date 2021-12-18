@@ -1,5 +1,6 @@
 import React from "react";
 import Combat from "./Combat.js"
+import BuffBar from "./BuffBar.js";
 import {TransitionGroup} from 'react-transition-group';
 import Fade from "./Fade.js";
 import FadeIn from "./FadeIn.js";
@@ -38,6 +39,21 @@ class Dungeon extends React.Component {
       this.pushMonstersByPosition(components, 'b');
       this.pushMonstersByPosition(components, 'f');
       components.push(<Combat key='c' props={this.props.props} dungeon={this.props.dungeon}/>)
+      let key = 0;
+      if(this.props.props.pc.buffs && this.props.props.pc.buffs.length > 0){
+        components.push(<BuffBar key={key++} props={this.props.props} entity={this.props.props.pc} type={"buffs"}/>);
+      }
+      if(this.props.props.pc.debuffs && this.props.props.pc.debuffs.length > 0){
+        components.push(<BuffBar key={key++} props={this.props.props} entity={this.props.props.pc} type={"debuffs"}/>);
+      }
+      for(let monster of this.currentRoom.monsters) {
+        if(monster.buffs && monster.buffs.length > 0){
+          components.push(<BuffBar key={key++} props={this.props.props} entity={monster} type={"buffs"}/>);
+        }
+        if(monster.debuffs && monster.debuffs.length > 0){
+          components.push(<BuffBar key={key++} props={this.props.props} entity={monster} type={"debuffs"}/>);
+        }
+      }
     }
     return (
       <TransitionGroup>

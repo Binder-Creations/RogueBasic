@@ -2,6 +2,7 @@ package com.RogueBasic.beans;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
@@ -32,66 +33,34 @@ public class Buff {
 	public Buff(String name, int duration, Map<String, Integer> stats) {
 		this.name = name;
 		this.duration = duration;
-		stats.forEach((String k, Integer i) -> {
-			switch(k) {
-				case "regenerate":
-					this.regenerate = i;
-					break;
-				case "poison":
-					this.poison = i;
-					break;
-				case "bleed":
-					this.bleed = i;
-					break;
-				case "burn":
-					this.burn = i;
-					break;
-				case "constitution":
-					this.constitution = i;
-					break;
-				case "strength":
-					this.strength = i;
-					break;
-				case "dexterity":
-					this.dexterity = i;
-					break;
-				case "intelligence":
-					this.intelligence = i;
-					break;
-				case "power":
-					this.power = i;
-					break;
-				case "health":
-					this.health = i;
-					break;
-				case "healthRegen":
-					this.healthRegen = i;
-					break;
-				case "armor":
-					this.armor = i;
-					break;
-				case "armorPen":
-					this.armorPen = i;
-					break;
-				case "dodgeRating":
-					this.dodgeRating = i;
-					break;
-				case "critRating":
-					this.critRating = i;
-					break;
-				case "energy":
-					this.energy = i;
-					break;
-				case "energyRegen":
-					this.energyRegen = i;
-					break;
-			}
+		stats.forEach((String stat, Integer statValue) -> {
+			assign(stat, statValue);
 		});
+	}
+	
+	public Buff(String name, int duration, String[] stats) {
+		this.name = name;
+		this.duration = duration;
+		for(int i = 0; i < stats.length; i++) {
+			assign(stats[i], -1);
+		}
 	}
 	
 	public Buff(String name, int duration, String stat, int statValue) {
 		this.name = name;
 		this.duration = duration;
+		assign(stat, statValue);
+	}
+	
+	public Buff(String name, String stat) {
+		this(name, -1, stat, -1);
+	}
+	
+	public Buff(String name, int duration, String stat) {
+		this(name, duration, stat, -1);
+	}
+	
+	private void assign(String stat, int statValue) {
 		switch(stat) {
 			case "regenerate":
 				this.regenerate = statValue;
@@ -145,14 +114,6 @@ public class Buff {
 				this.energyRegen = statValue;
 				break;
 		}
-	}
-	
-	public Buff(String name, String stat) {
-		this(name, -1, stat, -1);
-	}
-	
-	public Buff(String name, int duration, String stat) {
-		this(name, duration, stat, -1);
 	}
 	
 	public String getName() {

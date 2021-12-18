@@ -275,8 +275,8 @@ class App extends React.Component {
       }
     }
 
-    sortDungeon(dungeon){
-      dungeon.floors.forEach(floor=>floor.rooms.sort((a,b)=>(a.stairsPrevious) ? -1 : (b.stairsNext ? -1 : 0)));
+    sortDungeon(dungeon){     
+      dungeon.floors.forEach(floor=>floor.rooms.sort((a,b) => (a.count < b.count) ? -1 : (b.count < a.count ? 1 : 0)));
       dungeon.floors.sort((a,b) => (a.level < b.level) ? -1 : (b.level < a.level ? 1 : 0));
       return dungeon;
     }

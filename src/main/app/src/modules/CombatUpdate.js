@@ -1,9 +1,11 @@
 class CombatUpdate{
-  constructor(updateType, abilityName, target, source, value, crit){
+  constructor(updateType, abilityName, target, source, value, crit, attackEnergy){
     this.type = updateType;
-
-    if(abilityName){
-      this.abilityName = abilityName;
+    this.abilityName = abilityName ? abilityName : null;
+    if (this.type === "Attack"){
+      this.type = attackEnergy 
+        ? this.type + "Energy"
+        : this.type + "Health"
     }
 
     if(target){
@@ -31,17 +33,19 @@ class CombatUpdate{
         }
         
         this.text = updateType === "Attack" || updateType === "Chain"
-          ? value + source + crit
-          : updateType === "Heal"
-            ? value + source + crit
-            : updateType === "Buff"
-              ? "++" + source
+          ? attackEnergy
+            ? value + source + crit + " Energy Damage!"
+            : value + source + crit
+            : updateType === "Heal"
+              ? value
               : updateType === "Buff"
-                ? "--" + source
-                  : updateType === "death"
-                    ? source + " Dies!"
-                    : updateType === "stun"
-                      ? source + " is Stunned!"
+                ? "++" + source
+                : updateType === "Debuff"
+                  ? "--" + source
+                    : updateType === "death"
+                      ? source + " Dies!"
+                      : updateType === "stun"
+                        ? source + " is Stunned!"
                     : "";     
         this.size = {fontSize: 130*(1-(this.text.length - 14)/40) + "%"};
       }

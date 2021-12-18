@@ -199,55 +199,47 @@ class PcServices {
   parseDebuffs(){
     for(let debuff in this.pc.debuffs){
       for(let stat in this.pc.tempStats){
-        this.pc.tempStats[stat] += this.pc.debuffs[debuff][stat];
+        this.pc.tempStats[stat] -= this.pc.debuffs[debuff][stat];
       }
     }
   }
 
   conTotal(){
-    return this.pc.constitution*1 + this.pc.constitutionBonus*1 + this.pc.tempStats.constitution;
+    return Math.max((this.pc.constitution*1 + this.pc.constitutionBonus*1 + this.pc.tempStats.constitution), 0);
   }
   strTotal(){
-    return this.pc.strength*1 + this.pc.strengthBonus*1  + this.pc.tempStats.strength;
+    return Math.max((this.pc.strength*1 + this.pc.strengthBonus*1  + this.pc.tempStats.strength), 0);
   }
   dexTotal(){
-    return this.pc.dexterity*1 + this.pc.dexterityBonus*1  + this.pc.tempStats.dexterity;
+    return Math.max((this.pc.dexterity*1 + this.pc.dexterityBonus*1  + this.pc.tempStats.dexterity), 0);
   }
   intTotal(){
-    return this.pc.intelligence*1 + this.pc.intelligenceBonus*1  + this.pc.tempStats.intelligence;
+    return Math.max((this.pc.intelligence*1 + this.pc.intelligenceBonus*1  + this.pc.tempStats.intelligence), 0);
   }
   powerTotal() {
-		return (Math.round(this.strTotal()/2) + Math.round(this.dexTotal()/2) + Math.round(this.intTotal()/2) + this.pc.powerBonus*1  + this.pc.tempStats.power);
-	}
-	
+		return Math.max(((Math.round(this.strTotal()/2) + Math.round(this.dexTotal()/2) + Math.round(this.intTotal()/2) + this.pc.powerBonus*1  + this.pc.tempStats.power)), 0);
+	}	
 	healthTotal() {
-		return this.conTotal()*(4+(this.pc.level-1)/2) + this.pc.healthBonus*1 +  + this.pc.tempStats.health;
+		return Math.round(this.conTotal()*(4+(this.pc.level-1)/2) + this.pc.healthBonus*1 +  + this.pc.tempStats.health + Number.EPSILON);
 	}
-	
 	healthRegenTotal() {
 		return Math.round(this.conTotal()/3) + this.pc.healthRegenBonus*1 +  + this.pc.tempStats.healthRegen;
 	}
-	
 	armorPenTotal() {
 		return this.strTotal()*2 + this.pc.armorPenBonus*1 +  + this.pc.tempStats.armorPen;
-	}
-	
+	}	
 	armorTotal() {
-		return this.strTotal()*2 + this.pc.armorBonus*1  + this.pc.tempStats.armor;
-	}
-	
+		return Math.max((this.strTotal()*2 + this.pc.armorBonus*1  + this.pc.tempStats.armor), 0);
+	}	
 	dodgeRatingTotal() {
-		return this.dexTotal()*2 + this.pc.dodgeRatingBonus*1  + this.pc.tempStats.dodgeRating;
-	}
-	
+		return Math.max((this.dexTotal()*2 + this.pc.dodgeRatingBonus*1  + this.pc.tempStats.dodgeRating), 0);
+	}	
   critRatingTotal() {
-		return this.dexTotal()*2 + this.pc.critRatingBonus*1 + this.pc.tempStats.critRating;
+		return Math.max((this.dexTotal()*2 + this.pc.critRatingBonus*1 + this.pc.tempStats.critRating), 0);
 	}
-	
 	energyTotal() {
-		return (this.intTotal()+this.pc.level-1)*6 + this.pc.energyBonus*1  + this.pc.tempStats.energy;
+		return Math.round(this.intTotal()*(6+(this.pc.level - 1)*0.75) + this.pc.energyBonus*1  + this.pc.tempStats.energy + Number.EPSILON);
 	}
-	
 	energyRegenTotal() {
 		return Math.round(this.intTotal()/2) + this.pc.energyRegenBonus*1 + this.pc.tempStats.energyRegen;
 	}
