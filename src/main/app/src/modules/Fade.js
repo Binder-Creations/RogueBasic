@@ -9,10 +9,10 @@ class Fade extends React.Component {
   render(){
       return(
         <CSSTransition
-          appear={true} 
+          appear 
           classNames="fade"
           unmountOnExit 
-          timeout={{appear: 200, enter: 200, exit: 1000}}
+          timeout={{appear: 200, enter: 200, exit: 500}}
           {...this.props}
         />
     );

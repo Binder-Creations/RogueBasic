@@ -28,7 +28,7 @@ class Ui extends React.Component {
       let onClick = null;
 
       if(this.props.props.pc.level >= this.props.props.pc.abilities[props.number].level){
-        if(this.props.props.combat){
+        if(this.props.props.combat && !this.props.props.position){
           if(this.props.props.pc.currentEnergy >= this.props.props.pc.abilities[props.number].cost){
             className="hover-saturate"
             onClick= () => this.props.props.appState("ability", props.number)
@@ -88,7 +88,7 @@ class Ui extends React.Component {
       this.setState({characterMenu: false, inventoryMenu: false})
     }
     
-    if(this.props.props.combat){
+    if(this.props.props.combat && !this.props.props.position){
       this.attackButton = <input class="btn-attack hover-saturate" type="image" src={this.buttonAttack} alt="Attack" onClick={() => this.props.props.appState("ability", 0)}/>
     } else {
       this.attackButton = <input class="btn-attack" type="image" src={this.buttonAttack} alt="Attack"/>

@@ -3,21 +3,24 @@ import CombatUpdate from "./CombatUpdate";
 import MonsterServices from "./MonsterServices";
 
 class CombatEngine {
-  constructor(pc, pcServices, monsters, dungeonMod){
+  constructor(pc, pcServices, monsters, dungeonMod, positions){
     this.pc = JSON.parse(JSON.stringify(pc));
     this.monsters = JSON.parse(JSON.stringify(monsters));
     this.monsterServices = new MonsterServices(dungeonMod);
     this.pcServices = pcServices;
     this.updateMonsterStats();
     this.combatUpdates = [];
+    this.positions = positions;
   }
 
-  runRound(ability){
+  runRound(ability, position){
     this.combatUpdates = [];
-    AbilityServices["pc"+ability.type](ability, this.pc, this.monsters, this.combatUpdates);
-    this.pc.currentEnergy = (this.pc.currentEnergy - ability.cost) < 0 ? 0 : this.pc.currentEnergy - ability.cost;
-    
-    for (let monster of this.monsters) {
+    if(!position){
+      AbilityServices["pc"+ability.type](ability, this.pc, this.monsters, this.combatUpdates);
+      this.pc.currentEnergy = (this.pc.currentEnergy - ability.cost) < 0 ? 0 : this.pc.currentEnergy - ability.cost;
+      this.damageOverTime(this.pc);
+    } else {
+      let monster = this.monsters.find(monster => monster.position === this.positions[position]);
       if(monster.boss || monster.miniboss || !monster.flags.stun){
         let monsterAbility = this.selectAbility(monster);
         console.log(monsterAbility)
@@ -25,20 +28,46 @@ class CombatEngine {
       } else {
         this.combatUpdates.push(new CombatUpdate("stun", "stun", monster.position, monster.name));
       }
+      this.damageOverTime(monster);  
     }
+    this.pcServices.updateStats(this.pc);
+    this.updateMonsterStats();
+  }
+
+  endRound(){
     this.updateFlags(this.pc.flags);
     this.decrementBuffs(this.pc.buffs);
     this.decrementBuffs(this.pc.debuffs);
+
     for(let monster of this.monsters){
       this.updateFlags(monster.flags);
       this.decrementBuffs(monster.buffs);
       this.decrementBuffs(monster.debuffs);
-    }
-    
+    } 
+
     this.pcServices.updateStats(this.pc);
     this.updateMonsterStats();
     AbilityServices.corpseCollector(this.monsters, this.combatUpdates);
     AbilityServices.pcCorpseCollector(this.pc, this.combatUpdates);
+  }
+
+  damageOverTime(entity){
+    if(entity.tempStats.regenerate){
+      entity.currentHealth = Math.min((entity.currentHealth + entity.tempStats.regenerate), entity.currentHealth);
+      this.combatUpdates.push(new CombatUpdate("Heal", "regenerate", entity.position ? entity.position : "pc", "Regenerate", entity.tempStats.regenerate));
+    }
+    if(entity.tempStats.bleed){
+      entity.currentHealth = Math.max((entity.currentHealth + entity.tempStats.bleed), 0);
+      this.combatUpdates.push(new CombatUpdate("Attack", "bleed", entity.position ? entity.position : "pc", "Bleed", entity.tempStats.bleed));
+    }
+    if(entity.tempStats.burn){
+      entity.currentHealth = Math.max((entity.currentHealth + entity.tempStats.burn), 0);
+      this.combatUpdates.push(new CombatUpdate("Attack", "burn", entity.position ? entity.position : "pc", "Burn", entity.tempStats.burn));
+    }
+    if(entity.tempStats.poison){
+      entity.currentHealth = Math.max((entity.currentHealth + entity.tempStats.poison), 0);
+      this.combatUpdates.push(new CombatUpdate("Attack", "poison", entity.position ? entity.position : "pc", "Poison", entity.tempStats.poison));
+    }
   }
 
   updateMonsterStats(){

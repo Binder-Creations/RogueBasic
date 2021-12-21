@@ -465,7 +465,7 @@ public class MonsterServices {
 							abilities.add(new Ability(0, "Precise Shot", 0, 2.6f, 10, 1, "pc", "Attack", null, "shoots you with unerring accuracy.", new Flags("hit")));
 							break;
 						case 'B':
-							abilities.add(new Ability(0, "Poison", 0, 0.8f, 0, 1, "pc", "Debuff", null, "inflicts you with a long-lasting poison.", null, null, null, new Buff("poison", -1, "poison")));
+							abilities.add(new Ability(0, "Envenomed Strike", 0, 0.8f, 0, 1, "pc", "Debuff", null, "inflicts you with a long-lasting poison.", null, null, null, new Buff("poison", -1, "poison")));
 							break;
 						case 'C':
 							abilities.add(new Ability(0, "Take Aim", 0, 3f, 0, 1, "self", "Buff", null, "locks you in their sights.", new Flags("hit", -1), new Buff("takeAim", -1, "critRating")));
@@ -484,7 +484,7 @@ public class MonsterServices {
 				case "wizard":
 					switch(abilityChar) {
 						case 'A':
-							abilities.add(new Ability(0, "Gather Power", 0, 15f, 0, 1, "pc", "Buff", null, "gathers magical energy in preparation for a powerful spell.", new Buff("gatherPower", 2, "power")));
+							abilities.add(new Ability(0, "Gather Power", 0, 15f, 0, 1, "self", "Buff", null, "gathers magical energy in preparation for a powerful spell.", new Buff("gatherPower", 2, "power")));
 							break;
 						case 'B':
 							abilities.add(new Ability(0, "Fireball", 0, 1.8f, 0, 1, "pc", "Debuff", null, "throws a ball of sticky, long-burning flame at you.", null, null, null, new Buff("fireball", 3, "burn")));

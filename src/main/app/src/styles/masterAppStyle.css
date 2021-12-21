@@ -725,7 +725,7 @@
 			}
 			.fade-exit.fade-exit-active {
 				opacity: 0.01;
-				transition: opacity 1000ms ease-in;
+				transition: opacity 500ms ease-in;
 			}
 			.inn-float {
 				position: absolute;
@@ -771,10 +771,25 @@
 			.combat-text.stun {
 				color:rgb(36, 35, 35);
 			}
+			.combat-ability-popup {
+				height: 50%;
+				width: 23.81%;
+				opacity: 0.5;
+			}
+			.combat-ability-popup > img {
+				height: 100%;
+				width: auto;
+			}
 			.combat-ability-image {
 				height: 100%;
 				width: auto;
 			}
+			/* .animate__animated.animate__pulse {
+				--duration: 500ms;
+			}
+			.animate__animated.animate__fadeOut {
+				--duration: 300ms;
+			} */
 			.buff-icon {
 				height: 2vw;
 				width: auto;
@@ -786,45 +801,54 @@
 				display: flex;
 				flex-direction: row;
 				flex-wrap: nowrap;
-				justify-content: left;
 			}
 			.buff-box.pc.buffs {
+				justify-content: left;
 				top: 17.4%;
 				left: 5.1235%;	
 			}
 			.buff-box.pc.debuffs {
+				justify-content: left;
 				top: 22.9%;
 				left: 5.1235%;	
 			}
 			.buff-box.backLeft.buffs {
+				justify-content: right;
 				left: 22.8906%;
 				top: 11.8393%;
 			}
 			.buff-box.backLeft.debuffs {
+				justify-content: right;
 				left: 22.8906%;
 				top: 17.3393%;
 			}
 			.buff-box.backCenter.buffs {
+				justify-content: left;
 				left: 46.4062%;
 				top: 11.8393%;				
 			}
 			.buff-box.backCenter.debuffs {
+				justify-content: left;
 				left: 46.4062%;
 				top: 17.3393%;				
 			}
 			.buff-box.backRight.buffs {
+				justify-content: left;
 				left: 70.0%;
 				top: 11.8393%;				
 			}
 			.buff-box.backRight.debuffs {
+				justify-content: left;
 				left: 70.0%;
 				top: 17.3393%;				
 			}
 			.buff-box.frontLeft.buffs {
+				justify-content: right;
 				left: 15.1562%;
 				top: 76.3475%;				
 			}
 			.buff-box.frontLeft.debuffs {
+				justify-content: right;
 				left: 15.1562%;
 				top: 81.8475%;				
 			}
@@ -833,14 +857,17 @@
 				top: 76.3475%;				
 			}
 			.buff-box.frontCenter.debuffs {
+				justify-content: left;
 				left: 38.75%;
 				top: 81.8475%;				
 			}
 			.buff-box.frontRight.buffs {
+				justify-content: left;
 				left: 62.3438%;
 				top: 76.3475%;				
 			}
 			.buff-box.frontRight.debuffs {
+				justify-content: left;
 				left: 62.3438%;
 				top: 81.8475%;				
 			}

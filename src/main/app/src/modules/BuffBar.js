@@ -6,11 +6,12 @@ class BuffBar extends React.Component {
   
   render(){
     let components = [];
-    let position = this.props.entity.position ? this.props.entity.position : "pc";
+    let buffBox = "buff-box "
+    let position = this.props.entity.position ? " " + this.props.entity.position : " pc";
     this.buffs(components);
 
     return(
-      <TransitionGroup className={"buff-box " + this.props.type + " " + position}>
+      <TransitionGroup className={buffBox + this.props.type + position}>
         {components}
       </TransitionGroup>
     );
@@ -43,13 +44,14 @@ class BuffBar extends React.Component {
       statsLine += "."
 
       components.push(
+        this.props.props.combatTransitions && (
         <Fade
           key={key++} 
-          in={true} 
+          in
         >
           <img className="buff-icon" src={this.props.props.abilities[buff.name]} title={statsLine + duration} alt="buff"/>
         </Fade>
-      );
+      ));
     }
   }
 }

@@ -7,7 +7,6 @@ import Fade from "./Fade";
 class Combat extends React.Component {
   constructor(props){
     super(props);
-    this.positions = ["pc", "frontLeft", "frontCenter", "frontRight", "backLeft", "backCenter", "backRight"];
     this.state = {
       showUpdate: true
     }
@@ -26,9 +25,8 @@ class Combat extends React.Component {
 
     } else {
       let key = 0;
-      for(let position of this.positions){
+      for(let position of this.props.props.positions){
         let updates = [];
-        key++;
 
         for(let combatUpdate of this.props.props.combatUpdates){
           if(combatUpdate.target === position){
@@ -50,12 +48,19 @@ class Combat extends React.Component {
           }
         }
         if(updates.length){
+          let onExited = null;
+          if(!key){
+            onExited = () => setTimeout(() =>this.props.props.appState("nextCombat"), 100);
+          }
+
           components.push(  
-            this.state.showUpdate && (
+            this.state.showUpdate && 
+            this.props.props.combatTransitions && (
               <Fade 
-                key={key} 
-                in={true} 
-                onEntered={() => setTimeout(() =>this.setState({showUpdate:false}), 700)}
+                key={key++} 
+                in 
+                onEntered={() => setTimeout(() =>this.setState({showUpdate:false}), 500)}
+                onExited={onExited}
               >
                 <div className={"nopointer monster " + position}>
                   <table className="monster-update-box">

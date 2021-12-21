@@ -88,32 +88,22 @@ class AbilityServices {
     this.mergeBuffs(pc.buffs, ability.buffs);
   }
 
-  static monsterBuff(ability, monster, monsters, combatUpdates){
+  static monsterBuff(ability, pc, monster, monsters, combatUpdates){
     if(ability.selfFlags || ability.targetFlags){
-      this.parseFlags(ability, monster);
+      this.parseFlags(ability, monster, monsters);
     }
     
     let value = this.calcValue(this.calcBase(ability, monster.baseDamage), monster)
-    for(let buff of ability.buffs){
-      this.parseBuff(buff, value);
-      combatUpdates.push(new CombatUpdate(ability.type, ability.name, monster.position, monster.name, value));
-    }
-    this.mergeBuffs(monster.buffs, ability.buffs);
-  }
-
-  static monsterBuffAll(ability, source, monsters, combatUpdates){
-    if(ability.selfFlags || ability.targetFlags){
-      this.parseFlags(ability, null, monsters);
-    }
-
-    let value = this.calcValue(this.calcBase(ability, source.baseDamage), source)
-    for(let monster of monsters){
+    let targets = ability.target === "self" 
+      ? [monster]
+      : monsters;
+    for(let target of targets){
       for(let buff of ability.buffs){
         this.parseBuff(buff, value);
-        combatUpdates.push(new CombatUpdate(ability.type, ability.name, monster.position, source.name, value));
+        combatUpdates.push(new CombatUpdate(ability.type, ability.name, target.position, target.name, value));
       }
-      this.mergeBuffs(monster.buffs, ability.buffs);
-    };
+      this.mergeBuffs(target.buffs, ability.buffs);
+    }
   }
 
   static pcDebuff(ability, pc, monsters, combatUpdates){
@@ -288,8 +278,10 @@ class AbilityServices {
 
   static parseBuff(buff, value){
     for(let stat in buff){
-      if(buff[stat] === -1){
-        buff[stat] = value;
+      if(stat !== "duration"){
+        if(buff[stat] === -1){
+          buff[stat] = value;
+        }
       }
     }
   }
@@ -335,6 +327,8 @@ class AbilityServices {
     while (i--){
       if(monsters[i].currentHealth <= 0){
         combatUpdates.push(new CombatUpdate("death", "death", monsters[i].position, monsters[i].name));
+        monsters[i].buffs = [];
+        monsters[i].debuffs = [];
         monsters.splice(i, 1);
       }
     }

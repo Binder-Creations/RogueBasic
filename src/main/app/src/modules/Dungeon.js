@@ -4,11 +4,13 @@ import BuffBar from "./BuffBar.js";
 import {TransitionGroup} from 'react-transition-group';
 import Fade from "./Fade.js";
 import FadeIn from "./FadeIn.js";
+import AbilityAnimation from "./AbilityAnimation.js";
 
 class Dungeon extends React.Component {
   constructor(props){
     super(props);
     this.currentRoom = null;
+    this.abilityAnimationKey = 0;
     this.pushMonstersByPosition = this.pushMonstersByPosition.bind(this);
   }
 
@@ -20,25 +22,27 @@ class Dungeon extends React.Component {
       components.push(
         <FadeIn 
           key='s' 
-          in={true} 
+          in
         >
           <img src={this.props.props.images["dungeon"+this.props.dungeon.theme+"Stairs"]} className="dungeon-stairs hover-saturate" alt="Stairs" onClick={() => this.props.props.appState("stairs", this.currentRoom.stairsPrevious)}/>
         </FadeIn>
       );
     }
 
-    if(this.currentRoom.monsters && this.currentRoom.monsters.length > 0){
+    if(this.props.props.combat){
       components.push(
+        this.props.props.combatTransitions && (
         <Fade 
           key='a' 
           in={true} 
+          onExited={() => this.props.props.appState("combat")}
         >
           <img src={this.props.props.images["arena"+this.props.dungeon.theme]} className="dungeon-arena" alt="Arena"/>
         </Fade>
-      );
+      ));
       this.pushMonstersByPosition(components, 'b');
       this.pushMonstersByPosition(components, 'f');
-      components.push(<Combat key='c' props={this.props.props} dungeon={this.props.dungeon}/>)
+      components.push(<Combat key='c' props={this.props.props} monsters={this.currentRoom.monsters}/>)
       let key = 0;
       if(this.props.props.pc.buffs && this.props.props.pc.buffs.length > 0){
         components.push(<BuffBar key={key++} props={this.props.props} entity={this.props.props.pc} type={"buffs"}/>);
@@ -54,6 +58,12 @@ class Dungeon extends React.Component {
           components.push(<BuffBar key={key++} props={this.props.props} entity={monster} type={"debuffs"}/>);
         }
       }
+      console.log(this.props.props.renderAbilityAnimation)
+      if(this.props.props.renderAbilityAnimation){
+        components.push(<AbilityAnimation props={this.props.props} key={this.abilityAnimationKey++}/>);
+      }
+        
+        
     }
     return (
       <TransitionGroup>
@@ -83,19 +93,20 @@ class Dungeon extends React.Component {
         let nameStyle = {
           fontSize: fontSize
         }
+        let animation = (monster.position === this.props.props.positions[Math.max(this.props.props.position - 1, 0)]) ? " animate__animated animate__bounce" : ""
         components.push(
-          true && (<Fade 
-          key={monster.position}
-          in={true} 
+          <Fade 
+            key={monster.position}
+            in={true} 
           >
             <>
-              <img src={this.props.props.monsters[monster.species][(monster.boss ? "boss" : monster.miniboss ? "miniboss" : monster.type) + monster.variant]} className={"monster "+monster.position} alt={monster.name}/>
+              <img src={this.props.props.monsters[monster.species][(monster.boss ? "boss" : monster.miniboss ? "miniboss" : monster.type) + monster.variant]} className={"monster "+monster.position+animation} alt={monster.name}/>
               <img src={this.props.props.images.barBackground} className={"monster-bar "+monster.position} alt="Health"/>
               <img src={this.props.props.images.barHealth} className={"monster-bar "+monster.position} alt="Health" style={healthStyle}/>
               <img src={this.props.props.images.barFrame} className={"monster-bar "+monster.position} alt="Health"/>
               <div className={"monster-bar "+monster.position} title={monster.currentHealth + "/" + monster.healthTotal}><p className="nowrap v-h-centered" style={nameStyle}>{"lv." + monster.level + " " + monster.name}</p></div>
             </>
-          </Fade>)
+          </Fade>
         );
       }
     });

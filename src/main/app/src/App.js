@@ -23,9 +23,13 @@ class App extends React.Component {
       combat: false,
       combatUpdates: [], 
       character_id: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*=\s*([^;]*).*$)|^.*$/, "$1"),
+      combatTransitions: false,
       widthChange: 0,
       eaten: 0,
-      rested: 0
+      rested: 0,
+      position: 0,
+      abilityAnimation: 0,
+      renderAbilityAnimation: false
     };
     if(this.state.character_id){
       fetch('/pc/'+ this.state.character_id)
@@ -49,6 +53,7 @@ class App extends React.Component {
       items: items,
       monsters: monsters, 
       appState: this.appState,
+      positions: ["pc", "frontLeft", "frontCenter", "frontRight", "backLeft", "backCenter", "backRight"],
       colorArmor: {color: "#136f9b"},
       colorPower: {color: "#a83a0e"},
       colorHeal: {color: "#ce6eb9"},
@@ -120,6 +125,10 @@ class App extends React.Component {
     this.props.props.combat = this.state.combat;
     this.props.props.combatUpdates = this.state.combatUpdates;
     this.props.props.widthChange = this.state.widthChange;
+    this.props.props.position = this.state.position;
+    this.props.props.combatTransitions = this.state.combatTransitions;
+    this.props.props.abilityAnimation = this.state.abilityAnimation;
+    this.props.props.renderAbilityAnimation = this.state.renderAbilityAnimation;
       
     this.innerElements = <></>
     this.outerElements = <></>
@@ -247,7 +256,6 @@ class App extends React.Component {
     }
 
     componentDidMount(){
-      this.imageCache = [];
       Object.keys(this.props.props.abilities).forEach((image) => {
         new Image().src = this.props.props.abilities[image];
       });
@@ -268,9 +276,6 @@ class App extends React.Component {
 
     checkCombat(){
       if(!this.state.combat && this.state.pc.location === "Dungeon" && this.state.dungeon && this.state.dungeon.floors && this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters && this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters.length){
-        this.appState("combat");
-      }
-      if(this.state.combat && (this.state.pc.location !== "Dungeon" || !this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters.length)){
         this.appState("combat");
       }
     }
@@ -308,6 +313,19 @@ class App extends React.Component {
       this.setState(state);
     }
 
+    getNextPosition(){
+      let nextPosition = null;
+      let i = this.state.position;
+      while(!nextPosition){
+        nextPosition = this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters.find(monster => monster.position === this.props.props.positions[i])
+        i++
+        if(i >= this.props.props.positions.length){
+          break;
+        }
+      }
+      return nextPosition ? this.props.props.positions.indexOf(nextPosition.position) : 0;
+    }
+
     appState(method, key, value){
       let pc;
       let dungeon;
@@ -315,23 +333,60 @@ class App extends React.Component {
       let addItem = true;
       switch(method){
         case "ability":
+          this.setStateCustom({
+            abilityAnimation: key,
+            renderAbilityAnimation: true
+          })
+          break;
+        case "pcCombat":
           dungeon = {...this.state.dungeon}
+          document.documentElement.style.setProperty('--animate-duration', '1s');
           this.combatEngine.runRound(this.state.pc.abilities[key]);
+          
           dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
           this.setStateCustom({
             pc: this.combatEngine.pc,
             dungeon: dungeon,
-            combatUpdates: this.combatEngine.combatUpdates
+            combatUpdates: this.combatEngine.combatUpdates,
+            position: 1,
+            renderAbilityAnimation: false
+          });
+          break;
+        case "nextCombat":
+          dungeon = {...this.state.dungeon}
+
+          let nextPosition = this.getNextPosition();
+          if(!nextPosition){
+            this.combatEngine.endRound();
+            let combatTransitions = this.combatEngine.monsters.length ? true : false;
+            dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
+            this.setStateCustom({
+              pc: this.combatEngine.pc,
+              dungeon: dungeon,
+              combatUpdates: this.combatEngine.combatUpdates,
+              combatTransitions: combatTransitions,
+              position: 0
+            });
+            break;
+          }
+          this.combatEngine.runRound(null, nextPosition);
+          dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
+          this.setStateCustom({
+            pc: this.combatEngine.pc,
+            dungeon: dungeon,
+            combatUpdates: this.combatEngine.combatUpdates,
+            position: nextPosition + 1
           });
           break;
         case "combat":
           if(!this.state.combat){
               dungeon = {...this.state.dungeon}
-              this.combatEngine = new CombatEngine(this.state.pc, this.pcServices, this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters, this.state.dungeon.postFix);
+              this.combatEngine = new CombatEngine(this.state.pc, this.pcServices, this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters, this.state.dungeon.postFix, this.props.props.positions);
               dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
               this.setStateCustom({
                 combat: true,
-                dungeon: dungeon
+                dungeon: dungeon,
+                combatTransitions: true
               });
               break;
           } else {
@@ -340,7 +395,7 @@ class App extends React.Component {
             this.pcServices.resetTempStats(pc);
             this.pcServices.updateStats(pc);
             this.combatEngine = null;
-            this.save(["pc", "dungeon"], [this.state.pc, this.state.dungeon], {pc: pc, combat: false});
+            this.save(["pc", "dungeon"], [this.state.pc, this.state.dungeon], {pc: pc, combat: false, position: 0});
             break;
           }
           
