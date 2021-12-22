@@ -1,6 +1,7 @@
 import AbilityServices from "./AbilityServices";
 import CombatUpdate from "./CombatUpdate";
 import MonsterServices from "./MonsterServices";
+import {unmountComponentAtNode} from "react-dom";
 
 class CombatEngine {
   constructor(pc, pcServices, monsters, dungeonMod, positions){
@@ -47,13 +48,32 @@ class CombatEngine {
 
     this.pcServices.updateStats(this.pc);
     this.updateMonsterStats();
-    AbilityServices.corpseCollector(this.monsters, this.combatUpdates);
+    AbilityServices.corpseCollector(this.pc, this.monsters, this.combatUpdates);
     AbilityServices.pcCorpseCollector(this.pc, this.combatUpdates);
+  }
+
+  endCombat(){
+    for(let position of this.positions){
+      let buffs = document.getElementById(position + "-buffs");
+      let debuffs = document.getElementById(position + "-debuffs"); 
+      console.log(buffs)
+      console.log(debuffs)
+      if(buffs){
+        buffs.remove();
+      }
+      if(debuffs){
+        debuffs.remove();
+      }
+    }
+    let abilityAnimation = document.getElementById("ability-animation");
+    if(abilityAnimation){
+      abilityAnimation.remove();
+    }
   }
 
   damageOverTime(entity){
     if(entity.tempStats.regenerate){
-      entity.currentHealth = Math.min((entity.currentHealth + entity.tempStats.regenerate), entity.currentHealth);
+      entity.currentHealth = Math.min((entity.currentHealth + entity.tempStats.regenerate), entity.healthTotal);
       this.combatUpdates.push(new CombatUpdate("Heal", "regenerate", entity.position ? entity.position : "pc", "Regenerate", entity.tempStats.regenerate));
     }
     if(entity.tempStats.bleed){

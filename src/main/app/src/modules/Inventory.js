@@ -17,6 +17,9 @@ class Inventory extends React.Component {
     } else if (this.props.type === "shop-store") {
       this.inventory = null;
       this.inventoryCache = this.props.shop.inventoryCache;
+    } else if (this.props.type === "loot") {
+      this.inventory = this.props.room.loot;
+      this.inventoryCache = this.props.room.lootCache;
     }
     this.push = this.push.bind(this);
     this.pushUsable = this.pushUsable.bind(this);
@@ -30,11 +33,11 @@ class Inventory extends React.Component {
     this.itemList = [];
     let sort = []; 
     if(this.props.props.pc.characterClass === "Rogue"){
-      sort = ["potion", "consumable", "bow", "dagger", "headMedium", "bodyMedium", "neck", "back", "staff", "spellbook", "sword", "shield", "headLight", "bodyLight", "headHeavy", "bodyHeavy"];
+      sort = ["currency", "potion", "consumable", "bow", "dagger", "headMedium", "bodyMedium", "neck", "back", "staff", "spellbook", "sword", "shield", "headLight", "bodyLight", "headHeavy", "bodyHeavy"];
     } else if (this.props.props.pc.characterClass === "Wizard"){
-      sort = ["potion", "consumable", "staff", "spellbook", "headLight", "bodyLight", "neck", "back", "bow", "dagger", "sword", "shield", "headMedium", "bodyMedium", "headHeavy", "bodyHeavy"];
+      sort = ["currency", "potion", "consumable", "staff", "spellbook", "headLight", "bodyLight", "neck", "back", "bow", "dagger", "sword", "shield", "headMedium", "bodyMedium", "headHeavy", "bodyHeavy"];
     } else {
-      sort = ["potion", "consumable", "sword", "shield", "headHeavy", "bodyHeavy", "neck", "back", "staff", "spellbook", "bow", "dagger", "headLight", "bodyLight", "headMedium", "bodyMedium"];
+      sort = ["currency", "potion", "consumable", "sword", "shield", "headHeavy", "bodyHeavy", "neck", "back", "staff", "spellbook", "bow", "dagger", "headLight", "bodyLight", "headMedium", "bodyMedium"];
     }
 
     sort.forEach(type => {
@@ -91,7 +94,7 @@ class Inventory extends React.Component {
       }
     }
     
-    if(this.props.type === "shop-player"){
+    if(this.props.type === "shop-player" || this.props.type === "loot"){
       if(this.inventory[item.id] > 1){
         this.pushUsable(item, count);
       } else {

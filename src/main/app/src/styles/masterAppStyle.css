@@ -217,6 +217,13 @@
 				width: 85.2619%;
 				height: 90%;
 			}
+			.loot-menu {
+				position: absolute;
+				left: 34.9479%;  
+				top: 7.0022%;    
+				width: 31.25%;   
+				height: 69.3654%;
+			}
 			.badge{
 				position: absolute;
 				left: 14.4932%;
@@ -343,6 +350,13 @@
 				width: 5.3058%;
 				height: 10.5556%;
 			}
+			.btn-close-small {
+				position: absolute;
+				left: 91.2117%;
+				top: 5.482%;
+				width: 8.522%;
+				height: 8.0655%;
+			}
 			.btn-atr {
 				position:absolute;
 				width: 21.7816%;
@@ -374,7 +388,14 @@
 				height: 4.2778%;
 				font-size: 75%;
 			}
-			.inventory-box-wrapper {
+			.unspent-points {
+				position: absolute;
+				left: 16.5625%; 
+				top: 75.0547%;  
+				width: 1.5625%; 
+				height: 3.2823%;
+			}
+			.inventory-box-wrapper{
 				z-index: 1;
 				position: absolute;
 				overflow-y: auto;
@@ -393,6 +414,16 @@
 				top: 20.2222%;
 				width: 45.0433%;
 				height: 73.6111%;
+			}
+			.loot-box-wrapper{
+				z-index: 1;
+				position: absolute;
+				overflow-y: auto;
+				overflow-x: hidden;
+				left: 2.2636%;
+				top: 13.4846%;
+				width: 95.4727%;
+				height: 83.4909%;
 			}
 			.inventory-box {
 				pointer-events: auto;
@@ -414,6 +445,18 @@
 				width: 88.9027%;
 				height: 100%;
 				table-layout: fixed;
+			}
+			.loot-box {
+				pointer-events: auto;
+				position: absolute;
+				right: 0%;
+				top: 0%;
+				width: 100%;
+				height: 100%;
+				display:flex;
+				flex-flow: row wrap;
+				align-items: flex-start;
+				align-content: flex-start;
 			}
 			.inventory-box-item {
 				position: relative;
@@ -625,9 +668,16 @@
 				height: 19.6%;
 				text-align: right;
 			}
-			.dungeon-stairs {
+			.dungeon-stairs, .dungeon-chest {
 				position: absolute;
 				left: 36.4286%;
+				top: 32.0%;
+				width: 27.1429%;
+				height: 57.0%;
+			}
+			.dungeon-chest-left {
+				position: absolute;
+				left: 7%;
 				top: 32.0%;
 				width: 27.1429%;
 				height: 57.0%;
@@ -771,25 +821,29 @@
 			.combat-text.stun {
 				color:rgb(36, 35, 35);
 			}
-			.combat-ability-popup {
+			.combat-text.experience {
+				color:rgb(0, 206, 10);
+			}
+			.popup {
 				height: 50%;
 				width: 23.81%;
 				opacity: 0.5;
 			}
-			.combat-ability-popup > img {
+			.popup > img {
 				height: 100%;
 				width: auto;
+			}
+			.level-up {
+				position:absolute;
+				top: 30%;
+				left:50%;
+				transform: translate(-50%, -70%);
+				-ms-transform: translateY(-70%) translateX(-50%);
 			}
 			.combat-ability-image {
 				height: 100%;
 				width: auto;
 			}
-			/* .animate__animated.animate__pulse {
-				--duration: 500ms;
-			}
-			.animate__animated.animate__fadeOut {
-				--duration: 300ms;
-			} */
 			.buff-icon {
 				height: 2vw;
 				width: auto;

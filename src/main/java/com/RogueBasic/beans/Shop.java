@@ -20,11 +20,8 @@ public class Shop {
 	
 	public Shop(UUID pcId) {
 		ShopServices services = new ShopServices(CassandraConnector.connect());
-		ItemServices iService = new ItemServices(CassandraConnector.connect());
 		this.id = UUID.randomUUID();
 		this.inventoryCache = services.genInventoryCache(this.id, pcId);
-		this.inventoryCache.add(iService.getPremade(2));
-		this.inventoryCache.add(iService.getPremade(3));
 	}
 
 	public UUID getId() {

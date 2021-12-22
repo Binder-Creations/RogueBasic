@@ -73,12 +73,18 @@ class PcServices {
       this.clearBuffs(this.pc);
     }
     this.resetTempStats(this.pc);
-    if(Object.keys(this.pc.buffs).length){
+    if(this.pc.buffs.length){
       this.parseBuffs();
     }
 
-    if(Object.keys(this.pc.debuffs).length){
+    if(this.pc.debuffs.length){
       this.parseDebuffs();
+    }
+
+    if(this.pc.experience >= this.pc.experienceNeeded){
+      this.pc.experience = this.pc.experience - this.pc.experienceNeeded;
+      this.pc.level = this.pc.level*1 + 1;
+      this.pc.attributePoints = this.pc.attributePoints*1 + 4;
     }
     
     let head = this.pc.equippedHead ? this.pc.equippedHead : this.emptySlot

@@ -1,4 +1,5 @@
 import CombatUpdate from "./CombatUpdate";
+import {unmountComponentAtNode} from "react-dom";
 
 class AbilityServices {
 
@@ -17,7 +18,7 @@ class AbilityServices {
           monster.currentHealth = (monster.currentHealth - damage) >= 0 ? (monster.currentHealth - damage) : 0;
           combatUpdates.push(new CombatUpdate(ability.type, ability.name, monster.position, "pc", damage, crit));
         });
-        this.corpseCollector(monsters, combatUpdates);
+        this.corpseCollector(pc, monsters, combatUpdates);
       } else {
         break;
      }
@@ -322,13 +323,21 @@ class AbilityServices {
     return ability.factor ? this.randomize(baseDamage*ability.modifier, ability.factor) : baseDamage*ability.modifier;
   }
 
-  static corpseCollector(monsters, combatUpdates){
+  static corpseCollector(pc, monsters, combatUpdates){
     let i = monsters.length;
     while (i--){
       if(monsters[i].currentHealth <= 0){
+        pc.experience += monsters[i].experience;
         combatUpdates.push(new CombatUpdate("death", "death", monsters[i].position, monsters[i].name));
-        monsters[i].buffs = [];
-        monsters[i].debuffs = [];
+        combatUpdates.push(new CombatUpdate("experience", "experience", monsters[i].position, monsters[i].name, monsters[i].experience));
+        let buffs = document.getElementById(monsters[i].position + "Buffs");
+        let debuffs = document.getElementById(monsters[i].position + "Debuffs"); 
+        if(buffs){
+          unmountComponentAtNode(buffs);
+        }
+        if(debuffs){
+          unmountComponentAtNode(debuffs);
+        }
         monsters.splice(i, 1);
       }
     }

@@ -48,6 +48,7 @@ class BuffBar extends React.Component {
         <Fade
           key={key++} 
           in
+          id={this.props.entity.position + "-" + this.props.type}
         >
           <img className="buff-icon" src={this.props.props.abilities[buff.name]} title={statsLine + duration} alt="buff"/>
         </Fade>

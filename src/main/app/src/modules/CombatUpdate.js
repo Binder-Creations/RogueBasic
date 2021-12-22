@@ -12,7 +12,7 @@ class CombatUpdate{
       this.target = target;
       if(source){
         if(updateType !== "death" && updateType !== "stun"){
-          if(source !== "pc"){
+          if(source !== "pc" && updateType !== "experience"){
             source = " (" + source + ")";
           } else {
             source = "";
@@ -36,17 +36,19 @@ class CombatUpdate{
           ? attackEnergy
             ? value + source + crit + " Energy Damage!"
             : value + source + crit
-            : updateType === "Heal"
-              ? value
-              : updateType === "Buff"
-                ? "++" + source
-                : updateType === "Debuff"
-                  ? "--" + source
-                    : updateType === "death"
-                      ? source + " Dies!"
+            : updateType === "death"
+              ? source + " Dies!"
+              : updateType === "experience"
+                ? "+ " + value + " EXP!"
+                : updateType === "Buff"
+                  ? "++" + source
+                  : updateType === "Debuff"
+                    ? "--" + source
+                    : updateType === "Heal"
+                      ? value
                       : updateType === "stun"
                         ? source + " is Stunned!"
-                    : "";     
+                        : "";     
         this.size = {fontSize: 130*(1-(this.text.length - 14)/40) + "%"};
       }
     }

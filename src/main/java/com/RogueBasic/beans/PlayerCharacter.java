@@ -68,7 +68,7 @@ public class PlayerCharacter {
 		this.strength = strength;
 		this.dexterity = dexterity;
 		this.intelligence = intelligence;
-		this.level = 6;
+		this.level = 1;
 		this.currentHealth = -1;
 		this.currentEnergy = -1;
 		this.inventory = new HashMap<>();

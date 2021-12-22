@@ -11,6 +11,7 @@ export {default as deathCircuit} from "./death-circuit.png";
 export {default as death} from "./death.png";
 export {default as deepChill} from "./deep-chill.png";
 export {default as envenomedStrike} from "./envenomed-strike.png";
+export {default as experience} from "./experience.png";
 export {default as extinctionEvent} from "./extinction-event.png";
 export {default as fireball} from "./fireball.png";
 export {default as flameCone} from "./flame-cone.png";

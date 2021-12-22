@@ -91,8 +91,6 @@ class App extends React.Component {
   }
 
   render(){
-    this.checkCombat();
-
     if (!this.state.character_id)
       return(
         <Router>
@@ -120,6 +118,7 @@ class App extends React.Component {
       window.addEventListener("resize", this.updateWidth)
       this.initialize = true;
     }
+    this.checkCombat();
 
     this.props.props.pc = this.state.pc;
     this.props.props.combat = this.state.combat;
@@ -394,6 +393,7 @@ class App extends React.Component {
             this.pcServices.clearBuffs(pc);
             this.pcServices.resetTempStats(pc);
             this.pcServices.updateStats(pc);
+            this.combatEngine.endCombat();
             this.combatEngine = null;
             this.save(["pc", "dungeon"], [this.state.pc, this.state.dungeon], {pc: pc, combat: false, position: 0});
             break;
@@ -482,11 +482,39 @@ class App extends React.Component {
 
             this.save(["pc"], [pc], {pc: pc, eaten: this.state.eaten + 1});
             break;
+        case "loot":
+            pc = {...this.state.pc};
+            dungeon = {...this.state.dungeon};
+            let room = dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom]
+            let index = room.lootCache.indexOf(key);
+            let count = room.loot[key.id];
+            if (index !== -1){
+              room.lootCache.splice(index, 1);
+            }
+            
+            if(key.type !== "currency"){
+              if(pc.inventory[key.id]){
+                pc.inventory[key.id] += count;
+              } else {
+                pc.inventory[key.id] = count;
+              }
+
+              if(!pc.inventoryCache.find(item => item.id === key.id)){
+                pc.inventoryCache.push(key);
+              }
+            } else {
+              if(key.name === "Gold") {
+                pc.currency += count;
+              }
+            }
+
+            this.save(["pc", "dungeon"], [pc, dungeon], {pc: pc, dungeon: dungeon});
+            break;
         case "shop-store":
           pc = {...this.state.pc};
           shop = {...this.state.shop};
           if(key.type !== "potion" && key.type !== "consumable"){
-            var index = shop.inventoryCache.indexOf(key);
+            let index = shop.inventoryCache.indexOf(key);
             if (index !== -1)
               shop.inventoryCache.splice(index, 1);
           }

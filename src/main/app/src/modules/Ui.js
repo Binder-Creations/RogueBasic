@@ -4,6 +4,7 @@ import InventoryMenu from "./InventoryMenu";
 import SkillTooltip from "./SkillTooltip";
 import Minimap from "./Minimap";
 import {camelCase} from "./GeneralUtilities";
+import FadeUp from "./FadeUp";
 
 class Ui extends React.Component {
 
@@ -11,7 +12,8 @@ class Ui extends React.Component {
     super(props);
     this.state = {
       characterMenu: false,
-      inventoryMenu: false
+      inventoryMenu: false,
+      level: this.props.props.pc.level
     };
     if(this.props.props.pc.characterClass === "Rogue"){
       this.buttonAttack = this.props.props.images.buttonAttackRogue;
@@ -74,6 +76,8 @@ class Ui extends React.Component {
   }
 
   render(){
+    let components = [];
+
     this.ReturnButton = this.props.props.combat ? this.NoButton : this[this.props.button];
     this.healthStyle = {
       width: 20*(this.props.props.pc.currentHealth/this.props.props.pc.healthTotal) + "%"
@@ -94,29 +98,49 @@ class Ui extends React.Component {
       this.attackButton = <input class="btn-attack" type="image" src={this.buttonAttack} alt="Attack"/>
     }
 
-    return(
+    components.push(
       <>
-        <img className="bar-health-background" src={this.props.props.images.barBackground} alt="Health" title={this.healthHover}/>
-        <img className="bar-health" src={this.props.props.images.barHealth} alt="Health" title={this.healthHover} style={this.healthStyle}/>
-        <img className="bar-health-frame" src={this.props.props.images.barFrame} alt="Health" title={this.healthHover}/>
-        <img className="heart" src={this.props.props.images.heart} alt="Health" title={this.healthHover}/>
-        <img className="bar-energy-background" src={this.props.props.images.barBackground} alt="Energy" title={this.energyHover}/>
-        <img className="bar-energy" src={this.props.props.images.barEnergy} alt="Energy" title={this.energyHover} style={this.energyStyle}/>
-        <img className="bar-energy-frame" src={this.props.props.images.barFrame} alt="Energy" title={this.energyHover}/>
-        <img className="swirl" src={this.props.props.images.swirl} alt="Energy" title={this.energyHover}/>
-        <this.Skill number={1}/>
-        <this.Skill number={2}/>
-        <this.Skill number={3}/>
-        <this.Skill number={4}/>  
-        <Minimap props={this.props.props} dungeon={this.props.dungeon}/>
-        <this.AttackButton/>
-        <input class="btn-character hover-saturate-250" type="image" src={this.props.props.images.buttonCharacter} alt="Character" onClick={this.toggleCharacterMenu}/>
-        <input class="btn-inventory hover-saturate-250" type="image" src={this.props.props.images.buttonInventory} alt="Inventory" onClick={this.toggleInventoryMenu}/>
-        <CharacterMenu props={this.props.props} toggle={this.toggleCharacterMenu} on={this.state.characterMenu}/>
-        <InventoryMenu props={this.props.props} toggle={this.toggleInventoryMenu} on={this.state.inventoryMenu}/>
-        <this.ReturnButton/>
+          <img className="bar-health-background" src={this.props.props.images.barBackground} alt="Health" title={this.healthHover}/>
+          <img className="bar-health" src={this.props.props.images.barHealth} alt="Health" title={this.healthHover} style={this.healthStyle}/>
+          <img className="bar-health-frame" src={this.props.props.images.barFrame} alt="Health" title={this.healthHover}/>
+          <img className="heart" src={this.props.props.images.heart} alt="Health" title={this.healthHover}/>
+          <img className="bar-energy-background" src={this.props.props.images.barBackground} alt="Energy" title={this.energyHover}/>
+          <img className="bar-energy" src={this.props.props.images.barEnergy} alt="Energy" title={this.energyHover} style={this.energyStyle}/>
+          <img className="bar-energy-frame" src={this.props.props.images.barFrame} alt="Energy" title={this.energyHover}/>
+          <img className="swirl" src={this.props.props.images.swirl} alt="Energy" title={this.energyHover}/>
+          <this.Skill number={1}/>
+          <this.Skill number={2}/>
+          <this.Skill number={3}/>
+          <this.Skill number={4}/>  
+          <Minimap props={this.props.props} dungeon={this.props.dungeon}/>
+          <this.AttackButton/>
+          <input class="btn-character hover-saturate-250" type="image" src={this.props.props.images.buttonCharacter} alt="Character" onClick={this.toggleCharacterMenu}/>
+          <input class="btn-inventory hover-saturate-250" type="image" src={this.props.props.images.buttonInventory} alt="Inventory" onClick={this.toggleInventoryMenu}/>
+          <CharacterMenu props={this.props.props} toggle={this.toggleCharacterMenu} on={this.state.characterMenu}/>
+          <InventoryMenu props={this.props.props} toggle={this.toggleInventoryMenu} on={this.state.inventoryMenu}/>
+          <this.ReturnButton/>
       </>
-    )
+    );
+    
+    if(this.props.props.pc.attributePoints && !this.state.characterMenu && !this.state.inventoryMenu){
+      components.push(<img className="unspent-points noclick" src={this.props.props.images.unspentPoints} alt="unspent points"/>);
+    }
+    
+    components.push((this.props.props.pc.level > this.state.level) && (
+      <div className="popup level-up">
+        <FadeUp
+        in = {(this.props.props.pc.level > this.state.level)}
+        onEntered={() => {
+          document.documentElement.style.setProperty('--animate-duration', '1s')
+          this.setState({level: this.props.props.pc.level})
+        }}
+        >
+          <img src={this.props.props.images.levelUp} alt="level up"/>
+        </FadeUp>
+      </div>
+    ));
+
+    return components;
   }
 
   toggleCharacterMenu(){
@@ -138,8 +162,3 @@ class Ui extends React.Component {
 }
 
 export default Ui
-
-/* <input class="btn-inventory" type="image" src={this.props.props.images.buttonInventory} alt="Inventory" onClick={this.toggleInventoryMenu} 
-onMouseEnter={e => (e.currentTarget.src=this.props.props.images.buttonInventoryHover)}
-onMouseLeave={e => (e.currentTarget.src=this.props.props.images.buttonInventory)}
-/> */

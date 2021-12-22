@@ -465,7 +465,7 @@ public class MonsterServices {
 							abilities.add(new Ability(0, "Precise Shot", 0, 2.6f, 10, 1, "pc", "Attack", null, "shoots you with unerring accuracy.", new Flags("hit")));
 							break;
 						case 'B':
-							abilities.add(new Ability(0, "Envenomed Strike", 0, 0.8f, 0, 1, "pc", "Debuff", null, "inflicts you with a long-lasting poison.", null, null, null, new Buff("poison", -1, "poison")));
+							abilities.add(new Ability(0, "Envenomed Strike", 0, 0.8f, 0, 1, "pc", "Debuff", null, "inflicts you with a long-lasting poison.", null, null, null, new Buff("envenomedStrike", -1, "poison")));
 							break;
 						case 'C':
 							abilities.add(new Ability(0, "Take Aim", 0, 3f, 0, 1, "self", "Buff", null, "locks you in their sights.", new Flags("hit", -1), new Buff("takeAim", -1, "critRating")));

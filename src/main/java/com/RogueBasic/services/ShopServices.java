@@ -53,6 +53,9 @@ public class ShopServices {
 			Item item = iService.genEquipment(exceptions, pc.getLevel());
 			inventory.add(item);
 		}
+		for(int i = 2; i < 6 ;i++) {
+			inventory.add(iService.getPremade(i));
+		}
 		
 		return inventory;
 	}

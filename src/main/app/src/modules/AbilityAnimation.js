@@ -1,5 +1,4 @@
 import React from "react";
-import Fade from "./Fade.js";
 import Pulse from "./Pulse.js";
 import {camelCase} from "./GeneralUtilities";
 
@@ -14,7 +13,7 @@ class AbilityAnimation extends React.Component {
 
   render(){
     return(
-      <div className="combat-ability-popup v-h-centered">
+      <div className="popup v-h-centered nopointer" id="ability-animation">
         {
           this.props.props.renderAbilityAnimation && (
             <Pulse 
