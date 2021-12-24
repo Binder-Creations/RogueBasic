@@ -1,6 +1,8 @@
 package com.RogueBasic.services;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -8,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.RogueBasic.beans.Dungeon;
+import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.PlayerCharacter;
 import com.RogueBasic.data.DungeonDao;
 import com.RogueBasic.data.PlayerCharacterDao;
@@ -38,6 +41,7 @@ public class DungeonServices {
 		PlayerCharacter pc = pcDao.findById(pcId);
 		Dungeon dungeon = new Dungeon();
 		dungeon.setId(UUID.randomUUID());
+		ItemServices is = new ItemServices(session);
 		
 		//Calls various private methods in this class to:
 		//Calculate a challenge rating from a range based on PC level;
@@ -56,7 +60,11 @@ public class DungeonServices {
 			return null;
 		}
 		dungeon.setReward((int)Math.round(100*(1+(0.1*(dungeon.getChallengeRating()-1)))*(1+(0.25*(dungeon.getFloorCount()-1)))*(dungeon.isMiniboss() ? 1.34 : 1)*(dungeon.isBoss() ? 1.67 : 1)));
-		
+		Set<Item> rewardCache = new HashSet<>();
+		for(int i = 0; i<3; i++) {
+			rewardCache.add(is.genEquipment(pc.getEquipTypes(), dungeon.getChallengeRating() + 2));
+		}
+		dungeon.setRewardCache(rewardCache);
 		this.dao.save(dungeon);
 		
 		log.trace("DungeonServices.generate() returning UUID" );

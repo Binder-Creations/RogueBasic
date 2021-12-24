@@ -21,6 +21,9 @@ class Inventory extends React.Component {
       this.inventory = this.props.room.loot;
       this.inventoryCache = this.props.room.lootCache;
     }
+    this.qMods = this.props.type === "loot" 
+      ? [0.3, 0.4, 0.55]
+      : [0.45, 0.6, 0.7];
     this.push = this.push.bind(this);
     this.pushUsable = this.pushUsable.bind(this);
     this.pushUnusable = this.pushUnusable.bind(this);
@@ -166,7 +169,7 @@ class Inventory extends React.Component {
           <img src={itemProps.frame} className="absolute-fill" alt="frame"/>
         </div>
         <Count/>
-        <ItemTooltip props={this.props.props} itemProps={itemProps} item={item} update={this.props.update} leftMod={0.7} costMult={1}/>
+        <ItemTooltip props={this.props.props} itemProps={itemProps} item={item} update={this.props.update} qMods={this.qMods} costMult={1}/>
       </div>
     )
   }
@@ -179,7 +182,7 @@ class Inventory extends React.Component {
         <img src={itemProps.image} className="item-image gray-75" alt="item"/>
         <img src={itemProps.frame} className="absolute-fill gray-75" alt="frame"/>
         <Count/>
-        <ItemTooltip props={this.props.props} itemProps={itemProps} item={item} update={this.props.update} leftMod={0.7} costMult={1}/>
+        <ItemTooltip props={this.props.props} itemProps={itemProps} item={item} update={this.props.update} qMods={this.qMods} costMult={1}/>
       </div>
     )
   }
@@ -189,7 +192,7 @@ class Inventory extends React.Component {
         <tr className="hover-saturate shop-box-item" onClick={()=>{this.props.props.appState(this.props.type, item)}} style={{backgroundImage: `url(${this.props.props.images.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
           <td className="item-tooltip relative">
             <img src={itemProps.image} className="shop-image" alt="item"/>
-            <ItemTooltip props={this.props.props} itemProps={itemProps} item={item} update={this.props.update} leftMod={0.7} costMult={5}/>
+            <ItemTooltip props={this.props.props} itemProps={itemProps} item={item} update={this.props.update} qMods={this.qMods} costMult={5}/>
           </td>
           <td colSpan="2">
             <p style={itemProps.shopNameStyle}>{item.name}</p>
@@ -211,7 +214,7 @@ class Inventory extends React.Component {
         <tr className="shop-box-item" style={{backgroundImage: `url(${this.props.props.images.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
           <td className="item-tooltip relative">
             <img src={itemProps.image} className="shop-image gray-75" alt="item"/>
-            <ItemTooltip props={this.props.props} itemProps={itemProps} item={item} update={this.props.update} leftMod={0.7} costMult={5}/>
+            <ItemTooltip props={this.props.props} itemProps={itemProps} item={item} update={this.props.update} qMods={this.qMods} costMult={5}/>
           </td>
           <td colSpan="2">
             <p style={itemProps.shopNameStyle}>{item.name}</p>

@@ -44,7 +44,7 @@ class ItemTooltip extends React.Component {
   }
 
   componentDidUpdate(){
-    if(this.props.props.widthChange > this.previousWidthChange || this.props.update > this.previousUpdate){
+    if(this.props.props.widthChange > this.previousWidthChange || (this.props.update !== null && this.props.update > this.previousUpdate)){
       this.previousWidthChange = this.props.props.widthChange;
       this.previousUpdate = this.props.update;
       this.setState({boundingRect: this.tooltipBox.current.getBoundingClientRect()});
@@ -90,14 +90,15 @@ class ItemTooltip extends React.Component {
       let top = true;
       let left = true;
       let center = false;
+      
 
-      top = centerPointY < (window.innerWidth*0.4286)*0.45
+      top = centerPointY < (window.innerWidth*0.4286)*this.props.qMods[0]
         ? true
         : false
-      center = (centerPointY < (window.innerWidth*0.4286)*0.60 && centerPointY > (window.innerWidth*0.4286)*0.45)
+      center = (centerPointY < (window.innerWidth*0.4286)*this.props.qMods[1] && centerPointY > (window.innerWidth*0.4286)*this.props.qMods[0])
         ? true
         : false
-      left = centerPointX < window.innerWidth*this.props.leftMod
+      left = centerPointX < window.innerWidth*this.props.qMods[2]
         ? true
         : false
       this.tooltipQuadrant = left

@@ -6,22 +6,17 @@ import Fade from "./Fade.js";
 import FadeIn from "./FadeIn.js";
 import AbilityAnimation from "./AbilityAnimation.js";
 import LootMenu from "./LootMenu.js";
+import QuestMenu from "./QuestMenu.js"
 
 class Dungeon extends React.Component {
   constructor(props){
     super(props);
 
-    this.state = {
-      lootMenu: false
-    }
-
     this.currentRoom = null;
-    this.abilityAnimationKey = 0;
     this.pushMonstersByPosition = this.pushMonstersByPosition.bind(this);
   }
 
   render(){
-    console.log(this.props.dungeon)
     let components = [];
     this.currentRoom = this.props.dungeon.floors[this.props.dungeon.currentFloor].rooms[this.props.dungeon.currentRoom];
 
@@ -35,15 +30,15 @@ class Dungeon extends React.Component {
         </FadeIn>
       );
     }
-
-    if(!this.props.props.combat && this.currentRoom.lootCache.length){
-      if(this.currentRoom.stairsNext || this.currentRoom.stairsPrevious){
+    
+    if(!this.props.props.combat && this.currentRoom.lootCache && this.currentRoom.lootCache.length){
+      if((this.currentRoom.stairsPrevious || (this.currentRoom.stairsNext && (this.props.dungeon.currentFloor + 1 < this.props.dungeon.floorCount)))){
         components.push(        
           <FadeIn 
             key='c' 
             in
           >
-            <img src={this.props.props.images.chest} className="dungeon-chest-left hover-saturate" alt="chest" onClick={() => this.setState({lootMenu: true})}/>
+            <img src={this.props.props.images.chest} className="dungeon-chest-left hover-saturate" alt="chest" onClick={() => this.props.props.appState("menu", "loot")}/>
           </FadeIn>);
       } else {
         components.push(        
@@ -51,13 +46,13 @@ class Dungeon extends React.Component {
             key='c' 
             in
           >
-            <img src={this.props.props.images.chest} className="dungeon-chest hover-saturate" alt="chest" onClick={() => this.toggleLootMenu()}/>
+            <img src={this.props.props.images.chest} className="dungeon-chest hover-saturate" alt="chest" onClick={() => this.props.props.appState("menu", "loot")}/>
           </FadeIn>);
       }
-      if(this.state.lootMenu){
-        components.push(<LootMenu props={this.props.props} room={this.currentRoom} toggle={this.toggleLootMenu}/>);
+      if(this.props.props.menu === "loot"){
+        components.push(<LootMenu props={this.props.props} room={this.currentRoom}/>);
       }
-    }  
+    } 
     if(this.props.props.combat){
       components.push(
         this.props.props.combatTransitions && (
@@ -72,34 +67,33 @@ class Dungeon extends React.Component {
       this.pushMonstersByPosition(components, 'b');
       this.pushMonstersByPosition(components, 'f');
       components.push(<Combat key='c' props={this.props.props} monsters={this.currentRoom.monsters}/>)
-      let key = 0;
+
       if(this.props.props.pc.buffs && this.props.props.pc.buffs.length > 0){
-        components.push(<BuffBar key={key++} id="pcBuffs" props={this.props.props} entity={this.props.props.pc} type={"buffs"}/>);
+        components.push(<BuffBar props={this.props.props} entity={this.props.props.pc} type={"buffs"}/>);
       }
       if(this.props.props.pc.debuffs && this.props.props.pc.debuffs.length > 0){
-        components.push(<BuffBar key={key++} id="pcDebuffs" props={this.props.props} entity={this.props.props.pc} type={"debuffs"}/>);
+        components.push(<BuffBar props={this.props.props} entity={this.props.props.pc} type={"debuffs"}/>);
       }
       for(let monster of this.currentRoom.monsters) {
         if(monster.buffs && monster.buffs.length > 0){
-          components.push(<BuffBar key={key++} props={this.props.props} entity={monster} type={"buffs"}/>);
+          components.push(<BuffBar props={this.props.props} entity={monster} type={"buffs"}/>);
         }
         if(monster.debuffs && monster.debuffs.length > 0){
-          components.push(<BuffBar key={key++} props={this.props.props} entity={monster} type={"debuffs"}/>);
+          components.push(<BuffBar props={this.props.props} entity={monster} type={"debuffs"}/>);
         }
       }
       if(this.props.props.renderAbilityAnimation){
-        components.push(<AbilityAnimation props={this.props.props} key={this.abilityAnimationKey++}/>);
+        components.push(<AbilityAnimation props={this.props.props} key='n'/>);
       }   
     }
+    if(this.props.props.questComplete){
+      components.push(<QuestMenu props={this.props.props} reward={this.props.dungeon.reward} rewardItems={this.props.props.dungeon.rewardCache}/>);
+    } 
     return (
       <TransitionGroup>
         {components}
       </TransitionGroup>
     );
-  }
-
-  toggleLootMenu(){
-    this.setState({lootMenu: this.state.lootMenu ? false : true})
   }
 
   pushMonstersByPosition(components, char){

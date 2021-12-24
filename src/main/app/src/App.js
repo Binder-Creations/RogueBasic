@@ -24,6 +24,8 @@ class App extends React.Component {
       combatUpdates: [], 
       character_id: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*=\s*([^;]*).*$)|^.*$/, "$1"),
       combatTransitions: false,
+      questComplete: false,
+      menu: null,
       widthChange: 0,
       eaten: 0,
       rested: 0,
@@ -128,7 +130,9 @@ class App extends React.Component {
     this.props.props.combatTransitions = this.state.combatTransitions;
     this.props.props.abilityAnimation = this.state.abilityAnimation;
     this.props.props.renderAbilityAnimation = this.state.renderAbilityAnimation;
-      
+    this.props.props.menu = this.state.menu;
+    this.props.props.questComplete = this.state.questComplete;
+    
     this.innerElements = <></>
     this.outerElements = <></>
     this.disableUiMenus = false;
@@ -279,6 +283,16 @@ class App extends React.Component {
       }
     }
 
+    checkQuest(){
+      return this.state.dungeon.floors.find(
+        floor => floor.rooms.find(
+        room => room.monsters && room.monsters.length > 0
+        )
+      )
+        ? false
+        : true;
+    }
+
     sortDungeon(dungeon){     
       dungeon.floors.forEach(floor=>floor.rooms.sort((a,b) => (a.count < b.count) ? -1 : (b.count < a.count ? 1 : 0)));
       dungeon.floors.sort((a,b) => (a.level < b.level) ? -1 : (b.level < a.level ? 1 : 0));
@@ -331,6 +345,17 @@ class App extends React.Component {
       let shop;
       let addItem = true;
       switch(method){
+        case "quest":
+          pc = {...this.state.pc};
+          pc.currency += this.state.dungeon.reward;
+          pc.experience += Math.floor(this.state.dungeon.reward*2.5);
+          pc.inventory[this.state.dungeon.rewardCache[key].id] = 1;
+          pc.inventoryCache.push(this.state.dungeon.rewardCache[key]);
+          this.save(["pc"], [pc], {pc:pc, questComplete: false});
+          break;
+        case "menu":
+          this.setStateCustom({menu: key === this.state.menu ? null : key});
+          break;
         case "ability":
           this.setStateCustom({
             abilityAnimation: key,
@@ -393,9 +418,11 @@ class App extends React.Component {
             this.pcServices.clearBuffs(pc);
             this.pcServices.resetTempStats(pc);
             this.pcServices.updateStats(pc);
-            this.combatEngine.endCombat();
             this.combatEngine = null;
-            this.save(["pc", "dungeon"], [this.state.pc, this.state.dungeon], {pc: pc, combat: false, position: 0});
+
+            let questComplete = this.checkQuest();
+
+            this.save(["pc", "dungeon"], [this.state.pc, this.state.dungeon], {pc: pc, combat: false, questComplete: questComplete, position: 0});
             break;
           }
           

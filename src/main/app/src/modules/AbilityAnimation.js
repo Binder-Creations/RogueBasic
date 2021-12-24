@@ -13,7 +13,7 @@ class AbilityAnimation extends React.Component {
 
   render(){
     return(
-      <div className="popup v-h-centered nopointer" id="ability-animation">
+      <div className="popup v-h-centered nopointer" key={this.props.key}>
         {
           this.props.props.renderAbilityAnimation && (
             <Pulse 

@@ -35,22 +35,9 @@ public class ShopServices {
 		
 		pc.setCurrentShop(shopID);
 		pcDao.save(pc);
-		String[] exceptions = null;
-		if(pc.getCharacterClass().equals("Rogue")) {
-			String[] rogueExceptions = {"headLight", "headHeavy", "bodyLight", "bodyHeavy", "sword", "staff", "shield", "spellbook"};
-			exceptions = rogueExceptions;
-		}
-		if(pc.getCharacterClass().equals("Wizard")) {
-			String[] wizardExceptions = {"headMedium", "headHeavy", "bodyMedium", "bodyHeavy", "sword", "bow", "shield", "dagger"};
-			exceptions = wizardExceptions;
-		}
-		if(pc.getCharacterClass().equals("Warrior"))  {
-			String[] warriorExceptions = {"headLight", "headMedium", "bodyLight", "bodyMedium", "bow", "staff", "dagger", "spellbook"};
-			exceptions = warriorExceptions;
-		}
-		
+
 		for(int i = 0; i < 23; i++) {
-			Item item = iService.genEquipment(exceptions, pc.getLevel());
+			Item item = iService.genEquipment(pc.getEquipTypes(), pc.getLevel());
 			inventory.add(item);
 		}
 		for(int i = 2; i < 6 ;i++) {

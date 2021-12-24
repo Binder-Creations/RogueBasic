@@ -2,7 +2,7 @@ import React from "react";
 
 class AttributeBuyButtons extends React.Component {
   render(){
-    if(this.props.props.pc.attributePoints < 1){
+    if(this.props.props.pc.attributePoints < 1 || this.props.props.combat){
         return(
           <>
             <div className="btn-atr con gray-75">

@@ -24,11 +24,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ItemServices {
 	private RogueUtilities ru;
+	private List<String> allTypes;
 	private static final Logger log = LogManager.getLogger(ItemServices.class);
 
 	public ItemServices(CqlSession session) {
 		super();
 		this.ru = new RogueUtilities();
+		this.allTypes = new ArrayList<String>(Arrays.asList(new String[] {"headLight", "headMedium", "headHeavy", "bodyLight", "bodyMedium", "bodyHeavy", "staff", "spellbook", "bow", "dagger", "sword", "shield", "back", "neck"}));
 	}
 
 	public Item getPremade(int index) {
@@ -50,16 +52,16 @@ public class ItemServices {
 	}
 	
 	private int genLV(int challengeRating, int level, String prefixMod, boolean miniboss, boolean boss, boolean monsters,boolean trapped) {
-		int modifier = 40*(2+(challengeRating/2)+(level));
+		int modifier = 100*(2+(challengeRating/2)+(level));
 		int base = boss 
-				? challengeRating*180
+				? challengeRating*450
 				: miniboss
-					? challengeRating*120
+					? challengeRating*300
 					: monsters
-						? challengeRating*90
+						? challengeRating*200
 						: trapped
-							? challengeRating*60
-							:challengeRating*30;
+							? challengeRating*150
+							:challengeRating*75;
 		int lootValue = base + ThreadLocalRandom.current().nextInt(modifier);
 		if(prefixMod != null)
 			if (prefixMod.substring(0, 4).equals("loot"))
@@ -85,7 +87,7 @@ public class ItemServices {
 		
 		int averageCost = (int)Math.round(Math.pow(challengeRating*5, 0.65)*10);
 		
-		while(lootValue >= averageCost) {
+		while(lootValue >= averageCost && lootCache.size() <= 25) {
 			int roll = ThreadLocalRandom.current().nextInt(1, 15);
 			if(roll == 1) {
 				Item healthPotion = iService.getPremade(2);
@@ -123,8 +125,7 @@ public class ItemServices {
 				
 			}
 			if(roll >= 10) {
-				String[] exceptions = {};
-				Item equipment = genEquipment(exceptions, challengeRating);
+				Item equipment = genEquipment(allTypes, challengeRating);
 				loot.put(equipment.getId(), 1);
 				lootCache.add(equipment);
 				lootValue -= equipment.getCost();
@@ -137,13 +138,7 @@ public class ItemServices {
 		room.setLootCache(lootCache);
 	}
 	
-	public Item genEquipment(String[] exceptions, int challengeRating){
-		String[] defaultTypes = {"headLight", "headMedium", "headHeavy", "bodyLight", "bodyMedium", "bodyHeavy", "back", "neck", "sword", "bow", "staff", "shield", "dagger", "spellbook"};
-		List<String> types = new ArrayList<>(Arrays.asList(defaultTypes));
-		
-		for(String exception: exceptions) {
-			types.remove(exception);
-		}
+	public Item genEquipment(List<String> types, int challengeRating){		
 		String type = types.get(ThreadLocalRandom.current().nextInt(types.size()));
 		List<String[]> components = ru.readFileToArrays("source/itemTypes/" + type + ".rbt");
 

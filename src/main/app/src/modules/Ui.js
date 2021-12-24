@@ -4,6 +4,7 @@ import InventoryMenu from "./InventoryMenu";
 import SkillTooltip from "./SkillTooltip";
 import Minimap from "./Minimap";
 import {camelCase} from "./GeneralUtilities";
+import {TransitionGroup} from 'react-transition-group';
 import FadeUp from "./FadeUp";
 
 class Ui extends React.Component {
@@ -22,8 +23,6 @@ class Ui extends React.Component {
     } else {
       this.buttonAttack = this.props.props.images.buttonAttackWarrior;
     }
-    this.toggleCharacterMenu = this.toggleCharacterMenu.bind(this);
-    this.toggleInventoryMenu = this.toggleInventoryMenu.bind(this);
 
     this.Skill = (props) => {
       let className = "gray-100";
@@ -114,15 +113,21 @@ class Ui extends React.Component {
           <this.Skill number={4}/>  
           <Minimap props={this.props.props} dungeon={this.props.dungeon}/>
           <this.AttackButton/>
-          <input class="btn-character hover-saturate-250" type="image" src={this.props.props.images.buttonCharacter} alt="Character" onClick={this.toggleCharacterMenu}/>
-          <input class="btn-inventory hover-saturate-250" type="image" src={this.props.props.images.buttonInventory} alt="Inventory" onClick={this.toggleInventoryMenu}/>
-          <CharacterMenu props={this.props.props} toggle={this.toggleCharacterMenu} on={this.state.characterMenu}/>
-          <InventoryMenu props={this.props.props} toggle={this.toggleInventoryMenu} on={this.state.inventoryMenu}/>
+          <input class="btn-character hover-saturate-250" type="image" src={this.props.props.images.buttonCharacter} alt="Character" onClick={() => this.props.props.appState("menu", "character")}/>
+          <input class="btn-inventory hover-saturate-250" type="image" src={this.props.props.images.buttonInventory} alt="Inventory" onClick={() => this.props.props.appState("menu", "inventory")}/>
           <this.ReturnButton/>
       </>
     );
+
+    if(this.props.props.menu === "character"){
+      components.push(<CharacterMenu props={this.props.props}/>)
+    }
+
+    if(this.props.props.menu === "inventory"){
+      components.push(<InventoryMenu props={this.props.props}/>)
+    }
     
-    if(this.props.props.pc.attributePoints && !this.state.characterMenu && !this.state.inventoryMenu){
+    if(this.props.props.pc.attributePoints && this.props.props.menu !== "character" && this.props.props.menu !== "inventory"){
       components.push(<img className="unspent-points noclick" src={this.props.props.images.unspentPoints} alt="unspent points"/>);
     }
     
@@ -142,23 +147,6 @@ class Ui extends React.Component {
 
     return components;
   }
-
-  toggleCharacterMenu(){
-    if(!this.props.disableUiMenus){
-      this.state.characterMenu
-        ? this.setState({characterMenu: false})
-        : this.setState({characterMenu: true});
-    }
-  }
-
-  toggleInventoryMenu(){
-    if(!this.props.disableUiMenus){
-      this.state.inventoryMenu
-        ? this.setState({inventoryMenu: false})
-        : this.setState({inventoryMenu: true});
-    }
-  }
-
 }
 
 export default Ui

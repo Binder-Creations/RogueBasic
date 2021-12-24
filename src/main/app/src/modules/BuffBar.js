@@ -6,12 +6,11 @@ class BuffBar extends React.Component {
   
   render(){
     let components = [];
-    let buffBox = "buff-box "
     let position = this.props.entity.position ? " " + this.props.entity.position : " pc";
     this.buffs(components);
 
     return(
-      <TransitionGroup className={buffBox + this.props.type + position}>
+      <TransitionGroup key={this.props.entity.position+"-"+this.props.type} className={"buff-box " + this.props.type + position}>
         {components}
       </TransitionGroup>
     );

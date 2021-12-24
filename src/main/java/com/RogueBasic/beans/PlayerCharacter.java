@@ -1,7 +1,10 @@
 package com.RogueBasic.beans;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -26,9 +29,11 @@ public class PlayerCharacter {
 	private int level;
 	private int attributePoints;
 	private int currency;
+	private int metacurrency;
 	private Set<Ability> abilities;
 	private Map<UUID, Integer> inventory;
 	private Set<Item> inventoryCache;
+	private List<String> equipTypes;
 	private Item equippedHead;
 	private Item equippedBody;
 	private Item equippedBack;
@@ -95,6 +100,7 @@ public class PlayerCharacter {
 				this.equippedPrimary = iservice.getPremade(10);
 				this.equippedSecondary = iservice.getPremade(11);
 				this.currency = 150 + currencyMetabonus;
+				this.equipTypes = new ArrayList<String>(Arrays.asList(new String[] {"headMedium", "bodyMedium", "bow", "dagger", "back", "neck"}));
 				this.abilities.add(new Ability(0, "Steady Shot", 0, 1f, 10, 1, "lowHealth", "Attack", "Power", "Fire off a basic shot."));
 				this.abilities.add(new Ability(1, "Deadeye", 10, 1.6f, 0, 1, "backCenter", "Attack", "Power", "Shoot the back center enemy with unerring precision. This attack cannot be dodged.", new Flags("hit")));	
 				this.abilities.add(new Ability(2, "Shadowmeld", 20, 8f, 0, 1, "self", "Buff", "Armor", "Become one with the shadows, making it harder for enemies to hit you. Dramatically increases your dodge and critical ratings for one round.", new Buff("shadowmeld", 2, new String[]{"critRating", "dodgeRating"})));
@@ -115,6 +121,7 @@ public class PlayerCharacter {
 				this.equippedPrimary = iservice.getPremade(13);
 				this.equippedSecondary = iservice.getPremade(14);
 				this.currency = 100 + currencyMetabonus;
+				this.equipTypes = new ArrayList<String>(Arrays.asList(new String[] {"headHeavy", "bodyHeavy", "sword", "shield", "back", "neck"}));		
 				this.abilities.add(new Ability(0, "Straight Slash", 0, 1f, 25, 1, "frontCenter", "Attack", "Power", "Make a basic attack."));
 				this.abilities.add(new Ability(1, "Heavy Strike", 8, 1.6f, 35, 1, "frontRight", "Attack", "Power", "Attack with a mighty blow. 150% of Armor Penetration applies.", new Flags("highPen")));
 				this.abilities.add(new Ability(2, "Stunning Bash", 16, 1.4f, 20, 1, "frontLeft", "Attack", "Power", "Attack with a stunning shield strike. Stuns normal enemies for 1 round.", null, new Flags("stun")));
@@ -135,6 +142,7 @@ public class PlayerCharacter {
 				this.equippedPrimary = iservice.getPremade(7);
 				this.equippedSecondary = iservice.getPremade(8);
 				this.currency = 100 + currencyMetabonus;
+				this.equipTypes = new ArrayList<String>(Arrays.asList(new String[] {"headLight", "bodyLight", "staff", "spellbook", "back", "neck"}));
 				this.abilities.add(new Ability(0, "Zap", 0, 1.2f, 55, 1, "random", "Attack", "Power", "Cast a basic spell.", new Flags("magic")));
 				this.abilities.add(new Ability(1, "Ice Shards", 16, 0.75f, 15, 3, "random", "Attack", "Power", "Conjure and launch 3 frozen knives.", new Flags("magic")));
 				this.abilities.add(new Ability(2, "Flame Cone", 32, 0.9f, 30,  1, "cone", "Attack", "Power", "Blast outward with a spreading cone of fire.", new Flags("magic")));
@@ -150,13 +158,6 @@ public class PlayerCharacter {
 				this.energyBonus = 40;
 				this.energyRegenBonus = 5;		
 				break;
-		}
-		ItemServices iss = new ItemServices(CassandraConnector.getSession());
-		for(int i = 0; i < 30; i++) {
-			String[] exceptions = {};
-			Item item = iss.genEquipment(exceptions, 8);
-			inventory.put(item.getId(), 1);
-			inventoryCache.add(item);
 		}
 	}
 
@@ -264,6 +265,14 @@ public class PlayerCharacter {
 		this.currency = currency;
 	}
 
+	public int getMetacurrency() {
+		return metacurrency;
+	}
+
+	public void setMetacurrency(int metacurrency) {
+		this.metacurrency = metacurrency;
+	}
+
 	public Set<Ability> getAbilities() {
 		return abilities;
 	}
@@ -286,6 +295,14 @@ public class PlayerCharacter {
 
 	public void setInventoryCache(Set<Item> inventoryCache) {
 		this.inventoryCache = inventoryCache;
+	}
+
+	public List<String> getEquipTypes() {
+		return equipTypes;
+	}
+
+	public void setEquipTypes(List<String> equipTypes) {
+		this.equipTypes = equipTypes;
 	}
 
 	public Item getEquippedHead() {
@@ -493,9 +510,9 @@ public class PlayerCharacter {
 		return Objects.hash(abilities, armorBonus, armorPenBonus, ate, attributePoints, characterClass, constitution,
 				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentHealth, currentShop,
 				day, dexterity, dexterityBonus, dodgeRatingBonus, dungeonBoard, energyBonus, energyRegenBonus,
-				equippedBack, equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary, experience,
-				healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, inventory, inventoryCache, level,
-				location, name, powerBonus, strength, strengthBonus);
+				equipTypes, equippedBack, equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary,
+				experience, healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, inventory,
+				inventoryCache, level, location, metacurrency, name, powerBonus, strength, strengthBonus);
 	}
 
 	@Override
@@ -516,17 +533,18 @@ public class PlayerCharacter {
 				&& Objects.equals(currentShop, other.currentShop) && day == other.day && dexterity == other.dexterity
 				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
 				&& Objects.equals(dungeonBoard, other.dungeonBoard) && energyBonus == other.energyBonus
-				&& energyRegenBonus == other.energyRegenBonus && Objects.equals(equippedBack, other.equippedBack)
-				&& Objects.equals(equippedBody, other.equippedBody) && Objects.equals(equippedHead, other.equippedHead)
-				&& Objects.equals(equippedNeck, other.equippedNeck)
+				&& energyRegenBonus == other.energyRegenBonus && Objects.equals(equipTypes, other.equipTypes)
+				&& Objects.equals(equippedBack, other.equippedBack) && Objects.equals(equippedBody, other.equippedBody)
+				&& Objects.equals(equippedHead, other.equippedHead) && Objects.equals(equippedNeck, other.equippedNeck)
 				&& Objects.equals(equippedPrimary, other.equippedPrimary)
 				&& Objects.equals(equippedSecondary, other.equippedSecondary) && experience == other.experience
 				&& healthBonus == other.healthBonus && healthRegenBonus == other.healthRegenBonus
 				&& Objects.equals(id, other.id) && intelligence == other.intelligence
 				&& intelligenceBonus == other.intelligenceBonus && Objects.equals(inventory, other.inventory)
 				&& Objects.equals(inventoryCache, other.inventoryCache) && level == other.level
-				&& Objects.equals(location, other.location) && Objects.equals(name, other.name)
-				&& powerBonus == other.powerBonus && strength == other.strength && strengthBonus == other.strengthBonus;
+				&& Objects.equals(location, other.location) && metacurrency == other.metacurrency
+				&& Objects.equals(name, other.name) && powerBonus == other.powerBonus && strength == other.strength
+				&& strengthBonus == other.strengthBonus;
 	}
 
 	@Override
@@ -535,17 +553,18 @@ public class PlayerCharacter {
 				+ ", currentDungeon=" + currentDungeon + ", currentShop=" + currentShop + ", day=" + day + ", ate="
 				+ ate + ", name=" + name + ", characterClass=" + characterClass + ", experience=" + experience
 				+ ", level=" + level + ", attributePoints=" + attributePoints + ", currency=" + currency
-				+ ", abilities=" + abilities + ", inventory=" + inventory + ", inventoryCache=" + inventoryCache
-				+ ", equippedHead=" + equippedHead + ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack
-				+ ", equippedNeck=" + equippedNeck + ", equippedPrimary=" + equippedPrimary + ", equippedSecondary="
-				+ equippedSecondary + ", constitution=" + constitution + ", strength=" + strength + ", dexterity="
-				+ dexterity + ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus
-				+ ", strengthBonus=" + strengthBonus + ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus="
-				+ intelligenceBonus + ", powerBonus=" + powerBonus + ", healthBonus=" + healthBonus
-				+ ", healthRegenBonus=" + healthRegenBonus + ", armorPenBonus=" + armorPenBonus + ", armorBonus="
-				+ armorBonus + ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus
-				+ ", energyBonus=" + energyBonus + ", energyRegenBonus=" + energyRegenBonus + ", currentHealth="
-				+ currentHealth + ", currentEnergy=" + currentEnergy + "]";
+				+ ", metacurrency=" + metacurrency + ", abilities=" + abilities + ", inventory=" + inventory
+				+ ", inventoryCache=" + inventoryCache + ", equipTypes=" + equipTypes + ", equippedHead=" + equippedHead
+				+ ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck
+				+ ", equippedPrimary=" + equippedPrimary + ", equippedSecondary=" + equippedSecondary
+				+ ", constitution=" + constitution + ", strength=" + strength + ", dexterity=" + dexterity
+				+ ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus + ", strengthBonus="
+				+ strengthBonus + ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus=" + intelligenceBonus
+				+ ", powerBonus=" + powerBonus + ", healthBonus=" + healthBonus + ", healthRegenBonus="
+				+ healthRegenBonus + ", armorPenBonus=" + armorPenBonus + ", armorBonus=" + armorBonus
+				+ ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus + ", energyBonus="
+				+ energyBonus + ", energyRegenBonus=" + energyRegenBonus + ", currentHealth=" + currentHealth
+				+ ", currentEnergy=" + currentEnergy + "]";
 	}
 	
 	

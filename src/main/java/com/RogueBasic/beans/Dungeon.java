@@ -22,6 +22,7 @@ public class Dungeon {
 	private boolean miniboss;
 	private boolean boss;
 	private int reward;
+	private Set<Item> rewardCache;
 	private int currentFloor;
 	private int currentRoom;
 	
@@ -123,6 +124,14 @@ public class Dungeon {
 		this.reward = reward;
 	}
 
+	public Set<Item> getRewardCache() {
+		return rewardCache;
+	}
+
+	public void setRewardCache(Set<Item> rewardCache) {
+		this.rewardCache = rewardCache;
+	}
+
 	public int getCurrentFloor() {
 		return currentFloor;
 	}
@@ -142,7 +151,7 @@ public class Dungeon {
 	@Override
 	public int hashCode() {
 		return Objects.hash(boss, challengeRating, currentFloor, currentRoom, description, floorCount, floors, id,
-				miniboss, name, postfixMod, prefixMod, reward, theme);
+				miniboss, name, postfixMod, prefixMod, reward, rewardCache, theme);
 	}
 	
 	@Override
@@ -159,7 +168,8 @@ public class Dungeon {
 				&& floorCount == other.floorCount && Objects.equals(floors, other.floors)
 				&& Objects.equals(id, other.id) && miniboss == other.miniboss && Objects.equals(name, other.name)
 				&& Objects.equals(postfixMod, other.postfixMod) && Objects.equals(prefixMod, other.prefixMod)
-				&& reward == other.reward && Objects.equals(theme, other.theme);
+				&& reward == other.reward && Objects.equals(rewardCache, other.rewardCache)
+				&& Objects.equals(theme, other.theme);
 	}
 	
 	@Override
@@ -167,7 +177,8 @@ public class Dungeon {
 		return "Dungeon [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme
 				+ ", prefixMod=" + prefixMod + ", postfixMod=" + postfixMod + ", floorCount=" + floorCount + ", floors="
 				+ floors + ", challengeRating=" + challengeRating + ", miniboss=" + miniboss + ", boss=" + boss
-				+ ", reward=" + reward + ", currentFloor=" + currentFloor + ", currentRoom=" + currentRoom + "]";
+				+ ", reward=" + reward + ", rewardCache=" + rewardCache + ", currentFloor=" + currentFloor
+				+ ", currentRoom=" + currentRoom + "]";
 	}
 	
 	

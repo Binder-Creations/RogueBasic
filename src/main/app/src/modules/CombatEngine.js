@@ -1,7 +1,6 @@
 import AbilityServices from "./AbilityServices";
 import CombatUpdate from "./CombatUpdate";
 import MonsterServices from "./MonsterServices";
-import {unmountComponentAtNode} from "react-dom";
 
 class CombatEngine {
   constructor(pc, pcServices, monsters, dungeonMod, positions){
@@ -50,25 +49,6 @@ class CombatEngine {
     this.updateMonsterStats();
     AbilityServices.corpseCollector(this.pc, this.monsters, this.combatUpdates);
     AbilityServices.pcCorpseCollector(this.pc, this.combatUpdates);
-  }
-
-  endCombat(){
-    for(let position of this.positions){
-      let buffs = document.getElementById(position + "-buffs");
-      let debuffs = document.getElementById(position + "-debuffs"); 
-      console.log(buffs)
-      console.log(debuffs)
-      if(buffs){
-        buffs.remove();
-      }
-      if(debuffs){
-        debuffs.remove();
-      }
-    }
-    let abilityAnimation = document.getElementById("ability-animation");
-    if(abilityAnimation){
-      abilityAnimation.remove();
-    }
   }
 
   damageOverTime(entity){

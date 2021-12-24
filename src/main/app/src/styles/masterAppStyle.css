@@ -224,7 +224,53 @@
 				width: 31.25%;   
 				height: 69.3654%;
 			}
-			.badge{
+			.quest-menu {
+				position: absolute;
+				left: 34.9479%;
+				top: 8.8522%;
+				width: 31.25%;
+				height: 65.625%;
+			}
+			.quest-gold {
+				position: absolute;
+				left: 31.3333%;    
+				top: 21.6667%;
+				width: 22.3333%;
+				height: 13.5556%;
+				font-size: 200%;
+				text-align: right;
+			}
+			.quest-exp {
+				position: absolute;
+				left: 31.3333%;
+				top: 36.8889%;
+				width: 22.3333%;
+				height: 13.5556%;
+				font-size: 200%;
+				text-align: right;
+			}
+			.quest-item-1{
+				position: absolute;
+				left: 7.7222%;
+				top: 61.4444%;
+				width: 24.4444%;
+				height: 24.4444%;
+			}
+			.quest-item-2 {
+				position: absolute;
+				left: 37.7222%;
+				top: 61.4444%;
+				width: 24.4444%;
+				height: 24.4444%;
+			}
+			.quest-item-3 {
+				position: absolute;
+				left: 67.3333%;
+				top: 61.4444%;
+				width: 24.4444%;
+				height: 24.4444%;
+			}
+			.badge {
 				position: absolute;
 				left: 14.4932%;
 				top: 0.8377%;
@@ -415,16 +461,6 @@
 				width: 45.0433%;
 				height: 73.6111%;
 			}
-			.loot-box-wrapper{
-				z-index: 1;
-				position: absolute;
-				overflow-y: auto;
-				overflow-x: hidden;
-				left: 2.2636%;
-				top: 13.4846%;
-				width: 95.4727%;
-				height: 83.4909%;
-			}
 			.inventory-box {
 				pointer-events: auto;
 				position: absolute;
@@ -447,12 +483,13 @@
 				table-layout: fixed;
 			}
 			.loot-box {
+				overflow: visible;
 				pointer-events: auto;
 				position: absolute;
-				right: 0%;
-				top: 0%;
-				width: 100%;
-				height: 100%;
+				left: 2.2636%;
+				top: 13.4846%;
+				width: 95.4727%;
+				height: 83.4909%;
 				display:flex;
 				flex-flow: row wrap;
 				align-items: flex-start;
