@@ -24,14 +24,14 @@ class LootMenu extends React.Component {
         );
       }
       return(
-        <Fade in key='q' className="quest-menu">
+        <div className="quest-menu">
           <img className="background" src={this.props.props.images.questMenu} alt="Quest Screen"/>
           <p className="quest-gold">{this.props.reward}</p>
           <p className="quest-exp">{Math.floor(this.props.reward*2.5)}</p>
           <QuestItem i={0}/>
           <QuestItem i={1}/>
           <QuestItem i={2}/>
-        </Fade>
+        </div>
       )  
     }
 }

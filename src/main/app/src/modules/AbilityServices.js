@@ -15,6 +15,10 @@ class AbilityServices {
           let damage = this.calcDamage(this.calcBase(ability, pc.baseDamage), pc, monster, crit);
           crit = damage ? crit : false;
 
+          if(ability.targetFlags && ability.targetFlags.stun && !damage){
+            monster.flags.stun = 0;
+          }
+
           monster.currentHealth = (monster.currentHealth - damage) >= 0 ? (monster.currentHealth - damage) : 0;
           combatUpdates.push(new CombatUpdate(ability.type, ability.name, monster.position, "pc", damage, crit));
         });

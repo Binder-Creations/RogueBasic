@@ -13,6 +13,7 @@ class Dungeon extends React.Component {
     super(props);
 
     this.currentRoom = null;
+    this.abilityAnimationKey = 0;
     this.pushMonstersByPosition = this.pushMonstersByPosition.bind(this);
   }
 
@@ -22,10 +23,7 @@ class Dungeon extends React.Component {
 
     if(((this.currentRoom.stairsPrevious || (this.currentRoom.stairsNext && (this.props.dungeon.currentFloor + 1 < this.props.dungeon.floorCount))) && (!this.currentRoom.monsters || this.currentRoom.monsters.length === 0))){
       components.push(
-        <FadeIn 
-          key='s' 
-          in
-        >
+        <FadeIn in key='s'>
           <img src={this.props.props.images["dungeon"+this.props.dungeon.theme+"Stairs"]} className="dungeon-stairs hover-saturate" alt="Stairs" onClick={() => this.props.props.appState("stairs", this.currentRoom.stairsPrevious)}/>
         </FadeIn>
       );
@@ -34,23 +32,23 @@ class Dungeon extends React.Component {
     if(!this.props.props.combat && this.currentRoom.lootCache && this.currentRoom.lootCache.length){
       if((this.currentRoom.stairsPrevious || (this.currentRoom.stairsNext && (this.props.dungeon.currentFloor + 1 < this.props.dungeon.floorCount)))){
         components.push(        
-          <FadeIn 
-            key='c' 
-            in
-          >
+          <FadeIn in key='c'>
             <img src={this.props.props.images.chest} className="dungeon-chest-left hover-saturate" alt="chest" onClick={() => this.props.props.appState("menu", "loot")}/>
-          </FadeIn>);
+          </FadeIn>
+        );
       } else {
         components.push(        
-          <FadeIn 
-            key='c' 
-            in
-          >
+          <FadeIn in key='c'>
             <img src={this.props.props.images.chest} className="dungeon-chest hover-saturate" alt="chest" onClick={() => this.props.props.appState("menu", "loot")}/>
-          </FadeIn>);
+          </FadeIn>
+        );
       }
       if(this.props.props.menu === "loot"){
-        components.push(<LootMenu props={this.props.props} room={this.currentRoom}/>);
+        components.push(
+          <Fade in key='l'>
+            <LootMenu props={this.props.props} room={this.currentRoom}/>
+          </Fade>
+        );
       }
     } 
     if(this.props.props.combat){
@@ -69,26 +67,49 @@ class Dungeon extends React.Component {
       components.push(<Combat key='c' props={this.props.props} monsters={this.currentRoom.monsters}/>)
 
       if(this.props.props.pc.buffs && this.props.props.pc.buffs.length > 0){
-        components.push(<BuffBar props={this.props.props} entity={this.props.props.pc} type={"buffs"}/>);
+        components.push(
+          <Fade in key="pc-buffs">
+            <BuffBar props={this.props.props} entity={this.props.props.pc} type={"buffs"}/>
+          </Fade>
+        );
       }
       if(this.props.props.pc.debuffs && this.props.props.pc.debuffs.length > 0){
-        components.push(<BuffBar props={this.props.props} entity={this.props.props.pc} type={"debuffs"}/>);
+        components.push(
+          <Fade in key="pc-debuffs">
+            <BuffBar props={this.props.props} entity={this.props.props.pc} type={"debuffs"}/>
+          </Fade>
+        );
       }
       for(let monster of this.currentRoom.monsters) {
         if(monster.buffs && monster.buffs.length > 0){
-          components.push(<BuffBar props={this.props.props} entity={monster} type={"buffs"}/>);
+          components.push(
+            <Fade in key={monster.position+"-buffs"}>
+              <BuffBar props={this.props.props} entity={monster} type={"buffs"}/>
+            </Fade>
+          );
         }
         if(monster.debuffs && monster.debuffs.length > 0){
-          components.push(<BuffBar props={this.props.props} entity={monster} type={"debuffs"}/>);
+          components.push(
+            <Fade in key={monster.position+"pc-debuffs"}>
+              <BuffBar props={this.props.props} entity={monster} type={"debuffs"}/>
+            </Fade>
+          );
         }
       }
+
       if(this.props.props.renderAbilityAnimation){
-        components.push(<AbilityAnimation props={this.props.props} key='n'/>);
+        components.push(<AbilityAnimation props={this.props.props} key={"aa" + this.abilityAnimationKey++}/>);
       }   
     }
-    if(this.props.props.questComplete){
-      components.push(<QuestMenu props={this.props.props} reward={this.props.dungeon.reward} rewardItems={this.props.props.dungeon.rewardCache}/>);
-    } 
+    
+    if(this.props.dungeon.questCompleted && !this.props.dungeon.rewardClaimed){
+      components.push(
+        <Fade in key='q'>
+          <QuestMenu props={this.props.props} reward={this.props.dungeon.reward} rewardItems={this.props.dungeon.rewardCache}/>
+       </Fade>
+      );
+    }
+
     return (
       <TransitionGroup>
         {components}

@@ -347,11 +347,13 @@ class App extends React.Component {
       switch(method){
         case "quest":
           pc = {...this.state.pc};
+          dungeon = {...this.state.dungeon};
           pc.currency += this.state.dungeon.reward;
           pc.experience += Math.floor(this.state.dungeon.reward*2.5);
           pc.inventory[this.state.dungeon.rewardCache[key].id] = 1;
           pc.inventoryCache.push(this.state.dungeon.rewardCache[key]);
-          this.save(["pc"], [pc], {pc:pc, questComplete: false});
+          dungeon.rewardClaimed = true;
+          this.save(["pc", "dungeon"], [pc, dungeon], {pc:pc, dungeon: dungeon});
           break;
         case "menu":
           this.setStateCustom({menu: key === this.state.menu ? null : key});
@@ -415,14 +417,15 @@ class App extends React.Component {
               break;
           } else {
             pc = {...this.state.pc}
+            dungeon = {...this.state.dungeon}
             this.pcServices.clearBuffs(pc);
             this.pcServices.resetTempStats(pc);
             this.pcServices.updateStats(pc);
             this.combatEngine = null;
 
-            let questComplete = this.checkQuest();
+            dungeon.questCompleted = this.checkQuest();
 
-            this.save(["pc", "dungeon"], [this.state.pc, this.state.dungeon], {pc: pc, combat: false, questComplete: questComplete, position: 0});
+            this.save(["pc", "dungeon"], [pc, dungeon], {pc: pc, dungeon: dungeon, combat: false, position: 0});
             break;
           }
           
@@ -433,7 +436,7 @@ class App extends React.Component {
             if(dungeon.currentFloor === 0){
               pc = {...this.state.pc};
               pc.location = "Town";
-              this.save(["pc", "dungeon"], [this.state.pc, this.state.dungeon], {dungeon: dungeon, pc:pc, scene:"Default"});
+              this.save(["pc", "dungeon"], [pc, dungeon], {dungeon: dungeon, pc:pc, scene:"Default"});
             } else {
               dungeon.currentFloor -= 1;
               dungeon.currentRoom = dungeon.floors[dungeon.currentFloor].rooms.length-1;
@@ -532,6 +535,9 @@ class App extends React.Component {
             } else {
               if(key.name === "Gold") {
                 pc.currency += count;
+              }
+              if(key.name === "Soul") {
+                pc.metacurrency += count;
               }
             }
 

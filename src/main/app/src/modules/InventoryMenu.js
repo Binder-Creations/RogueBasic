@@ -29,6 +29,7 @@ class InventoryMenu extends React.Component {
         <img className={this.silhouetteClass} src={this.silhouette} alt={this.props.props.pc.characterClass}/>
         <input className="btn-close hover-saturate" type="image" src={this.props.props.images.buttonClose} alt="Close" onClick={() => this.props.props.appState("menu", "inventory")}/>
         <p className="gold-count">{this.props.props.pc.currency}</p>
+        <p className="soul-count">{this.props.props.pc.metacurrency}</p>
         <Equipped props={this.props.props} slot="Head"/>
         <Equipped props={this.props.props} slot="Body"/>
         <Equipped props={this.props.props} slot="Back"/>

@@ -23,6 +23,8 @@ public class Dungeon {
 	private boolean boss;
 	private int reward;
 	private Set<Item> rewardCache;
+	private boolean questCompleted;
+	private boolean rewardClaimed;
 	private int currentFloor;
 	private int currentRoom;
 	
@@ -132,6 +134,22 @@ public class Dungeon {
 		this.rewardCache = rewardCache;
 	}
 
+	public boolean isQuestCompleted() {
+		return questCompleted;
+	}
+
+	public void setQuestCompleted(boolean questCompleted) {
+		this.questCompleted = questCompleted;
+	}
+
+	public boolean isRewardClaimed() {
+		return rewardClaimed;
+	}
+
+	public void setRewardClaimed(boolean rewardClaimed) {
+		this.rewardClaimed = rewardClaimed;
+	}
+
 	public int getCurrentFloor() {
 		return currentFloor;
 	}
@@ -151,7 +169,7 @@ public class Dungeon {
 	@Override
 	public int hashCode() {
 		return Objects.hash(boss, challengeRating, currentFloor, currentRoom, description, floorCount, floors, id,
-				miniboss, name, postfixMod, prefixMod, reward, rewardCache, theme);
+				miniboss, name, postfixMod, prefixMod, questCompleted, reward, rewardCache, rewardClaimed, theme);
 	}
 	
 	@Override
@@ -168,7 +186,8 @@ public class Dungeon {
 				&& floorCount == other.floorCount && Objects.equals(floors, other.floors)
 				&& Objects.equals(id, other.id) && miniboss == other.miniboss && Objects.equals(name, other.name)
 				&& Objects.equals(postfixMod, other.postfixMod) && Objects.equals(prefixMod, other.prefixMod)
-				&& reward == other.reward && Objects.equals(rewardCache, other.rewardCache)
+				&& questCompleted == other.questCompleted && reward == other.reward
+				&& Objects.equals(rewardCache, other.rewardCache) && rewardClaimed == other.rewardClaimed
 				&& Objects.equals(theme, other.theme);
 	}
 	
@@ -177,8 +196,9 @@ public class Dungeon {
 		return "Dungeon [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme
 				+ ", prefixMod=" + prefixMod + ", postfixMod=" + postfixMod + ", floorCount=" + floorCount + ", floors="
 				+ floors + ", challengeRating=" + challengeRating + ", miniboss=" + miniboss + ", boss=" + boss
-				+ ", reward=" + reward + ", rewardCache=" + rewardCache + ", currentFloor=" + currentFloor
-				+ ", currentRoom=" + currentRoom + "]";
+				+ ", reward=" + reward + ", rewardCache=" + rewardCache + ", questCompleted=" + questCompleted
+				+ ", rewardClaimed=" + rewardClaimed + ", currentFloor=" + currentFloor + ", currentRoom=" + currentRoom
+				+ "]";
 	}
 	
 	

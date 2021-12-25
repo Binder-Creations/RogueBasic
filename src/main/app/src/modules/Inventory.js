@@ -107,10 +107,18 @@ class Inventory extends React.Component {
 
     if (this.props.type === "inventory"){
       if(item.type === "potion"){
-        if(this.inventory[item.id] > 1){
-          this.pushUsable(item, count);
+        if(this.props.props.position){
+          if(this.inventory[item.id] > 1){
+            this.pushUnusable(item, count);
+          } else {
+            this.pushUnusable(item, this.empty);
+          }
         } else {
-          this.pushUsable(item, this.empty);
+          if(this.inventory[item.id] > 1){
+            this.pushUsable(item, count);
+          } else {
+            this.pushUsable(item, this.empty);
+          }
         }
       }
       if(item.type === "consumable"){

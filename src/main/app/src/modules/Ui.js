@@ -4,7 +4,6 @@ import InventoryMenu from "./InventoryMenu";
 import SkillTooltip from "./SkillTooltip";
 import Minimap from "./Minimap";
 import {camelCase} from "./GeneralUtilities";
-import {TransitionGroup} from 'react-transition-group';
 import FadeUp from "./FadeUp";
 
 class Ui extends React.Component {
@@ -23,11 +22,10 @@ class Ui extends React.Component {
     } else {
       this.buttonAttack = this.props.props.images.buttonAttackWarrior;
     }
-
+    
     this.Skill = (props) => {
       let className = "gray-100";
       let onClick = null;
-
       if(this.props.props.pc.level >= this.props.props.pc.abilities[props.number].level){
         if(this.props.props.combat && !this.props.props.position){
           if(this.props.props.pc.currentEnergy >= this.props.props.pc.abilities[props.number].cost){

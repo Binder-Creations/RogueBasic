@@ -61,8 +61,8 @@ public class DungeonServices {
 		}
 		dungeon.setReward((int)Math.round(100*(1+(0.1*(dungeon.getChallengeRating()-1)))*(1+(0.25*(dungeon.getFloorCount()-1)))*(dungeon.isMiniboss() ? 1.34 : 1)*(dungeon.isBoss() ? 1.67 : 1)));
 		Set<Item> rewardCache = new HashSet<>();
-		for(int i = 0; i<3; i++) {
-			rewardCache.add(is.genEquipment(pc.getEquipTypes(), dungeon.getChallengeRating() + 2));
+		for(int i = 0; i < 3; i++) {
+			rewardCache.add(is.genEquipment(pc.getEquipTypes(), dungeon.getChallengeRating() + dungeon.getFloorCount()*2));
 		}
 		dungeon.setRewardCache(rewardCache);
 		this.dao.save(dungeon);

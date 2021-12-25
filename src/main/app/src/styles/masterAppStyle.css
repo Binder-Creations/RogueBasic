@@ -249,21 +249,21 @@
 				font-size: 200%;
 				text-align: right;
 			}
-			.quest-item-1{
+			.quest-item-0 {
 				position: absolute;
 				left: 7.7222%;
 				top: 61.4444%;
 				width: 24.4444%;
 				height: 24.4444%;
 			}
-			.quest-item-2 {
+			.quest-item-1 {
 				position: absolute;
 				left: 37.7222%;
 				top: 61.4444%;
 				width: 24.4444%;
 				height: 24.4444%;
 			}
-			.quest-item-3 {
+			.quest-item-2 {
 				position: absolute;
 				left: 67.3333%;
 				top: 61.4444%;
@@ -426,13 +426,22 @@
 				left: 25.1406%;
 				top: 85.2777%;
 			}
-			.gold-count{
+			.gold-count {
 				position: absolute;
 				left: 57.5258%;
 				top: 15.3889%;
 				width: 7.2605%;
 				height: 4.2778%;
 				font-size: 75%;
+			}
+			.soul-count {
+				position: absolute;
+				left: 85.088%;
+				top: 15.3889%;
+				width: 7.2605%;
+				height: 4.2778%;
+				font-size: 75%;
+				text-align: right;
 			}
 			.unspent-points {
 				position: absolute;
@@ -862,11 +871,14 @@
 				color:rgb(0, 206, 10);
 			}
 			.popup {
+				position: absolute;
+				top:25%;
+				left: 38.095%;
 				height: 50%;
 				width: 23.81%;
 				opacity: 0.5;
 			}
-			.popup > img {
+			.popup img {
 				height: 100%;
 				width: auto;
 			}

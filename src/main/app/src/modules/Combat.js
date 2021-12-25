@@ -52,7 +52,7 @@ class Combat extends React.Component {
           if(!key){
             onExited = () => setTimeout(() =>this.props.props.appState("nextCombat"), 100);
           }
-
+          
           components.push(  
             this.state.showUpdate && 
             this.props.props.combatTransitions && (
