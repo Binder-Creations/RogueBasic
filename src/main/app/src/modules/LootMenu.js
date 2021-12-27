@@ -15,6 +15,12 @@ class LootMenu extends React.Component {
           <div className="loot-box">
             <Inventory props={this.props.props} type="loot" room={this.props.room}/>
           </div>
+          <div className="btn-loot-all hover-saturate">
+            <input className="background" type="image" src={this.props.props.images.buttonGeneric} alt="Loot All" onClick={() => this.props.props.appState("loot-all")}/>
+            <p className="v-h-centered nopointer">
+              Take All
+            </p>
+          </div>
         </div>
       )  
     }

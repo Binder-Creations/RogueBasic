@@ -231,6 +231,14 @@
 				width: 31.25%;
 				height: 65.625%;
 			}
+			.death-menu {
+				position: absolute;
+				left: 34.9479%;
+				top: 8.8522%;
+				width: 31.25%;
+				height: 65.625%;
+				color: whitesmoke;
+			}
 			.quest-gold {
 				position: absolute;
 				left: 31.3333%;    
@@ -269,6 +277,30 @@
 				top: 61.4444%;
 				width: 24.4444%;
 				height: 24.4444%;
+			}
+			.death-cause {
+				position: absolute;
+				left: 23.5556%;
+				top: 23.8889%;
+				width: 32.6667%;
+				height: 19.8333%;
+				font-size: 70%;
+			}
+			.death-souls {
+				position: absolute;
+				left: 23.5556%;
+				top: 55.3889%;
+				width: 32.6667%;
+				height: 19.8333%;
+				font-size: 300%;
+			}
+			.btn-death {
+				position: absolute;
+				left: 28.6667%;
+				top: 82.7778%;
+				width: 43.3333%;
+				height: 12.5%;
+				font-size: 70%;
 			}
 			.badge {
 				position: absolute;
@@ -441,7 +473,6 @@
 				width: 7.2605%;
 				height: 4.2778%;
 				font-size: 75%;
-				text-align: right;
 			}
 			.unspent-points {
 				position: absolute;
@@ -498,11 +529,17 @@
 				left: 2.2636%;
 				top: 13.4846%;
 				width: 95.4727%;
-				height: 83.4909%;
+				height: 66.7927%;
 				display:flex;
 				flex-flow: row wrap;
 				align-items: flex-start;
 				align-content: flex-start;
+			}
+			.loot-box-item {
+				position: relative;
+				width: 18.1311%;
+				height:24.5526%;
+				margin: 0.2983% 0.935%;
 			}
 			.inventory-box-item {
 				position: relative;
@@ -1145,6 +1182,14 @@
 				transform: translate(-50%, -50%);
 				-ms-transform: translateY(-50%) translateX(-50%);
 			}
+		.btn-loot-all {
+			position: absolute;
+			left: 32.024%;  
+			top: 84.2634%;  
+			width: 35.8189%;
+			height: 9.7669%;
+			font-size: 75%;
+		}
 
 		.item-tooltip-box{
 			position: absolute;

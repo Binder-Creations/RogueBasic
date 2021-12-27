@@ -22,7 +22,8 @@ class App extends React.Component {
       scene: "Default",
       combat: false,
       combatUpdates: [], 
-      character_id: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*=\s*([^;]*).*$)|^.*$/, "$1"),
+      characterId: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*=\s*([^;]*).*$)|^.*$/, "$1"),
+      playerId: document.cookie.replace(/(?:(?:^|.*;\s*)player_id\s*=\s*([^;]*).*$)|^.*$/, "$1"),
       combatTransitions: false,
       questComplete: false,
       menu: null,
@@ -33,13 +34,17 @@ class App extends React.Component {
       abilityAnimation: 0,
       renderAbilityAnimation: false
     };
-    if(this.state.character_id){
-      fetch('/pc/'+ this.state.character_id)
-      .then(response => response.json())
-      .then(data => {
-        this.setStateCustom({pc: data})
-      });
-      
+    if(this.state.characterId){
+      try {
+        fetch('/pc/'+ this.state.characterId)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          this.setStateCustom({pc: data})
+        });
+      } catch(e) {
+        this.setStateCustom({characterId: null, playerId: null})
+      } 
     }
     this.combat = false;
     this.pcServices = new PcServices(this.state.pc.characterClass);
@@ -55,6 +60,7 @@ class App extends React.Component {
       items: items,
       monsters: monsters, 
       appState: this.appState,
+      gameOver: false,
       positions: ["pc", "frontLeft", "frontCenter", "frontRight", "backLeft", "backCenter", "backRight"],
       colorArmor: {color: "#136f9b"},
       colorPower: {color: "#a83a0e"},
@@ -93,7 +99,7 @@ class App extends React.Component {
   }
 
   render(){
-    if (!this.state.character_id)
+    if (!this.state.characterId || !this.state.playerId)
       return(
         <Router>
           <Route path='/' component={() => { 
@@ -132,6 +138,7 @@ class App extends React.Component {
     this.props.props.renderAbilityAnimation = this.state.renderAbilityAnimation;
     this.props.props.menu = this.state.menu;
     this.props.props.questComplete = this.state.questComplete;
+    this.props.props.gameOver = this.state.gameOver;
     
     this.innerElements = <></>
     this.outerElements = <></>
@@ -343,8 +350,30 @@ class App extends React.Component {
       let pc;
       let dungeon;
       let shop;
+      let room;
+      let count;
       let addItem = true;
       switch(method){
+        case "game-over":
+          this.setStateCustom({gameOver: key});
+          break;
+        case "end-game":
+          fetch('/pc/', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              playerId: this.state.playerId, 
+              characterId: this.state.characterId, 
+              metacurrency: this.state.pc.metacurrency
+            })
+          })
+          .then(response => { 
+            document.cookie = "character_id=; Max-Age=-99999999;"
+            this.setStateCustom({characterId: null})
+          });
+          break;
         case "quest":
           pc = {...this.state.pc};
           dungeon = {...this.state.dungeon};
@@ -407,7 +436,7 @@ class App extends React.Component {
         case "combat":
           if(!this.state.combat){
               dungeon = {...this.state.dungeon}
-              this.combatEngine = new CombatEngine(this.state.pc, this.pcServices, this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters, this.state.dungeon.postFix, this.props.props.positions);
+              this.combatEngine = new CombatEngine(this.state.pc, this.pcServices, this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters, this.state.dungeon.postFix, this.props.props.positions, this.appState);
               dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
               this.setStateCustom({
                 combat: true,
@@ -469,11 +498,11 @@ class App extends React.Component {
           break;
         case "scene":
           if(this.state.pc.location === value) {
-            this.setStateCustom({scene: key})
+            this.setStateCustom({scene: key, menu: null})
           } else {
             pc = {...this.state.pc}
             pc.location = value
-            this.save(["pc"], [pc], {pc: pc, scene: key})
+            this.save(["pc"], [pc], {pc: pc, scene: key, menu: null})
           }
           break;
         case "to-dungeon":
@@ -503,46 +532,77 @@ class App extends React.Component {
           this.save(["pc"], [pc], {pc: pc, dungeon: null, rested: this.state.rested +1});
           break;
         case "eat":
-            pc = {...this.state.pc};
-            pc.currentHealth = pc.healthTotal;
-            pc.currentEnergy = pc.energyTotal;
-            pc.ate = true;
-            pc.currency -= 100;
-            pc.currency = pc.currency > 0 ? pc.currency : 0;
+          pc = {...this.state.pc};
+          pc.currentHealth = pc.healthTotal;
+          pc.currentEnergy = pc.energyTotal;
+          pc.ate = true;
+          pc.currency -= 100;
+          pc.currency = pc.currency > 0 ? pc.currency : 0;
 
-            this.save(["pc"], [pc], {pc: pc, eaten: this.state.eaten + 1});
-            break;
-        case "loot":
-            pc = {...this.state.pc};
-            dungeon = {...this.state.dungeon};
-            let room = dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom]
-            let index = room.lootCache.indexOf(key);
-            let count = room.loot[key.id];
-            if (index !== -1){
-              room.lootCache.splice(index, 1);
-            }
+          this.save(["pc"], [pc], {pc: pc, eaten: this.state.eaten + 1});
+          break;
+        case "loot-all":
+          pc = {...this.state.pc};
+          dungeon = {...this.state.dungeon};
+          room = dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom]
+          
+          for(let i = 0; i < room.lootCache.length; i++){
+            count = room.loot[room.lootCache[i].id];
             
-            if(key.type !== "currency"){
-              if(pc.inventory[key.id]){
-                pc.inventory[key.id] += count;
+            if(room.lootCache[i].type !== "currency"){
+              if(pc.inventory[room.lootCache[i].id]){
+                pc.inventory[room.lootCache[i].id] += count;
               } else {
-                pc.inventory[key.id] = count;
+                pc.inventory[room.lootCache[i].id] = count;
               }
 
-              if(!pc.inventoryCache.find(item => item.id === key.id)){
-                pc.inventoryCache.push(key);
+              if(!pc.inventoryCache.find(item => item.id === room.lootCache[i].id)){
+                pc.inventoryCache.push(room.lootCache[i]);
               }
             } else {
-              if(key.name === "Gold") {
+              if(room.lootCache[i].name === "Gold") {
                 pc.currency += count;
               }
-              if(key.name === "Soul") {
+              if(room.lootCache[i].name === "Soul") {
                 pc.metacurrency += count;
               }
             }
+          }
+          room.loot = {};
+          room.lootCache = [];
+          this.save(["pc", "dungeon"], [pc, dungeon], {pc: pc, dungeon: dungeon, menu: null});
+          break;
+        case "loot":
+          pc = {...this.state.pc};
+          dungeon = {...this.state.dungeon};
+          room = dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom]
+          let index = room.lootCache.indexOf(key);
+          count = room.loot[key.id];
+          if (index !== -1){
+            room.lootCache.splice(index, 1);
+          }
+          
+          if(key.type !== "currency"){
+            if(pc.inventory[key.id]){
+              pc.inventory[key.id] += count;
+            } else {
+              pc.inventory[key.id] = count;
+            }
 
-            this.save(["pc", "dungeon"], [pc, dungeon], {pc: pc, dungeon: dungeon});
-            break;
+            if(!pc.inventoryCache.find(item => item.id === key.id)){
+              pc.inventoryCache.push(key);
+            }
+          } else {
+            if(key.name === "Gold") {
+              pc.currency += count;
+            }
+            if(key.name === "Soul") {
+              pc.metacurrency += count;
+            }
+          }
+
+          this.save(["pc", "dungeon"], [pc, dungeon], {pc: pc, dungeon: dungeon});
+          break;
         case "shop-store":
           pc = {...this.state.pc};
           shop = {...this.state.shop};
@@ -658,19 +718,20 @@ class App extends React.Component {
           pc.inventory[key.id] = 1;
           pc.inventoryCache.push(key);
           if(key.type === "headLight" || key.type === "headMedium" || key.type === "headHeavy"){
-            pc.equippedHead = null;
+            pc.equippedHead = {id: "00000000-0000-0000-0000-000000000000"};
           } else if (key.type === "bodyLight" || key.type === "bodyMedium" || key.type === "bodyHeavy"){
-            pc.equippedBody = null;
+            pc.equippedBody = {id: "00000000-0000-0000-0000-000000000000"};
           } else if (key.type === "neck"){
-            pc.equippedNeck = null;
+            pc.equippedNeck = {id: "00000000-0000-0000-0000-000000000000"};
           } else if (key.type === "back"){
-            pc.equippedBack = null;
+            pc.equippedBack = {id: "00000000-0000-0000-0000-000000000000"};
           } else if (key.type === "bow" || key.type === "staff" || key.type === "sword"){
-            pc.equippedPrimary = null;
+            pc.equippedPrimary = {id: "00000000-0000-0000-0000-000000000000"};
           } else {
-            pc.equippedSecondary = null;
+            pc.equippedSecondary = {id: "00000000-0000-0000-0000-000000000000"};
           }
           this.pcServices.updateStats(pc);
+          console.log(pc)
           this.save(["pc"], [pc], {pc: pc});
           break;
         case "pointbuy":

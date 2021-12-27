@@ -14,12 +14,15 @@ class Inventory extends React.Component {
     if(this.props.type === "inventory" || this.props.type === "shop-player"){
       this.inventory = this.props.props.pc.inventory;
       this.inventoryCache = this.props.props.pc.inventoryCache;
+      this.itemBoxClass = "inventory-box-item";
     } else if (this.props.type === "shop-store") {
       this.inventory = null;
       this.inventoryCache = this.props.shop.inventoryCache;
+      this.itemBoxClass = "inventory-box-item";
     } else if (this.props.type === "loot") {
       this.inventory = this.props.room.loot;
       this.inventoryCache = this.props.room.lootCache;
+      this.itemBoxClass = "loot-box-item";
     }
     this.qMods = this.props.type === "loot" 
       ? [0.3, 0.4, 0.55]
@@ -74,8 +77,9 @@ class Inventory extends React.Component {
     fillSize = fillSize < 5 
       ? 5
       : fillSize;
-    while (this.itemList.length < fillSize*5){
-      this.itemList.push(<div className="inventory-box-item"><img src={this.props.props.images.frameEmpty} className="absolute-fill" alt="frame"/></div>)
+    let inventoryMax = this.props.type === "loot" ? 20 : 25;
+    while (this.itemList.length < inventoryMax){
+      this.itemList.push(<div className={this.itemBoxClass}><img src={this.props.props.images.frameEmpty} className="absolute-fill" alt="frame"/></div>)
     }
     return this.itemList;
   }
@@ -170,7 +174,7 @@ class Inventory extends React.Component {
   pushUsable(item, Count){
     let itemProps = this.props.props.itemServices.getProps(item);
     this.itemList.push(
-      <div className="inventory-box-item item-tooltip" onClick={()=>{this.props.props.appState(this.props.type, item)}}>
+      <div className={this.itemBoxClass+" item-tooltip"} onClick={()=>{this.props.props.appState(this.props.type, item)}}>
         <div className="absolute-fill hover-saturate" style={{pointerEvents: "auto"}}>
           <img src={itemProps.background} className="absolute-fill" alt=""/>
           <img src={itemProps.image} className="item-image" alt="item"/>
@@ -185,7 +189,7 @@ class Inventory extends React.Component {
   pushUnusable(item, Count){
     let itemProps = this.props.props.itemServices.getProps(item);
     this.itemList.push(
-      <div className="inventory-box-item item-tooltip">
+      <div className={this.itemBoxClass+" item-tooltip"}>
         <img src={itemProps.background} className="absolute-fill gray-75" alt=""/>
         <img src={itemProps.image} className="item-image gray-75" alt="item"/>
         <img src={itemProps.frame} className="absolute-fill gray-75" alt="frame"/>

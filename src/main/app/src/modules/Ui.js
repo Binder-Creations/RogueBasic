@@ -5,6 +5,8 @@ import SkillTooltip from "./SkillTooltip";
 import Minimap from "./Minimap";
 import {camelCase} from "./GeneralUtilities";
 import FadeUp from "./FadeUp";
+import Fade from "./Fade";
+import GameOver from "./GameOver";
 
 class Ui extends React.Component {
 
@@ -75,7 +77,7 @@ class Ui extends React.Component {
   render(){
     let components = [];
 
-    this.ReturnButton = this.props.props.combat ? this.NoButton : this[this.props.button];
+    this.ReturnButton = (this.props.props.combat || this.props.props.gameOver) ? this.NoButton : this[this.props.button];
     this.healthStyle = {
       width: 20*(this.props.props.pc.currentHealth/this.props.props.pc.healthTotal) + "%"
     }
@@ -84,10 +86,6 @@ class Ui extends React.Component {
     }
     this.healthHover = this.props.props.pc.currentHealth + "/" + this.props.props.pc.healthTotal;
     this.energyHover = this.props.props.pc.currentEnergy + "/" + this.props.props.pc.energyTotal;
-
-    if(this.props.disableUiMenus && (this.state.characterMenu || this.state.inventoryMenu)){
-      this.setState({characterMenu: false, inventoryMenu: false})
-    }
     
     if(this.props.props.combat && !this.props.props.position){
       this.attackButton = <input class="btn-attack hover-saturate" type="image" src={this.buttonAttack} alt="Attack" onClick={() => this.props.props.appState("ability", 0)}/>
@@ -116,32 +114,43 @@ class Ui extends React.Component {
           <this.ReturnButton/>
       </>
     );
-
-    if(this.props.props.menu === "character"){
-      components.push(<CharacterMenu props={this.props.props}/>)
-    }
-
-    if(this.props.props.menu === "inventory"){
-      components.push(<InventoryMenu props={this.props.props}/>)
-    }
     
-    if(this.props.props.pc.attributePoints && this.props.props.menu !== "character" && this.props.props.menu !== "inventory"){
-      components.push(<img className="unspent-points noclick" src={this.props.props.images.unspentPoints} alt="unspent points"/>);
-    }
-    
-    components.push((this.props.props.pc.level > this.state.level) && (
-      <div className="popup level-up">
-        <FadeUp
-        in = {(this.props.props.pc.level > this.state.level)}
-        onEntered={() => {
-          document.documentElement.style.setProperty('--animate-duration', '1s')
-          this.setState({level: this.props.props.pc.level})
-        }}
+    if(this.props.props.gameOver){
+      components.push(
+        <Fade
+          in
+          key="gg"
         >
-          <img src={this.props.props.images.levelUp} alt="level up"/>
-        </FadeUp>
-      </div>
-    ));
+          <GameOver props={this.props.props}/>
+        </Fade>
+      )
+    } else {
+      if(this.props.props.menu === "character"){
+        components.push(<CharacterMenu props={this.props.props}/>)
+      }
+
+      if(this.props.props.menu === "inventory"){
+        components.push(<InventoryMenu props={this.props.props}/>)
+      }
+      
+      if(this.props.props.pc.attributePoints && this.props.props.menu !== "character" && this.props.props.menu !== "inventory"){
+        components.push(<img className="unspent-points noclick" src={this.props.props.images.unspentPoints} alt="unspent points"/>);
+      }
+      
+      components.push((this.props.props.pc.level > this.state.level) && (
+        <div className="popup level-up">
+          <FadeUp
+          in = {(this.props.props.pc.level > this.state.level)}
+          onEntered={() => {
+            document.documentElement.style.setProperty('--animate-duration', '1s')
+            this.setState({level: this.props.props.pc.level})
+          }}
+          >
+            <img src={this.props.props.images.levelUp} alt="level up"/>
+          </FadeUp>
+        </div>
+      ));
+    }
 
     return components;
   }

@@ -2,7 +2,6 @@ import React from "react";
 import {camelCase} from "./GeneralUtilities";
 import {TransitionGroup} from 'react-transition-group';
 import Fade from "./Fade";
-// import GameOver from "./GameOver.js";
 
 class Combat extends React.Component {
   constructor(props){
@@ -20,10 +19,7 @@ class Combat extends React.Component {
 
     let components = [];
     this.previousUpdates = this.props.props.combatUpdates;
-    let gameOver = this.props.props.combatUpdates.find(combatUpdate => combatUpdate.type === "gameOver");
-    if(gameOver){
-
-    } else {
+    if(!this.props.props.gameOver){
       let key = 0;
       for(let position of this.props.props.positions){
         let updates = [];

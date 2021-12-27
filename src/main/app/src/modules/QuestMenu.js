@@ -1,13 +1,8 @@
 import React from "react";
-import Fade from "./Fade";
 import ItemTooltip from "./ItemTooltip";
 
-class LootMenu extends React.Component {
-
-  constructor(props){
-    super(props);
-  }
-
+class QuestMenu extends React.Component {
+  
   render(){
       let QuestItem = (props) => {
         let item = this.props.rewardItems[props.i];
@@ -36,4 +31,4 @@ class LootMenu extends React.Component {
     }
 }
 
-export default LootMenu;
+export default QuestMenu;

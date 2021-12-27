@@ -45,7 +45,15 @@ class Dungeon extends React.Component {
       }
       if(this.props.props.menu === "loot"){
         components.push(
-          <Fade in key='l'>
+          <Fade 
+            in 
+            key='l'
+            onExited={()=>{
+              if(this.props.props.menu === "loot"){
+                this.props.props.appState("menu");
+              }
+            }}
+          >
             <LootMenu props={this.props.props} room={this.currentRoom}/>
           </Fade>
         );

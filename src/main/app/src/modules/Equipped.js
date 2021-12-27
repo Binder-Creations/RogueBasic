@@ -13,7 +13,7 @@ class Equipped extends React.Component {
   }
 
   render(){
-    if (this.props.props.pc["equipped"+this.props.slot]){
+    if (this.props.props.pc["equipped"+this.props.slot] && this.props.props.pc["equipped"+this.props.slot].id !== "00000000-0000-0000-0000-000000000000"){
       this.item = this.props.props.pc["equipped"+this.props.slot];
       this.itemProps = this.props.props.itemServices.getProps(this.item);
     } else {

@@ -3,7 +3,7 @@ import CombatUpdate from "./CombatUpdate";
 import MonsterServices from "./MonsterServices";
 
 class CombatEngine {
-  constructor(pc, pcServices, monsters, dungeonMod, positions){
+  constructor(pc, pcServices, monsters, dungeonMod, positions, appState){
     this.pc = JSON.parse(JSON.stringify(pc));
     this.monsters = JSON.parse(JSON.stringify(monsters));
     this.monsterServices = new MonsterServices(dungeonMod);
@@ -11,6 +11,7 @@ class CombatEngine {
     this.updateMonsterStats();
     this.combatUpdates = [];
     this.positions = positions;
+    this.appState = appState;
   }
 
   runRound(ability, position){
@@ -24,7 +25,7 @@ class CombatEngine {
       if(monster.boss || monster.miniboss || !monster.flags.stun){
         let monsterAbility = this.selectAbility(monster);
         console.log(monsterAbility)
-        AbilityServices["monster"+monsterAbility.type](monsterAbility, this.pc, monster, this.monsters, this.combatUpdates);
+        AbilityServices["monster"+monsterAbility.type](monsterAbility, this.pc, monster, this.monsters, this.combatUpdates, this.appState);
       } else {
         this.combatUpdates.push(new CombatUpdate("stun", "stun", monster.position, monster.name));
       }
@@ -48,7 +49,6 @@ class CombatEngine {
     this.pcServices.updateStats(this.pc);
     this.updateMonsterStats();
     AbilityServices.corpseCollector(this.pc, this.monsters, this.combatUpdates);
-    AbilityServices.pcCorpseCollector(this.pc, this.combatUpdates);
   }
 
   damageOverTime(entity){
@@ -59,6 +59,9 @@ class CombatEngine {
     if(entity.tempStats.bleed){
       entity.currentHealth = Math.max((entity.currentHealth + entity.tempStats.bleed), 0);
       this.combatUpdates.push(new CombatUpdate("Attack", "bleed", entity.position ? entity.position : "pc", "Bleed", entity.tempStats.bleed));
+      if(!entity.position){
+        AbilityServices.pcCorpseCollector(entity, "bleed", "bleed", entity.tempStats.bleed, false, this.appState);
+      }
     }
     if(entity.tempStats.burn){
       entity.currentHealth = Math.max((entity.currentHealth + entity.tempStats.burn), 0);

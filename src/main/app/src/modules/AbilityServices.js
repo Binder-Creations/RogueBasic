@@ -29,7 +29,7 @@ class AbilityServices {
     }
   }
 
-  static monsterAttack(ability, pc, monster, monsters, combatUpdates){
+  static monsterAttack(ability, pc, monster, monsters, combatUpdates, appState){
     for(let i = 0; i < ability.hits; i++){
       if(ability.selfFlags || ability.targetFlags){
         this.parseFlags(ability, monster, pc);
@@ -46,7 +46,9 @@ class AbilityServices {
       }
 
       combatUpdates.push(new CombatUpdate(ability.type, ability.name, "pc", monster.name, damage, crit, monster.flags.attackEnergy));
-      this.pcCorpseCollector(pc, combatUpdates);
+      if(this.pcCorpseCollector(pc, monster, ability, damage, crit, appState)){
+        break;
+      }
     }
   }
 
@@ -350,9 +352,9 @@ class AbilityServices {
     }
   }
 
-  static pcCorpseCollector(pc, combatUpdates){
+  static pcCorpseCollector(pc, monster, ability, damage, crit, appState){
     if(pc.currentHealth <= 0){
-      combatUpdates.push(new CombatUpdate("gameOver"));
+      appState("game-over", new CombatUpdate("gameOver", ability.name, "pc", monster.name, damage, crit));
     }
   }
 

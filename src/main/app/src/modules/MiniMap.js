@@ -113,7 +113,7 @@ class Minimap extends React.Component {
   Arrows(){
     let arrows = []
     let room = this.props.dungeon.floors[this.props.dungeon.currentFloor].rooms[this.props.dungeon.currentRoom];
-    if(this.props.props.combat){
+    if(this.props.props.combat || this.props.props.gameOver){
       arrows.push(<></>)
     } else {
       if(room.northRoomId){
