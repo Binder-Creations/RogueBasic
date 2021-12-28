@@ -8,12 +8,13 @@
 </head>
 <body>
 	<div class="spacer-l"></div>
-   	<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
+   	<img class ="title" th:src='@{/images/rogueBasicTitle.png}'>
  	<div class="spacer-xxl"></div>
  	<div class="formbox">
 		<p class="font-m" th:text="'Your Rogue Basic account has successfully been created, ' + ${name}"></p>  		
 		<p class="font-m">You will be redirected to the login screen in...</p> 
 		<p class ="font-red font-xs" id="counter">3</p>
 	</div>
+	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
 </body>
 </html>

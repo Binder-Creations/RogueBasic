@@ -22,7 +22,6 @@ public class Room {
 	private UUID southRoomId;
 	private UUID eastRoomId;
 	private UUID westRoomId;
-	private Trap trap;
 	private Map<UUID, Integer> loot;
 	private Set<Item> lootCache;
 	private Set<Monster> monsters;
@@ -136,14 +135,6 @@ public class Room {
 		this.westRoomId = westRoomId;
 	}
 
-	public Trap getTrap() {
-		return trap;
-	}
-
-	public void setTrap(Trap trap) {
-		this.trap = trap;
-	}
-
 	public Map<UUID, Integer> getLoot() {
 		return loot;
 	}
@@ -195,8 +186,7 @@ public class Room {
 	@Override
 	public int hashCode() {
 		return Objects.hash(boss, cleared, count, dungeonId, eastRoomId, floorId, id, loot, lootCache, miniboss,
-				monsters, northRoomId, southRoomId, stairsNext, stairsPrevious, trap, variant, westRoomId, xCoord,
-				yCoord);
+				monsters, northRoomId, southRoomId, stairsNext, stairsPrevious, variant, westRoomId, xCoord, yCoord);
 	}
 
 	@Override
@@ -214,8 +204,7 @@ public class Room {
 				&& Objects.equals(loot, other.loot) && Objects.equals(lootCache, other.lootCache)
 				&& miniboss == other.miniboss && Objects.equals(monsters, other.monsters)
 				&& Objects.equals(northRoomId, other.northRoomId) && Objects.equals(southRoomId, other.southRoomId)
-				&& stairsNext == other.stairsNext && stairsPrevious == other.stairsPrevious
-				&& Objects.equals(trap, other.trap) && variant == other.variant
+				&& stairsNext == other.stairsNext && stairsPrevious == other.stairsPrevious && variant == other.variant
 				&& Objects.equals(westRoomId, other.westRoomId) && xCoord == other.xCoord && yCoord == other.yCoord;
 	}
 
@@ -224,9 +213,9 @@ public class Room {
 		return "Room [count=" + count + ", id=" + id + ", floorId=" + floorId + ", dungeonId=" + dungeonId
 				+ ", variant=" + variant + ", xCoord=" + xCoord + ", yCoord=" + yCoord + ", stairsPrevious="
 				+ stairsPrevious + ", stairsNext=" + stairsNext + ", northRoomId=" + northRoomId + ", southRoomId="
-				+ southRoomId + ", eastRoomId=" + eastRoomId + ", westRoomId=" + westRoomId + ", trap=" + trap
-				+ ", loot=" + loot + ", lootCache=" + lootCache + ", monsters=" + monsters + ", miniboss=" + miniboss
-				+ ", boss=" + boss + ", cleared=" + cleared + "]";
+				+ southRoomId + ", eastRoomId=" + eastRoomId + ", westRoomId=" + westRoomId + ", loot=" + loot
+				+ ", lootCache=" + lootCache + ", monsters=" + monsters + ", miniboss=" + miniboss + ", boss=" + boss
+				+ ", cleared=" + cleared + "]";
 	}
 	
 }

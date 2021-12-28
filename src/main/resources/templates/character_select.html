@@ -11,7 +11,7 @@
 	</div>
 	<div class="center-aligner">
 		<div class="spacer-l"></div>   	
-	   	<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
+	   	<img class ="title" th:src='@{/images/rogueBasicTitle.png}' alt="title"/>
 	  	<div class="spacer-xl"></div>
 	  	<form action="#" th:action="@{/character_select}" method="post">
 			<div th:each="playercharacter: ${characters}">
@@ -19,9 +19,9 @@
 			 		<table>
 			 			<tr>
 			 				<td>
-			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Warrior'" th:src="@{/images/RogueWarriorIcon.png}"/>
-			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Rogue'" th:src="@{/images/RogueRogueIcon.png}"/>
-			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Wizard'" th:src="@{/images/RogueWizardIcon.png}"/>
+			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Warrior'" th:src="@{/images/warrior.png}"/>
+			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Rogue'" th:src="@{/images/rogue.png}"/>
+			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Wizard'" th:src="@{/images/wizard.png}"/>
 			 				</td>
 			 				<td class="spacer-cell"/>
 			 				<td th:text="'lv.'+${playercharacter.level}"/>
@@ -34,5 +34,6 @@
 			</div>
 		</form>
 	 </div>
+	 <img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
 </body>
 </html>

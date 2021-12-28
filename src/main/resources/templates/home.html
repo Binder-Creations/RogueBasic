@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div class="spacer-l"></div>
-   	<img class="title" th:src='@{/images/RogueBasicTitle.png}'>
+   	<img class="title" th:src='@{/images/rogueBasicTitle.png}'>
   	<div class="spacer-xl"></div>
  	<button class="btn-l font-l" th:if="${has_characters}" type="button" onclick="location.href='/character_select'">Character Select</button>
  	<div class="spacer-xs" th:if="${has_characters}"></div>
@@ -17,5 +17,6 @@
  	<div class="spacer-xs"></div>
  	<button class="btn-l font-l" type="button" onclick="location.href='/login?logout=true'">Logout</button>
 	<div class="spacer-s"></div>
+	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
 </body>
 </html>

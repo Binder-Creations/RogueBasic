@@ -76,6 +76,11 @@ class SpendSouls{
 	private int dexterityMetabonus;
 	private int intelligenceMetabonus;
 	private int currencyMetabonus;
+	private int conCost;
+	private int strCost;
+	private int dexCost;
+	private int intCost;
+	private int goldCost;
 	
 	public SpendSouls() {}
 	
@@ -87,8 +92,21 @@ class SpendSouls{
 		this.dexterityMetabonus = player.getDexterityMetabonus();
 		this.intelligenceMetabonus = player.getIntelligenceMetabonus();
 		this.currencyMetabonus = player.getCurrencyMetabonus();
+		this.conCost = calcCost(player.getConstitutionMetabonus());
+		this.strCost = calcCost(player.getStrengthMetabonus());
+		this.dexCost = calcCost(player.getDexterityMetabonus());
+		this.intCost = calcCost(player.getIntelligenceMetabonus());
+		this.goldCost = calcCost(player.getCurrencyMetabonus()/25);
 	}
 
+	private int calcCost(int attribute) {
+		return attribute == 0 
+			? 3
+			: attribute == 1
+				? 5
+				: attribute*5;
+	}
+	
 	public int getMetacurrency() {
 		return metacurrency;
 	}
@@ -136,4 +154,45 @@ class SpendSouls{
 	public void setCurrencyMetabonus(int currencyMetabonus) {
 		this.currencyMetabonus = currencyMetabonus;
 	}
+
+	public int getConCost() {
+		return conCost;
+	}
+
+	public void setConCost(int conCost) {
+		this.conCost = conCost;
+	}
+
+	public int getStrCost() {
+		return strCost;
+	}
+
+	public void setStrCost(int strCost) {
+		this.strCost = strCost;
+	}
+
+	public int getDexCost() {
+		return dexCost;
+	}
+
+	public void setDexCost(int dexCost) {
+		this.dexCost = dexCost;
+	}
+
+	public int getIntCost() {
+		return intCost;
+	}
+
+	public void setIntCost(int intCost) {
+		this.intCost = intCost;
+	}
+
+	public int getGoldCost() {
+		return goldCost;
+	}
+
+	public void setGoldCost(int goldCost) {
+		this.goldCost = goldCost;
+	}
+	
 }

@@ -31,7 +31,6 @@ public class RoomServices {
 	
 	public Set<Room> generate (Dungeon dungeon, Floor floor) {
 		ItemServices is = new ItemServices(session);
-		TrapServices ts = new TrapServices(session);
 		
 		Set<Room> rooms = new HashSet<>();
 		boolean stairsGenerated = false;
@@ -66,9 +65,7 @@ public class RoomServices {
 				genBossMiniboss(room, dungeon, floor.getLevel());
 				if(containsMonsters(room.isStairsPrevious(), room.isBoss(), room.isMiniboss(), dungeon.getChallengeRating()))
 					room.setMonsters(MonsterServices.generate(dungeon.getChallengeRating(), dungeon.getTheme(), floor.getLevel(), room.isBoss(), room.isMiniboss()));
-				if(containsTrap(room.getMonsters() != null, dungeon.getChallengeRating()))
-					room.setTrap(ts.generate(dungeon, floor.getLevel()));
-				if(containsItems(room.isBoss(), room.isMiniboss(), room.getMonsters() != null, room.getTrap() != null, dungeon.getChallengeRating()))
+				if(containsItems(room.isBoss(), room.isMiniboss(), room.getMonsters() != null, dungeon.getChallengeRating()))
 					is.generate(dungeon, room, floor.getLevel());
 				room.setVariant(ThreadLocalRandom.current().nextInt(1,5));
 				room.setCount(count++);
@@ -279,35 +276,23 @@ public class RoomServices {
 					? true
 					: miniboss
 						? true
-						: ThreadLocalRandom.current().nextInt(100) < 37 + challengeRating/2
+						: ThreadLocalRandom.current().nextInt(100) < 42 + challengeRating
 							? true
 							: false;
 	}
 	
-	private boolean containsTrap(boolean monsters, int challengeRating) {
-		return monsters
-				? false
-				: ThreadLocalRandom.current().nextInt(100) < 14 + challengeRating/2
-					? true
-					: false;
-	}
-	
-	private boolean containsItems(boolean boss, boolean miniboss, boolean monsters, boolean trap, int challengeRating) {
+	private boolean containsItems(boolean boss, boolean miniboss, boolean monsters, int challengeRating) {
 		return boss
 				? true
 				: miniboss
 					? true
 					: monsters
-						? ThreadLocalRandom.current().nextInt(100) < 49 + challengeRating/2
+						? ThreadLocalRandom.current().nextInt(100) < 45 + challengeRating
 							? true
 							: false
-						: trap
-							? ThreadLocalRandom.current().nextInt(100) < 34 + challengeRating/2
-								? true
-								: false
-							: ThreadLocalRandom.current().nextInt(100) < 19 + challengeRating/2
-								? true
-								: false;
+						: ThreadLocalRandom.current().nextInt(100) < 19 + challengeRating/2
+							? true
+							: false;
 	}
 
 

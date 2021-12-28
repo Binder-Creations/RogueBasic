@@ -22,7 +22,7 @@
 	</div>
 	<div class="center-aligner">    	
 	   	<div class="spacer-l"></div>
-	   	<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
+	   	<img class ="title" th:src='@{/images/rogueBasicTitle.png}'>
 	 	<div class="spacer-xl"></div>
   		<form class="formbox" action="#" th:action="@{/new_character}" th:object="${newCharacter}" method="post">
 		    <p class="hilight-l font-xl">Create Your Adventurer</p>
@@ -32,15 +32,27 @@
 			<ul class="radio-parent">
 				<li>
 					<input type="radio" id="warrior" name="class_selection" value="Warrior" th:field="*{characterClass}" required/>
-					<label class=font-xs for="warrior">⚔️ Warrior 🛡️</label>
+					<label class=font-xs for="warrior">
+						<img class="medium-icon" th:src='@{/images/warrior.png}'>
+						Warrior
+						<img class="medium-icon" th:src='@{/images/warrior.png}'>
+					</label>
 				</li>
 				<li>
 					<input type="radio" id="rogue" name="class_selection"  value="Rogue" th:field="*{characterClass}" required/>
-					<label class=font-xs for="rogue">🔪 Rogue 🏹</label>
+					<label class=font-xs for="rogue">
+						<img class="medium-icon" th:src='@{/images/rogue.png}'>
+						Rogue
+						<img class="medium-icon" th:src='@{/images/rogue.png}'>
+					</label>
 				</li>
 				<li>
 					<input type="radio" id="wizard" name="class_selection"  value="Wizard" th:field="*{characterClass}" required/>
-					<label class=font-xs for="wizard">🔮 Wizard ⚗️</label>
+					<label class=font-xs for="wizard">
+						<img class="medium-icon" th:src='@{/images/wizard.png}'>
+						Wizard
+						<img class="medium-icon" th:src='@{/images/wizard.png}'>
+					</label>
 				</li>
 			</ul>
 			<div class="spacer-m"></div>
@@ -66,7 +78,10 @@
 	                              			<button class="down font-xxxs" type="button" onclick="decrement('AttributeCon')" value="AttributeCon">▼</button>
 	                            		</td>
 	                            		<td>
-	                            			<button th:if="${newCharacter.constitutionMetabonus > 0}" class="circle-bonus font-xxs" type="button" th:text="'+'+${newCharacter.constitutionMetabonus}+' (👻)'"></button>
+	                            			<button th:if="${newCharacter.constitutionMetabonus > 0}" class="circle-bonus font-xxs" type="button">
+	                            				<span th:text="'+'+${newCharacter.constitutionMetabonus}"></span>
+			 									<img class="small-icon" th:src='@{/images/soul.png}'>
+	                            			</button>
 	                            		</td>
 	                          		</tr>
 	                        	</tbody>
@@ -89,7 +104,10 @@
 	                              			<button class="down font-xxxs" type="button" onclick="decrement('AttributeStr')" value="AttributeStr">▼</button>
 	                            		</td>
 	                            		<td>
-	                            			<button th:if="${newCharacter.strengthMetabonus > 0}" class="circle-bonus font-xxs" type="button" th:text="'+'+${newCharacter.strengthMetabonus}+' (👻)'"></button>
+	                            			<button th:if="${newCharacter.strengthMetabonus > 0}" class="circle-bonus font-xxs" type="button">
+	                            				<span th:text="'+'+${newCharacter.strengthMetabonus}"></span>
+			 									<img class="small-icon" th:src='@{/images/soul.png}'>	                            			
+	                            			</button>
 	                            		</td>
 	                          		</tr>
 	                        	</tbody>
@@ -112,7 +130,10 @@
 	                              			<button class="down font-xxxs" type="button" onclick="decrement('AttributeDex')" value="AttributeDex">▼</button>
 	                            		</td>
 	                            		<td>
-	                            			<button th:if="${newCharacter.dexterityMetabonus > 0}" class="circle-bonus font-xxs" type="button" th:text="'+'+${newCharacter.dexterityMetabonus}+' (👻)'"></button>
+	                            			<button th:if="${newCharacter.dexterityMetabonus > 0}" class="circle-bonus font-xxs" type="button">
+	                            				<span th:text="'+'+${newCharacter.dexterityMetabonus}"></span>
+			 									<img class="small-icon" th:src='@{/images/soul.png}'>
+	                            			</button>
 	                            		</td>
 	                          		</tr>
 	                        	</tbody>
@@ -135,7 +156,10 @@
 	                              			<button class="down font-xxxs" type="button" onclick="decrement('AttributeInt')" value="AttributeInt">▼</button>
 	                            		</td>
 	                            		<td>
-	                            			<button th:if="${newCharacter.intelligenceMetabonus > 0}" class="circle-bonus font-xxs" type="button" th:text="'+'+${newCharacter.intelligenceMetabonus}+' (👻)'"></button>
+	                            			<button th:if="${newCharacter.intelligenceMetabonus > 0}" class="circle-bonus font-xxs" type="button">
+	                            				<span th:text="'+'+${newCharacter.intelligenceMetabonus}"></span>
+			 									<img class="small-icon" th:src='@{/images/soul.png}'>	                            			
+	                            			</button>
 	                            		</td>
 	                          		</tr>
 	                        	</tbody>
@@ -145,10 +169,15 @@
 				</tbody>
 			</table>
 			<div class="spacer-xxs"></div>
-			<button th:if="${newCharacter.currencyMetabonus > 0}" class="circle-bonus font-s" type="button" th:text="'+'+${newCharacter.currencyMetabonus}+'💰 (👻)'"></button>
+			<button th:if="${newCharacter.currencyMetabonus > 0}" class="circle-bonus font-s" type="button">
+            	<span th:text="'+'+${newCharacter.currencyMetabonus}"></span>
+				<img class="small-icon" th:src='@{/images/gold.png}'>
+				<img class="small-icon" th:src='@{/images/soul.png}'>
+			</button>
 			<div class="spacer-m"></div>
 		    <button class="btn-m font-s" type="submit">Venture Forth</button>
 		</form>
 	</div>
+	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
 </body>
 </html>

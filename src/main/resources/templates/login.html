@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div class="spacer-l"></div>
-   	<img class ="title" th:src='@{/images/RogueBasicTitle.png}'>
+   	<img class ="title" th:src='@{/images/rogueBasicTitle.png}'>
  	<div class="spacer-xxl"></div>
  	<form action="#" th:action="@{/login}" th:object="${login}" method="post">
 	    <div class="formbox">
@@ -29,5 +29,6 @@
 			<span class="font-xs"><a th:href="@{/register}">New user? Create account!</a></span>
 		</div>
 	</form>
+	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
 </body>
 </html>

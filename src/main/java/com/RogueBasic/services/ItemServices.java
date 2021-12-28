@@ -45,13 +45,13 @@ public class ItemServices {
 	}
 	
 	public void generate(Dungeon dungeon, Room room, int level){
-		int lootValue = genLV(dungeon.getChallengeRating(), level, dungeon.getPrefixMod(), room.isMiniboss(), room.isBoss(), room.getMonsters() != null, room.getTrap() != null);	
+		int lootValue = genLV(dungeon.getChallengeRating(), level, room.isMiniboss(), room.isBoss(), room.getMonsters() != null);	
 		if (lootValue == 0)
 			return;
-		genLoot(room, lootValue, dungeon.getChallengeRating(), room.isMiniboss(), room.isBoss());
+		genLoot(room, lootValue, dungeon.getChallengeRating(), dungeon.getPrefixMod(), room.isMiniboss(), room.isBoss());
 	}
 	
-	private int genLV(int challengeRating, int level, String prefixMod, boolean miniboss, boolean boss, boolean monsters,boolean trapped) {
+	private int genLV(int challengeRating, int level, boolean miniboss, boolean boss, boolean monsters) {
 		int modifier = 100*(2+(challengeRating/2)+(level));
 		int base = boss 
 				? challengeRating*450
@@ -59,17 +59,12 @@ public class ItemServices {
 					? challengeRating*300
 					: monsters
 						? challengeRating*200
-						: trapped
-							? challengeRating*150
-							:challengeRating*75;
+						: challengeRating*100;
 		int lootValue = base + ThreadLocalRandom.current().nextInt(modifier);
-		if(prefixMod != null)
-			if (prefixMod.substring(0, 4).equals("loot"))
-				lootValue = (lootValue*(100 + Integer.parseInt(prefixMod.substring(5))))/100;
 		return lootValue > 0 ? lootValue : 0;
 	}
 	
-	private void genLoot(Room room, int lootValue, int challengeRating, boolean miniboss, boolean boss) {
+	private void genLoot(Room room, int lootValue, int challengeRating, String prefixMod, boolean miniboss, boolean boss) {
 		
 		Map<UUID, Integer> loot = new HashMap<>();
 		Set<Item> lootCache = new HashSet<>();
@@ -83,6 +78,18 @@ public class ItemServices {
 		if(boss) {
 			loot.put(soul.getId(), 3);
 			lootCache.add(soul);
+		}
+		
+		int goldMod = 0;
+		int equipmentMod = 0;
+		if(prefixMod != null) {
+			String[] components = prefixMod.split("-");
+			if (components[0].equals("gold")) {
+				goldMod = Integer.parseInt(components[1]);
+			}
+			if (components[0].equals("equipment")) {
+				equipmentMod = Integer.parseInt(components[1]);
+			}
 		}
 		
 		int averageCost = (int)Math.round(Math.pow(challengeRating*5, 0.65)*10);
@@ -119,15 +126,23 @@ public class ItemServices {
 					? loot.get(gold.getId())
 					: 0;
 				int addedGold = ThreadLocalRandom.current().nextInt(averageCost/2, averageCost*2);
-				loot.put(gold.getId(), goldCount+addedGold);
-				lootCache.add(gold);
 				lootValue -= addedGold;
-				
+				loot.put(gold.getId(), goldCount+(addedGold*(100+goldMod)/100));
+				lootCache.add(gold);	
 			}
 			if(roll >= 10) {
-				Item equipment = genEquipment(allTypes, challengeRating);
-				loot.put(equipment.getId(), 1);
-				lootCache.add(equipment);
+				int equipmentMultiplier = 1;
+				int doubleEquipmentRoll = ThreadLocalRandom.current().nextInt(100) + 1;
+				if(doubleEquipmentRoll > 100 - equipmentMod) {
+					equipmentMultiplier = 2;
+				}
+				
+				Item equipment = null;
+				for(int i = 0; i < equipmentMultiplier; i++) {
+					equipment = genEquipment(allTypes, challengeRating);
+					loot.put(equipment.getId(), 1);
+					lootCache.add(equipment);
+				}
 				lootValue -= equipment.getCost();
 			}
 

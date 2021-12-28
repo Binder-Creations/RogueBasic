@@ -155,32 +155,32 @@ public class DungeonServices {
 		int roll = ThreadLocalRandom.current().nextInt(11);
 			switch(roll) {
 				case 0:
-					dungeon.setPrefixMod("traps-10");
+					dungeon.setPrefixMod("gold-10");
 					name.append(components.get(0)[ThreadLocalRandom.current().nextInt(components.get(0).length)]);
 					description.append(components.get(6)[ThreadLocalRandom.current().nextInt(components.get(6).length)]);
 					break;
 				case 1:
-					dungeon.setPrefixMod("traps-20");
+					dungeon.setPrefixMod("gold-20");
 					name.append(components.get(0)[ThreadLocalRandom.current().nextInt(components.get(0).length)]);
 					description.append(components.get(6)[ThreadLocalRandom.current().nextInt(components.get(6).length)]);
 					break;
 				case 2:
-					dungeon.setPrefixMod("traps-30");
+					dungeon.setPrefixMod("gold-30");
 					name.append(components.get(0)[ThreadLocalRandom.current().nextInt(components.get(0).length)]);
 					description.append(components.get(6)[ThreadLocalRandom.current().nextInt(components.get(6).length)]);
 					break;
 				case 3:
-					dungeon.setPrefixMod("loot-10");
+					dungeon.setPrefixMod("equipment-10");
 					name.append(components.get(1)[ThreadLocalRandom.current().nextInt(components.get(1).length)]);
 					description.append(components.get(7)[ThreadLocalRandom.current().nextInt(components.get(7).length)]);
 					break;
 				case 4:
-					dungeon.setPrefixMod("loot-20");
+					dungeon.setPrefixMod("equipment-20");
 					name.append(components.get(1)[ThreadLocalRandom.current().nextInt(components.get(1).length)]);
 					description.append(components.get(7)[ThreadLocalRandom.current().nextInt(components.get(7).length)]);
 					break;
 				case 5:
-					dungeon.setPrefixMod("loot-30");
+					dungeon.setPrefixMod("equipment-30");
 					name.append(components.get(1)[ThreadLocalRandom.current().nextInt(components.get(1).length)]);
 					description.append(components.get(7)[ThreadLocalRandom.current().nextInt(components.get(7).length)]);
 					break;
