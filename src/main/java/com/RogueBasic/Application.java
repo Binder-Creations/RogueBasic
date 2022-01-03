@@ -1,5 +1,6 @@
 package com.RogueBasic;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +22,7 @@ import com.datastax.oss.driver.api.core.CqlSession;
 public class Application {
 	private static final Logger log = LogManager.getLogger(Application.class);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NoSuchAlgorithmException{
 		SpringApplication.run(Application.class, args);
 	}
 
@@ -31,13 +32,8 @@ public class Application {
 			System.out.println("Application started.");
 			try {
 				CqlSession service = CassandraConnector.connect();
-				CassandraGC gc = new CassandraGC();
-				gc.start();
-//				PlayerDao pdao = new PlayerDao(service);
-//				Player p = new Player("Test5000", "supreme");
-//				p.setMetacurrency(5000);
-//				pdao.firstSave(p);
-//				System.out.println(pdao.findById(p.getId()).toString());
+//				CassandraGC gc = new CassandraGC();
+//				gc.start();
 				System.out.println("Connected to Cassandra.");
 			}catch(Exception e) {
 				e.printStackTrace();

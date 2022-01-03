@@ -26,16 +26,9 @@ public class CassandraUtilities {
 	public void initialize() {
 		//creates the tables required for our database, from the Tables.rbt document
 		log.trace("CassandraUtilities.initialize() calling RogueUtilities.readFileToList() for Tables.rbt");
-		ru.readFileToList("source/usertypes.rbt")
-		  .forEach((s)->session.execute("CREATE TYPE IF NOT EXISTS " + this.keyspace + "." + s));
-		log.debug("UDTs created");
 		ru.readFileToList("source/tables.rbt")
 		  .forEach((s)->session.execute("CREATE TABLE IF NOT EXISTS " + this.keyspace + "." + s));
 		log.debug("Database tables created");
-	}
-	
-	public void populate() {
-		//no longer necessary?
 	}
 
 	public void dropAllTables() {
@@ -48,14 +41,6 @@ public class CassandraUtilities {
 			  if(m.find())
 				  session.execute("DROP TABLE IF EXISTS "  + this.keyspace + "." + m.group(1));});
 		log.debug("Database tables dropped");
-		List<String> usertypes = ru.readFileToList("source/usertypes.rbt");
-		Collections.reverse(usertypes);
-		usertypes
-		  .forEach((s)->{
-			  Matcher m = name.matcher(s);
-			  if(m.find())
-				  session.execute("DROP TYPE IF EXISTS " + this.keyspace + "." + m.group(1));});
-		log.debug("Database types dropped");
 	}
 	
 }

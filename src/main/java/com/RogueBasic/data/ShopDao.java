@@ -1,5 +1,6 @@
 package com.RogueBasic.data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ import org.springframework.data.cassandra.core.query.Criteria;
 import org.springframework.data.cassandra.core.query.Query;
 
 import com.RogueBasic.beans.Shop;
+import com.RogueBasic.beans.ShopAWS;
 import com.datastax.oss.driver.api.core.CqlSession;
 
 public class ShopDao {
@@ -29,7 +31,7 @@ public class ShopDao {
 	public Shop findById(UUID id) {
 		log.trace("ShopDao.findById() calling CassandraOperations.selectOne() and returning Shop");
 		try {
-			return template.selectOne(Query.query(Criteria.where("id").is(id)), Shop.class);
+			return new Shop(template.selectOne(Query.query(Criteria.where("id").is(id)), ShopAWS.class));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -39,7 +41,12 @@ public class ShopDao {
 	public List<Shop> getAll() {
 		log.trace("ShopDao.findById() calling CassandraOperations.select() and returning List<Shop>");
 		try {
-			return template.select("select * from shop", Shop.class);
+			List<ShopAWS> shopsAWS = template.select("select * from shop", ShopAWS.class);
+			List<Shop> shops = new ArrayList<>();
+			for(ShopAWS shopAWS: shopsAWS) {
+				shops.add(new Shop(shopAWS));
+			}
+			return shops;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -49,7 +56,7 @@ public class ShopDao {
 	public boolean save(Shop shop) {
 		log.trace("ShopDao.findById() calling CassandraOperations.insert()");
 		try {
-			template.insert(shop);
+			template.insert(new ShopAWS(shop));
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,7 +67,7 @@ public class ShopDao {
 	public boolean deleteById(UUID id) {
 		log.trace("ShopDao.save() calling CassandraOperations.delete()");
 		try {
-			template.delete(Query.query(Criteria.where("id").is(id)), Shop.class);
+			template.delete(Query.query(Criteria.where("id").is(id)), ShopAWS.class);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,6 +76,6 @@ public class ShopDao {
 	}
 	
 	public void truncate() {
-		template.truncate(Shop.class);
+		template.truncate(ShopAWS.class);
 	}
 }

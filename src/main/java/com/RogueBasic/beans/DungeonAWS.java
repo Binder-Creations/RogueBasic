@@ -4,57 +4,53 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Table
+public class DungeonAWS {
 
-public class Dungeon {
-	
-	private UUID id;
+	@PrimaryKey private UUID id;
 	private String name;
 	private String description;
 	private String theme;
 	private String prefixMod;
 	private String postfixMod;
 	private int floorCount;
-	private Set<Floor> floors;
+	private Set<String> floors;
 	private int challengeRating;
 	private boolean miniboss;
 	private boolean boss;
 	private int reward;
-	private Set<Item> rewardCache;
+	private Set<String> rewardCache;
 	private boolean questCompleted;
 	private boolean rewardClaimed;
 	private int currentFloor;
 	private int currentRoom;
 	
-	public Dungeon() {}
+	public DungeonAWS() {}
 	
-	public Dungeon(DungeonAWS dungeon) {
+	public DungeonAWS(Dungeon dungeon) {
 		ObjectMapper mapper = new ObjectMapper();
-		Set<Floor> floors = new HashSet<>();
+		Set<String> floors = new HashSet<>();
 		if(dungeon.getFloors() != null) {
-			for(String floor: dungeon.getFloors()) {
+			for(Floor floor: dungeon.getFloors()) {
 				try {
-					floors.add(mapper.readValue(floor, Floor.class));
-				} catch (JsonMappingException e) {
-					e.printStackTrace();
+					floors.add(mapper.writeValueAsString(floor));
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-		Set<Item> rewardCache = new HashSet<>();
+		Set<String> rewardCache = new HashSet<>();
 		if(dungeon.getRewardCache() != null) {
-			for(String item: dungeon.getRewardCache()) {
+			for(Item item: dungeon.getRewardCache()) {
 				try {
-					rewardCache.add(mapper.readValue(item, Item.class));
-				} catch (JsonMappingException e) {
-					e.printStackTrace();
+					rewardCache.add(mapper.writeValueAsString(item));
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
 				}
@@ -83,35 +79,35 @@ public class Dungeon {
 	public UUID getId() {
 		return id;
 	}
-	
+
 	public void setId(UUID id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public String getTheme() {
 		return theme;
 	}
-	
+
 	public void setTheme(String theme) {
 		this.theme = theme;
 	}
-	
+
 	public String getPrefixMod() {
 		return prefixMod;
 	}
@@ -131,39 +127,39 @@ public class Dungeon {
 	public int getFloorCount() {
 		return floorCount;
 	}
-	
+
 	public void setFloorCount(int floorCount) {
 		this.floorCount = floorCount;
 	}
-	
-	public Set<Floor> getFloors() {
+
+	public Set<String> getFloors() {
 		return floors;
 	}
 
-	public void setFloors(Set<Floor> floors) {
+	public void setFloors(Set<String> floors) {
 		this.floors = floors;
 	}
 
 	public int getChallengeRating() {
 		return challengeRating;
 	}
-	
+
 	public void setChallengeRating(int challengeRating) {
 		this.challengeRating = challengeRating;
 	}
-	
+
 	public boolean isMiniboss() {
 		return miniboss;
 	}
-	
+
 	public void setMiniboss(boolean miniboss) {
 		this.miniboss = miniboss;
 	}
-	
+
 	public boolean isBoss() {
 		return boss;
 	}
-	
+
 	public void setBoss(boolean boss) {
 		this.boss = boss;
 	}
@@ -176,11 +172,11 @@ public class Dungeon {
 		this.reward = reward;
 	}
 
-	public Set<Item> getRewardCache() {
+	public Set<String> getRewardCache() {
 		return rewardCache;
 	}
 
-	public void setRewardCache(Set<Item> rewardCache) {
+	public void setRewardCache(Set<String> rewardCache) {
 		this.rewardCache = rewardCache;
 	}
 
@@ -221,7 +217,7 @@ public class Dungeon {
 		return Objects.hash(boss, challengeRating, currentFloor, currentRoom, description, floorCount, floors, id,
 				miniboss, name, postfixMod, prefixMod, questCompleted, reward, rewardCache, rewardClaimed, theme);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -230,7 +226,7 @@ public class Dungeon {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Dungeon other = (Dungeon) obj;
+		DungeonAWS other = (DungeonAWS) obj;
 		return boss == other.boss && challengeRating == other.challengeRating && currentFloor == other.currentFloor
 				&& currentRoom == other.currentRoom && Objects.equals(description, other.description)
 				&& floorCount == other.floorCount && Objects.equals(floors, other.floors)
@@ -240,16 +236,15 @@ public class Dungeon {
 				&& Objects.equals(rewardCache, other.rewardCache) && rewardClaimed == other.rewardClaimed
 				&& Objects.equals(theme, other.theme);
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Dungeon [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme
+		return "DungeonAWS [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme
 				+ ", prefixMod=" + prefixMod + ", postfixMod=" + postfixMod + ", floorCount=" + floorCount + ", floors="
 				+ floors + ", challengeRating=" + challengeRating + ", miniboss=" + miniboss + ", boss=" + boss
 				+ ", reward=" + reward + ", rewardCache=" + rewardCache + ", questCompleted=" + questCompleted
 				+ ", rewardClaimed=" + rewardClaimed + ", currentFloor=" + currentFloor + ", currentRoom=" + currentRoom
 				+ "]";
 	}
-	
 	
 }
