@@ -32,8 +32,8 @@ public class Application {
 			System.out.println("Application started.");
 			try {
 				CqlSession service = CassandraConnector.connect();
-//				CassandraGC gc = new CassandraGC();
-//				gc.start();
+				CassandraGC gc = new CassandraGC();
+				gc.start();
 				System.out.println("Connected to Cassandra.");
 			}catch(Exception e) {
 				e.printStackTrace();

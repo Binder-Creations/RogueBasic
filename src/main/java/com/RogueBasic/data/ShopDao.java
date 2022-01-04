@@ -41,7 +41,7 @@ public class ShopDao {
 	public List<Shop> getAll() {
 		log.trace("ShopDao.findById() calling CassandraOperations.select() and returning List<Shop>");
 		try {
-			List<ShopAWS> shopsAWS = template.select("select * from shop", ShopAWS.class);
+			List<ShopAWS> shopsAWS = template.select("select * from shopAWS", ShopAWS.class);
 			List<Shop> shops = new ArrayList<>();
 			for(ShopAWS shopAWS: shopsAWS) {
 				shops.add(new Shop(shopAWS));

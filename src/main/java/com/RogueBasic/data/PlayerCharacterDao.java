@@ -41,7 +41,7 @@ public class PlayerCharacterDao {
 	public List<PlayerCharacter> getAll() {
 		log.trace("PlayerCharacterDao.findById() calling CassandraOperations.select() and returning List<PlayerCharacter>");
 		try {
-			List<PlayerCharacterAWS> playerCharactersAWS = template.select("select * from playerCharacter", PlayerCharacterAWS.class);
+			List<PlayerCharacterAWS> playerCharactersAWS = template.select("select * from playerCharacterAWS", PlayerCharacterAWS.class);
 			List<PlayerCharacter> playerCharacters = new ArrayList<>();
 			for(PlayerCharacterAWS playerCharacterAWS: playerCharactersAWS) {
 				playerCharacters.add(new PlayerCharacter(playerCharacterAWS));

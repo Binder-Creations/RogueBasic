@@ -41,7 +41,7 @@ public class DungeonDao {
 	public List<Dungeon> getAll() {
 		log.trace("DungeonDao.findById() calling CassandraOperations.select() and returning List<Dungeon>");
 		try {
-			List<DungeonAWS> dungeonsAWS = template.select("select * from dungeon", DungeonAWS.class);
+			List<DungeonAWS> dungeonsAWS = template.select("select * from dungeonAWS", DungeonAWS.class);
 			List<Dungeon> dungeons = new ArrayList<>();
 			for(DungeonAWS dungeonAWS: dungeonsAWS) {
 				dungeons.add(new Dungeon(dungeonAWS));
