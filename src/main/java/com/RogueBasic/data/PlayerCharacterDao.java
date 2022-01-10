@@ -1,5 +1,6 @@
 package com.RogueBasic.data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ import org.springframework.data.cassandra.core.query.Criteria;
 import org.springframework.data.cassandra.core.query.Query;
 
 import com.RogueBasic.beans.PlayerCharacter;
+import com.RogueBasic.beans.PlayerCharacterAWS;
 import com.datastax.oss.driver.api.core.CqlSession;
 
 public class PlayerCharacterDao {
@@ -29,7 +31,7 @@ public class PlayerCharacterDao {
 	public PlayerCharacter findById(UUID id) {
 		log.trace("PlayerCharacterDao.findById() calling CassandraOperations.selectOne() and returning PlayerCharacter");
 		try {
-			return template.selectOne(Query.query(Criteria.where("id").is(id)), PlayerCharacter.class);
+			return new PlayerCharacter(template.selectOne(Query.query(Criteria.where("id").is(id)), PlayerCharacterAWS.class));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -39,7 +41,12 @@ public class PlayerCharacterDao {
 	public List<PlayerCharacter> getAll() {
 		log.trace("PlayerCharacterDao.findById() calling CassandraOperations.select() and returning List<PlayerCharacter>");
 		try {
-			return template.select("select * from playercharacter", PlayerCharacter.class);
+			List<PlayerCharacterAWS> playerCharactersAWS = template.select("select * from playerCharacterAWS", PlayerCharacterAWS.class);
+			List<PlayerCharacter> playerCharacters = new ArrayList<>();
+			for(PlayerCharacterAWS playerCharacterAWS: playerCharactersAWS) {
+				playerCharacters.add(new PlayerCharacter(playerCharacterAWS));
+			}
+			return playerCharacters;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -49,7 +56,7 @@ public class PlayerCharacterDao {
 	public boolean save(PlayerCharacter playerCharacter) {
 		log.trace("PlayerCharacterDao.findById() calling CassandraOperations.insert()");
 		try {
-			template.insert(playerCharacter);
+			template.insert(new PlayerCharacterAWS(playerCharacter));
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,7 +67,7 @@ public class PlayerCharacterDao {
 	public boolean deleteById(UUID id) {
 		log.trace("PlayerCharacterDao.deleteById() calling CassandraOperations.delete()");
 		try {
-			template.delete(Query.query(Criteria.where("id").is(id)), PlayerCharacter.class);
+			template.delete(Query.query(Criteria.where("id").is(id)), PlayerCharacterAWS.class);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,6 +76,6 @@ public class PlayerCharacterDao {
 	}
 	
 	public void truncate() {
-		template.truncate(PlayerCharacter.class);
+		template.truncate(PlayerCharacterAWS.class);
 	}
 }

@@ -40,7 +40,7 @@ class App extends React.Component {
         .then(response => response.json())
         .then(data => {
           console.log(data)
-          this.setStateCustom({pc: data})
+          this.setStateCustom({pc: this.sortPC(data)})
         });
       } catch(e) {
         this.setStateCustom({characterId: null, playerId: null})
@@ -51,6 +51,7 @@ class App extends React.Component {
     this.appState = this.appState.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
     this.sortDungeon = this.sortDungeon.bind(this);
+    this.sortPC = this.sortPC.bind(this);
 
     this.props.props = {
       pc: this.state.pc,
@@ -304,6 +305,11 @@ class App extends React.Component {
       dungeon.floors.forEach(floor=>floor.rooms.sort((a,b) => (a.count < b.count) ? -1 : (b.count < a.count ? 1 : 0)));
       dungeon.floors.sort((a,b) => (a.level < b.level) ? -1 : (b.level < a.level ? 1 : 0));
       return dungeon;
+    }
+
+    sortPC(pc){
+      pc.abilities.sort((a,b) => (a.level < b.level) ? -1 : (b.level < a.level ? 1 : 0));
+      return pc;
     }
 
     async save(types, objects, state){

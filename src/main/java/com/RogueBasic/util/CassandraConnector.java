@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.cassandra.core.CassandraOperations;
 
+import com.RogueBasic.CassandraConfig;
 import com.datastax.oss.driver.api.core.CqlSession;
 
 public class CassandraConnector {
@@ -13,7 +14,8 @@ public class CassandraConnector {
     
     public static CqlSession connect() {
     	try {
-    		session = CqlSession.builder().withKeyspace("rogue").build();
+    		CassandraConfig cc = new CassandraConfig();
+    		session = cc.session();
     		return session;
     	} catch (Exception e) {
     		e.printStackTrace();

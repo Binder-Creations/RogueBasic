@@ -50,9 +50,7 @@
       	-ms-transform: translateY(-50%);
 			}
 			.background {
-				max-height: 100%;
-				max-width: 100%;
-				width: auto;
+				width: 100%;
 				height: auto;
 				display:block;
 			}
@@ -1197,7 +1195,7 @@
 			transition: opacity 0.3s;
 			z-index: 9;
 		}
-		.skill-tooltip-box{
+		.ability-tooltip-box{
 			position: absolute;
 			visibility: hidden;
 			bottom:100%;
@@ -1205,15 +1203,22 @@
 			transition: visibility 0s linear 0s;
 			z-index: 9;
 		}
-		.item-tooltip *, .skill-toopltip * {
+		.item-tooltip *, .ability-toopltip * {
 			pointer-events: none
 		}
-		.item-tooltip:hover .item-tooltip-box{
+		.item-tooltip:hover .item-tooltip-box {
 			visibility: visible;
 		}
-		.skill-tooltip:hover .skill-tooltip-box{
+		.ability-tooltip:hover .ability-tooltip-box {
 			visibility: visible;
 			transition: visibility 0.3s linear 1s;
+		}
+		.ability-tooltip-target {
+			position: absolute;
+			left: 30.2857%;
+			top: 14.7619%;
+			width: 39.4286%;
+			height: 11.2381%;
 		}
 
 		.top-left{
@@ -1321,7 +1326,7 @@
 			height: 6.0%;
 			font-size: 62.5%;
 		}
-		.skill-tooltip-cost{
+		.ability-tooltip-cost{
 			position: absolute;
 			left: 12.8571%;  
 			top: 85.9048%;   
@@ -1349,15 +1354,15 @@
 			color:#000000;
 			font-size: 80%;
 		}
-		.skill-tooltip-requirement{
+		.ability-tooltip-requirement{
 			position: absolute;
-			left: 21.7143%;
-			top: 11.6667%;
-			width: 56.5714%;
+			left: 21.7143%;  
+			top: 69.1667%;   
+			width: 56.5714%; 
 			height: 11.4286%;
 			color:#920000;
 		}
-		.skill-tooltip-requirement p{
+		.ability-tooltip-requirement p{
 			font-size: 75%;
 		}
 		.item-tooltip-statbox{

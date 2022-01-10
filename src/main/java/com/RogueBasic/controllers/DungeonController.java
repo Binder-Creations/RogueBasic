@@ -28,7 +28,10 @@ public class DungeonController {
     	DungeonServices ds = new DungeonServices(CassandraConnector.getSession());
     	DungeonDao dDao = new DungeonDao(CassandraConnector.getSession());
     	Dungeon dungeon = dDao.findById(UUID.fromString(id));
-    	return dungeon.getFloors() != null ? dungeon : ds.addFloors(dungeon);
+    	if(dungeon.getFloors() == null || dungeon.getFloors().size() == 0) {
+    		return ds.addFloors(dungeon);
+    	}
+    	return dungeon;
     }
 	
 	//returns a list of 3 dungeon shells for use on the quest board

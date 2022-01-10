@@ -2,12 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link rel="icon" th:href="@{/images/favicon.ico}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="application-name" content="Rogue Basic"/>
+    <meta name="author" content="BinderCreations"/>
+    <meta name="description" content="Simple loot-filled dungeon crawler RPG."/>
+    <link rel="apple-touch-icon" th:href="@{/images/logo192.png}" />
+    <link rel="manifest" th:href="@{/images/manifest.json}" />
 	<title>Infuse Future Adventurers with Soul-Power!</title>
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript" th:src="@{/scripts/postReload.js}"></script>
 </head>
 <body>
+	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
 	<div class="right-aligner">
 		<button class="btn-home font-s"  onclick="location.href='/home'"><p>🏘</p></button>
 	</div>
@@ -96,7 +105,10 @@
 		 	</button>
 		 	<button class="btn-l-faded font-l" th:unless="${spendSouls.intCost < spendSouls.metacurrency}" >
 		 		<div class="flex">
-		 			<p class="left font-red" th:text="${spendSouls.intCost}+'👻:'"></p>
+			 		<div class="left font-red">
+			 			<span th:text="${spendSouls.intCost}"></span>
+			 			<img class="small-icon" th:src='@{/images/soul.png}'>
+			 		</div>
 		 			<p class="center">+1 Starting Intelligence</p>
 		 		</div>
 		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.intelligenceMetabonus}"></p>
@@ -125,6 +137,5 @@
 			<div class="spacer-s"></div>
 		</div>
 	</div>
-	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
 </body>
 </html>

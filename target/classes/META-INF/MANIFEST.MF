@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Build-Jdk-Spec: 13
 Implementation-Title: RogueBasic
-Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Version: 0.9.1-SNAPSHOT
 Created-By: Maven Integration for Eclipse
 

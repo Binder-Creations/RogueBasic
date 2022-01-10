@@ -2,6 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link rel="icon" th:href="@{/images/favicon.ico}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="application-name" content="Rogue Basic"/>
+    <meta name="author" content="BinderCreations"/>
+    <meta name="description" content="Simple loot-filled dungeon crawler RPG."/>
+    <link rel="apple-touch-icon" th:href="@{/images/logo192.png}" />
+    <link rel="manifest" th:href="@{/images/manifest.json}" />
 	<title>Create a New Adventurer!</title>
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
     <script type="text/javascript" th:src="@{/scripts/statCounters.js}"></script>
@@ -17,6 +25,7 @@
     </style>
 </head>
 <body onload="intializeAttributes('attribute')">
+	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
 	<div class="right-aligner">
 		<button class="btn-home font-s" type="button" onclick="location.href='/home'"><p>🏘</p></button>
 	</div>
@@ -27,7 +36,7 @@
   		<form class="formbox" action="#" th:action="@{/new_character}" th:object="${newCharacter}" method="post">
 		    <p class="hilight-l font-xl">Create Your Adventurer</p>
 		    <div class="spacer-s"></div>
-			<input type="text" class="charactername" placeholder="Enter Character Name" th:field="*{name}" required>
+			<input type="text" class="charactername" style="font-size: 150%" placeholder="Enter Character Name" th:field="*{name}" required>
 			<div class="spacer-s"></div>
 			<ul class="radio-parent">
 				<li>
@@ -178,6 +187,5 @@
 		    <button class="btn-m font-s" type="submit">Venture Forth</button>
 		</form>
 	</div>
-	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
 </body>
 </html>

@@ -28,12 +28,6 @@ public class Player {
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.password = password;
-		this.metacurrency = 500;
-		this.constitutionMetabonus = 0;
-		this.strengthMetabonus = 0;
-		this.intelligenceMetabonus = 0;
-		this.dexterityMetabonus = 0;
-		this.currencyMetabonus = 0;
 	}
 
 	public UUID getId() {
