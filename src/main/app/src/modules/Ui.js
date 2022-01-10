@@ -1,7 +1,7 @@
 import React from "react";
 import CharacterMenu from "./CharacterMenu";
 import InventoryMenu from "./InventoryMenu";
-import SkillTooltip from "./SkillTooltip";
+import AbilityTooltip from "./AbilityTooltip";
 import Minimap from "./Minimap";
 import {camelCase} from "./GeneralUtilities";
 import FadeUp from "./FadeUp";
@@ -25,7 +25,7 @@ class Ui extends React.Component {
       this.buttonAttack = this.props.props.images.buttonAttackWarrior;
     }
     
-    this.Skill = (props) => {
+    this.Ability = (props) => {
       let className = "gray-100";
       let onClick = null;
       if(this.props.props.pc.level >= this.props.props.pc.abilities[props.number].level){
@@ -41,10 +41,10 @@ class Ui extends React.Component {
         }
       }
       return(
-        <button className={className+" skill-tooltip skill s-"+props.number} onClick={onClick}>
+        <div className={className+" ability-tooltip skill s-"+props.number} onClick={onClick}>
           <img className="absolute-fill" src={this.props.props.abilities[camelCase(this.props.props.pc.abilities[props.number].name)]} alt="Skill"/>
-          <SkillTooltip props={this.props.props} number={props.number}/>
-        </button>
+          <AbilityTooltip props={this.props.props} number={props.number}/>
+        </div>
       )
     }
 
@@ -103,10 +103,10 @@ class Ui extends React.Component {
           <img className="bar-energy" src={this.props.props.images.barEnergy} alt="Energy" title={this.energyHover} style={this.energyStyle}/>
           <img className="bar-energy-frame" src={this.props.props.images.barFrame} alt="Energy" title={this.energyHover}/>
           <img className="swirl" src={this.props.props.images.swirl} alt="Energy" title={this.energyHover}/>
-          <this.Skill number={1}/>
-          <this.Skill number={2}/>
-          <this.Skill number={3}/>
-          <this.Skill number={4}/>  
+          <this.Ability number={1}/>
+          <this.Ability number={2}/>
+          <this.Ability number={3}/>
+          <this.Ability number={4}/>  
           <Minimap props={this.props.props} dungeon={this.props.dungeon}/>
           <this.AttackButton/>
           <input class="btn-character hover-saturate-250" type="image" src={this.props.props.images.buttonCharacter} alt="Character" onClick={() => this.props.props.appState("menu", "character")}/>

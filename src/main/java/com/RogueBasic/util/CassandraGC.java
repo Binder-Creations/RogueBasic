@@ -41,9 +41,9 @@ public class CassandraGC implements Runnable{
 	    	    
 	    	    int counter = 0;
 	    	    for(PlayerCharacter character : characters) {
-    	    		this.collect = true;
+	    	    	this.collect = true;
     	    		for (Player player : players) {
-		    			if(player.getCharacterIds().contains(character.getId()))
+		    			if(player.getCharacterIds() != null && player.getCharacterIds().contains(character.getId()))
 		    				this.collect = false;
     	    		}
     	    		if(this.collect) {

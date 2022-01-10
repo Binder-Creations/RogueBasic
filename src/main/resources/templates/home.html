@@ -2,10 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link rel="icon" th:href="@{/images/favicon.ico}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="application-name" content="Rogue Basic"/>
+    <meta name="author" content="BinderCreations"/>
+    <meta name="description" content="Simple loot-filled dungeon crawler RPG."/>
+    <link rel="apple-touch-icon" th:href="@{/images/logo192.png}" />
+    <link rel="manifest" th:href="@{/images/manifest.json}" />
 	<title>Prepare for Adventure!</title>
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
 </head>
 <body>
+	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
 	<div class="spacer-l"></div>
    	<img class="title" th:src='@{/images/rogueBasicTitle.png}'>
   	<div class="spacer-xl"></div>
@@ -17,6 +26,5 @@
  	<div class="spacer-xs"></div>
  	<button class="btn-l font-l" type="button" onclick="location.href='/login?logout=true'">Logout</button>
 	<div class="spacer-s"></div>
-	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
 </body>
 </html>

@@ -274,10 +274,10 @@ class PcServices {
     return 8+this.pc.level*2
   }
   regenHealth(pc){
-    pc.currentHealth = (pc.currentHealth + pc.healthRegenTotal) > pc.healthTotal ? pc.healthTotal : pc.currentHealth + pc.healthRegenTotal;
+    pc.currentHealth = Math.round(((pc.currentHealth + pc.healthRegenTotal) > pc.healthTotal ? pc.healthTotal : pc.currentHealth + pc.healthRegenTotal) + Number.EPSILON);
   }
   regenEnergy(pc){
-    pc.currentEnergy = (pc.currentEnergy + pc.energyRegenTotal) > pc.energyTotal ? pc.energyTotal : pc.currentEnergy + pc.energyRegenTotal;
+    pc.currentEnergy = Math.round(((pc.currentEnergy + pc.energyRegenTotal) > pc.energyTotal ? pc.energyTotal : pc.currentEnergy + pc.energyRegenTotal) + Number.EPSILON);
   }
 }
 
