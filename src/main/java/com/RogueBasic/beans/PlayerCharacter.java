@@ -127,7 +127,7 @@ public class PlayerCharacter {
 				this.abilities.add(new Ability(0, "Straight Slash", 0, 1f, 25, 1, "frontCenter", "Attack", "Power", "Make a basic attack."));
 				this.abilities.add(new Ability(1, "Heavy Strike", 8, 1.6f, 35, 1, "frontRight", "Attack", "Power", "Attack with a mighty blow. 150% of Armor Penetration applies.", new Flags("highPen")));
 				this.abilities.add(new Ability(2, "Stunning Bash", 16, 1.4f, 20, 1, "frontLeft", "Attack", "Power", "Attack with a stunning shield strike. Stuns normal enemies for 1 round.", null, new Flags("stun")));
-				this.abilities.add(new Ability(4, "Wide Sweep", 32, 1.8f, 30, 1, "frontRow", "Attack", "Power", "Attack all enemie in a row."));
+				this.abilities.add(new Ability(4, "Wide Sweep", 32, 1.8f, 30, 1, "frontRow", "Attack", "Power", "Attack all enemies in a row."));
 				this.abilities.add(new Ability(6, "Living Fortress", 64, 5f, 0, 1, "self", "Buff", "Armor", "Dramatically increases armor and provites immunity to critical hits until end of combat.", new Flags("fortress", -1), new Buff("livingFortress", "armor")));
 				this.powerBonus = 10;
 				this.healthBonus = 30;

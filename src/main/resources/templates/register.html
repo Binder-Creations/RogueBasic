@@ -9,7 +9,7 @@
     <meta name="author" content="BinderCreations"/>
     <meta name="description" content="Simple loot-filled dungeon crawler RPG."/>
     <link rel="apple-touch-icon" th:href="@{/images/logo192.png}" />
-    <link rel="manifest" th:href="@{/images/manifest.json}" />
+    <link rel="manifest" th:href="@{/manifest.json}" />
 	<title>Create a New Rogue Basic Account</title>
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
 </head>
@@ -25,12 +25,14 @@
   			<p th:if="${failure}" class="font-red font-xs">Please try again.</p>
 		    <div th:if="${failure}" class="spacer-xs"></div>
 		    <label class="font-m label" for="uname"><b>Username</b></label>
-		    <input type="text" placeholder="Enter Username" name="uname" th:field="*{name}" required>
-			<div class="spacer-xxs"></div>
+		    <input type="text" class="text-input" placeholder="Enter Username" name="uname" th:field="*{name}" required>
+		    <div></div>
 		    <label class="font-m label" for="psw"><b>Password</b></label>
-		    <input type="password" placeholder="Enter Password" name="psw" th:field="*{password}" required>
+		    <input type="password" class="text-input" placeholder="Enter Password" name="psw" th:field="*{password}" required>
 			<div class="spacer-s"></div>
-	    	<button class="btn-m font-s" type="submit">Register</button>
+	    	<button class="btn-m font-s" type="submit">
+	    		<p class="v-h-centered">Register</p>
+	    	</button>
 		    <div class="spacer-s"></div>
 		    <span class="font-xs"><a th:href="@{/login}">Already have an account? Login.</a></span>
 	</form>

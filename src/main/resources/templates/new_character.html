@@ -9,7 +9,7 @@
     <meta name="author" content="BinderCreations"/>
     <meta name="description" content="Simple loot-filled dungeon crawler RPG."/>
     <link rel="apple-touch-icon" th:href="@{/images/logo192.png}" />
-    <link rel="manifest" th:href="@{/images/manifest.json}" />
+    <link rel="manifest" th:href="@{/manifest.json}" />
 	<title>Create a New Adventurer!</title>
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
     <script type="text/javascript" th:src="@{/scripts/statCounters.js}"></script>
@@ -26,9 +26,9 @@
 </head>
 <body onload="intializeAttributes('attribute')">
 	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
-	<div class="right-aligner">
-		<button class="btn-home font-s" type="button" onclick="location.href='/home'"><p>🏘</p></button>
-	</div>
+	<button class="btn-home" type="button" onclick="location.href='/home'">
+		<img th:src='@{/images/scroll.png}'/>
+	</button>
 	<div class="center-aligner">    	
 	   	<div class="spacer-l"></div>
 	   	<img class ="title" th:src='@{/images/rogueBasicTitle.png}'>
@@ -99,7 +99,7 @@
 					</tr>
 					<tr style="text-align: right;">
 						<td class="tooltip atr-offset">Strength
-						<span class="tooltiptext font-xxs">+Power<br></br>++Armor<br></br>++Carry Weight</span></td>
+						<span class="tooltiptext font-xxs">+Power<br></br>++Armor<br></br>++Armor Pen</span></td>
 						<td style="text-align: center;">
 	                      	<table>
 	                        	<tbody>
@@ -184,7 +184,9 @@
 				<img class="small-icon" th:src='@{/images/soul.png}'>
 			</button>
 			<div class="spacer-m"></div>
-		    <button class="btn-m font-s" type="submit">Venture Forth</button>
+		    <button class="btn-ml font-s center-contents" type="submit">
+		    	Venture Forth
+		    </button>
 		</form>
 	</div>
 </body>

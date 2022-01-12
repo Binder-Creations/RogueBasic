@@ -44,6 +44,10 @@
 				border-collapse: collapse;
 			}
 			.app-container {
+				width: 100vw;
+				height: 47.619047vw;
+				background-repeat: no-repeat;
+				background-size: contain;
 				position:absolute;
       	top: 50%;
       	transform: translateY(-50%);
@@ -154,7 +158,7 @@
 				top: 11.2055%;
 				left: 2.3809%;
 			}
-			.skill {
+			.ability {
 				position:absolute;
 				bottom: 2.8265%;
 				height:14.9%;
@@ -162,29 +166,29 @@
 				border: 0em;
 				background-color:#00000000;
 			}
-			.skill img {
+			.ability img {
 				position: absolute;
 			}
-			.skill .glow {
+			.ability .glow {
 				left: 0%;
 				top: 0%;
 				opacity: 0.0;
 				width: 100%;
 				height: 100%;
 			}
-			.skill:hover .glow{
+			.ability:hover .glow{
 				opacity: 1.0;
 			}
-			.s-1 {
+			.a-1 {
 				left: 34.8096%;
 			}
-			.s-2 {
+			.a-2 {
 				left: 42.9048%;
 			}
-			.s-3 {
+			.a-3 {
 				left: 51%;
 			}
-			.s-4 {
+			.a-4 {
 				left: 59.0952%;
 			}
 			.btn-attack {
@@ -1166,10 +1170,6 @@
 				background-color: #69696988;
 				border: 1% solid #55555588;
 			}
-			.btn-home p {
-				position:relative; 
-				bottom:.2em;
-			}
 			.btn-home img{
 				position:absolute;
 				width: 75%;
@@ -1203,13 +1203,21 @@
 			transition: visibility 0s linear 0s;
 			z-index: 9;
 		}
+		.ability-tooltip-box-0{
+			position: absolute;
+			visibility: hidden;
+			bottom:100%;
+			left:0%;
+			transition: visibility 0s linear 0s;
+			z-index: 9;
+		}
 		.item-tooltip *, .ability-toopltip * {
 			pointer-events: none
 		}
 		.item-tooltip:hover .item-tooltip-box {
 			visibility: visible;
 		}
-		.ability-tooltip:hover .ability-tooltip-box {
+		.ability-tooltip:hover .ability-tooltip-box, .ability-tooltip:hover .ability-tooltip-box-0 {
 			visibility: visible;
 			transition: visibility 0.3s linear 1s;
 		}

@@ -257,8 +257,7 @@ class App extends React.Component {
     }
 
     return(
-    <div className="app-container">
-      <img className="background" src={this.backgroundSrc} alt="Background"/>
+    <div className="app-container" style={{backgroundImage: "url("+this.backgroundSrc+")"}}>
       <this.InnerElements/>
       <Ui props={this.props.props} dungeon={this.state.dungeon} button={button} disableUiMenus={this.disableUiMenus}/>
       <this.OuterElements/>
