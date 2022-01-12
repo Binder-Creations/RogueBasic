@@ -30,10 +30,15 @@ class AbilityTooltip extends React.Component {
 
     let icon;
     let iconClass;
-    let valueStyle;
+    let valueColor;
     let value;
     let targetImage;
     let targetText;
+    let is0 = "";
+
+    if(this.props.number === 0){
+      is0 = "-0"
+    }
 
     if(ability.type === "Attack") {
       targetImage = this.props.props.images["target"+ability.target[0].toUpperCase() + ability.target.substring(1)];
@@ -77,11 +82,11 @@ class AbilityTooltip extends React.Component {
     if(ability.icon === "Power"){
       icon = this.props.props.images.iconPower
       iconClass = "item-tooltip-icon-power"
-      valueStyle = this.props.props.colorPower
+      valueColor = this.props.props.colorPower.color
     } else {
       icon = this.props.props.images.iconArmor
       iconClass = "item-tooltip-icon-armor"
-      valueStyle = this.props.props.colorArmor
+      valueColor = this.props.props.colorArmor.color
     }
 
     if(ability.factor){
@@ -89,21 +94,28 @@ class AbilityTooltip extends React.Component {
     } else {
       value = round(this.props.props.pc, ability.modifier)
     }
+
+    let valueText = value + hits;
+
+    let valueStyle = {
+      fontSize: (132-valueText.length*4) + "%",
+      color: valueColor
+    }
     
     return (
-      <div className={"ability-tooltip-box"} style={this.style}>
+      <div className={"ability-tooltip-box"+is0} style={this.style}>
         <img className="absolute-fill" src={this.props.props.images.tooltipSkill} alt="background"/>
         <img className="item-tooltip-image" src={this.props.props.abilities[camelCase(this.props.props.pc.abilities[this.props.number].name)]} alt="Skill"/>
         <img className="ability-tooltip-target" src={targetImage} style={{pointerEvents: "auto"}} title={targetText} alt="Target"/>
         <img className={"item-tooltip-badge-"+this.props.props.pc.characterClass.toLowerCase()} src={this.props.props.images["badge"+this.props.props.pc.characterClass+"Small"]} alt="class"/>
         <img className={iconClass} src={icon} alt="icon"/>
-        <p className="item-tooltip-icon-value" style={valueStyle}>{value+hits}</p>
+        <p className="item-tooltip-icon-value" style={valueStyle}>{valueText}</p>
         <p className="item-tooltip-name">{ability.name}</p>
         <p className="ability-tooltip-cost">{ability.cost}</p>      
         <div className="ability-tooltip-requirement">
           <Level/>
         </div>
-        <div className="item-tooltip-statbox">{ability.description}</div>
+        <div className="item-tooltip-statbox" style={ability.description.length > 80 ? {fontSize: (70 - (ability.description.length - 80)/3.5) + "%" } : {}}>{ability.description}</div>
       </div>
     )
   }

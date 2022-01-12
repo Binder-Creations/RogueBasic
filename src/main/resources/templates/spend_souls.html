@@ -9,7 +9,7 @@
     <meta name="author" content="BinderCreations"/>
     <meta name="description" content="Simple loot-filled dungeon crawler RPG."/>
     <link rel="apple-touch-icon" th:href="@{/images/logo192.png}" />
-    <link rel="manifest" th:href="@{/images/manifest.json}" />
+    <link rel="manifest" th:href="@{/manifest.json}" />
 	<title>Infuse Future Adventurers with Soul-Power!</title>
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -17,20 +17,20 @@
 </head>
 <body>
 	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
-	<div class="right-aligner">
-		<button class="btn-home font-s"  onclick="location.href='/home'"><p>🏘</p></button>
-	</div>
+	<button class="btn-home" type="button" onclick="location.href='/home'">
+		<img th:src='@{/images/scroll.png}'/>
+	</button>
 	<div class="center-aligner"> 
 		<div class="spacer-l"></div>
 	   	<img class="title" th:src='@{/images/rogueBasicTitle.png}'>
 	  	<div class="spacer-xl"></div>
 	  	<div class="circle-souls font-xxl">
 	  		<span th:text="${spendSouls.metacurrency}"></span>
-	  		<img class="small-icon" th:src='@{/images/soul.png}'>
+	  		<img class="large-icon" th:src='@{/images/soul.png}'>
 	  	</div>
 		<div class="spacer-s"></div>
 		<div> 	
-		 	<button class="active btn-l font-l" id="Constitution" th:if="${spendSouls.conCost < spendSouls.metacurrency}" th:value="${spendSouls.conCost}">
+		 	<button class="active btn-l font-xs" id="Constitution" th:if="${spendSouls.conCost < spendSouls.metacurrency}" th:value="${spendSouls.conCost}">
 		 		<div class="flex">
 			 		<div class="left">
 			 			<span th:text="${spendSouls.conCost}"></span>
@@ -40,7 +40,7 @@
 		 		</div>
 		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.constitutionMetabonus}"></p>
 		 	</button>
-		 	<button class="btn-l-faded font-l" th:unless="${spendSouls.conCost < spendSouls.metacurrency}" >
+		 	<button class="btn-l-faded font-xs" th:unless="${spendSouls.conCost < spendSouls.metacurrency}" >
 		 		<div class="flex">
 		 			<div class="left font-red">
 			 			<span th:text="${spendSouls.conCost}"></span>
@@ -51,7 +51,7 @@
 		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.constitutionMetabonus}"></p>
 		 	</button>
 		 	<div class="spacer-xs"></div>
-		 	<button class="active btn-l font-l" id="Strength" th:if="${spendSouls.strCost < spendSouls.metacurrency}" th:onclick="" th:value="${spendSouls.strCost}">
+		 	<button class="active btn-l font-xs" id="Strength" th:if="${spendSouls.strCost < spendSouls.metacurrency}" th:onclick="" th:value="${spendSouls.strCost}">
 		 		<div class="flex">
 			 		<div class="left">
 			 			<span th:text="${spendSouls.strCost}"></span>
@@ -61,7 +61,7 @@
 		 		</div>
 		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.strengthMetabonus}"></p>
 		 	</button>
-		 	<button class="btn-l-faded font-l" th:unless="${spendSouls.strCost < spendSouls.metacurrency}" >
+		 	<button class="btn-l-faded font-xs" th:unless="${spendSouls.strCost < spendSouls.metacurrency}" >
 		 		<div class="flex">
 			 		<div class="left font-red">
 			 			<span th:text="${spendSouls.strCost}"></span>
@@ -72,7 +72,7 @@
 		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.strengthMetabonus}"></p>
 		 	</button>
 		 	<div class="spacer-xs"></div>
-		 	<button class="active btn-l font-l" id="Dexterity" th:if="${spendSouls.dexCost < spendSouls.metacurrency}" th:onclick="" th:value="${spendSouls.dexCost}">
+		 	<button class="active btn-l font-xs" id="Dexterity" th:if="${spendSouls.dexCost < spendSouls.metacurrency}" th:onclick="" th:value="${spendSouls.dexCost}">
 		 		<div class="flex">
 			 		<div class="left">
 			 			<span th:text="${spendSouls.dexCost}"></span>
@@ -82,7 +82,7 @@
 		 		</div>
 		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.dexterityMetabonus}"></p>
 		 	</button>
-		 	<button class="btn-l-faded font-l" th:unless="${spendSouls.dexCost < spendSouls.metacurrency}" >
+		 	<button class="btn-l-faded font-xs" th:unless="${spendSouls.dexCost < spendSouls.metacurrency}" >
 		 		<div class="flex">
 			 		<div class="left font-red">
 			 			<span th:text="${spendSouls.dexCost}"></span>
@@ -93,7 +93,7 @@
 		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.dexterityMetabonus}"></p>
 		 	</button>
 		 	<div class="spacer-xs"></div>
-		 	<button class="active btn-l font-l" id="Intelligence" th:if="${spendSouls.intCost < spendSouls.metacurrency}" th:onclick="" th:value="${spendSouls.intCost}">
+		 	<button class="active btn-l font-xs" id="Intelligence" th:if="${spendSouls.intCost < spendSouls.metacurrency}" th:onclick="" th:value="${spendSouls.intCost}">
 		 		<div class="flex">
 			 		<div class="left">
 			 			<span th:text="${spendSouls.intCost}"></span>
@@ -103,7 +103,7 @@
 		 		</div>
 		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.intelligenceMetabonus}"></p>
 		 	</button>
-		 	<button class="btn-l-faded font-l" th:unless="${spendSouls.intCost < spendSouls.metacurrency}" >
+		 	<button class="btn-l-faded font-xs" th:unless="${spendSouls.intCost < spendSouls.metacurrency}" >
 		 		<div class="flex">
 			 		<div class="left font-red">
 			 			<span th:text="${spendSouls.intCost}"></span>
@@ -114,7 +114,7 @@
 		 		<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.intelligenceMetabonus}"></p>
 		 	</button>
 			<div class="spacer-xs"></div>
-			<button class="active btn-l font-l" id="Currency" th:if="${spendSouls.goldCost < spendSouls.metacurrency}" th:onclick="" th:value="${spendSouls.goldCost}">
+			<button class="active btn-l font-xs" id="Currency" th:if="${spendSouls.goldCost < spendSouls.metacurrency}" th:onclick="" th:value="${spendSouls.goldCost}">
 				<div class="flex">
 			 		<div class="left">
 			 			<span th:text="${spendSouls.goldCost}"></span>
@@ -124,7 +124,7 @@
 				</div>
 				<p class="font-xxxs" th:text="'Current Bonus: +' + ${spendSouls.currencyMetabonus}"></p>
 			</button>
-		 	<button class="btn-l-faded font-l" th:unless="${spendSouls.goldCost < spendSouls.metacurrency}" >
+		 	<button class="btn-l-faded font-xs" th:unless="${spendSouls.goldCost < spendSouls.metacurrency}" >
 		 		<div class="flex">
 			 		<div class="left font-red">
 			 			<span th:text="${spendSouls.strCost}"></span>

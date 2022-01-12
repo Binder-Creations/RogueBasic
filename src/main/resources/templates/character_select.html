@@ -9,33 +9,35 @@
     <meta name="author" content="BinderCreations"/>
     <meta name="description" content="Simple loot-filled dungeon crawler RPG."/>
     <link rel="apple-touch-icon" th:href="@{/images/logo192.png}" />
-    <link rel="manifest" th:href="@{/images/manifest.json}" />
+    <link rel="manifest" th:href="@{/manifest.json}" />
 	<title>Select Your Adventurer</title>
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
 </head>
 <body>
 	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
-	<div class="right-aligner">
-		<button class="btn-home font-s" type="button" onclick="location.href='/home'"><p style="position:relative; bottom:.2em;">🏘</p></button>
-	</div>
+	<button class="btn-home" type="button" onclick="location.href='/home'">
+		<img th:src='@{/images/scroll.png}'/>
+	</button>
 	<div class="center-aligner">
 		<div class="spacer-l"></div>   	
 	   	<img class ="title" th:src='@{/images/rogueBasicTitle.png}' alt="title"/>
 	  	<div class="spacer-xl"></div>
 	  	<form action="#" th:action="@{/character_select}" method="post">
 			<div th:each="playercharacter: ${characters}">
-			 	<button name="character_id" th:value=${playercharacter.id} class="btn-xl font-xxxl" type="submit">
+			 	<button name="character_id" th:value=${playercharacter.id} class="btn-xl font-xxl" type="submit">
 			 		<table>
 			 			<tr>
-			 				<td>
-			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Warrior'" th:src="@{/images/warrior.png}"/>
-			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Rogue'" th:src="@{/images/rogue.png}"/>
-			 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Wizard'" th:src="@{/images/wizard.png}"/>
+			 				<td class="vcenter">
+			 					<div class="vcenter-image">
+				 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Warrior'" th:src="@{/images/warrior.png}"/>
+				 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Rogue'" th:src="@{/images/rogue.png}"/>
+				 					<img class="class-icon" th:if="${playercharacter.characterClass} == 'Wizard'" th:src="@{/images/wizard.png}"/>
+			 					</div>
 			 				</td>
 			 				<td class="spacer-cell"/>
-			 				<td th:text="'lv.'+${playercharacter.level}"/>
+			 				<td th:text="'lv.'+${playercharacter.level}" class="vcenter"/>
 			 				<td class="spacer-cell"/>
-			 				<td th:text="${playercharacter.name}"/>
+			 				<td th:text="${playercharacter.name}" class="vcenter"/>
 			 			</tr>
 			 		</table>
 			 	</button>
