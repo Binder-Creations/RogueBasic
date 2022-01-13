@@ -5,7 +5,7 @@
           	padding:0;
           	box-sizing:border-box;
           	color:#ffcc66;
-     	  	font-family:"Copperplate", fantasy;
+     	  	font-family:"Georgia", sans-sarif;
      	  	text-align:center;
       	}
       	body {
@@ -14,7 +14,7 @@
   			background-position:center;
   			background-size:cover;
     	    background-image:url(../images/rogueBackground.png);
-    	    font-size:2vw;
+    	    font-size:1.9vw;
       	}
         .text-input {
             padding:.2vw;
@@ -82,7 +82,8 @@
       	}
       	.title {
       		display:inline-block;
-      		width:80%;
+      		width:65%;
+      		height: auto;
       	}
       	.small-icon {
       		display:inline-block;
@@ -429,11 +430,11 @@
       	}
       	.flex > .left{
 	      	padding: 0 0 0 0.8vw;
-      		width:25%;
+      		width:17%;
 			text-align:left;
       	}
       	.flex > .center{
-      		width:65%;
+      		width:83%;
 			text-align:center;
       	}
       	.hilight-l {

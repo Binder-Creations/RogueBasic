@@ -98,7 +98,7 @@ class AbilityTooltip extends React.Component {
     let valueText = value + hits;
 
     let valueStyle = {
-      fontSize: (132-valueText.length*4) + "%",
+      fontSize: (valueText.length < 6 ? 128 : (134-valueText.length*6-(valueText.length-6)*5)) + "%",
       color: valueColor
     }
     
@@ -110,7 +110,7 @@ class AbilityTooltip extends React.Component {
         <img className={"item-tooltip-badge-"+this.props.props.pc.characterClass.toLowerCase()} src={this.props.props.images["badge"+this.props.props.pc.characterClass+"Small"]} alt="class"/>
         <img className={iconClass} src={icon} alt="icon"/>
         <p className="item-tooltip-icon-value" style={valueStyle}>{valueText}</p>
-        <p className="item-tooltip-name">{ability.name}</p>
+        <p className="item-tooltip-name" style={ability.name.length > 13 ? {fontSize: (139 - ability.name.length*3) + "%" } : {}}>{ability.name}</p>
         <p className="ability-tooltip-cost">{ability.cost}</p>      
         <div className="ability-tooltip-requirement">
           <Level/>

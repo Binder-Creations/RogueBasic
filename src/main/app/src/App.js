@@ -256,8 +256,9 @@ class App extends React.Component {
       this.backgroundSrc = this.props.props.images.town
     }
 
+    let isWide = window.innerWidth >= window.innerHeight*2.1;
     return(
-    <div className="app-container" style={{backgroundImage: "url("+this.backgroundSrc+")"}}>
+    <div className="app-container v-h-centered" style={{backgroundImage: "url("+this.backgroundSrc+")", height: isWide ? "100vh" : "47.619047vw", width: isWide ? "210vh" : "100vw"}}>
       <this.InnerElements/>
       <Ui props={this.props.props} dungeon={this.state.dungeon} button={button} disableUiMenus={this.disableUiMenus}/>
       <this.OuterElements/>
