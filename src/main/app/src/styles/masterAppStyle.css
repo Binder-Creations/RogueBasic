@@ -433,6 +433,13 @@
 				width: 8.522%;
 				height: 8.0655%;
 			}
+			.btn-close-help {
+				position: absolute;
+				right: 1.6111%;
+				top: 1.6111%;
+				height: 6.5%;
+				width: 6.5%;
+			}
 			.btn-atr {
 				position:absolute;
 				width: 21.7816%;
@@ -1162,13 +1169,42 @@
 				border-radius: 100%;
 				transition-duration: 0.4s;
 			}
-			.btn-home:hover {
+			.btn-help {
+				position: absolute;
+				top: 13.95%;
+				right: 1.4286%;
+				text-align: center;
+				width: 4.5%;
+				height: 9.45%;
+				background-color: #55555588;
+				border: 1% solid #69696988;
+				border-radius: 100%;
+				transition-duration: 0.4s;
+			}
+			.help-menu {
+				position: absolute;
+				right: 6.5%;  
+				top: 3%;     
+				width: 42.8571%;
+				height: 90.0%; 
+			}
+			.btn-home:hover, .btn-help:hover {
 				background-color: #69696988;
 				border: 1% solid #55555588;
 			}
 			.btn-home img{
 				position:absolute;
 				width: 75%;
+				height: auto;
+				opacity: 0.5;
+				top: 50%;
+				left:50%;
+				transform: translate(-50%, -50%);
+				-ms-transform: translateY(-50%) translateX(-50%);
+			}
+			.btn-help img{
+				position:absolute;
+				width: 100%;
 				height: auto;
 				opacity: 0.5;
 				top: 50%;

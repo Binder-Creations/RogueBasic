@@ -27,6 +27,7 @@ class App extends React.Component {
       combatTransitions: false,
       questComplete: false,
       menu: null,
+      help: false,
       widthChange: 0,
       eaten: 0,
       rested: 0,
@@ -89,8 +90,12 @@ class App extends React.Component {
 
     this.disableUiMenus = false;
     this.backgroundSrc = "";
-    this.innerElements = <></>
-    this.outerElements = <></>
+    this.innerElements = []
+    this.outerElements = []
+    this.helpButton = 
+      <button className="btn-help" onClick={ () => {this.appState("help")} }>
+        <img src={images.helpIcon} alt="Help"/>
+      </button>
     this.InnerElements = () => {
       return(this.innerElements);
     }
@@ -141,8 +146,8 @@ class App extends React.Component {
     this.props.props.questComplete = this.state.questComplete;
     this.props.props.gameOver = this.state.gameOver;
     
-    this.innerElements = <></>
-    this.outerElements = <></>
+    this.innerElements = []
+    this.outerElements = []
     this.disableUiMenus = false;
     let button = "TownButton";
 
@@ -150,11 +155,17 @@ class App extends React.Component {
       if(this.state.scene === "Default"){
         this.backgroundSrc = this.props.props.images.town
         button = "HomeButton"
-        this.innerElements = <>
-          <input className="tavern" type="image" src={this.props.props.images.tavernExterior} alt="Tavern" onClick={ () => { this.setStateCustom({scene:"Tavern"})} }/>
-          <input className="inn" type="image" src={this.props.props.images.innExterior} alt="Inn" onClick={ () => { this.setStateCustom({scene:"Inn"})} }/>
-          <input className="shop" type="image" src={this.props.props.images.shopExterior} alt="Shop" onClick={ () => { this.setStateCustom({scene:"Shop"})} }/>
-        </>
+        this.innerElements.push(
+          <>
+            <input className="tavern" type="image" src={this.props.props.images.tavernExterior} alt="Tavern" onClick={ () => { this.setStateCustom({scene:"Tavern"})} }/>
+            <input className="inn" type="image" src={this.props.props.images.innExterior} alt="Inn" onClick={ () => { this.setStateCustom({scene:"Inn"})} }/>
+            <input className="shop" type="image" src={this.props.props.images.shopExterior} alt="Shop" onClick={ () => { this.setStateCustom({scene:"Shop"})} }/>
+          </>
+        );
+        this.outerElements.push(this.helpButton);
+        if(this.state.help){
+          this.outerElements.push(this.helpMenu(images.helpTown));
+        }
       } else if(this.state.scene === "Tavern"){
         if(this.state.pc.currentDungeon && (!this.state.dungeon || this.state.dungeon.id !== this.state.pc.currentDungeon)){
           fetch('/dungeon/'+ this.state.pc.currentDungeon)
@@ -183,15 +194,23 @@ class App extends React.Component {
 
         this.disableUiMenus = true;
         this.backgroundSrc = this.props.props.images.tavern
-        this.outerElements = <>
-          <TavernMenu props={this.props.props} dungeonBoard={this.state.dungeonBoard} dungeon={this.state.dungeon}/>
-        </>
+        this.outerElements.push( 
+          <>
+            <TavernMenu props={this.props.props} dungeonBoard={this.state.dungeonBoard} dungeon={this.state.dungeon}/>
+          </>
+        );
+        this.outerElements.push(this.helpButton);
+        if(this.state.help){
+          this.outerElements.push(this.helpMenu(images.helpTavern));
+        }
       } else if(this.state.scene==="Inn"){
         this.disableUiMenus = true;
         this.backgroundSrc = this.props.props.images.inn
-        this.outerElements = <>
-          <InnMenu props={this.props.props} eaten={this.state.eaten} rested={this.state.rested}/>
-        </>
+        this.outerElements.push(
+          <>
+            <InnMenu props={this.props.props} eaten={this.state.eaten} rested={this.state.rested}/>
+          </>
+        );
       } else if(this.state.scene==="Shop"){
         if(this.state.pc.currentShop){
           if(!this.state.shop){
@@ -219,9 +238,11 @@ class App extends React.Component {
 
         this.disableUiMenus = true;
         this.backgroundSrc = this.props.props.images.shop
-        this.outerElements = <>
-          <ShopMenu props={this.props.props} shop={this.state.shop}/>
-        </>
+        this.outerElements.push(
+          <>
+            <ShopMenu props={this.props.props} shop={this.state.shop}/>
+          </>
+        );
       }
     } else if(this.state.pc.location === "Dungeon") {
       if(!this.state.dungeon){
@@ -248,7 +269,13 @@ class App extends React.Component {
 
       if(this.state.dungeon && this.state.dungeon.floors){
         this.backgroundSrc = this.props.props.images[this.state.dungeon.theme.toLowerCase() + this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].variant];
-        this.innerElements = <Dungeon props={this.props.props} dungeon={this.state.dungeon} pcServices={this.pcServices}/>
+        this.outerElements.push(
+          <Dungeon props={this.props.props} dungeon={this.state.dungeon} pcServices={this.pcServices}/>
+        );
+        this.outerElements.push(this.helpButton);
+        if(this.state.help){
+          this.outerElements.push(this.helpMenu(this.state.combat ? images.helpCombat : images.helpDungeon));
+        }
       } else {
         this.backgroundSrc = this.props.props.images.tavern
       }
@@ -283,6 +310,15 @@ class App extends React.Component {
           new Image().src = this.props.props.monsters[type][item];
         });
       });
+    }
+
+    helpMenu(src){
+      return(
+        <div className="help-menu">
+          <img src={src} className="background" alt="Help Menu"/>
+          <img className="btn-close-help hover-saturate" src={images.buttonClose} alt="Close" onClick={() => this.appState("help")}/>
+        </div>
+      );
     }
 
     checkCombat(){
@@ -360,6 +396,9 @@ class App extends React.Component {
       let count;
       let addItem = true;
       switch(method){
+        case "help":
+          this.setStateCustom({help: this.state.help ? false : true})
+          break;
         case "game-over":
           this.setStateCustom({gameOver: key});
           break;
