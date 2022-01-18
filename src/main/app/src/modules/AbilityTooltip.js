@@ -121,7 +121,7 @@ class AbilityTooltip extends React.Component {
   }
 
   setStyle(){
-    this.style = {height: + window.innerWidth*0.25 + "px", width: + window.innerWidth*0.1667 + "px"}
+    this.style = {height: + this.props.props.appWidth*0.25 + "px", width: + this.props.props.appWidth*0.1667 + "px"}
   }
 
 }

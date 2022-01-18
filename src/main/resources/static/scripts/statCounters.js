@@ -50,3 +50,12 @@ function getCounterValue(){
 function setCounterValue(int){
 	document.getElementById("counter").innerHTML = document.getElementById("counter").innerHTML.slice(0, document.getElementById("counter").innerHTML.search(/\d/)) + int;
 }
+
+function disable(){
+	document.getElementById("submit").innerHTML = "Generating";
+	setTimeout(function(){document.getElementById("submit").innerHTML = "Generating."}, 400);
+	setTimeout(function(){document.getElementById("submit").innerHTML = "Generating.."}, 800);
+	setTimeout(function(){document.getElementById("submit").innerHTML = "Generating..."}, 1200);
+	setTimeout(function(){document.getElementById("submit").innerHTML = "Generating...."}, 1600);
+	setTimeout(function(){document.getElementById("submit").innerHTML = "Generating....."}, 2000);
+}

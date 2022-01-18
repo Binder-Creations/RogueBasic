@@ -26,7 +26,6 @@
       body {
     	  background-color:black;
 				color:#ffcc66;
-				font-size: 1.9vw;
 				-webkit-touch-callout: none;
 				-webkit-user-select: none;
 				-khtml-user-select: none;
@@ -433,13 +432,6 @@
 				width: 8.522%;
 				height: 8.0655%;
 			}
-			.btn-close-help {
-				position: absolute;
-				right: 1.6111%;
-				top: 1.6111%;
-				height: 6.5%;
-				width: 6.5%;
-			}
 			.btn-atr {
 				position:absolute;
 				width: 21.7816%;
@@ -590,7 +582,7 @@
 			.shop-image {
 				display:block;
 				width:80%;
-				height:75%;
+				height:auto;
 			}
 			.inn-menu {
 				position: absolute;
@@ -928,6 +920,9 @@
 				position:absolute;
 				top: 30%;
 				left:50%;
+				height: 40%;
+				width: auto;
+				opacity: 1.0;
 				transform: translate(-50%, -70%);
 				-ms-transform: translateY(-70%) translateX(-50%);
 			}
@@ -1157,6 +1152,41 @@
    		.font-red {
        		color:#ff0000;
    		}
+			.help-menu {
+				position: absolute;
+				right: 6.5%;  
+				top: 3%;     
+				width: 42.8571%;
+				height: 90.0%; 
+			}
+			.help-menu-tavern {
+				position: absolute;
+				right: 28.5715%;  
+				top: 5%;     
+				width: 42.8571%;
+				height: 90.0%; 
+			}
+			.help-menu-combat {
+				position: absolute;
+				right: 6.5%;  
+				top: 3%;     
+				width: 85.7143%;
+				height: 90.0%; 
+			}
+			.help-menu .close, .help-menu-tavern .close {
+				position: absolute;
+				right: 1.6111%;
+				top: 1.6111%;
+				height: 6.5%;
+				width: 6.5%;
+			}
+			.help-menu-combat .close {
+				position: absolute;
+				right: 0.8055%;
+				top: 1.6111%;
+				height: 6.5%;
+				width: auto;
+			}
 			.btn-home {
 				position: absolute;
 				top: 3%;
@@ -1180,13 +1210,6 @@
 				border: 1% solid #69696988;
 				border-radius: 100%;
 				transition-duration: 0.4s;
-			}
-			.help-menu {
-				position: absolute;
-				right: 6.5%;  
-				top: 3%;     
-				width: 42.8571%;
-				height: 90.0%; 
 			}
 			.btn-home:hover, .btn-help:hover {
 				background-color: #69696988;

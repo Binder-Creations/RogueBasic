@@ -201,7 +201,7 @@ class App extends React.Component {
         );
         this.outerElements.push(this.helpButton);
         if(this.state.help){
-          this.outerElements.push(this.helpMenu(images.helpTavern));
+          this.outerElements.push(this.helpMenu(images.helpTavern, "tavern"));
         }
       } else if(this.state.scene==="Inn"){
         this.disableUiMenus = true;
@@ -269,12 +269,12 @@ class App extends React.Component {
 
       if(this.state.dungeon && this.state.dungeon.floors){
         this.backgroundSrc = this.props.props.images[this.state.dungeon.theme.toLowerCase() + this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].variant];
-        this.outerElements.push(
+        this.innerElements.push(
           <Dungeon props={this.props.props} dungeon={this.state.dungeon} pcServices={this.pcServices}/>
         );
         this.outerElements.push(this.helpButton);
         if(this.state.help){
-          this.outerElements.push(this.helpMenu(this.state.combat ? images.helpCombat : images.helpDungeon));
+          this.outerElements.push( this.state.combat ? this.helpMenu(images.helpCombat, "combat") : this.helpMenu(images.helpDungeon));
         }
       } else {
         this.backgroundSrc = this.props.props.images.tavern
@@ -284,8 +284,12 @@ class App extends React.Component {
     }
 
     let isWide = window.innerWidth >= window.innerHeight*2.1;
+    this.props.props.appHeight = isWide ? window.innerHeight : window.innerWidth*0.47619047;
+    this.props.props.appWidth = isWide ? window.innerHeight*2.1 : window.innerWidth;
+    document.body.style.fontSize = this.props.props.appWidth*0.019 + "px";
+    
     return(
-    <div className="app-container v-h-centered" style={{backgroundImage: "url("+this.backgroundSrc+")", height: isWide ? "100vh" : "47.619047vw", width: isWide ? "210vh" : "100vw"}}>
+    <div className="app-container v-h-centered" style={{backgroundImage: "url("+this.backgroundSrc+")", height: this.props.props.appHeight + "px", width: this.props.props.appWidth + "px"}}>
       <this.InnerElements/>
       <Ui props={this.props.props} dungeon={this.state.dungeon} button={button} disableUiMenus={this.disableUiMenus}/>
       <this.OuterElements/>
@@ -312,11 +316,11 @@ class App extends React.Component {
       });
     }
 
-    helpMenu(src){
+    helpMenu(src, classMod){
       return(
-        <div className="help-menu">
+        <div className={"help-menu" + (classMod ? "-"+classMod : "")}>
           <img src={src} className="background" alt="Help Menu"/>
-          <img className="btn-close-help hover-saturate" src={images.buttonClose} alt="Close" onClick={() => this.appState("help")}/>
+          <img className="close hover-saturate" src={images.buttonClose} alt="Close" onClick={() => this.appState("help")}/>
         </div>
       );
     }

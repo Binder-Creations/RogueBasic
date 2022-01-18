@@ -146,7 +146,7 @@ class Ui extends React.Component {
       }
       
       components.push((this.props.props.pc.level > this.state.level) && (
-        <div className="popup level-up">
+        <div className="level-up">
           <FadeUp
           in = {(this.props.props.pc.level > this.state.level)}
           onEntered={() => {
