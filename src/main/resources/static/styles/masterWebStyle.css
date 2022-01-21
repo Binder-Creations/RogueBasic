@@ -13,9 +13,39 @@
     		background-attachment:fixed;
   			background-position:center;
   			background-size:cover;
-    	    background-image:url(../images/rogueBackground.png);
     	    font-size:1.9vw;
       	}
+      	
+      	@media (max-width: 960px) {
+      		body {
+      			background-image:url(../images/background-small.png);
+      		}
+      		.radio-parent .warrior {
+      			background-image:url(../images/warrior-background-small.png);	
+      		}
+      		.radio-parent .rogue {
+      			background-image:url(../images/rogue-background-small.png);
+      		}
+      		.radio-parent .wizard {
+      			background-image:url(../images/wizard-background-small.png);
+      		}
+      	}
+      	
+      	@media (min-width: 961px) {
+      		body {
+      			background-image:url(../images/background.png);
+      		}
+      		.radio-parent .warrior {
+      			background-image:url(../images/warrior-background.png);	
+      		}
+      		.radio-parent .rogue {
+      			background-image:url(../images/rogue-background.png);
+      		}
+      		.radio-parent .wizard {
+      			background-image:url(../images/wizard-background.png);
+      		}
+      	}
+      	
         .text-input {
             padding:.2vw;
        		padding-left:.8vw;
@@ -89,8 +119,8 @@
       		display:inline-block;
       		width:2.4vw;
       		height:2.4vw;
-      		transform: translate(-8%, 19%);
-      		-ms-transform: translateY(19%) translateX(-8%);
+      		transform: translate(-8%, 35%);
+      		-ms-transform: translateY(35%) translateX(-8%);
       	}
       	.medium-icon {
       		display:inline-block;
@@ -144,6 +174,9 @@
       	}
       	.font-xxxl{
       		font-size: 250%;
+      	}
+      	.font-xxl2{
+      		font-size: 208%;
       	}
       	.font-xxl{
       		font-size: 180%;
@@ -313,22 +346,23 @@
 		
 		.radio-parent input[type="radio"]:checked+label,
 		.Checked+label {
-		  	background: #ffcc66;
-		  	border: .3vw solid #6B8E23;
-		  	color: #6B8E23;
+		  	filter: grayscale(0%);
 		}
 		
 		.radio-parent label {
 		  	padding: .8vw;
 		  	border: .6vw solid #ffcc66;
-		  	background: #6B8E23;
 		  	cursor: pointer;
 		  	z-index: 90;
+		  	filter: grayscale(90%);
+		  	background-size:contain;
+		  	text-stroke: .15vw #6c5c1e;
+		  	-webkit-text-stroke: .15vw #6c5c1e;
+		}
+		.radio-parent label:hover {
+			filter: grayscale(45%);
 		}
 		
-		.radio-parent label:hover {
-		  	background: #808000;
-		}
 		.tooltip {
 		  	position: relative;
 		  	display: inline-block;

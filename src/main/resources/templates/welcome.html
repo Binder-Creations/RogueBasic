@@ -15,9 +15,15 @@
     <script type="text/javascript" th:src="@{/scripts/autoRedirect.js}"></script>
 </head>
 <body>
-	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
+	<picture>
+	  	<source th:srcset='@{/images/logo.png}' media='(min-width: 961px)'>
+   		<img class="bc-logo" th:src="@{/images/logo-small.png}" alt="logo"/>
+  	</picture>
 	<div class="spacer-l"></div>
-   	<img class ="title" th:src='@{/images/rogueBasicTitle.png}'>
+	<picture>
+	  	<source th:srcset='@{/images/title.png}' media='(min-width: 961px)'>
+   		<img class ="title" th:src='@{/images/title-small.png}' alt="title"/>
+  	</picture>
  	<div class="spacer-xxl"></div>
  	<div class="formbox">
 		<p class="font-m" th:text="'Your Rogue Basic account has successfully been created, ' + ${name}"></p>  		

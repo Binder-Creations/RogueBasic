@@ -14,9 +14,15 @@
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
 </head>
 <body>
-	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
+	<picture>
+	  	<source th:srcset='@{/images/logo.png}' media='(min-width: 961px)'>
+   		<img class="bc-logo" th:src="@{/images/logo-small.png}" alt="logo"/>
+  	</picture>
 	<div class="spacer-l"></div>
-   	<img class="title" th:src='@{/images/rogueBasicTitle.png}'>
+	<picture>
+	  	<source th:srcset='@{/images/title.png}' media='(min-width: 961px)'>
+   		<img class ="title" th:src='@{/images/title-small.png}' alt="title"/>
+  	</picture>
   	<div class="spacer-xl"></div>
  	<button class="btn-l font-l" th:if="${has_characters}" type="button" onclick="location.href='/character_select'">Character Select</button>
  	<div class="spacer-xs" th:if="${has_characters}"></div>
@@ -26,5 +32,10 @@
  	<div class="spacer-xs"></div>
  	<button class="btn-l font-l" type="button" onclick="location.href='/login?logout=true'">Logout</button>
 	<div class="spacer-s"></div>
+	<div class="spacer-m" th:if="${temp}"></div>
+	<button class="btn-l font-xxs" th:if="${temp}" type="button" onclick="location.href='/register'">
+		<p class="font-red">You are Using a Temporary Account</p>
+		<p class="font-red">Convert it to Permanent One!</p>
+	</button>
 </body>
 </html>

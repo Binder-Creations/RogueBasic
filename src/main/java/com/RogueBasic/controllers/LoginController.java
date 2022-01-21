@@ -21,8 +21,8 @@ import com.datastax.oss.driver.api.core.CqlSession;
 public class LoginController {
 	
 	@GetMapping("/login")
-	public String dungeon(@CookieValue(value="player_id", defaultValue="0") String playerId, @RequestParam(name = "logout", defaultValue = "false") String logout, Model model, HttpServletResponse response) {
-		if(logout.equals("true")) {
+	public String dungeon(@CookieValue(value="player_id", defaultValue="0") String playerId, @CookieValue(value="player_name", required=false) String playerName, @RequestParam(name = "logout", defaultValue = "false") String logout, Model model, HttpServletResponse response) {
+		if(logout.equals("true") || (!playerId.equals("0") && playerName == null)) {
 			Cookie nameCookie = new Cookie("player_name", null);
 			Cookie idCookie = new Cookie("player_id", null);
 			nameCookie.setPath("/");

@@ -123,7 +123,7 @@ class Minimap extends React.Component {
       }
       if(room.southRoomId){
         arrows.push(
-          <img src={this.props.props.images.minimapSouth} className="minimap-south hover-saturate" onClick={()=>this.props.props.appState("move-room", room.southRoomId)} alt="South"/>
+          <img src={this.props.props.images.minimapNorth} className="minimap-south hover-saturate y-flip" onClick={()=>this.props.props.appState("move-room", room.southRoomId)} alt="South"/>
         )
       }
       if(room.eastRoomId){
@@ -133,7 +133,7 @@ class Minimap extends React.Component {
       }
       if(room.westRoomId){
         arrows.push(
-          <img src={this.props.props.images.minimapWest} className="minimap-west hover-saturate" onClick={()=>this.props.props.appState("move-room", room.westRoomId)} alt="West"/>
+          <img src={this.props.props.images.minimapEast} className="minimap-west hover-saturate x-flip" onClick={()=>this.props.props.appState("move-room", room.westRoomId)} alt="West"/>
         )
       }
     }

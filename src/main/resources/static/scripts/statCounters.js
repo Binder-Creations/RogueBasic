@@ -52,10 +52,12 @@ function setCounterValue(int){
 }
 
 function disable(){
-	document.getElementById("submit").innerHTML = "Generating";
-	setTimeout(function(){document.getElementById("submit").innerHTML = "Generating."}, 400);
-	setTimeout(function(){document.getElementById("submit").innerHTML = "Generating.."}, 800);
-	setTimeout(function(){document.getElementById("submit").innerHTML = "Generating..."}, 1200);
-	setTimeout(function(){document.getElementById("submit").innerHTML = "Generating...."}, 1600);
-	setTimeout(function(){document.getElementById("submit").innerHTML = "Generating....."}, 2000);
+	if(document.getElementById('charactername').value && (document.getElementById('warrior').checked || document.getElementById('rogue').checked || document.getElementById('wizard').checked)){
+		document.getElementById("submit").innerHTML = "Generating";
+		setTimeout(function(){document.getElementById("submit").innerHTML = "Generating."}, 400);
+		setTimeout(function(){document.getElementById("submit").innerHTML = "Generating.."}, 800);
+		setTimeout(function(){document.getElementById("submit").innerHTML = "Generating..."}, 1200);
+		setTimeout(function(){document.getElementById("submit").innerHTML = "Generating...."}, 1600);
+		setTimeout(function(){document.getElementById("submit").innerHTML = "Generating....."}, 2000);
+	}
 }

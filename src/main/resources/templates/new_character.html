@@ -25,42 +25,45 @@
     </style>
 </head>
 <body onload="intializeAttributes('attribute')">
-	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
+	<picture>
+	  	<source th:srcset='@{/images/logo.png}' media='(min-width: 961px)'>
+   		<img class="bc-logo" th:src="@{/images/logo-small.png}" alt="logo"/>
+  	</picture>
 	<button class="btn-home" type="button" onclick="location.href='/home'">
-		<img th:src='@{/images/scroll.png}'/>
+		<picture>
+		  	<source th:srcset='@{/images/scroll.png}' media='(min-width: 961px)'>
+	   		<img class ="title" th:src='@{/images/scroll-small.png}' alt="scroll"/>
+	  	</picture>
 	</button>
 	<div class="center-aligner">    	
 	   	<div class="spacer-l"></div>
-	   	<img class ="title" th:src='@{/images/rogueBasicTitle.png}'>
+		<picture>
+		  	<source th:srcset='@{/images/title.png}' media='(min-width: 961px)'>
+	   		<img class ="title" th:src='@{/images/title-small.png}' alt="title"/>
+	  	</picture>
 	 	<div class="spacer-xl"></div>
   		<form class="formbox" action="#" th:action="@{/new_character}" th:object="${newCharacter}" method="post">
 		    <p class="hilight-l font-xl">Create Your Adventurer</p>
 		    <div class="spacer-s"></div>
-			<input type="text" class="charactername" style="font-size: 150%" placeholder="Enter Character Name" th:field="*{name}" required>
+			<input type="text" id="charactername" class="charactername" style="font-size: 150%" placeholder="Enter Character Name" th:field="*{name}" required>
 			<div class="spacer-s"></div>
-			<ul class="radio-parent">
+			<ul class="radio-parent font-xxl2">
 				<li>
 					<input type="radio" id="warrior" name="class_selection" value="Warrior" th:field="*{characterClass}" required/>
-					<label class=font-xs for="warrior">
-						<img class="medium-icon" th:src='@{/images/warrior.png}'>
-						Warrior
-						<img class="medium-icon" th:src='@{/images/warrior.png}'>
+					<label class="warrior" for="warrior">
+						<span class="v-h-centered">Warrior</span>
 					</label>
 				</li>
 				<li>
 					<input type="radio" id="rogue" name="class_selection"  value="Rogue" th:field="*{characterClass}" required/>
-					<label class=font-xs for="rogue">
-						<img class="medium-icon" th:src='@{/images/rogue.png}'>
-						Rogue
-						<img class="medium-icon" th:src='@{/images/rogue.png}'>
+					<label class="rogue" for="rogue">
+						<span class="v-h-centered">Rogue</span>
 					</label>
 				</li>
 				<li>
 					<input type="radio" id="wizard" name="class_selection"  value="Wizard" th:field="*{characterClass}" required/>
-					<label class=font-xs for="wizard">
-						<img class="medium-icon" th:src='@{/images/wizard.png}'>
-						Wizard
-						<img class="medium-icon" th:src='@{/images/wizard.png}'>
+					<label class="wizard" for="wizard">
+						<span class="v-h-centered">Wizard</span>
 					</label>
 				</li>
 			</ul>

@@ -24,10 +24,27 @@ public class Player {
 	
 	public Player(String name, String password) {
 		super();
-		
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.password = password;
+	}
+	
+	public Player(String id) {
+		super ();
+		this.setId(UUID.fromString(id));
+		this.setName("Temporary User");
+		this.setPassword(id);	
+	}
+	
+	public Player(String name, String password, Player tempPlayer) {
+		this(name, password);
+		this.setCharacterIds(tempPlayer.getCharacterIds());
+		this.setMetacurrency(tempPlayer.getMetacurrency());
+		this.setConstitutionMetabonus(tempPlayer.getConstitutionMetabonus());
+		this.setStrengthMetabonus(tempPlayer.getStrengthMetabonus());
+		this.setDexterityMetabonus(tempPlayer.getDexterityMetabonus());
+		this.setIntelligenceMetabonus(tempPlayer.getIntelligenceMetabonus());
+		this.setCurrencyMetabonus(tempPlayer.getCurrencyMetabonus());
 	}
 
 	public UUID getId() {

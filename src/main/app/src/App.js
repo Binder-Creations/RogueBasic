@@ -1,5 +1,6 @@
 import React from "react";
 import {Route, BrowserRouter as Router} from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 import Ui from "./modules/Ui"
 import ShopMenu from "./modules/ShopMenu";
 import InnMenu from "./modules/InnMenu";
@@ -7,10 +8,14 @@ import TavernMenu from "./modules/TavernMenu";
 import PcServices from "./modules/PcServices";
 import ItemServices from "./modules/ItemServices";
 import Dungeon from "./modules/Dungeon";
-import * as abilities from "./images/abilities"
-import * as images from "./images"
-import * as items from "./images/items";
-import * as monsters from "./images/monsters";
+import * as abilities from "./images/abilities" 
+import * as abilitiesSmall from "./images-small/abilities";
+import * as images from "./images" 
+import * as imagesSmall from "./images-small";
+import * as items from "./images/items" 
+import * as itemsSmall from "./images-small/items";
+import * as monsters from "./images/monsters" 
+import * as monstersSmall from "./images-small/monsters";
 import CombatEngine from "./modules/CombatEngine";
 
 class App extends React.Component {
@@ -47,20 +52,23 @@ class App extends React.Component {
         this.setStateCustom({characterId: null, playerId: null})
       } 
     }
+    this.returningUser = document.cookie.replace(/(?:(?:^|.*;\s*)returning_user\s*=\s*([^;]*).*$)|^.*$/, "$1");
     this.combat = false;
     this.pcServices = new PcServices(this.state.pc.characterClass);
     this.appState = this.appState.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
     this.sortDungeon = this.sortDungeon.bind(this);
     this.sortPC = this.sortPC.bind(this);
+    this.preloadImages = this.preloadImages.bind(this);
+    this.genDungeons = this.genDungeons.bind(this);
 
     this.props.props = {
       pc: this.state.pc,
       combat: this.state.combat,
-      abilities: abilities,
-      images: images, 
-      items: items,
-      monsters: monsters, 
+      abilities: window.innerWidth > 960 ? abilities : abilitiesSmall,
+      images: window.innerWidth > 960 ? images : imagesSmall, 
+      items: window.innerWidth > 960 ? items : itemsSmall,
+      monsters: window.innerWidth > 960 ? monsters : monstersSmall, 
       appState: this.appState,
       gameOver: false,
       positions: ["pc", "frontLeft", "frontCenter", "frontRight", "backLeft", "backCenter", "backRight"],
@@ -71,9 +79,9 @@ class App extends React.Component {
     }
 
     this.props.props.itemServices = new ItemServices({
-      images: images, 
-      items: items, 
-      monsters: monsters,
+      images: window.innerWidth > 960 ? images : imagesSmall, 
+      items: window.innerWidth > 960 ? items : itemsSmall, 
+      monsters: window.innerWidth > 960 ? monsters : monstersSmall,
       colorArmor: this.props.props.colorArmor,
       colorPower: this.props.props.colorPower,
       colorHeal: this.props.props.colorHeal,
@@ -105,15 +113,36 @@ class App extends React.Component {
   }
 
   render(){
-    if (!this.state.characterId || !this.state.playerId)
+    if(this.state.routeHome){
       return(
         <Router>
           <Route path='/' component={() => { 
-            window.location.href = '/login'; 
+            window.location.href = '/home'; 
             return null;
           }}/>
         </Router>
       );
+    }
+    if (!this.state.characterId || !this.state.playerId){
+      if(!this.returningUser){
+        document.cookie = "returning_user=true;max-age=99999999";
+        let tempUUID = uuidv4();
+        document.cookie = "player_id="+tempUUID+";max-age=99999999";
+        fetch('/register/'+ tempUUID, {method: 'POST'})
+        .then(response => {
+          this.setState({routeHome: true})
+        });     
+      } else {
+        return(
+          <Router>
+            <Route path='/' component={() => { 
+              window.location.href = '/login'; 
+              return null;
+            }}/>
+          </Router>
+        );
+      }
+    }
     if(this.state.scene==="Home"){
         return(
           <Router>
@@ -128,10 +157,32 @@ class App extends React.Component {
       return(<></>)
     }
     if(!this.initialize){
+      this.initialize = true;
+      this.loading = true;
       this.pcServices.updateStats(this.state.pc);
       window.addEventListener("resize", this.updateWidth)
-      this.initialize = true;
+      this.preloadImages();
+      this.genDungeons();
     }
+
+    if(this.loading){
+      if(this.loadingImages && this.loadingImages >= 495) {
+        this.loading = false;
+        this.loadingImages = 0;
+      } else {
+        return(
+          <p>
+            {
+              this.loadingImages && this.loadingImages > 0 && this.loadingImages < 496
+                ? "Loading Images (" + this.loadingImages + "/495"
+                : this.loadingDungeons 
+                  ? "Generating Dungeons..."
+                  : "Loading..."
+            }
+          </p>)
+      }
+    }
+
     this.checkCombat();
 
     this.props.props.pc = this.state.pc;
@@ -297,24 +348,31 @@ class App extends React.Component {
     );
     }
 
-    componentDidMount(){
+    preloadImages() {
+      this.loadingImages = 0;
       Object.keys(this.props.props.abilities).forEach((image) => {
         new Image().src = this.props.props.abilities[image];
+        this.loadingImages++
       });
       Object.keys(this.props.props.images).forEach((image) => {
         new Image().src = this.props.props.images[image];
+        this.loadingImages++
       });
       Object.keys(this.props.props.items).forEach((type) => {
         Object.keys(this.props.props.items[type]).forEach((item) => {
           new Image().src = this.props.props.items[type][item];
+          this.loadingImages++
         });
       });
       Object.keys(this.props.props.monsters).forEach((type) => {
         Object.keys(this.props.props.monsters[type]).forEach((item) => {
           new Image().src = this.props.props.monsters[type][item];
+          this.loadingImages++
         });
       });
     }
+
+    genDungeons(){}
 
     helpMenu(src, classMod){
       return(
@@ -780,7 +838,6 @@ class App extends React.Component {
             pc.equippedSecondary = {id: "00000000-0000-0000-0000-000000000000"};
           }
           this.pcServices.updateStats(pc);
-          console.log(pc)
           this.save(["pc"], [pc], {pc: pc});
           break;
         case "pointbuy":

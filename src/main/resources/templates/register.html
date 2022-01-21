@@ -19,7 +19,7 @@
    	<img class ="title" th:src='@{/images/rogueBasicTitle.png}'>
  	<div class="spacer-xxl"></div>
  	<form class="formbox" action="#" th:action="@{/register}" th:object="${register}" method="post">
-		    <p th:unless="${failure}" class="font-xs">Create a new account!</p>
+		    <p th:unless="${failure}" th:class="${temp} ? 'font-xxs' : 'font-xs'" th:text="${temp} ? 'Create a Username and Password for your Temporary Account!': 'Create a new account!'"></p>
 		    <div th:unless="${failure}" class="spacer-xs"></div>
 		    <p th:if="${failure}" class="font-red font-xs">That Username is taken.</p>
   			<p th:if="${failure}" class="font-red font-xs">Please try again.</p>
