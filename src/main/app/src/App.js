@@ -8,6 +8,7 @@ import TavernMenu from "./modules/TavernMenu";
 import PcServices from "./modules/PcServices";
 import ItemServices from "./modules/ItemServices";
 import Dungeon from "./modules/Dungeon";
+import LoadScreen from "./modules/LoadScreen";
 import * as abilities from "./images/abilities" 
 import * as abilitiesSmall from "./images-small/abilities";
 import * as images from "./images" 
@@ -24,6 +25,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       pc: {name: null},
+      loading: true,
+      loadingImages: 0,
+      loadingDungeons: false,
+      loadingShop: false,
       scene: "Default",
       combat: false,
       combatUpdates: [], 
@@ -45,7 +50,6 @@ class App extends React.Component {
         fetch('/pc/'+ this.state.characterId)
         .then(response => response.json())
         .then(data => {
-          console.log(data)
           this.setStateCustom({pc: this.sortPC(data)})
         });
       } catch(e) {
@@ -54,13 +58,17 @@ class App extends React.Component {
     }
     this.returningUser = document.cookie.replace(/(?:(?:^|.*;\s*)returning_user\s*=\s*([^;]*).*$)|^.*$/, "$1");
     this.combat = false;
+    this.imageMax = 498;
     this.pcServices = new PcServices(this.state.pc.characterClass);
     this.appState = this.appState.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
     this.sortDungeon = this.sortDungeon.bind(this);
     this.sortPC = this.sortPC.bind(this);
+    this.loadImage = this.loadImage.bind(this);
     this.preloadImages = this.preloadImages.bind(this);
     this.genDungeons = this.genDungeons.bind(this);
+    this.genShop = this.genShop.bind(this);
+    this.rest = this.rest.bind(this);
 
     this.props.props = {
       pc: this.state.pc,
@@ -158,28 +166,30 @@ class App extends React.Component {
     }
     if(!this.initialize){
       this.initialize = true;
-      this.loading = true;
       this.pcServices.updateStats(this.state.pc);
       window.addEventListener("resize", this.updateWidth)
       this.preloadImages();
       this.genDungeons();
+      this.genShop();
     }
 
-    if(this.loading){
-      if(this.loadingImages && this.loadingImages >= 495) {
-        this.loading = false;
-        this.loadingImages = 0;
+    if(this.restCheck){
+      this.restCheck = false;
+      this.rest()
+    }
+
+    let isWide = window.innerWidth >= window.innerHeight*2.1;
+    this.props.props.appHeight = isWide ? window.innerHeight : window.innerWidth*0.47619047;
+    this.props.props.appWidth = isWide ? window.innerHeight*2.1 : window.innerWidth;
+    document.body.style.fontSize = this.props.props.appWidth*0.019 + "px";
+
+    console.log(this.state)
+
+    if(this.state.loading){
+      if(this.state.loadingImages >= this.imageMax && this.state.loadingDungeons && this.state.loadingShop) {
+        this.setState({loading: false, loadingImages: 0, loadingDungeons: false, loadingShop: false})
       } else {
-        return(
-          <p>
-            {
-              this.loadingImages && this.loadingImages > 0 && this.loadingImages < 496
-                ? "Loading Images (" + this.loadingImages + "/495"
-                : this.loadingDungeons 
-                  ? "Generating Dungeons..."
-                  : "Loading..."
-            }
-          </p>)
+        return(<LoadScreen props={this.props.props} imageCount={this.state.loadingImages} loadingDungeons={this.state.loadingDungeons} loadingShop={this.state.loadingShop} imageMax={this.imageMax}/>)
       }
     }
 
@@ -218,38 +228,34 @@ class App extends React.Component {
           this.outerElements.push(this.helpMenu(images.helpTown));
         }
       } else if(this.state.scene === "Tavern"){
-        if(this.state.pc.currentDungeon && (!this.state.dungeon || this.state.dungeon.id !== this.state.pc.currentDungeon)){
-          fetch('/dungeon/'+ this.state.pc.currentDungeon)
-          .then(response => response.json())
-          .then(data => {
-            this.setStateCustom({dungeon: this.sortDungeon(data)});
-          });
-        }
-        if(!this.state.pc.dungeonBoard){
-          fetch('/dungeon/new/'+ this.state.pc.id)
-          .then(response => response.json())
-          .then(data => {
-            let pc = {...this.state.pc};
-            pc.dungeonBoard = [];
-            data.forEach(dungeon => pc.dungeonBoard.push(dungeon.id))
-            this.save(["pc"], [pc], {pc: pc, dungeonBoard: data});
-          });
-        } 
-        if(this.state.pc.dungeonBoard && (!this.state.dungeonBoard)){
-          fetch('/dungeon/getBoard/'+ this.state.pc.id)
-            .then(response => response.json())
-            .then(data => {
-              this.setStateCustom({dungeonBoard: data});
-            });
-        }
-
+        this.genDungeons();
         this.disableUiMenus = true;
-        this.backgroundSrc = this.props.props.images.tavern
+        this.backgroundSrc = this.props.props.images.tavern;
         this.outerElements.push( 
           <>
             <TavernMenu props={this.props.props} dungeonBoard={this.state.dungeonBoard} dungeon={this.state.dungeon}/>
           </>
         );
+        if(this.state.generatingDungeon){
+          let elipsis = "";
+          if(this.state.barPercent){
+            for(let i = 0; i < this.state.barPercent/20; i++){
+              elipsis += "."
+            }
+          }
+          this.outerElements.push(
+            <div className="loading-bar v-h-centered">
+              <img className="background" src={this.props.props.images.barBackgroundLoading}/>
+              <img className="bar" src={this.props.props.images.barLoading} style={{width: (this.state.barPercent ? this.state.barPercent : 5) + "%"}}/>
+              <img className="background v-h-centered" src={this.props.props.images.barFrame}/>
+              <p className="v-h-centered">
+                {
+                  "Generating Dungeon" + elipsis
+                }
+              </p>
+            </div>
+          )
+        }
         this.outerElements.push(this.helpButton);
         if(this.state.help){
           this.outerElements.push(this.helpMenu(images.helpTavern, "tavern"));
@@ -263,30 +269,6 @@ class App extends React.Component {
           </>
         );
       } else if(this.state.scene==="Shop"){
-        if(this.state.pc.currentShop){
-          if(!this.state.shop){
-            fetch('/shop/'+ this.state.pc.currentShop)
-              .then(response => response.json())
-              .then(data => {
-                this.setStateCustom({shop: data});
-              });
-          } else if(this.state.shop.id !== this.state.pc.currentShop){
-            fetch('/shop/'+ this.state.pc.currentShop)
-              .then(response => response.json())
-              .then(data => {
-                this.setStateCustom({shop: data});
-              });
-          }
-        } else {
-          fetch('/shop/new/'+ this.state.pc.id)
-            .then(response => response.json())
-            .then(data => {
-              let pc = {...this.state.pc}
-              pc.currentShop = data.id;
-              this.save(["pc"], [this.state.pc], {shop: data, pc: pc});
-            });
-        }
-
         this.disableUiMenus = true;
         this.backgroundSrc = this.props.props.images.shop
         this.outerElements.push(
@@ -333,11 +315,6 @@ class App extends React.Component {
     } else {
       this.backgroundSrc = this.props.props.images.town
     }
-
-    let isWide = window.innerWidth >= window.innerHeight*2.1;
-    this.props.props.appHeight = isWide ? window.innerHeight : window.innerWidth*0.47619047;
-    this.props.props.appWidth = isWide ? window.innerHeight*2.1 : window.innerWidth;
-    document.body.style.fontSize = this.props.props.appWidth*0.019 + "px";
     
     return(
     <div className="app-container v-h-centered" style={{backgroundImage: "url("+this.backgroundSrc+")", height: this.props.props.appHeight + "px", width: this.props.props.appWidth + "px"}}>
@@ -348,31 +325,107 @@ class App extends React.Component {
     );
     }
 
+    componentDidUpdate(){
+      if(this.state.loading){
+        setTimeout(() => {
+          this.setState({loadingImages: this.loadingImages})
+        }, 33);
+      }
+      if(this.state.generatingDungeon){
+        setTimeout(() => {
+          if(this.state.generatingDungeon){
+            this.setState({barPercent: this.state.barPercent ? this.state.barPercent + 20 : 20})
+          }
+        }, 2000);
+      }
+    }
+
+    loadImage(image){
+      return new Promise(resolve => {
+        resolve(new Image().src = image);
+      })
+    }
+
     preloadImages() {
       this.loadingImages = 0;
       Object.keys(this.props.props.abilities).forEach((image) => {
         new Image().src = this.props.props.abilities[image];
-        this.loadingImages++
+        this.loadingImages++;
       });
       Object.keys(this.props.props.images).forEach((image) => {
-        new Image().src = this.props.props.images[image];
-        this.loadingImages++
+        new Image().src = this.props.props.images[image]
+        this.loadingImages++;
       });
       Object.keys(this.props.props.items).forEach((type) => {
         Object.keys(this.props.props.items[type]).forEach((item) => {
-          new Image().src = this.props.props.items[type][item];
-          this.loadingImages++
+          new Image().src = this.props.props.items[type][item]
+          this.loadingImages++;
         });
       });
       Object.keys(this.props.props.monsters).forEach((type) => {
         Object.keys(this.props.props.monsters[type]).forEach((item) => {
-          new Image().src = this.props.props.monsters[type][item];
-          this.loadingImages++
+          new Image().src = this.props.props.monsters[type][item]
+          this.loadingImages++;
         });
       });
     }
 
-    genDungeons(){}
+    genDungeons(){
+      if(this.state.pc.currentDungeon && (!this.state.dungeon || this.state.dungeon.id !== this.state.pc.currentDungeon)){
+        fetch('/dungeon/'+ this.state.pc.currentDungeon)
+        .then(response => response.json())
+        .then(data => {
+          console.log("here2")
+          this.setStateCustom({dungeon: this.sortDungeon(data), loadingDungeons: true, generatingDungeon: false, barPercent: 0});
+        });
+      }
+      if(!this.state.pc.dungeonBoard){
+        fetch('/dungeon/new/'+ this.state.pc.id)
+        .then(response => response.json())
+        .then(data => {
+          let pc = {...this.state.pc};
+          pc.dungeonBoard = [];
+          data.forEach(dungeon => pc.dungeonBoard.push(dungeon.id))
+          this.save(["pc"], [pc], {pc: pc, dungeonBoard: data, loadingDungeons: true});
+        });
+      } 
+      if(this.state.pc.dungeonBoard && (!this.state.dungeonBoard)){
+        fetch('/dungeon/getBoard/'+ this.state.pc.id)
+          .then(response => response.json())
+          .then(data => {
+            this.setStateCustom({dungeonBoard: data, loadingDungeons: true});
+          });
+      }     
+      if(this.state.pc.dungeonBoard && this.state.dungeonBoard && !this.state.loadingDungeons){
+        this.setStateCustom({loadingDungeons: true});
+      }
+    }
+
+    genShop(){
+      if(this.state.pc.currentShop){
+        if(!this.state.shop){
+          fetch('/shop/'+ this.state.pc.currentShop)
+            .then(response => response.json())
+            .then(data => {
+              this.setStateCustom({shop: data, loadingShop: true});
+            });
+        } else if(this.state.shop.id !== this.state.pc.currentShop){
+          fetch('/shop/'+ this.state.pc.currentShop)
+            .then(response => response.json())
+            .then(data => {
+              this.setStateCustom({shop: data, loadingShop: true});
+            });
+        }
+      } else {
+        fetch('/shop/new/'+ this.state.pc.id)
+          .then(response => response.json())
+          .then(data => {
+            let pc = {...this.state.pc}
+            pc.currentShop = data.id;
+            this.save(["pc"], [this.state.pc], {shop: data, pc: pc, loadingShop: true});
+          });
+      }
+    }
 
     helpMenu(src, classMod){
       return(
@@ -448,6 +501,33 @@ class App extends React.Component {
         }
       }
       return nextPosition ? this.props.props.positions.indexOf(nextPosition.position) : 0;
+    }
+
+    rest(){
+      let pc = {...this.state.pc};
+      pc.currentHealth = pc.healthTotal;
+      pc.currentEnergy = pc.energyTotal;
+      pc.ate = false;
+      pc.currentDungeon = null;
+      pc.currentFloor = -1;
+      pc.currentRoom = -1;
+      pc.day += 1;
+      pc.currency -= 250;
+      pc.currency = pc.currency > 0 ? pc.currency : 0;
+      let dungeonData;
+      fetch('/dungeon/new/'+ this.state.pc.id)
+      .then(response => response.json())
+      .then(data => {          
+        pc.dungeonBoard = [];
+        data.forEach(dungeon => pc.dungeonBoard.push(dungeon.id))
+        dungeonData = data;
+      })
+      .then(fetch('/shop/new/'+ this.state.pc.id)
+      .then(response => response.json())
+      .then(data => {
+        pc.currentShop = data.id;
+        this.save(["pc"], [this.state.pc], {shop: data, dungeonBoard: dungeonData, pc: pc, loadingShop: true, dungeon: null});
+      }));
     }
 
     appState(method, key, value){
@@ -617,26 +697,20 @@ class App extends React.Component {
           pc.location = "Dungeon";
           this.save(["pc"], [pc], {pc: pc});
           break;
-        case "set-dungeon":
+        case "set-dungeon": 
           pc = {...this.state.pc};
-          pc.currentDungeon = key;
-          this.save(["pc"], [pc], {pc: pc});
+          pc.currentDungeon = key;     
+          this.save(["pc"], [pc], {pc: pc, generatingDungeon: true});
           break;
         case "rest":
           pc = {...this.state.pc};
           pc.currentHealth = pc.healthTotal;
           pc.currentEnergy = pc.energyTotal;
           pc.ate = false;
-          pc.currentShop = null;
-          pc.dungeonBoard = null;
-          pc.currentDungeon = null;
-          pc.currentFloor = -1;
-          pc.currentRoom = -1;
-          pc.day += 1;
           pc.currency -= 250;
           pc.currency = pc.currency > 0 ? pc.currency : 0;
-
-          this.save(["pc"], [pc], {pc: pc, dungeon: null, rested: this.state.rested +1});
+          this.restCheck = true;
+          this.setStateCustom({pc: pc, rested: this.state.rested +1});
           break;
         case "eat":
           pc = {...this.state.pc};

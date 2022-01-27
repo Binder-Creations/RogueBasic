@@ -61,7 +61,7 @@
 				left:34.3095%;
 				bottom:17.95%;
 			}
-			.tavern:hover {
+			.tavern:hover, .taver:active {
 				opacity:1.0;
 			}
 			.inn {
@@ -72,7 +72,7 @@
 				left:51.5238%;
 				bottom:20.65%;
 			}
-			.inn:hover {
+			.inn:hover, .inn:active {
 				opacity:1.0;
 			}
 			.shop {
@@ -83,8 +83,21 @@
 				left:14.7619%;
 				bottom:17.35%;
 			}
-			.shop:hover {
+			.shop:hover, .shop:active {
 				opacity:1.0;
+			}
+			.loading-bar{
+				position: absolute;
+				width: 50%;
+				height: 12.6682%;
+				color:#000000;
+				font-size: 120%;
+			}
+			.loading-bar .bar {
+				position:absolute;
+				height: 100%;
+				left: 0%;
+				bottom: 0%;
 			}
 			.bar-health-background{
 				position:absolute;
@@ -171,7 +184,7 @@
 				width: 100%;
 				height: 100%;
 			}
-			.ability:hover .glow{
+			.ability:hover .glow, .ability:active .glow{
 				opacity: 1.0;
 			}
 			.a-1 {
@@ -627,13 +640,13 @@
 				width: 16.9758%;
 				height: 56%;
 			}
-			.hover-saturate:hover {
+			.hover-saturate:hover, .hover-saturate:active {
 				filter: saturate(150%);
 			}
-			.hover-saturate:hover + .hover-saturate-secondary{
+			.hover-saturate:hover + .hover-saturate-secondary, .hover-saturate:active + .hover-saturate-secondary{
 				filter: saturate(150%);
 			}
-			.hover-saturate-250:hover {
+			.hover-saturate-250:hover, .hover-saturate-250:active {
 				filter: saturate(250%);
 			}
 			.dungeon-portal-inactive {
@@ -1211,7 +1224,7 @@
 				border-radius: 100%;
 				transition-duration: 0.4s;
 			}
-			.btn-home:hover, .btn-help:hover {
+			.btn-home:hover, .btn-help:hover, .btn-home:active, .btn-help:active {
 				background-color: #69696988;
 				border: 1% solid #55555588;
 			}
@@ -1269,10 +1282,10 @@
 		.item-tooltip *, .ability-toopltip * {
 			pointer-events: none
 		}
-		.item-tooltip:hover .item-tooltip-box {
+		.item-tooltip:hover .item-tooltip-box, .item-tooltip:active .item-tooltip-box {
 			visibility: visible;
 		}
-		.ability-tooltip:hover .ability-tooltip-box, .ability-tooltip:hover .ability-tooltip-box-0 {
+		.ability-tooltip:hover .ability-tooltip-box, .ability-tooltip:active .ability-tooltip-box, .ability-tooltip:hover .ability-tooltip-box-0, .ability-tooltip:active .ability-tooltip-box-0 {
 			visibility: visible;
 			transition: visibility 0.3s linear 1s;
 		}
