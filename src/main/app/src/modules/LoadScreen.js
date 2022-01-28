@@ -16,13 +16,13 @@ class LoadScreen extends React.Component {
           <img className="background v-h-centered" src={this.props.props.images.barFrame}/>
           <p className="v-h-centered">
             {
-              this.props.imageCount > 0 && this.props.imageCount < this.props.imageMax
-                ? "Loading Images (" + this.props.imageCount + "/" + this.props.imageMax + ")..."
-                : this.props.loadingDungeons
-                  ? this.props.loadingShop
+              this.props.loadingShop 
+                ? this.props.imageCount >= this.props.imageMax
+                  ? this.props.loadingDungeons
                     ? "Loading..."
-                    : "Generating Shop Inventory..."
-                  : "Generating Dungeon Shells..."
+                    : "Populating Dungeon Options..."
+                  : "Loading Images (" + this.props.imageCount + "/" + this.props.imageMax + ")..."
+                : "Generating Shop Inventory..."
             }
           </p>
         </div>
@@ -32,12 +32,12 @@ class LoadScreen extends React.Component {
 
   barPercent(){
     let percent = 0;
-    percent += (this.props.imageCount/this.props.imageMax)*10;
+    percent += (this.props.imageCount/this.props.imageMax)*30;
     if(this.props.loadingDungeons){
-      percent += 50;
+      percent += 40;
     }
     if(this.props.loadingShop){
-      percent += 40;
+      percent += 30;
     }
     return percent;
   }

@@ -183,8 +183,6 @@ class App extends React.Component {
     this.props.props.appWidth = isWide ? window.innerHeight*2.1 : window.innerWidth;
     document.body.style.fontSize = this.props.props.appWidth*0.019 + "px";
 
-    console.log(this.state)
-
     if(this.state.loading){
       if(this.state.loadingImages >= this.imageMax && this.state.loadingDungeons && this.state.loadingShop) {
         this.setState({loading: false, loadingImages: 0, loadingDungeons: false, loadingShop: false})
@@ -348,26 +346,28 @@ class App extends React.Component {
 
     preloadImages() {
       this.loadingImages = 0;
-      Object.keys(this.props.props.abilities).forEach((image) => {
-        new Image().src = this.props.props.abilities[image];
-        this.loadingImages++;
-      });
-      Object.keys(this.props.props.images).forEach((image) => {
-        new Image().src = this.props.props.images[image]
-        this.loadingImages++;
-      });
-      Object.keys(this.props.props.items).forEach((type) => {
-        Object.keys(this.props.props.items[type]).forEach((item) => {
-          new Image().src = this.props.props.items[type][item]
-          this.loadingImages++;
-        });
-      });
-      Object.keys(this.props.props.monsters).forEach((type) => {
-        Object.keys(this.props.props.monsters[type]).forEach((item) => {
-          new Image().src = this.props.props.monsters[type][item]
-          this.loadingImages++;
-        });
-      });
+      let increment = () => this.loadingImages++
+      let fImage = (src) => {
+        let i = new Image();
+        i.src = src;
+        i.onload = increment;
+      }
+      for (let image of Object.keys(this.props.props.images)) {
+        fImage(this.props.props.images[image]);
+      }
+      for (let image of Object.keys(this.props.props.abilities)) {
+        fImage(this.props.props.abilities[image]);
+      }
+      for (let type of Object.keys(this.props.props.items)){
+        for (let image of Object.keys(this.props.props.items[type])) {
+          fImage(this.props.props.items[type][image]);
+        }
+      }
+      for (let type of Object.keys(this.props.props.monsters)) {
+        for (let image of Object.keys(this.props.props.monsters[type])) {
+          fImage(this.props.props.monsters[type][image]);
+        }
+      }
     }
 
     genDungeons(){
@@ -375,7 +375,6 @@ class App extends React.Component {
         fetch('/dungeon/'+ this.state.pc.currentDungeon)
         .then(response => response.json())
         .then(data => {
-          console.log("here2")
           this.setStateCustom({dungeon: this.sortDungeon(data), loadingDungeons: true, generatingDungeon: false, barPercent: 0});
         });
       }

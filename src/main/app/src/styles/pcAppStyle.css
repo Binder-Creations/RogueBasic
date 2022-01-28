@@ -1,0 +1,1474 @@
+@charset "UTF-8";
+		
+      *, *:before, *:after {
+				margin:0;
+        padding:0;
+      	box-sizing:border-box;	
+     	  font-family:"Georgia", sans-serif;
+      }
+			::-webkit-scrollbar {
+				width: 1vw;
+			}
+
+			::-webkit-scrollbar-track {
+				box-shadow: inset 0 0 0.7vw #a87e1299;
+				background: #4f3c0e99;
+			}
+
+			::-webkit-scrollbar-thumb {
+				background: #a47f32;
+				border-radius: 0.2vw;
+			}
+
+			::-webkit-scrollbar-thumb:hover {
+				background: #89651f;
+			}
+      body {
+    	  background-color:black;
+				color:#ffcc66;
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				text-align:center;
+      }
+      br {
+				display:block;
+				content:" ";
+	    }
+			table, td, tr {
+				border:none;
+				border-collapse: collapse;
+			}
+			.app-container {
+				width: 100vw;
+				height: 47.619047vw;
+				background-repeat: no-repeat;
+				background-size: contain;
+			}
+			.background {
+				width: 100%;
+				height: auto;
+				display:block;
+			}
+			.tavern {
+				opacity:0;
+				position:absolute;
+				width:18.8333%;
+				height:74.5%;
+				left:34.3095%;
+				bottom:17.95%;
+			}
+			.tavern:hover{
+				opacity:1.0;
+			}
+			.inn {
+				opacity:0;
+				position:absolute;
+				width:20.2142%;
+				height:59.15%;
+				left:51.5238%;
+				bottom:20.65%;
+			}
+			.inn:hover{
+				opacity:1.0;
+			}
+			.shop {
+				opacity:0;
+				position:absolute;
+				width:21.3571%;
+				height:47.3%;
+				left:14.7619%;
+				bottom:17.35%;
+			}
+			.shop:hover {
+				opacity:1.0;
+			}
+			.loading-bar{
+				position: absolute;
+				width: 50%;
+				height: 12.6682%;
+				color:#000000;
+				font-size: 110%;
+			}
+			.loading-bar .bar {
+				position:absolute;
+				height: 100%;
+				left: 0%;
+				bottom: 0%;
+			}
+			.bar-health-background{
+				position:absolute;
+				width:20.1854%;
+				height:5.082%;
+				top: 5%;
+				left: 5.0%;
+			}
+			.bar-health-frame{
+				position:absolute;
+				width:20.1546%;
+				height:5.082%;
+				top: 5%;
+				left: 5.0308%;				
+			}
+			.bar-health{
+				position:absolute;
+				height:4.7603%;
+				top: 5.123%;
+				left: 5.1235%;				
+			}
+			.bar-energy-background{
+				position:absolute;
+				width:20.1854%;
+				height:5.082%;
+				top: 12.329%;
+				left: 5.0%;
+			}
+			.bar-energy-frame{
+				position:absolute;
+				width:20.1546%;
+				height:5.082%;
+				top: 12.329%;
+				left: 5.0308%;				
+			}
+			.bar-energy{
+				position:absolute;
+				height:4.7603%;
+				top: 12.452%;
+				left: 5.1235%;				
+			}
+			.bar-experience{
+				position:absolute;
+				height:4.1667%;
+				top: 58.4444%;
+				left: 5.222%;
+			}
+			.bar-experience-frame{
+				position:absolute;
+				height:4.1667%;
+				width: 43.8984%;
+				top: 58.4444%;
+				left: 5.222%;
+			}
+			.heart{
+				position:absolute;
+				height:7.329%;
+				width:3.49%;
+				top: 3.8765%;
+				left: 2.3809%;
+			}
+			.swirl {
+				position:absolute;
+				height:7.329%;
+				width:3.49%;
+				top: 11.2055%;
+				left: 2.3809%;
+			}
+			.ability {
+				position:absolute;
+				bottom: 2.8265%;
+				height:14.9%;
+				width:7.0952%;
+				border: 0em;
+				background-color:#00000000;
+			}
+			.ability img {
+				position: absolute;
+			}
+			.ability .glow {
+				left: 0%;
+				top: 0%;
+				opacity: 0.0;
+				width: 100%;
+				height: 100%;
+			}
+			.ability:hover .glow{
+				opacity: 1.0;
+			}
+			.a-1 {
+				left: 34.8096%;
+			}
+			.a-2 {
+				left: 42.9048%;
+			}
+			.a-3 {
+				left: 51%;
+			}
+			.a-4 {
+				left: 59.0952%;
+			}
+			.btn-attack {
+				position:absolute;
+				left: 1.8459%;
+				bottom: 3.8765%;
+				width: 13.5%;
+				height: 28.35%;
+			}
+			.btn-character {
+				position:absolute;
+				left: 13.8459%;
+				bottom: 15.0515%;
+				width: 4.5%;
+				height: 9.45%;
+			}
+			.btn-inventory {
+				position:absolute;
+				left: 12.3459%;
+				bottom: 5.7515%;
+				width: 4.5%;
+				height: 9.45%;
+			}
+			.menu {
+				position: absolute;
+				right: 7.3691%;
+				top: 5%;
+				width: 85.2619%;
+				height: 90%;
+			}
+			.loot-menu {
+				position: absolute;
+				left: 34.9479%;  
+				top: 7.0022%;    
+				width: 31.25%;   
+				height: 69.3654%;
+			}
+			.quest-menu {
+				position: absolute;
+				left: 34.9479%;
+				top: 8.8522%;
+				width: 31.25%;
+				height: 65.625%;
+			}
+			.death-menu {
+				position: absolute;
+				left: 34.9479%;
+				top: 8.8522%;
+				width: 31.25%;
+				height: 65.625%;
+				color: whitesmoke;
+			}
+			.quest-gold {
+				position: absolute;
+				left: 31.3333%;    
+				top: 21.6667%;
+				width: 22.3333%;
+				height: 13.5556%;
+				font-size: 200%;
+				text-align: right;
+			}
+			.quest-exp {
+				position: absolute;
+				left: 31.3333%;
+				top: 36.8889%;
+				width: 22.3333%;
+				height: 13.5556%;
+				font-size: 200%;
+				text-align: right;
+			}
+			.quest-item-0 {
+				position: absolute;
+				left: 7.7222%;
+				top: 61.4444%;
+				width: 24.4444%;
+				height: 24.4444%;
+			}
+			.quest-item-1 {
+				position: absolute;
+				left: 37.7222%;
+				top: 61.4444%;
+				width: 24.4444%;
+				height: 24.4444%;
+			}
+			.quest-item-2 {
+				position: absolute;
+				left: 67.3333%;
+				top: 61.4444%;
+				width: 24.4444%;
+				height: 24.4444%;
+			}
+			.death-cause {
+				position: absolute;
+				left: 23.5556%;
+				top: 23.8889%;
+				width: 32.6667%;
+				height: 19.8333%;
+				font-size: 70%;
+			}
+			.death-souls {
+				position: absolute;
+				left: 23.5556%;
+				top: 55.3889%;
+				width: 32.6667%;
+				height: 19.8333%;
+				font-size: 300%;
+			}
+			.btn-death {
+				position: absolute;
+				left: 28.6667%;
+				top: 82.7778%;
+				width: 43.3333%;
+				height: 12.5%;
+				font-size: 70%;
+			}
+			.badge {
+				position: absolute;
+				left: 14.4932%;
+				top: 0.8377%;
+				width: 20.9439%;
+				height: 41.6666%;
+			}
+			.silhouette-warrior{
+				position: absolute;
+				left: 16.5875%;
+				top: 6.7222%;
+				width: 16.8389%;
+				height: 86.6111%;
+			}
+			.silhouette-wizard{
+				position: absolute;
+				left: 11.5052%;
+				top: 4.3333%;
+				width: 24.4345%;
+				height: 89.1111%;
+			}
+			.silhouette-rogue{
+				position: absolute;
+				left: 16.6713%;
+				top: 6.7778%;
+				width: 15.8894%;
+				height: 86.6667%;
+			}
+			.character-name{
+				position: absolute;
+				left: 0.8378%;
+				top: 49%;
+				width: 48.4222%;
+				height: 6.8889%;
+				font-size: 150%;
+			}
+			.character-level-background {
+				position: absolute;
+				left: 0.6423%;
+				top: 55.5556%;
+				width: 5.0545%;
+				height: 10.0556%;
+			}
+			.character-level {
+				position: absolute;
+				left: 1.2008%;
+				top: 56.9444%;
+				width: 3.9654%;
+				height: 7.2222%;
+				font-size: 120%;
+			}
+			.character-points {
+				position: absolute;
+				left: 16.7019%;
+				top: 63.9444%;
+				width: 15.5822%;
+				height: 6.9444%;
+				font-size: 80%;
+			}
+			.atr-values {
+				position: absolute;
+				left: 52.7427%;
+				top: 18.8889%;
+				width: 22.0688%;
+				height: 28.6667%;
+				font-size: 120%;
+				color: #000000;
+				text-align: left;
+			}
+			.atr-bonuses {
+				position: absolute;
+				left: 68.8674%;
+				top: 19.8889%;
+				width: 28.0688%;
+				height: 28.6667%;
+				font-size: 50%;
+				color: #000000;
+				text-align: ceneter;
+			}
+			.der-stats-1 {
+				position: absolute;
+				left: 51.2706%;
+				top: 58.5%;
+				width: 16.029%;
+				height: 35.6667%;
+				font-size: 90%;
+				color: #000000;
+				text-align: left;
+			}
+			.der-stats-2{
+				position: absolute;
+				left: 74.9232%;
+				top: 58.5%;
+				width: 16.029%;
+				height: 35.6667%;
+				font-size: 90%;
+				color: #000000;
+				text-align: left;
+			}
+			.der-values-1{
+				position: absolute;
+				left: 67.3555%;
+				top: 58.5%;
+				width: 7.4839%;
+				height: 35.6667%;
+				font-size: 90%;
+				color: #000000;
+				text-align: ceneter;
+			}
+			.der-values-2{
+				position: absolute;
+				left: 91.0081%;
+				top: 58.5%;
+				width: 7.4839%;
+				height: 35.6667%;
+				font-size: 90%;
+				color: #000000;
+				text-align: ceneter;
+			}
+			.btn-close {
+				position: absolute;
+				left: 93.8006%;
+				top: 1.6111%;
+				width: 5.3058%;
+				height: 10.5556%;
+			}
+			.btn-close-small {
+				position: absolute;
+				left: 91.2117%;
+				top: 5.482%;
+				width: 8.522%;
+				height: 8.0655%;
+			}
+			.btn-atr {
+				position:absolute;
+				width: 21.7816%;
+				height: 12.5%;
+				font-size: 170%;
+				color:#000000;
+			}
+			.con {
+				left: 3.1355%;
+				top: 72.2777%;
+			}
+			.str {
+				left: 3.1355%;
+				top: 85.2777%;
+			}
+			.dex {
+				left: 25.1406%;
+				top: 72.2777%;
+			}
+			.int {
+				left: 25.1406%;
+				top: 85.2777%;
+			}
+			.gold-count {
+				position: absolute;
+				left: 57.5258%;
+				top: 15.3889%;
+				width: 7.2605%;
+				height: 4.2778%;
+				font-size: 75%;
+			}
+			.soul-count {
+				position: absolute;
+				left: 85.088%;
+				top: 15.3889%;
+				width: 7.2605%;
+				height: 4.2778%;
+				font-size: 75%;
+			}
+			.unspent-points {
+				position: absolute;
+				left: 16.5625%; 
+				top: 75.0547%;  
+				width: 1.5625%; 
+				height: 3.2823%;
+			}
+			.inventory-box-wrapper{
+				z-index: 1;
+				position: absolute;
+				overflow-y: auto;
+				overflow-x: hidden;
+				left: 0%;
+				top: 20.2222%;
+				width: 95.0014%;
+				height: 73.6111%;
+			}
+			.shop-box-wrapper {
+				z-index: 1;
+				position: absolute;
+				overflow-y: auto;
+				overflow-x: hidden;
+				left: 0%;
+				top: 20.2222%;
+				width: 45.0433%;
+				height: 73.6111%;
+			}
+			.inventory-box {
+				pointer-events: auto;
+				position: absolute;
+				right: 0%;
+				top: 0%;
+				width: 42.1517%;
+				height: 100%;
+				display:flex;
+				flex-flow: row wrap;
+				align-items: flex-start;
+				align-content: flex-start;
+			}
+			.shop-box {
+				pointer-events: auto;
+				position: absolute;
+				right: 0%;
+				top: 0%;
+				width: 88.9027%;
+				height: 100%;
+				table-layout: fixed;
+			}
+			.loot-box {
+				overflow: visible;
+				pointer-events: auto;
+				position: absolute;
+				left: 2.2636%;
+				top: 13.4846%;
+				width: 95.4727%;
+				height: 66.7927%;
+				display:flex;
+				flex-flow: row wrap;
+				align-items: flex-start;
+				align-content: flex-start;
+			}
+			.loot-box-item {
+				position: relative;
+				width: 18.1311%;
+				height:24.5526%;
+				margin: 0.2983% 0.935%;
+			}
+			.inventory-box-item {
+				position: relative;
+				width: 18.1311%;
+				height:19.6226%;
+				margin: 0.1887% 0.935%;
+			}
+			.shop-box-item {
+				position: relative;
+				width: 100%;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			.shop-box-item td {
+				height: 100%;
+			}
+			.shop-fill {
+				display:block;
+
+				width:100%;
+				height:100%;
+			}
+			.shop-icon-heal {
+				display:inline-block;
+				width:16%;
+				height:25%;
+			}
+			.shop-icon-armor {
+				display:inline-block;
+				width:25%;
+				height: 25%;
+			}
+			.shop-icon-power {
+				display:inline-block;
+				width:20%;
+				height:25%;
+			}
+			.shop-coin {
+				display:inline-block;
+				width:25%;
+				height:25%;
+			}
+			.shop-image {
+				display:block;
+				width:80%;
+				height:auto;
+			}
+			.inn-menu {
+				position: absolute;
+				left: 28.5714%;
+				top: 5%;
+				width: 42.881%;
+				height: 90%;
+			}
+			.inn-menu > p {
+				position: absolute;
+				left: 44.5308%;
+				top: 89.8333%;
+				width: 20.211%;
+				height: 6.0%;
+			}
+			.rest {
+				position:absolute;
+				width:97.0572%;
+				height:37.4444%;
+				left:1.7768%;
+				top:12.6667%;
+			}
+			.eat {
+				position:absolute;
+				width:97.0572%;
+				height:37.4444%;
+				left:1.7768%;
+				top:50.1111%;
+			}
+			.dungeon-portal-frame {
+				position:absolute;
+				left: 6.4228%;
+				top: 6.4444%;
+				width: 37.1405%;
+				height: 88.7222%;
+				pointer-events: none;
+			}
+			.dungeon-portal-active {
+				position:absolute;
+				left: 16.6668%;
+				top: 23.0778%;
+				width: 16.9758%;
+				height: 56%;
+			}
+			.hover-saturate:hover{
+				filter: saturate(150%);
+			}
+			.hover-saturate:hover + .hover-saturate-secondary{
+				filter: saturate(150%);
+			}
+			.hover-saturate-250:hover{
+				filter: saturate(250%);
+			}
+			.dungeon-portal-inactive {
+				position: absolute;
+				left: 16.6668%;
+				top: 23.0778%;
+				width: 16.9758%;
+				height: 56%;
+			}
+			.dungeon-panel {
+				position: absolute;
+				left: 50.6004%;
+				width: 48.506%;
+				height: 27.7778%;		
+			}
+			.dungeon-menu .d1 {
+				top: 8.7778%;		
+			}
+			.dungeon-menu .d2 {
+				top: 36.5556%;			
+			}
+			.dungeon-menu .d3 {
+				top: 64.3333%;			
+			}
+			.dungeon-small {
+				position: absolute;
+				left: 0.1151%;
+				top: 16.2%;
+				width: 19.574%;
+				height: 68.0%;				
+			}
+			.dungeon-panel-name {
+				position: absolute;
+				left: 20.3224%;
+				top: 16.4%;
+				width: 72.4237%;
+				height: 23.0%;
+			}
+			.dungeon-panel-theme {
+				position: absolute;
+				left: 20.3224%;
+				top: 41.4%;
+				width: 22.6252%;
+				height: 19.6%;
+			}
+			.dungeon-panel-cr {
+				position: absolute;
+				left: 37.4657%;
+				top: 41.4%;
+				width: 12.0449%;
+				height: 19.6%;
+				text-align: right;
+			}
+			.dungeon-panel-floorcount {
+				position: absolute;
+				left: 20.3224%;
+				top: 59%;
+				width: 4.3178%;
+				height: 21%;
+				font-size: 130%;
+				text-align: right;
+			}
+			.dungeon-panel-floors {
+				position: absolute;
+				left: 25.2735%;
+				top: 62.0%;
+				width: 6.2176%;
+				height: 21.0%;
+			}
+			.dungeon-panel-miniboss {
+				position: absolute;
+				left: 31.9911%;
+				top: 62.6%;
+				width: 4.2026%;
+				height: 21.0%;
+			}
+			.dungeon-panel-boss {
+				position: absolute;
+				left: 36.1937%;
+				top: 62.4%;
+				width: 6.1025%;
+				height: 21.0%;
+			}
+			.dungeon-panel-prefix {
+				position: absolute;
+				left: 42.7962%;
+				top: 62.5%;
+				width: 5.5%;
+				height: 21.0%;
+			}
+			.dungeon-panel-postfix {
+				position: absolute;
+				left: 48.7962%;
+				top: 62.5%;
+				width: 5.5%;
+				height: 21.0%;
+			}
+			.dungeon-panel-quest {
+				position: absolute;
+				left: 52.5043%;
+				top: 44%;
+				width: 40.2418%;
+				height: 19.6%;
+				font-size: 75%;
+				text-align: right;
+			}
+			.dungeon-panel-reward {
+				position: absolute;
+				left: 52.5043%;
+				top: 63.0%;
+				width: 34.5423%;
+				height: 19.6%;
+				text-align: right;
+			}
+			.dungeon-stairs, .dungeon-chest {
+				position: absolute;
+				left: 36.4286%;
+				top: 32.0%;
+				width: 27.1429%;
+				height: 57.0%;
+			}
+			.dungeon-chest-left {
+				position: absolute;
+				left: 7%;
+				top: 32.0%;
+				width: 27.1429%;
+				height: 57.0%;
+			}
+			.dungeon-arena {
+				position: absolute;
+				left: 7.1094%;
+				top: 39.6721%;
+				width: 85.9375%;
+				height: 41.6393%;
+			}
+			.monster {
+				position: absolute;
+				width: 23.4375%;
+				height: 49.1803%;
+			}
+			.monster.backLeft {
+				left: 20.8594%;    
+				top: 4.0984%;
+			}
+			.monster.backCenter {
+				left: 44.4531%;
+				top: 4.0984%;				
+			}
+			.monster.backRight {
+				left: 68.0469%;
+				top: 4.0984%;
+			}
+			.monster.frontLeft {
+				left: 13.2031%;
+				top: 21.6393%;
+			}
+			.monster.frontCenter {
+				left: 36.7969%;
+				top: 21.6393%;
+			}
+			.monster.frontRight {
+				left: 60.3906%;
+				top: 21.6393%;
+			}
+			.monster.pc {
+				left:-5%;
+				top: 10%;
+			}
+			.monster-bar {
+				position: absolute;
+				width: 19.5312%;
+				height: 4.918%;
+			}
+			.monster-bar.backLeft {
+				left: 22.8906%;
+				top: 6.6393%;
+			}
+			.monster-bar.backCenter {
+				left: 46.4062%;
+				top: 6.6393%;				
+			}
+			.monster-bar.backRight {
+				left: 70.0%;
+				top: 6.6393%;				
+			}
+			.monster-bar.frontLeft {
+				left: 15.1562%;
+				top: 71.1475%;				
+			}
+			.monster-bar.frontCenter {
+				left: 38.75%;
+				top: 71.1475%;				
+			}
+			.monster-bar.frontRight {
+				left: 62.3438%;
+				top: 71.1475%;				
+			}
+			.monster-update-box {
+				position:absolute;
+				width: 100%;
+				height: 1%;
+				top: 50%;
+				transform: translate(0%, -50%);
+				-ms-transform: translateY(0%, -50%);
+				border-spacing: 0px;
+				table-layout: fixed;
+				margin-left:auto;
+				margin-right:auto;
+			}
+			.fade-enter, .fade-appear, .fade-in-enter, .fade-in-appear {
+				opacity: 0.01;
+			}
+			.fade-enter.fade-enter-active, .fade-appear.fade-appear-active, .fade-in-enter.fade-in-enter-active, .fade-in-appear.fade-in-appear-active {
+				opacity: 1;
+				transition: opacity 200ms ease-in;
+			}
+			.fade-exit {
+				opacity: 1;
+			}
+			.fade-exit.fade-exit-active {
+				opacity: 0.01;
+				transition: opacity 500ms ease-in;
+			}
+			.inn-float {
+				position: absolute;
+				width: 25%;
+				height: auto;
+				left: 37.5%;
+				top: 25%;
+			}
+			.combat-div {
+				height: 4vw;
+			}
+			.combat-text {
+				height: 4vw;
+				line-height: 4vw;
+				text-align: left;
+			}
+			.combat-text span {
+				display: inline-block;
+				vertical-align: middle;
+				line-height: normal;
+				background-color:rgba(214, 214, 184, 0.828);
+				border-radius: 1vw;
+
+			}
+			.combat-text.AttackHealth {
+				color:#920000;
+			}
+			.combat-text.AttackEnergy {
+				color:#0609a1;
+			}
+			.combat-text.Heal {
+				color:chartreuse;
+			}
+			.combat-text.Buff {
+				color:aqua;
+			}
+			.combat-text.Debuff {
+				color:indigo;
+			}
+			.combat-text.death {
+				color:rgb(29, 2, 2);
+			}
+			.combat-text.stun {
+				color:rgb(36, 35, 35);
+			}
+			.combat-text.experience {
+				color:rgb(0, 206, 10);
+			}
+			.popup {
+				position: absolute;
+				top:25%;
+				left: 38.095%;
+				height: 50%;
+				width: 23.81%;
+				opacity: 0.5;
+			}
+			.popup img {
+				height: 100%;
+				width: auto;
+			}
+			.level-up {
+				position:absolute;
+				top: 30%;
+				left:50%;
+				height: 40%;
+				width: auto;
+				opacity: 1.0;
+				transform: translate(-50%, -70%);
+				-ms-transform: translateY(-70%) translateX(-50%);
+			}
+			.combat-ability-image {
+				height: 100%;
+				width: auto;
+			}
+			.buff-icon {
+				height: 2vw;
+				width: auto;
+			}
+			.buff-box {
+				position: absolute;
+				height: 2vw;
+				width: 19.5312%;
+				display: flex;
+				flex-direction: row;
+				flex-wrap: nowrap;
+			}
+			.buff-box.pc.buffs {
+				justify-content: left;
+				top: 17.4%;
+				left: 5.1235%;	
+			}
+			.buff-box.pc.debuffs {
+				justify-content: left;
+				top: 22.9%;
+				left: 5.1235%;	
+			}
+			.buff-box.backLeft.buffs {
+				justify-content: right;
+				left: 22.8906%;
+				top: 11.8393%;
+			}
+			.buff-box.backLeft.debuffs {
+				justify-content: right;
+				left: 22.8906%;
+				top: 17.3393%;
+			}
+			.buff-box.backCenter.buffs {
+				justify-content: left;
+				left: 46.4062%;
+				top: 11.8393%;				
+			}
+			.buff-box.backCenter.debuffs {
+				justify-content: left;
+				left: 46.4062%;
+				top: 17.3393%;				
+			}
+			.buff-box.backRight.buffs {
+				justify-content: left;
+				left: 70.0%;
+				top: 11.8393%;				
+			}
+			.buff-box.backRight.debuffs {
+				justify-content: left;
+				left: 70.0%;
+				top: 17.3393%;				
+			}
+			.buff-box.frontLeft.buffs {
+				justify-content: right;
+				left: 15.1562%;
+				top: 76.3475%;				
+			}
+			.buff-box.frontLeft.debuffs {
+				justify-content: right;
+				left: 15.1562%;
+				top: 81.8475%;				
+			}
+			.buff-box.frontCenter.buffs {
+				left: 38.75%;
+				top: 76.3475%;				
+			}
+			.buff-box.frontCenter.debuffs {
+				justify-content: left;
+				left: 38.75%;
+				top: 81.8475%;				
+			}
+			.buff-box.frontRight.buffs {
+				justify-content: left;
+				left: 62.3438%;
+				top: 76.3475%;				
+			}
+			.buff-box.frontRight.debuffs {
+				justify-content: left;
+				left: 62.3438%;
+				top: 81.8475%;				
+			}
+			.minimap-overlay {
+				position: absolute;
+				right: 4.2269%;
+				bottom: 8.8765%;
+				width: 13.5%;
+				height: 28.35%;
+			}
+			.minimap-underlay {
+				position: absolute;
+				right: 4.8225%;
+				bottom: 10.0515%;
+				width: 12.3089%;
+				height: 26%;
+			}
+			.minimap-room-box {
+				position: absolute;
+				left: 84.2381%;
+				top: 66.9%;    
+				width: 9.5238%;
+				height: 20.0%; 
+			}
+			.minimap-north {
+				position: absolute;
+				left: 86.2857%;
+				top: 54.7%;
+				width: 5.4762%;
+				height: 7.55%;
+			}
+			.minimap-south {
+				position: absolute;
+				left: 86.2857%;
+				top: 91.6%;
+				width: 5.4762%;
+				height: 7.55%;
+			}
+			.minimap-east {
+				position: absolute;
+				width: 3.5952%;
+				height: 11.5%;
+				left: 96.0714%;
+				top: 71.2%;
+			}
+			.minimap-west {
+				position: absolute;
+				width: 3.5952%;
+				height: 11.5%;
+				left: 78.381%;
+				top: 71.2%;
+			}
+			.absolute-fill {
+				position: absolute;
+				top:0%;
+				left:0%;
+				width: 100%;
+				height: 100%;
+			}
+			.gray-75 {
+				filter: grayscale(75%);
+			}
+			.gray-100 {
+				filter: grayscale(100%);
+			}
+			.saturate-66 {
+				filter: saturate(66%);
+			}
+			.saturate-150 {
+				filter: saturate(150%);
+			}
+			.saturate-200 {
+				filter: saturate(200%);
+			}
+			.item-image {
+				position: absolute;
+				top:5%;
+				left:5%;
+				width: 90%;
+				height: 90%;
+			}
+			.item-count {
+				position: absolute;
+				bottom:20%;
+				left:4%;
+				width: 10%;
+				height: 10%;
+				color:white;
+				font-size: 75%;
+			}
+			.item-equipped {
+				position: absolute;
+				z-index: 2;
+				width: 9.4946%;
+				height: 18.8889%;
+			}
+			.equipped-head {
+				top:8.8333%;
+				left:1.4242%;
+			}
+			.equipped-body {
+				top:40.6667%;
+				left:1.4521%;
+			}
+			.equipped-back {
+				top:72%;
+				left:1.4521%;
+			}
+			.equipped-neck{
+				top:9.6667%;
+				left:39.2907%;
+			}
+			.equipped-primary{
+				top:40.667%;
+				left:39.2907%;
+			}
+			.equipped-secondary{
+				top:72%;
+				left:39.2907%;
+			}
+			.nopointer {
+				pointer-events: none;
+			}
+			.pointer {
+				pointer-events: auto;
+			}
+	    .inline-block {
+	    	display:inline-block;
+	    }
+	    .center-align {
+	    	text-align:center;
+	    }
+	    .left-align {
+	    	text-align:left;
+	    }
+	    .right-align {
+	    	text-align:right;
+	    }
+      	.spacer-xs {
+      		margin:1.95%;
+      	}
+   		.font-red {
+       		color:#ff0000;
+   		}
+			.help-menu {
+				position: absolute;
+				right: 6.5%;  
+				top: 3%;     
+				width: 42.8571%;
+				height: 90.0%; 
+			}
+			.help-menu-tavern {
+				position: absolute;
+				right: 28.5715%;  
+				top: 5%;     
+				width: 42.8571%;
+				height: 90.0%; 
+			}
+			.help-menu-combat {
+				position: absolute;
+				right: 6.5%;  
+				top: 3%;     
+				width: 85.7143%;
+				height: 90.0%; 
+			}
+			.help-menu .close, .help-menu-tavern .close {
+				position: absolute;
+				right: 1.6111%;
+				top: 1.6111%;
+				height: 6.5%;
+				width: 6.5%;
+			}
+			.help-menu-combat .close {
+				position: absolute;
+				right: 0.8055%;
+				top: 1.6111%;
+				height: 6.5%;
+				width: auto;
+			}
+			.btn-home {
+				position: absolute;
+				top: 3%;
+				right: 1.4286%;
+				text-align: center;
+				width: 4.5%;
+				height: 9.45%;
+				background-color: #55555588;
+				border: 1% solid #69696988;
+				border-radius: 100%;
+				transition-duration: 0.4s;
+			}
+			.btn-help {
+				position: absolute;
+				top: 13.95%;
+				right: 1.4286%;
+				text-align: center;
+				width: 4.5%;
+				height: 9.45%;
+				background-color: #55555588;
+				border: 1% solid #69696988;
+				border-radius: 100%;
+				transition-duration: 0.4s;
+			}
+			.btn-home:hover, .btn-help:hover{
+				background-color: #69696988;
+				border: 1% solid #55555588;
+			}
+			.btn-home img{
+				position:absolute;
+				width: 75%;
+				height: auto;
+				opacity: 0.5;
+				top: 50%;
+				left:50%;
+				transform: translate(-50%, -50%);
+				-ms-transform: translateY(-50%) translateX(-50%);
+			}
+			.btn-help img{
+				position:absolute;
+				width: 100%;
+				height: auto;
+				opacity: 0.5;
+				top: 50%;
+				left:50%;
+				transform: translate(-50%, -50%);
+				-ms-transform: translateY(-50%) translateX(-50%);
+			}
+		.btn-loot-all {
+			position: absolute;
+			left: 32.024%;  
+			top: 84.2634%;  
+			width: 35.8189%;
+			height: 9.7669%;
+			font-size: 75%;
+		}
+
+		.item-tooltip-box{
+			position: absolute;
+			visibility: hidden;
+			transition: opacity 0.3s;
+			z-index: 9;
+		}
+		.ability-tooltip-box{
+			position: absolute;
+			visibility: hidden;
+			bottom:100%;
+			left:-75%;
+			transition: visibility 0s linear 0s;
+			z-index: 9;
+		}
+		.ability-tooltip-box-0{
+			position: absolute;
+			visibility: hidden;
+			bottom:100%;
+			left:0%;
+			transition: visibility 0s linear 0s;
+			z-index: 9;
+		}
+		.item-tooltip *, .ability-toopltip * {
+			pointer-events: none
+		}
+		.item-tooltip:hover .item-tooltip-box{
+			visibility: visible;
+		}
+		.ability-tooltip:hover .ability-tooltip-box, .ability-tooltip:hover .ability-tooltip-box-0{
+			visibility: visible;
+			transition: visibility 0.3s linear 1s;
+		}
+		.ability-tooltip-target {
+			position: absolute;
+			left: 30.2857%;
+			top: 14.7619%;
+			width: 39.4286%;
+			height: 11.2381%;
+		}
+
+		.top-left{
+			top: 0%;
+			left: 100.2%;
+		}
+		.top-right{
+			top: 0%;
+			right: 100.2%;
+		}
+		.center-left{
+			top: -150%;
+			left: 100.2%;
+		}
+		.center-right{
+			top: -150%;
+			right: 100.2%;
+		}
+		.bottom-left{
+			bottom: 0%;
+			left: 100.2%;
+		}
+		.bottom-right{
+			bottom: 0%;
+			right: 100.2%;
+		}
+		.item-tooltip-image{
+			position: absolute;
+			left: 3.5714%;
+			top: 14.6667%;
+			width: 17.1429%;
+			height: 11.4286%;
+		}
+		.item-tooltip-badge-generic{
+			position: absolute;
+			left: 80.1427%;
+			top: 14.6667%;
+			width: 15.4286%;
+			height: 11.4286%;
+		}
+		.item-tooltip-badge-wizard{
+			position: absolute;
+			left: 79.4%;
+			top: 14.6667%;
+			width: 17.1429%;
+			height: 11.4286%;
+		}
+		.item-tooltip-badge-rogue{
+			position: absolute;
+			left: 81.7143%;
+			top: 14.6667%;
+			width: 12.5714%;
+			height: 11.4286%;
+		}
+		.item-tooltip-badge-warrior{
+			position: absolute;
+			left: 79.7143%;
+			top: 14.6667%;
+			width: 16.2857%;
+			height: 11.4286%;
+		}
+		.item-tooltip-icon-heal{
+			position: absolute;
+			left: 54.8571%;
+			top: 29.7143%;
+			width: 9.4286%;
+			height: 11.4286%;
+		}
+		.item-tooltip-icon-armor{
+			position: absolute;
+			left: 50.7143%;
+			top: 29.7143%;
+			width: 21.5714%;
+			height: 11.4286%;
+		}
+		.item-tooltip-icon-power{
+			position: absolute;
+			left: 53.1429%;
+			top: 29.7143%;
+			width: 16.7143%;
+			height: 11.4286%;
+		}
+		.item-tooltip-icon-value{
+			position: absolute;
+			left: 12.2571%;
+			top: 29.7143%;
+			width: 37.1429%;
+			height: 11.4286%;
+			font-size: 128%;
+			text-align: right;
+		}
+		.item-tooltip-name{
+			position: absolute;
+			left: 9.7143%;
+			top: 2.4762%;
+			width: 80.1429%;
+			height: 11.4286%;
+			color:#000000;
+		}
+		.item-tooltip-cost{
+			position: absolute;
+			left: 43.2857%;
+			top: 75.5238%;
+			width: 16.8571%;
+			height: 6.0%;
+			font-size: 62.5%;
+		}
+		.ability-tooltip-cost{
+			position: absolute;
+			left: 12.8571%;  
+			top: 85.9048%;   
+			width: 37.1429%; 
+			height: 11.4286%;
+			font-size: 128%;
+			text-align: right;
+			color: #2289c7;
+		}
+		.item-tooltip-description{
+			position: absolute;
+			left: 9.7143%;
+			top: 85.9048%;
+			width: 80.1429%;
+			height: 11.4286%;
+			color:#000000;
+			font-size: 50%;
+		}
+		.item-tooltip-general{
+			position: absolute;
+			left: 21.7143%;
+			top: 16.6667%;
+			width: 56.5714%;
+			height: 11.4286%;
+			color:#000000;
+			font-size: 80%;
+		}
+		.ability-tooltip-requirement{
+			position: absolute;
+			left: 21.7143%;  
+			top: 69.1667%;   
+			width: 56.5714%; 
+			height: 11.4286%;
+			color:#920000;
+		}
+		.ability-tooltip-requirement p{
+			font-size: 75%;
+		}
+		.item-tooltip-statbox{
+			position: absolute;
+			left: 9.7143%;
+			top: 42.2857%;
+			width: 80.5714%;
+			height: 31.7143%;
+			color:#000000;
+			font-size: 70%;
+		}
+		.v-h-centered{
+			position:absolute;
+			top: 50%;
+			left:50%;
+			transform: translate(-50%, -50%);
+			-ms-transform: translateY(-50%) translateX(-50%);
+		}
+		.nowrap{
+			white-space: nowrap;
+			overflow: hidden;
+		}
+		.relative{
+			position:relative;
+		}
+		.x-flip {
+			-webkit-transform: scaleX(-1);
+			transform: scaleX(-1);
+		}
+		.y-flip {
+			-webkit-transform: scaleY(-1);
+			transform: scaleY(-1);
+		}
