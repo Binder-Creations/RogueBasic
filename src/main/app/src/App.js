@@ -565,6 +565,7 @@ class App extends React.Component {
           dungeon = {...this.state.dungeon};
           pc.currency += this.state.dungeon.reward;
           pc.experience += Math.floor(this.state.dungeon.reward*2.5);
+          this.pcServices.updateStats(pc);
           pc.inventory[this.state.dungeon.rewardCache[key].id] = 1;
           pc.inventoryCache.push(this.state.dungeon.rewardCache[key]);
           dungeon.rewardClaimed = true;

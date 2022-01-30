@@ -16,12 +16,12 @@ class LoadScreen extends React.Component {
           <img className="background v-h-centered" src={this.props.props.images.barFrame}/>
           <p className="v-h-centered">
             {
-              this.props.loadingShop 
-                ? this.props.imageCount >= this.props.imageMax
-                  ? this.props.loadingDungeons
+              this.props.loadingShop
+                ? this.props.loadingDungeons 
+                  ? this.props.imageCount >= this.props.imageMax
                     ? "Loading..."
-                    : "Populating Dungeon Options..."
-                  : "Loading Images (" + this.props.imageCount + "/" + this.props.imageMax + ")..."
+                    : "Loading Images (" + this.props.imageCount + "/" + this.props.imageMax + ")..."
+                  : "Populating Dungeon Options..."    
                 : "Generating Shop Inventory..."
             }
           </p>

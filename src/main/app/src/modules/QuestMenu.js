@@ -9,7 +9,7 @@ class QuestMenu extends React.Component {
         let itemProps = this.props.props.itemServices.getProps(item);
         return(
           <div className={"quest-item-"+props.i+" item-tooltip"} onClick={()=>{this.props.props.appState("quest", props.i)}}>
-            <div className="absolute-fill hover-saturate">
+            <div className="absolute-fill hover-saturate nopointer">
               <img src={itemProps.background} className="absolute-fill" alt=""/>
               <img src={itemProps.image} className="item-image" alt="item"/>
               <img src={itemProps.frame} className="absolute-fill" alt="frame"/>

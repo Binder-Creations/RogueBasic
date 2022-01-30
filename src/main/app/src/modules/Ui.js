@@ -42,7 +42,7 @@ class Ui extends React.Component {
       }
       return(
         <div className={className+" ability-tooltip ability a-"+props.number} onClick={onClick}>
-          <img className="absolute-fill" src={this.props.props.abilities[camelCase(this.props.props.pc.abilities[props.number].name)]} alt="Ability"/>
+          <img className="absolute-fill nopointer" src={this.props.props.abilities[camelCase(this.props.props.pc.abilities[props.number].name)]} alt="Ability"/>
           <AbilityTooltip props={this.props.props} number={props.number}/>
         </div>
       )
@@ -90,13 +90,13 @@ class Ui extends React.Component {
     if(this.props.props.combat && !this.props.props.position){
       this.attackButton =
         <div className={"btn-attack hover-saturate ability-tooltip"} onClick={() => this.props.props.appState("ability", 0)}>
-          <img className="absolute-fill" src={this.buttonAttack} alt="Attack"/>
+          <img className="absolute-fill nopointer" src={this.buttonAttack} alt="Attack"/>
           <AbilityTooltip props={this.props.props} number={0}/>
         </div>
     } else {
       this.attackButton =
         <div className={"btn-attack hover-saturate ability-tooltip"}>
-          <img className="absolute-fill" src={this.buttonAttack} alt="Attack"/>
+          <img className="absolute-fill nopointer" src={this.buttonAttack} alt="Attack"/>
           <AbilityTooltip props={this.props.props} number={0}/>
         </div>
     }
