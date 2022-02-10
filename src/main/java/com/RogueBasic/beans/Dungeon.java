@@ -26,7 +26,7 @@ public class Dungeon {
 	private boolean miniboss;
 	private boolean boss;
 	private int reward;
-	private Set<Item> rewardCache;
+	private Set<Item> rewardSet;
 	private boolean questCompleted;
 	private boolean rewardClaimed;
 	private int currentFloor;
@@ -48,11 +48,11 @@ public class Dungeon {
 				}
 			}
 		}
-		Set<Item> rewardCache = new HashSet<>();
-		if(dungeon.getRewardCache() != null) {
-			for(String item: dungeon.getRewardCache()) {
+		Set<Item> rewardSet = new HashSet<>();
+		if(dungeon.getRewardSet() != null) {
+			for(String item: dungeon.getRewardSet()) {
 				try {
-					rewardCache.add(mapper.readValue(item, Item.class));
+					rewardSet.add(mapper.readValue(item, Item.class));
 				} catch (JsonMappingException e) {
 					e.printStackTrace();
 				} catch (JsonProcessingException e) {
@@ -73,7 +73,7 @@ public class Dungeon {
 		this.miniboss = dungeon.isMiniboss();
 		this.boss = dungeon.isBoss();
 		this.reward = dungeon.getReward();
-		this.rewardCache = rewardCache;
+		this.rewardSet = rewardSet;
 		this.questCompleted = dungeon.isQuestCompleted();
 		this.rewardClaimed = dungeon.isRewardClaimed();
 		this.currentFloor = dungeon.getCurrentFloor();
@@ -176,12 +176,12 @@ public class Dungeon {
 		this.reward = reward;
 	}
 
-	public Set<Item> getRewardCache() {
-		return rewardCache;
+	public Set<Item> getRewardSet() {
+		return rewardSet;
 	}
 
-	public void setRewardCache(Set<Item> rewardCache) {
-		this.rewardCache = rewardCache;
+	public void setRewardSet(Set<Item> rewardSet) {
+		this.rewardSet = rewardSet;
 	}
 
 	public boolean isQuestCompleted() {
@@ -219,7 +219,7 @@ public class Dungeon {
 	@Override
 	public int hashCode() {
 		return Objects.hash(boss, challengeRating, currentFloor, currentRoom, description, floorCount, floors, id,
-				miniboss, name, postfixMod, prefixMod, questCompleted, reward, rewardCache, rewardClaimed, theme);
+				miniboss, name, postfixMod, prefixMod, questCompleted, reward, rewardClaimed, rewardSet, theme);
 	}
 	
 	@Override
@@ -237,7 +237,7 @@ public class Dungeon {
 				&& Objects.equals(id, other.id) && miniboss == other.miniboss && Objects.equals(name, other.name)
 				&& Objects.equals(postfixMod, other.postfixMod) && Objects.equals(prefixMod, other.prefixMod)
 				&& questCompleted == other.questCompleted && reward == other.reward
-				&& Objects.equals(rewardCache, other.rewardCache) && rewardClaimed == other.rewardClaimed
+				&& rewardClaimed == other.rewardClaimed && Objects.equals(rewardSet, other.rewardSet)
 				&& Objects.equals(theme, other.theme);
 	}
 	
@@ -246,7 +246,7 @@ public class Dungeon {
 		return "Dungeon [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme
 				+ ", prefixMod=" + prefixMod + ", postfixMod=" + postfixMod + ", floorCount=" + floorCount + ", floors="
 				+ floors + ", challengeRating=" + challengeRating + ", miniboss=" + miniboss + ", boss=" + boss
-				+ ", reward=" + reward + ", rewardCache=" + rewardCache + ", questCompleted=" + questCompleted
+				+ ", reward=" + reward + ", rewardSet=" + rewardSet + ", questCompleted=" + questCompleted
 				+ ", rewardClaimed=" + rewardClaimed + ", currentFloor=" + currentFloor + ", currentRoom=" + currentRoom
 				+ "]";
 	}

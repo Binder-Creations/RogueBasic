@@ -7,7 +7,6 @@ import java.util.UUID;
 
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
-@UserDefinedType(value = "room")
 public class Room {
 	private int count;
 	private UUID id;
@@ -22,8 +21,7 @@ public class Room {
 	private UUID southRoomId;
 	private UUID eastRoomId;
 	private UUID westRoomId;
-	private Map<UUID, Integer> loot;
-	private Set<Item> lootCache;
+	private Set<Item> loot;
 	private Set<Monster> monsters;
 	private boolean miniboss;
 	private boolean boss;
@@ -135,20 +133,12 @@ public class Room {
 		this.westRoomId = westRoomId;
 	}
 
-	public Map<UUID, Integer> getLoot() {
+	public Set<Item> getLoot() {
 		return loot;
 	}
 
-	public void setLoot(Map<UUID, Integer> loot) {
+	public void setLoot(Set<Item> loot) {
 		this.loot = loot;
-	}
-
-	public Set<Item> getLootCache() {
-		return lootCache;
-	}
-
-	public void setLootCache(Set<Item> lootCache) {
-		this.lootCache = lootCache;
 	}
 
 	public Set<Monster> getMonsters() {
@@ -185,8 +175,8 @@ public class Room {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(boss, cleared, count, dungeonId, eastRoomId, floorId, id, loot, lootCache, miniboss,
-				monsters, northRoomId, southRoomId, stairsNext, stairsPrevious, variant, westRoomId, xCoord, yCoord);
+		return Objects.hash(boss, cleared, count, dungeonId, eastRoomId, floorId, id, loot, miniboss, monsters,
+				northRoomId, southRoomId, stairsNext, stairsPrevious, variant, westRoomId, xCoord, yCoord);
 	}
 
 	@Override
@@ -201,10 +191,10 @@ public class Room {
 		return boss == other.boss && cleared == other.cleared && count == other.count
 				&& Objects.equals(dungeonId, other.dungeonId) && Objects.equals(eastRoomId, other.eastRoomId)
 				&& Objects.equals(floorId, other.floorId) && Objects.equals(id, other.id)
-				&& Objects.equals(loot, other.loot) && Objects.equals(lootCache, other.lootCache)
-				&& miniboss == other.miniboss && Objects.equals(monsters, other.monsters)
-				&& Objects.equals(northRoomId, other.northRoomId) && Objects.equals(southRoomId, other.southRoomId)
-				&& stairsNext == other.stairsNext && stairsPrevious == other.stairsPrevious && variant == other.variant
+				&& Objects.equals(loot, other.loot) && miniboss == other.miniboss
+				&& Objects.equals(monsters, other.monsters) && Objects.equals(northRoomId, other.northRoomId)
+				&& Objects.equals(southRoomId, other.southRoomId) && stairsNext == other.stairsNext
+				&& stairsPrevious == other.stairsPrevious && variant == other.variant
 				&& Objects.equals(westRoomId, other.westRoomId) && xCoord == other.xCoord && yCoord == other.yCoord;
 	}
 
@@ -214,8 +204,7 @@ public class Room {
 				+ ", variant=" + variant + ", xCoord=" + xCoord + ", yCoord=" + yCoord + ", stairsPrevious="
 				+ stairsPrevious + ", stairsNext=" + stairsNext + ", northRoomId=" + northRoomId + ", southRoomId="
 				+ southRoomId + ", eastRoomId=" + eastRoomId + ", westRoomId=" + westRoomId + ", loot=" + loot
-				+ ", lootCache=" + lootCache + ", monsters=" + monsters + ", miniboss=" + miniboss + ", boss=" + boss
-				+ ", cleared=" + cleared + "]";
+				+ ", monsters=" + monsters + ", miniboss=" + miniboss + ", boss=" + boss + ", cleared=" + cleared + "]";
 	}
 	
 }

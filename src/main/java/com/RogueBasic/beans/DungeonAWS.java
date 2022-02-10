@@ -26,7 +26,7 @@ public class DungeonAWS {
 	private boolean miniboss;
 	private boolean boss;
 	private int reward;
-	private Set<String> rewardCache;
+	private Set<String> rewardSet;
 	private boolean questCompleted;
 	private boolean rewardClaimed;
 	private int currentFloor;
@@ -46,11 +46,11 @@ public class DungeonAWS {
 				}
 			}
 		}
-		Set<String> rewardCache = new HashSet<>();
-		if(dungeon.getRewardCache() != null) {
-			for(Item item: dungeon.getRewardCache()) {
+		Set<String> rewardSet = new HashSet<>();
+		if(dungeon.getRewardSet() != null) {
+			for(Item item: dungeon.getRewardSet()) {
 				try {
-					rewardCache.add(mapper.writeValueAsString(item));
+					rewardSet.add(mapper.writeValueAsString(item));
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
 				}
@@ -69,7 +69,7 @@ public class DungeonAWS {
 		this.miniboss = dungeon.isMiniboss();
 		this.boss = dungeon.isBoss();
 		this.reward = dungeon.getReward();
-		this.rewardCache = rewardCache;
+		this.rewardSet = rewardSet;
 		this.questCompleted = dungeon.isQuestCompleted();
 		this.rewardClaimed = dungeon.isRewardClaimed();
 		this.currentFloor = dungeon.getCurrentFloor();
@@ -172,12 +172,12 @@ public class DungeonAWS {
 		this.reward = reward;
 	}
 
-	public Set<String> getRewardCache() {
-		return rewardCache;
+	public Set<String> getRewardSet() {
+		return rewardSet;
 	}
 
-	public void setRewardCache(Set<String> rewardCache) {
-		this.rewardCache = rewardCache;
+	public void setRewardSet(Set<String> rewardSet) {
+		this.rewardSet = rewardSet;
 	}
 
 	public boolean isQuestCompleted() {
@@ -215,7 +215,7 @@ public class DungeonAWS {
 	@Override
 	public int hashCode() {
 		return Objects.hash(boss, challengeRating, currentFloor, currentRoom, description, floorCount, floors, id,
-				miniboss, name, postfixMod, prefixMod, questCompleted, reward, rewardCache, rewardClaimed, theme);
+				miniboss, name, postfixMod, prefixMod, questCompleted, reward, rewardClaimed, rewardSet, theme);
 	}
 
 	@Override
@@ -233,7 +233,7 @@ public class DungeonAWS {
 				&& Objects.equals(id, other.id) && miniboss == other.miniboss && Objects.equals(name, other.name)
 				&& Objects.equals(postfixMod, other.postfixMod) && Objects.equals(prefixMod, other.prefixMod)
 				&& questCompleted == other.questCompleted && reward == other.reward
-				&& Objects.equals(rewardCache, other.rewardCache) && rewardClaimed == other.rewardClaimed
+				&& rewardClaimed == other.rewardClaimed && Objects.equals(rewardSet, other.rewardSet)
 				&& Objects.equals(theme, other.theme);
 	}
 
@@ -242,7 +242,7 @@ public class DungeonAWS {
 		return "DungeonAWS [id=" + id + ", name=" + name + ", description=" + description + ", theme=" + theme
 				+ ", prefixMod=" + prefixMod + ", postfixMod=" + postfixMod + ", floorCount=" + floorCount + ", floors="
 				+ floors + ", challengeRating=" + challengeRating + ", miniboss=" + miniboss + ", boss=" + boss
-				+ ", reward=" + reward + ", rewardCache=" + rewardCache + ", questCompleted=" + questCompleted
+				+ ", reward=" + reward + ", rewardSet=" + rewardSet + ", questCompleted=" + questCompleted
 				+ ", rewardClaimed=" + rewardClaimed + ", currentFloor=" + currentFloor + ", currentRoom=" + currentRoom
 				+ "]";
 	}

@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 
-@UserDefinedType(value = "floor")
 public class Floor {
 	private UUID id;
 	private int level;

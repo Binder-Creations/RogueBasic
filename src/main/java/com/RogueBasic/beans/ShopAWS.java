@@ -14,17 +14,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Table
 public class ShopAWS {
 	@PrimaryKey private UUID id;
-	private Set<String> inventoryCache;
+	private Set<String> inventory;
 	
 	public ShopAWS() {}
 
 	public ShopAWS(Shop shop) {
 		ObjectMapper mapper = new ObjectMapper();
-		Set<String> inventoryCache = new HashSet<>();
-		if(shop.getInventoryCache() != null) {
-			for(Item item: shop.getInventoryCache()) {
+		Set<String> inventory = new HashSet<>();
+		if(shop.getInventory() != null) {
+			for(Item item: shop.getInventory()) {
 				try {
-					inventoryCache.add(mapper.writeValueAsString(item));
+					inventory.add(mapper.writeValueAsString(item));
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
 				}
@@ -32,7 +32,7 @@ public class ShopAWS {
 		}
 		
 		this.id = shop.getId();
-		this.inventoryCache = inventoryCache;	
+		this.inventory = inventory;	
 	}
 	
 	public UUID getId() {
@@ -41,15 +41,15 @@ public class ShopAWS {
 	public void setId(UUID id) {
 		this.id = id;
 	}
-	public Set<String> getInventoryCache() {
-		return inventoryCache;
+	public Set<String> getInventory() {
+		return inventory;
 	}
-	public void setInventoryCache(Set<String> inventoryCache) {
-		this.inventoryCache = inventoryCache;
+	public void setInventory(Set<String> inventory) {
+		this.inventory = inventory;
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, inventoryCache);
+		return Objects.hash(id, inventory);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -60,11 +60,11 @@ public class ShopAWS {
 		if (getClass() != obj.getClass())
 			return false;
 		ShopAWS other = (ShopAWS) obj;
-		return Objects.equals(id, other.id) && Objects.equals(inventoryCache, other.inventoryCache);
+		return Objects.equals(id, other.id) && Objects.equals(inventory, other.inventory);
 	}
 	@Override
 	public String toString() {
-		return "ShopAWS [id=" + id + ", inventoryCache=" + inventoryCache + "]";
+		return "ShopAWS [id=" + id + ", inventory=" + inventory + "]";
 	}
 	
 }

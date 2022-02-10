@@ -26,7 +26,7 @@ public class ShopServices {
 		dao = new ShopDao(session);
 	}
 	
-	public Set<Item> genInventoryCache(UUID shopID, UUID pcId) {
+	public Set<Item> genInventory(UUID shopID, UUID pcId) {
 		Set<Item> inventory = new HashSet<>();
 		CqlSession session = CassandraConnector.getSession();
 		PlayerCharacterDao pcDao = new PlayerCharacterDao(session);

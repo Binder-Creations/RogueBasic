@@ -7,10 +7,9 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
-@UserDefinedType(value = "item")
-public class Item {
-	
+public class Item {	
 	private UUID id;
+	private int count;
 	private String name;
 	private String description;
 	private String type;
@@ -35,9 +34,10 @@ public class Item {
 	
 	public Item() {}
 	
-	public Item(String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue) {
+	public Item(int count, String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue) {
 		super();
 		this.id = UUID.randomUUID();
+		this.count = count;
 		this.name = name;
 		this.description = description;
 		this.type = type;
@@ -48,9 +48,10 @@ public class Item {
 		this.actionValue = actionValue;
 	}
 	
-	public Item(UUID id, String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue) {
+	public Item(UUID id, int count, String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue) {
 		super();
 		this.id = id;
+		this.count = count;
 		this.name = name;
 		this.description = description;
 		this.type = type;
@@ -64,6 +65,7 @@ public class Item {
 	public Item(String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue, int constitutionBonus, int strengthBonus, int dexterityBonus, int intelligenceBonus, int powerBonus, int healthBonus, int healthRegenBonus, int armorBonus, int armorPenBonus, int dodgeRatingBonus, int critRatingBonus, int energyBonus, int energyRegenBonus) {
 		super();
 		this.id = UUID.randomUUID();
+		this.count = 1;
 		this.name = name;
 		this.description = description;
 		this.type = type;
@@ -90,6 +92,7 @@ public class Item {
 	public Item(UUID id, String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue, int constitutionBonus, int strengthBonus, int dexterityBonus, int intelligenceBonus, int powerBonus, int healthBonus, int healthRegenBonus, int armorBonus, int armorPenBonus, int dodgeRatingBonus, int critRatingBonus, int energyBonus, int energyRegenBonus) {
 		super();
 		this.id = id;
+		this.count = 1;
 		this.name = name;
 		this.description = description;
 		this.type = type;
@@ -120,6 +123,15 @@ public class Item {
 	public void setId(UUID id) {
 		this.id = id;
 	}
+	
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -290,7 +302,7 @@ public class Item {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(actionType, actionValue, armorBonus, armorPenBonus, constitutionBonus, cost,
+		return Objects.hash(actionType, actionValue, armorBonus, armorPenBonus, constitutionBonus, cost, count,
 				critRatingBonus, description, dexterityBonus, dodgeRatingBonus, energyBonus, energyRegenBonus,
 				healthBonus, healthRegenBonus, id, image, intelligenceBonus, name, powerBonus, rarity, strengthBonus,
 				type);
@@ -307,7 +319,7 @@ public class Item {
 		Item other = (Item) obj;
 		return Objects.equals(actionType, other.actionType) && actionValue == other.actionValue
 				&& armorBonus == other.armorBonus && armorPenBonus == other.armorPenBonus
-				&& constitutionBonus == other.constitutionBonus && cost == other.cost
+				&& constitutionBonus == other.constitutionBonus && cost == other.cost && count == other.count
 				&& critRatingBonus == other.critRatingBonus && Objects.equals(description, other.description)
 				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
 				&& energyBonus == other.energyBonus && energyRegenBonus == other.energyRegenBonus
@@ -320,14 +332,14 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", type=" + type + ", rarity="
-				+ rarity + ", image=" + image + ", cost=" + cost + ", actionType=" + actionType + ", actionValue="
-				+ actionValue + ", constitutionBonus=" + constitutionBonus + ", strengthBonus=" + strengthBonus
-				+ ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus=" + intelligenceBonus + ", powerBonus="
-				+ powerBonus + ", healthBonus=" + healthBonus + ", healthRegenBonus=" + healthRegenBonus
-				+ ", armorBonus=" + armorBonus + ", armorPenBonus=" + armorPenBonus + ", dodgeRatingBonus="
-				+ dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus + ", energyBonus=" + energyBonus
-				+ ", energyRegenBonus=" + energyRegenBonus + "]";
+		return "Item [id=" + id + ", count=" + count + ", name=" + name + ", description=" + description + ", type="
+				+ type + ", rarity=" + rarity + ", image=" + image + ", cost=" + cost + ", actionType=" + actionType
+				+ ", actionValue=" + actionValue + ", constitutionBonus=" + constitutionBonus + ", strengthBonus="
+				+ strengthBonus + ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus=" + intelligenceBonus
+				+ ", powerBonus=" + powerBonus + ", healthBonus=" + healthBonus + ", healthRegenBonus="
+				+ healthRegenBonus + ", armorBonus=" + armorBonus + ", armorPenBonus=" + armorPenBonus
+				+ ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus + ", energyBonus="
+				+ energyBonus + ", energyRegenBonus=" + energyRegenBonus + "]";
 	}
 	
 	

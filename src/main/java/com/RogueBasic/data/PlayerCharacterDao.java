@@ -13,16 +13,19 @@ import org.springframework.data.cassandra.core.query.Query;
 
 import com.RogueBasic.beans.PlayerCharacter;
 import com.RogueBasic.beans.PlayerCharacterAWS;
+import com.RogueBasic.util.CassandraUtilities;
 import com.datastax.oss.driver.api.core.CqlSession;
 
 public class PlayerCharacterDao {
 	private CassandraOperations template;
+	private CassandraUtilities cu;
 	private static final Logger log = LogManager.getLogger(PlayerCharacterDao.class);	
 	
 	public PlayerCharacterDao(CqlSession session) {
 		super();
 		try {
 			this.template = new CassandraTemplate(session);
+			this.cu = new CassandraUtilities(session);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -30,12 +33,7 @@ public class PlayerCharacterDao {
 	
 	public PlayerCharacter findById(UUID id) {
 		log.trace("PlayerCharacterDao.findById() calling CassandraOperations.selectOne() and returning PlayerCharacter");
-		try {
-			return new PlayerCharacter(template.selectOne(Query.query(Criteria.where("id").is(id)), PlayerCharacterAWS.class));
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return new PlayerCharacter(this.cu.findById(id, PlayerCharacterAWS.class));
 	}
 	
 	public List<PlayerCharacter> getAll() {

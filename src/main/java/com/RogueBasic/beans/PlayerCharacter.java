@@ -33,8 +33,7 @@ public class PlayerCharacter {
 	private int currency;
 	private int metacurrency;
 	private Set<Ability> abilities;
-	private Map<UUID, Integer> inventory;
-	private Set<Item> inventoryCache;
+	private Set<Item> inventory;
 	private List<String> equipTypes;
 	private Item equippedHead;
 	private Item equippedBody;
@@ -78,22 +77,19 @@ public class PlayerCharacter {
 		this.level = 1;
 		this.currentHealth = -1;
 		this.currentEnergy = -1;
-		this.inventory = new HashMap<>();
-		this.inventoryCache = new HashSet<>();
+		this.inventory = new HashSet<>();
 		
 		ItemServices iservice = new ItemServices(CassandraConnector.connect());
 		Item healthPotion = iservice.getPremade(2);
 		Item energyPotion = iservice.getPremade(3);
 		Item ration = iservice.getPremade(4);
+		ration.setCount(2);
 		Item wine = iservice.getPremade(5);
-		this.inventory.put(healthPotion.getId(), 1);
-		this.inventory.put(energyPotion.getId(), 1);
-		this.inventory.put(ration.getId(), 2);
-		this.inventory.put(wine.getId(), 2);
-		this.inventoryCache.add(healthPotion);
-		this.inventoryCache.add(energyPotion);
-		this.inventoryCache.add(ration);
-		this.inventoryCache.add(wine);
+		wine.setCount(2);
+		this.inventory.add(healthPotion);
+		this.inventory.add(energyPotion);
+		this.inventory.add(ration);
+		this.inventory.add(wine);
 		this.abilities = new HashSet<>();
 		
 		switch(characterClass) {
@@ -177,11 +173,11 @@ public class PlayerCharacter {
 				}
 			}
 		}
-		Set<Item> inventoryCache = new HashSet<>();
-		if(pc.getInventoryCache() != null) {
-			for(String item: pc.getInventoryCache()) {
+		Set<Item> inventory = new HashSet<>();
+		if(pc.getInventory() != null) {
+			for(String item: pc.getInventory()) {
 				try {
-					inventoryCache.add(mapper.readValue(item, Item.class));
+					inventory.add(mapper.readValue(item, Item.class));
 				} catch (JsonMappingException e) {
 					e.printStackTrace();
 				} catch (JsonProcessingException e) {
@@ -205,8 +201,7 @@ public class PlayerCharacter {
 		this.currency = pc.getCurrency();
 		this.metacurrency = pc.getMetacurrency();
 		this.abilities = abilities;
-		this.inventory = pc.getInventory();
-		this.inventoryCache = inventoryCache;
+		this.inventory = inventory;
 		this.equipTypes = pc.getEquipTypes();
 		try {
 			this.equippedHead = mapper.readValue(pc.getEquippedHead(), Item.class);
@@ -390,21 +385,13 @@ public class PlayerCharacter {
 	public void setAbilities(Set<Ability> abilities) {
 		this.abilities = abilities;
 	}
-
-	public Map<UUID, Integer> getInventory() {
+	
+	public Set<Item> getInventory() {
 		return inventory;
 	}
 
-	public void setInventory(Map<UUID, Integer> inventory) {
+	public void setInventory(Set<Item> inventory) {
 		this.inventory = inventory;
-	}
-	
-	public Set<Item> getInventoryCache() {
-		return inventoryCache;
-	}
-
-	public void setInventoryCache(Set<Item> inventoryCache) {
-		this.inventoryCache = inventoryCache;
 	}
 
 	public List<String> getEquipTypes() {
@@ -621,8 +608,8 @@ public class PlayerCharacter {
 				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentHealth, currentShop,
 				day, dexterity, dexterityBonus, dodgeRatingBonus, dungeonBoard, energyBonus, energyRegenBonus,
 				equipTypes, equippedBack, equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary,
-				experience, healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, inventory,
-				inventoryCache, level, location, metacurrency, name, powerBonus, strength, strengthBonus);
+				experience, healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, inventory, level,
+				location, metacurrency, name, powerBonus, strength, strengthBonus);
 	}
 
 	@Override
@@ -651,10 +638,9 @@ public class PlayerCharacter {
 				&& healthBonus == other.healthBonus && healthRegenBonus == other.healthRegenBonus
 				&& Objects.equals(id, other.id) && intelligence == other.intelligence
 				&& intelligenceBonus == other.intelligenceBonus && Objects.equals(inventory, other.inventory)
-				&& Objects.equals(inventoryCache, other.inventoryCache) && level == other.level
-				&& Objects.equals(location, other.location) && metacurrency == other.metacurrency
-				&& Objects.equals(name, other.name) && powerBonus == other.powerBonus && strength == other.strength
-				&& strengthBonus == other.strengthBonus;
+				&& level == other.level && Objects.equals(location, other.location)
+				&& metacurrency == other.metacurrency && Objects.equals(name, other.name)
+				&& powerBonus == other.powerBonus && strength == other.strength && strengthBonus == other.strengthBonus;
 	}
 
 	@Override
@@ -664,17 +650,16 @@ public class PlayerCharacter {
 				+ ate + ", name=" + name + ", characterClass=" + characterClass + ", experience=" + experience
 				+ ", level=" + level + ", attributePoints=" + attributePoints + ", currency=" + currency
 				+ ", metacurrency=" + metacurrency + ", abilities=" + abilities + ", inventory=" + inventory
-				+ ", inventoryCache=" + inventoryCache + ", equipTypes=" + equipTypes + ", equippedHead=" + equippedHead
-				+ ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck
-				+ ", equippedPrimary=" + equippedPrimary + ", equippedSecondary=" + equippedSecondary
-				+ ", constitution=" + constitution + ", strength=" + strength + ", dexterity=" + dexterity
-				+ ", intelligence=" + intelligence + ", constitutionBonus=" + constitutionBonus + ", strengthBonus="
-				+ strengthBonus + ", dexterityBonus=" + dexterityBonus + ", intelligenceBonus=" + intelligenceBonus
-				+ ", powerBonus=" + powerBonus + ", healthBonus=" + healthBonus + ", healthRegenBonus="
-				+ healthRegenBonus + ", armorPenBonus=" + armorPenBonus + ", armorBonus=" + armorBonus
-				+ ", dodgeRatingBonus=" + dodgeRatingBonus + ", critRatingBonus=" + critRatingBonus + ", energyBonus="
-				+ energyBonus + ", energyRegenBonus=" + energyRegenBonus + ", currentHealth=" + currentHealth
-				+ ", currentEnergy=" + currentEnergy + "]";
+				+ ", equipTypes=" + equipTypes + ", equippedHead=" + equippedHead + ", equippedBody=" + equippedBody
+				+ ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck + ", equippedPrimary="
+				+ equippedPrimary + ", equippedSecondary=" + equippedSecondary + ", constitution=" + constitution
+				+ ", strength=" + strength + ", dexterity=" + dexterity + ", intelligence=" + intelligence
+				+ ", constitutionBonus=" + constitutionBonus + ", strengthBonus=" + strengthBonus + ", dexterityBonus="
+				+ dexterityBonus + ", intelligenceBonus=" + intelligenceBonus + ", powerBonus=" + powerBonus
+				+ ", healthBonus=" + healthBonus + ", healthRegenBonus=" + healthRegenBonus + ", armorPenBonus="
+				+ armorPenBonus + ", armorBonus=" + armorBonus + ", dodgeRatingBonus=" + dodgeRatingBonus
+				+ ", critRatingBonus=" + critRatingBonus + ", energyBonus=" + energyBonus + ", energyRegenBonus="
+				+ energyRegenBonus + ", currentHealth=" + currentHealth + ", currentEnergy=" + currentEnergy + "]";
 	}
 	
 	

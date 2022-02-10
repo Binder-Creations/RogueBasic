@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
-@UserDefinedType(value = "flags")
 public class Flags {
 	private int attackEnergy;
 	private int critDoubleDamage;

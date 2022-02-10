@@ -13,16 +13,19 @@ import org.springframework.data.cassandra.core.query.Query;
 
 import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.DungeonAWS;
+import com.RogueBasic.util.CassandraUtilities;
 import com.datastax.oss.driver.api.core.CqlSession;
 
 public class DungeonDao {
 	private CassandraOperations template;
+	private CassandraUtilities cu;
 	private static final Logger log = LogManager.getLogger(DungeonDao.class);	
 	
 	public DungeonDao(CqlSession session) {
 		super();
 		try {
 			this.template = new CassandraTemplate(session);
+			this.cu = new CassandraUtilities(session);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -30,12 +33,7 @@ public class DungeonDao {
 	
 	public Dungeon findById(UUID id) {
 		log.trace("DungeonDao.findById() calling CassandraOperations.selectOne() and returning Dungeon");
-		try {
-			return new Dungeon(template.selectOne(Query.query(Criteria.where("id").is(id)), DungeonAWS.class));
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return new Dungeon(cu.findById(id, DungeonAWS.class));
 	}
 	
 	public List<Dungeon> getAll() {

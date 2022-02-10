@@ -91,7 +91,7 @@
 				width: 50%;
 				height: 12.6682%;
 				color:#000000;
-				font-size: 110%;
+				font-size: 100%;
 			}
 			.loading-bar .bar {
 				position:absolute;
@@ -1165,7 +1165,7 @@
    		.font-red {
        		color:#ff0000;
    		}
-			.help-menu {
+			.help-menu- {
 				position: absolute;
 				right: 6.5%;  
 				top: 3%;     
@@ -1186,7 +1186,7 @@
 				width: 85.7143%;
 				height: 90.0%; 
 			}
-			.help-menu .close, .help-menu-tavern .close {
+			.help-menu- .close, .help-menu-tavern .close {
 				position: absolute;
 				right: 1.6111%;
 				top: 1.6111%;
@@ -1421,6 +1421,15 @@
 			color:#000000;
 			font-size: 50%;
 		}
+		.item-tooltip-unusable{
+			position: absolute;
+			left: 7%;
+			top: 59.6667%;
+			width: 86%;
+			height: 11.4286%;
+			color:#d60606;
+			font-size: 85%;
+		}
 		.item-tooltip-general{
 			position: absolute;
 			left: 21.7143%;
@@ -1428,7 +1437,7 @@
 			width: 56.5714%;
 			height: 11.4286%;
 			color:#000000;
-			font-size: 80%;
+			font-size: 75%;
 		}
 		.ability-tooltip-requirement{
 			position: absolute;

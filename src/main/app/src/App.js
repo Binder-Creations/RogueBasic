@@ -1,14 +1,17 @@
 import React from "react";
 import {Route, BrowserRouter as Router} from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
-import Ui from "./modules/Ui"
-import ShopMenu from "./modules/ShopMenu";
-import InnMenu from "./modules/InnMenu";
-import TavernMenu from "./modules/TavernMenu";
-import PcServices from "./modules/PcServices";
-import ItemServices from "./modules/ItemServices";
-import Dungeon from "./modules/Dungeon";
-import LoadScreen from "./modules/LoadScreen";
+import Ui from "./modules/components/Ui";
+import Binder from "./modules/services/Binder";
+import ShopMenu from "./modules/components/ShopMenu";
+import InnMenu from "./modules/components/InnMenu";
+import TavernMenu from "./modules/components/TavernMenu";
+import PcServices from "./modules/services/PcServices";
+import ItemServices from "./modules/services/ItemServices";
+import ItemFactory from "./modules/services/ItemFactory";
+import CombatEngine from "./modules/services/CombatEngine";
+import Dungeon from "./modules/components/Dungeon";
+import LoadScreen from "./modules/components/LoadScreen";
 import * as abilities from "./images/abilities" 
 import * as abilitiesSmall from "./images-small/abilities";
 import * as images from "./images" 
@@ -17,14 +20,13 @@ import * as items from "./images/items"
 import * as itemsSmall from "./images-small/items";
 import * as monsters from "./images/monsters" 
 import * as monstersSmall from "./images-small/monsters";
-import CombatEngine from "./modules/CombatEngine";
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      pc: {name: null},
+      pc: null,
       loading: true,
       loadingImages: 0,
       loadingDungeons: false,
@@ -50,50 +52,37 @@ class App extends React.Component {
         fetch('/pc/'+ this.state.characterId)
         .then(response => response.json())
         .then(data => {
-          this.setStateCustom({pc: this.sortPC(data)})
+          this.setItemSortOrder(data);
+          ItemFactory.parsePC(data);
+          this.setState({pc: this.sortPC(data)});
         });
       } catch(e) {
-        this.setStateCustom({characterId: null, playerId: null})
+        this.setState({characterId: null, playerId: null});
       } 
     }
-    this.returningUser = document.cookie.replace(/(?:(?:^|.*;\s*)returning_user\s*=\s*([^;]*).*$)|^.*$/, "$1");
-    this.combat = false;
-    this.imageMax = 498;
-    this.pcServices = new PcServices(this.state.pc.characterClass);
-    this.appState = this.appState.bind(this);
-    this.updateWidth = this.updateWidth.bind(this);
-    this.sortDungeon = this.sortDungeon.bind(this);
-    this.sortPC = this.sortPC.bind(this);
-    this.loadImage = this.loadImage.bind(this);
-    this.preloadImages = this.preloadImages.bind(this);
-    this.genDungeons = this.genDungeons.bind(this);
-    this.genShop = this.genShop.bind(this);
-    this.rest = this.rest.bind(this);
-
-    this.props.props = {
-      pc: this.state.pc,
-      combat: this.state.combat,
-      abilities: window.innerWidth > 960 ? abilities : abilitiesSmall,
-      images: window.innerWidth > 960 ? images : imagesSmall, 
-      items: window.innerWidth > 960 ? items : itemsSmall,
-      monsters: window.innerWidth > 960 ? monsters : monstersSmall, 
-      appState: this.appState,
-      gameOver: false,
+    this.c = {
       positions: ["pc", "frontLeft", "frontCenter", "frontRight", "backLeft", "backCenter", "backRight"],
       colorArmor: {color: "#136f9b"},
       colorPower: {color: "#a83a0e"},
       colorHeal: {color: "#ce6eb9"},
-      colorEnergize: {color: "#2a52be"}
-    }
-
-    this.props.props.itemServices = new ItemServices({
-      images: window.innerWidth > 960 ? images : imagesSmall, 
-      items: window.innerWidth > 960 ? items : itemsSmall, 
+      colorEnergize: {color: "#2a52be"},
+      zeroId: {id: "00000000-0000-0000-0000-000000000000"},
+      imageMax: 498,
+      disableUiMenus: false,
+      images: window.innerWidth > 960 ? images : imagesSmall,
+      abilities: window.innerWidth > 960 ? abilities : abilitiesSmall,
+      items: window.innerWidth > 960 ? items : itemsSmall,
       monsters: window.innerWidth > 960 ? monsters : monstersSmall,
-      colorArmor: this.props.props.colorArmor,
-      colorPower: this.props.props.colorPower,
-      colorHeal: this.props.props.colorHeal,
-      colorEnergize: this.props.props.colorEnergize,
+    }
+    Binder.bindAndC(this);
+    this.c.itemServices = new ItemServices({
+      images: this.c.images, 
+      items: this.c.items, 
+      monsters: this.c.monsters,
+      colorArmor: this.c.colorArmor,
+      colorPower: this.c.colorPower,
+      colorHeal: this.c.colorHeal,
+      colorEnergize: this.c.colorEnergize,
       colorCommon: "#39363a",
       colorUncommon: "#4d610f",
       colorRare: "#1e4d7a",
@@ -103,831 +92,667 @@ class App extends React.Component {
       colorShopRare: "#3296f6",
       colorShopEpic: "#c111f9"
     });
-
-    this.disableUiMenus = false;
+    this.returningUser = document.cookie.replace(/(?:(?:^|.*;\s*)returning_user\s*=\s*([^;]*).*$)|^.*$/, "$1");
     this.backgroundSrc = "";
-    this.innerElements = []
-    this.outerElements = []
     this.helpButton = 
-      <button className="btn-help" onClick={ () => {this.appState("help")} }>
-        <img src={images.helpIcon} alt="Help"/>
+      <button className="btn-help" onClick={this.help}>
+        <img src={this.c.images.helpIcon} alt="Help"/>
       </button>
-    this.InnerElements = () => {
-      return(this.innerElements);
-    }
-    this.OuterElements = () => {
-      return(this.outerElements);
-    }
+    this.routeHome = 
+      <Router>
+        <Route path='/' component={() => { 
+          window.location.href = '/home'; 
+          return null;
+        }}/>
+      </Router>
+    this.routeLogin = 
+      <Router>
+        <Route path='/' component={() => { 
+          window.location.href = '/login'; 
+          return null;
+        }}/>
+      </Router>
+    this.exteriorBuildings =
+      <>
+        <input className="tavern" type="image" src={this.c.images.tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
+        <input className="inn" type="image" src={this.c.images.innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
+        <input className="shop" type="image" src={this.c.images.shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
+      </>
   }
 
   render(){
     if(this.state.routeHome){
-      return(
-        <Router>
-          <Route path='/' component={() => { 
-            window.location.href = '/home'; 
-            return null;
-          }}/>
-        </Router>
-      );
+      return this.routeHome;
     }
     if (!this.state.characterId || !this.state.playerId){
       if(!this.returningUser){
-        document.cookie = "returning_user=true;max-age=99999999";
-        let tempUUID = uuidv4();
-        document.cookie = "player_id="+tempUUID+";max-age=99999999";
-        fetch('/register/'+ tempUUID, {method: 'POST'})
-        .then(response => {
-          this.setState({routeHome: true})
-        });     
+        this.assignTempAccount();   
       } else {
-        return(
-          <Router>
-            <Route path='/' component={() => { 
-              window.location.href = '/login'; 
-              return null;
-            }}/>
-          </Router>
-        );
+        return this.routeLogin;
       }
     }
     if(this.state.scene==="Home"){
-        return(
-          <Router>
-            <Route path='/' component={() => { 
-              window.location.href = '/home'; 
-              return null;
-            }}/>
-          </Router>
-        );
+        return this.routeHome;
       }
-    if(!this.state.pc.name){
-      return(<></>)
+    this.sizeWindow();
+    if(!this.state.pc){
+      return <LoadScreen c={this.c} s={this.state}/>
     }
-    if(!this.initialize){
-      this.initialize = true;
-      this.pcServices.updateStats(this.state.pc);
-      window.addEventListener("resize", this.updateWidth)
-      this.preloadImages();
-      this.genDungeons();
-      this.genShop();
+    if(!this.initialized){
+      this.initialize();
     }
-
-    if(this.restCheck){
-      this.restCheck = false;
+    if(this.toRest){
+      this.toRest = false;
       this.rest()
-    }
-
-    let isWide = window.innerWidth >= window.innerHeight*2.1;
-    this.props.props.appHeight = isWide ? window.innerHeight : window.innerWidth*0.47619047;
-    this.props.props.appWidth = isWide ? window.innerHeight*2.1 : window.innerWidth;
-    document.body.style.fontSize = this.props.props.appWidth*0.019 + "px";
-
+    } 
     if(this.state.loading){
-      if(this.state.loadingImages >= this.imageMax && this.state.loadingDungeons && this.state.loadingShop) {
+      if(this.state.loadingImages >= this.c.imageMax && this.state.loadingDungeons && this.state.loadingShop) {
         this.setState({loading: false, loadingImages: 0, loadingDungeons: false, loadingShop: false})
       } else {
-        return(<LoadScreen props={this.props.props} imageCount={this.state.loadingImages} loadingDungeons={this.state.loadingDungeons} loadingShop={this.state.loadingShop} imageMax={this.imageMax}/>)
+        return <LoadScreen c={this.c} s={this.state}/>;
       }
     }
-
     this.checkCombat();
 
-    this.props.props.pc = this.state.pc;
-    this.props.props.combat = this.state.combat;
-    this.props.props.combatUpdates = this.state.combatUpdates;
-    this.props.props.widthChange = this.state.widthChange;
-    this.props.props.position = this.state.position;
-    this.props.props.combatTransitions = this.state.combatTransitions;
-    this.props.props.abilityAnimation = this.state.abilityAnimation;
-    this.props.props.renderAbilityAnimation = this.state.renderAbilityAnimation;
-    this.props.props.menu = this.state.menu;
-    this.props.props.questComplete = this.state.questComplete;
-    this.props.props.gameOver = this.state.gameOver;
-    
-    this.innerElements = []
-    this.outerElements = []
-    this.disableUiMenus = false;
-    let button = "TownButton";
-
+    let innerElements = [];
+    let outerElements = [];
+    this.c.disableUiMenus = false;
+    this.c.button = "TownButton";
     if (this.state.pc.location === "Town"){
       if(this.state.scene === "Default"){
-        this.backgroundSrc = this.props.props.images.town
-        button = "HomeButton"
-        this.innerElements.push(
-          <>
-            <input className="tavern" type="image" src={this.props.props.images.tavernExterior} alt="Tavern" onClick={ () => { this.setStateCustom({scene:"Tavern"})} }/>
-            <input className="inn" type="image" src={this.props.props.images.innExterior} alt="Inn" onClick={ () => { this.setStateCustom({scene:"Inn"})} }/>
-            <input className="shop" type="image" src={this.props.props.images.shopExterior} alt="Shop" onClick={ () => { this.setStateCustom({scene:"Shop"})} }/>
-          </>
-        );
-        this.outerElements.push(this.helpButton);
+        this.backgroundSrc = this.c.images.town;
+        this.c.button = "HomeButton";
+        innerElements.push(this.exteriorBuildings);
+        outerElements.push(this.helpButton);
         if(this.state.help){
-          this.outerElements.push(this.helpMenu(images.helpTown));
+          outerElements.push(this.helpMenu(this.c.images.helpTown));
         }
       } else if(this.state.scene === "Tavern"){
         this.genDungeons();
-        this.disableUiMenus = true;
-        this.backgroundSrc = this.props.props.images.tavern;
-        this.outerElements.push( 
-          <>
-            <TavernMenu props={this.props.props} dungeonBoard={this.state.dungeonBoard} dungeon={this.state.dungeon}/>
-          </>
-        );
+        this.c.disableUiMenus = true;
+        this.backgroundSrc = this.c.images.tavern;
+        outerElements.push(<TavernMenu c={this.c} s={this.state}/>);
         if(this.state.generatingDungeon){
-          let elipsis = "";
-          if(this.state.barPercent){
-            for(let i = 0; i < this.state.barPercent/20; i++){
-              elipsis += "."
-            }
-          }
-          this.outerElements.push(
-            <div className="loading-bar v-h-centered">
-              <img className="background" src={this.props.props.images.barBackgroundLoading}/>
-              <img className="bar" src={this.props.props.images.barLoading} style={{width: (this.state.barPercent ? this.state.barPercent : 5) + "%"}}/>
-              <img className="background v-h-centered" src={this.props.props.images.barFrame}/>
-              <p className="v-h-centered">
-                {
-                  "Generating Dungeon" + elipsis
-                }
-              </p>
-            </div>
-          )
+          outerElements.push(this.loadingBar())
         }
-        this.outerElements.push(this.helpButton);
+        outerElements.push(this.helpButton);
         if(this.state.help){
-          this.outerElements.push(this.helpMenu(images.helpTavern, "tavern"));
+          outerElements.push(this.helpMenu(this.c.images.helpTavern, "tavern"));
         }
       } else if(this.state.scene==="Inn"){
-        this.disableUiMenus = true;
-        this.backgroundSrc = this.props.props.images.inn
-        this.outerElements.push(
-          <>
-            <InnMenu props={this.props.props} eaten={this.state.eaten} rested={this.state.rested}/>
-          </>
-        );
+        this.c.disableUiMenus = true;
+        this.backgroundSrc = this.c.images.inn;
+        outerElements.push(<InnMenu c={this.c} s={this.state}/>);
       } else if(this.state.scene==="Shop"){
-        this.disableUiMenus = true;
-        this.backgroundSrc = this.props.props.images.shop
-        this.outerElements.push(
-          <>
-            <ShopMenu props={this.props.props} shop={this.state.shop}/>
-          </>
-        );
+        this.c.disableUiMenus = true;
+        this.backgroundSrc = this.c.images.shop;
+        outerElements.push(<ShopMenu c={this.c} s={this.state}/>);
       }
     } else if(this.state.pc.location === "Dungeon") {
-      if(!this.state.dungeon){
-        fetch('/dungeon/' + this.state.pc.currentDungeon)
-          .then(response => response.json())
-          .then(data => {
-            this.setStateCustom({dungeon: this.sortDungeon(data)});
-        });
-        return(<></>)
-      }
-      if(!this.state.dungeon.floors && !this.state.dungeon.floorIds){
-        fetch('/dungeon/' + this.state.dungeon.id)
-          .then(response => response.json())
-          .then(data => {
-            this.setStateCustom({dungeon: this.sortDungeon(data)});
-        });
-      } else if(!this.state.dungeon.floors){
-        fetch('/dungeon/convert/' + this.state.dungeon.id)
-          .then(response => response.json())
-          .then(data => {
-            this.setStateCustom({dungeon: this.sortDungeon(data)});
-        });
-      }
-
+      this.getDungeon();
       if(this.state.dungeon && this.state.dungeon.floors){
-        this.backgroundSrc = this.props.props.images[this.state.dungeon.theme.toLowerCase() + this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].variant];
-        this.innerElements.push(
-          <Dungeon props={this.props.props} dungeon={this.state.dungeon} pcServices={this.pcServices}/>
-        );
-        this.outerElements.push(this.helpButton);
+        this.backgroundSrc = this.c.images[this.state.dungeon.theme.toLowerCase() + this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].variant];
+        innerElements.push(<Dungeon c={this.c} s={this.state}/>);
+        outerElements.push(this.helpButton);
         if(this.state.help){
-          this.outerElements.push( this.state.combat ? this.helpMenu(images.helpCombat, "combat") : this.helpMenu(images.helpDungeon));
+          outerElements.push( this.state.combat ? this.helpMenu(this.c.images.helpCombat, "combat") : this.helpMenu(this.c.images.helpDungeon));
         }
       } else {
-        this.backgroundSrc = this.props.props.images.tavern
+        this.backgroundSrc = this.c.images.tavern
       }
     } else {
-      this.backgroundSrc = this.props.props.images.town
+      this.backgroundSrc = this.c.images.town
     }
     
     return(
-    <div className="app-container v-h-centered" style={{backgroundImage: "url("+this.backgroundSrc+")", height: this.props.props.appHeight + "px", width: this.props.props.appWidth + "px"}}>
-      <this.InnerElements/>
-      <Ui props={this.props.props} dungeon={this.state.dungeon} button={button} disableUiMenus={this.disableUiMenus}/>
-      <this.OuterElements/>
-    </div>
+      <div className="app-container v-h-centered" style={{backgroundImage: "url("+this.backgroundSrc+")", height: this.c.appHeight + "px", width: this.c.appWidth + "px"}}>
+        {innerElements}
+        <Ui c={this.c} s={this.state}/>
+        {outerElements}
+      </div>
     );
-    }
+  }
 
-    componentDidUpdate(){
-      if(this.state.loading){
-        setTimeout(() => {
-          this.setState({loadingImages: this.loadingImages})
-        }, 33);
-      }
-      if(this.state.generatingDungeon){
-        setTimeout(() => {
-          if(this.state.generatingDungeon){
-            this.setState({barPercent: this.state.barPercent ? this.state.barPercent + 20 : 20})
-          }
-        }, 2000);
-      }
+  componentDidUpdate(){
+    if(this.state.loading){
+      setTimeout(() => {
+        this.setState({loadingImages: this.imagesLoaded})
+      }, 33);
     }
-
-    loadImage(image){
-      return new Promise(resolve => {
-        resolve(new Image().src = image);
-      })
-    }
-
-    preloadImages() {
-      this.loadingImages = 0;
-      let increment = () => this.loadingImages++
-      let fImage = (src) => {
-        let i = new Image();
-        i.src = src;
-        i.onload = increment;
-      }
-      for (let image of Object.keys(this.props.props.images)) {
-        fImage(this.props.props.images[image]);
-      }
-      for (let image of Object.keys(this.props.props.abilities)) {
-        fImage(this.props.props.abilities[image]);
-      }
-      for (let type of Object.keys(this.props.props.items)){
-        for (let image of Object.keys(this.props.props.items[type])) {
-          fImage(this.props.props.items[type][image]);
+    if(this.state.generatingDungeon){
+      setTimeout(() => {
+        if(this.state.generatingDungeon){
+          this.setState({barPercent: this.state.barPercent ? this.state.barPercent + 20 : 20})
         }
-      }
-      for (let type of Object.keys(this.props.props.monsters)) {
-        for (let image of Object.keys(this.props.props.monsters[type])) {
-          fImage(this.props.props.monsters[type][image]);
-        }
-      }
+      }, 2000);
     }
+  }
 
-    genDungeons(){
-      if(this.state.pc.currentDungeon && (!this.state.dungeon || this.state.dungeon.id !== this.state.pc.currentDungeon)){
-        fetch('/dungeon/'+ this.state.pc.currentDungeon)
-        .then(response => response.json())
-        .then(data => {
-          this.setStateCustom({dungeon: this.sortDungeon(data), loadingDungeons: true, generatingDungeon: false, barPercent: 0});
-        });
-      }
-      if(!this.state.pc.dungeonBoard){
-        fetch('/dungeon/new/'+ this.state.pc.id)
-        .then(response => response.json())
-        .then(data => {
-          let pc = {...this.state.pc};
-          pc.dungeonBoard = [];
-          data.forEach(dungeon => pc.dungeonBoard.push(dungeon.id))
-          this.save(["pc"], [pc], {pc: pc, dungeonBoard: data, loadingDungeons: true});
-        });
-      } 
-      if(this.state.pc.dungeonBoard && (!this.state.dungeonBoard)){
-        fetch('/dungeon/getBoard/'+ this.state.pc.id)
-          .then(response => response.json())
-          .then(data => {
-            this.setStateCustom({dungeonBoard: data, loadingDungeons: true});
-          });
-      }     
-      if(this.state.pc.dungeonBoard && this.state.dungeonBoard && !this.state.loadingDungeons){
-        this.setStateCustom({loadingDungeons: true});
-      }
+  assignTempAccount(){
+    document.cookie = "returning_user=true;max-age=99999999";
+    let tempUUID = uuidv4();
+    document.cookie = "player_id="+tempUUID+";max-age=99999999";
+    fetch('/register/'+ tempUUID, {method: 'POST'})
+    .then(response => {
+      this.setState({routeHome: true});
+    });  
+  }
+
+  initialize(){
+    this.initialized = true;
+    this.c.pcServices = new PcServices(this.state.pc.characterClass);
+    this.c.pcServices.updateStats(this.state.pc);
+    window.addEventListener("resize", this.updateWidth)
+    this.preloadImages();
+    this.genDungeons();
+    this.genShop();
+  }
+
+  sizeWindow(){
+    let isWide = window.innerWidth >= window.innerHeight*2.1;
+    this.c.appHeight = isWide ? window.innerHeight : window.innerWidth*0.47619047;
+    this.c.appWidth = isWide ? window.innerHeight*2.1 : window.innerWidth;
+    document.body.style.fontSize = this.c.appWidth*0.019 + "px";
+  }
+
+  setItemSortOrder(pc){
+    if(pc.characterClass === "Rogue"){
+      this.itemSortOrder = ["currency", "potion", "consumable", "bow", "dagger", "headMedium", "bodyMedium", "neck", "back", "staff", "spellbook", "sword", "shield", "headLight", "bodyLight", "headHeavy", "bodyHeavy"];
+    } else if (pc.characterClass === "Wizard"){
+      this.itemSortOrder = ["currency", "potion", "consumable", "staff", "spellbook", "headLight", "bodyLight", "neck", "back", "bow", "dagger", "sword", "shield", "headMedium", "bodyMedium", "headHeavy", "bodyHeavy"];
+    } else {
+      this.itemSortOrder = ["currency", "potion", "consumable", "sword", "shield", "headHeavy", "bodyHeavy", "neck", "back", "staff", "spellbook", "bow", "dagger", "headLight", "bodyLight", "headMedium", "bodyMedium"];
     }
+  }
 
-    genShop(){
-      if(this.state.pc.currentShop){
-        if(!this.state.shop){
-          fetch('/shop/'+ this.state.pc.currentShop)
-            .then(response => response.json())
-            .then(data => {
-              this.setStateCustom({shop: data, loadingShop: true});
-            });
-        } else if(this.state.shop.id !== this.state.pc.currentShop){
-          fetch('/shop/'+ this.state.pc.currentShop)
-            .then(response => response.json())
-            .then(data => {
-              this.setStateCustom({shop: data, loadingShop: true});
-            });
-        }
-      } else {
-        fetch('/shop/new/'+ this.state.pc.id)
-          .then(response => response.json())
-          .then(data => {
-            let pc = {...this.state.pc}
-            pc.currentShop = data.id;
-            this.save(["pc"], [this.state.pc], {shop: data, pc: pc, loadingShop: true});
-          });
+  preloadImages() {
+    this.imagesLoaded = 0;
+    let increment = () => this.imagesLoaded++
+    let createElement = (src) => {
+      let i = new Image();
+      i.src = src;
+      i.onload = increment;
+    }
+    for (let image of Object.keys(this.c.images)) {
+      createElement(this.c.images[image]);
+    }
+    for (let image of Object.keys(this.c.abilities)) {
+      createElement(this.c.abilities[image]);
+    }
+    for (let type of Object.keys(this.c.items)){
+      for (let image of Object.keys(this.c.items[type])) {
+        createElement(this.c.items[type][image]);
       }
     }
-
-    helpMenu(src, classMod){
-      return(
-        <div className={"help-menu" + (classMod ? "-"+classMod : "")}>
-          <img src={src} className="background" alt="Help Menu"/>
-          <img className="close hover-saturate" src={images.buttonClose} alt="Close" onClick={() => this.appState("help")}/>
-        </div>
-      );
-    }
-
-    checkCombat(){
-      if(!this.state.combat && this.state.pc.location === "Dungeon" && this.state.dungeon && this.state.dungeon.floors && this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters && this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters.length){
-        this.appState("combat");
+    for (let type of Object.keys(this.c.monsters)) {
+      for (let image of Object.keys(this.c.monsters[type])) {
+        createElement(this.c.monsters[type][image]);
       }
     }
+  }
 
-    checkQuest(){
-      return this.state.dungeon.floors.find(
-        floor => floor.rooms.find(
-        room => room.monsters && room.monsters.length > 0
-        )
-      )
-        ? false
-        : true;
+  genDungeons(){
+    if(this.state.pc.currentDungeon && (!this.state.dungeon || this.state.dungeon.id !== this.state.pc.currentDungeon)){
+      fetch('/dungeon/'+ this.state.pc.currentDungeon)
+      .then(response => response.json())
+      .then(data => {
+        ItemFactory.parseDungeon(data);
+        this.setState({dungeon: this.sortDungeon(data), loadingDungeons: true, generatingDungeon: false, barPercent: 0});
+      });
     }
-
-    sortDungeon(dungeon){     
-      dungeon.floors.forEach(floor=>floor.rooms.sort((a,b) => (a.count < b.count) ? -1 : (b.count < a.count ? 1 : 0)));
-      dungeon.floors.sort((a,b) => (a.level < b.level) ? -1 : (b.level < a.level ? 1 : 0));
-      return dungeon;
-    }
-
-    sortPC(pc){
-      pc.abilities.sort((a,b) => (a.level < b.level) ? -1 : (b.level < a.level ? 1 : 0));
-      return pc;
-    }
-
-    async save(types, objects, state){
-      for(let i=0; i<types.length; i++){
-        await fetch('/'+types[i]+'/', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(objects[i])
-        });
-      }
-      if(state){
-        this.setStateCustom(state);
-      }
-      return;
-    }
-
-    updateWidth(){
-      this.setStateCustom({widthChange: this.state.widthChange + 1});
-    }
-
-    setStateCustom(state){
-      if(!state.combatUpdates){
-        state.combatUpdates = []
-      }
-      this.setState(state);
-    }
-
-    getNextPosition(){
-      let nextPosition = null;
-      let i = this.state.position;
-      while(!nextPosition){
-        nextPosition = this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters.find(monster => monster.position === this.props.props.positions[i])
-        i++
-        if(i >= this.props.props.positions.length){
-          break;
-        }
-      }
-      return nextPosition ? this.props.props.positions.indexOf(nextPosition.position) : 0;
-    }
-
-    rest(){
-      let pc = {...this.state.pc};
-      pc.currentHealth = pc.healthTotal;
-      pc.currentEnergy = pc.energyTotal;
-      pc.ate = false;
-      pc.currentDungeon = null;
-      pc.currentFloor = -1;
-      pc.currentRoom = -1;
-      pc.day += 1;
-      pc.currency -= 250;
-      pc.currency = pc.currency > 0 ? pc.currency : 0;
-      let dungeonData;
+    if(!this.state.pc.dungeonBoard){
       fetch('/dungeon/new/'+ this.state.pc.id)
       .then(response => response.json())
-      .then(data => {          
+      .then(data => {
+        let pc = {...this.state.pc};
         pc.dungeonBoard = [];
         data.forEach(dungeon => pc.dungeonBoard.push(dungeon.id))
-        dungeonData = data;
+        this.save({pc: pc}, {pc: pc, dungeonBoard: data, loadingDungeons: true});
+      });
+    } 
+    if(this.state.pc.dungeonBoard && (!this.state.dungeonBoard)){
+      fetch('/dungeon/getBoard/'+ this.state.pc.id)
+        .then(response => response.json())
+        .then(data => {
+          this.setState({dungeonBoard: data, loadingDungeons: true});
+        });
+    }     
+    if(this.state.pc.dungeonBoard && this.state.dungeonBoard && !this.state.loadingDungeons){
+      this.setState({loadingDungeons: true});
+    }
+  }
+
+  genShop(){
+    if(this.state.pc.currentShop){
+      if(!this.state.shop){
+        fetch('/shop/'+ this.state.pc.currentShop)
+          .then(response => response.json())
+          .then(data => {
+            data.inventory = ItemFactory.parseArray(data.inventory);
+            this.setState({shop: data, loadingShop: true});
+          });
+      } else if(this.state.shop.id !== this.state.pc.currentShop){
+        fetch('/shop/'+ this.state.pc.currentShop)
+          .then(response => response.json())
+          .then(data => {
+            data.inventory = ItemFactory.parseArray(data.inventory);
+            this.setState({shop: data, loadingShop: true});
+          });
+      }
+    } else {
+      fetch('/shop/new/'+ this.state.pc.id)
+        .then(response => response.json())
+        .then(data => {
+          let pc = {...this.state.pc}
+          pc.currentShop = data.id;
+          this.save({pc: pc}, {shop: data, pc: pc, loadingShop: true});
+        });
+    }
+  }
+
+  loadingBar(){
+    return(
+      <div className="loading-bar v-h-centered">
+        <img className="background" src={this.c.images.barBackgroundLoading} alt="background"/>
+        <img className="bar" src={this.c.images.barLoading} style={{width: (this.state.barPercent ? this.state.barPercent : 5) + "%"}} alt="load bar"/>
+        <img className="background v-h-centered" src={this.c.images.barFrame} alt="load bar"/>
+        <p className="v-h-centered">
+          {"Generating Dungeon" + this.elipsis()}
+        </p>
+      </div>
+    );
+  }
+
+  helpMenu(src, classExtension = ""){
+    return(
+      <div className={"help-menu-" + classExtension}>
+        <img src={src} className="background" alt="Help Menu"/>
+        <img className="close hover-saturate" src={this.c.images.buttonClose} alt="Close" onClick={this.help}/>
+      </div>
+    );
+  }
+
+  elipsis(){
+    let elipsis = "";
+    if(this.state.barPercent){
+      for(let i = 0; i < this.state.barPercent/20; i++){
+        elipsis += "."
+      }
+    }
+    return elipsis
+  }
+
+  async getDungeon(){
+    if(!this.state.dungeon){
+      await fetch('/dungeon/' + this.state.pc.currentDungeon)
+      .then(response => response.json())
+      .then(data => {
+        ItemFactory.parseDungeon(data);
+        this.setState({dungeon: this.sortDungeon(data)});
+      });
+    }
+    if(!this.state.dungeon.floors && !this.state.dungeon.floorIds){
+      await fetch('/dungeon/' + this.state.dungeon.id)
+      .then(response => response.json())
+      .then(data => {
+        ItemFactory.parseDungeon(data);
+        this.setState({dungeon: this.sortDungeon(data)});
+      });
+    } else if(!this.state.dungeon.floors){
+      await fetch('/dungeon/convert/' + this.state.dungeon.id)
+      .then(response => response.json())
+      .then(data => {
+        ItemFactory.parseDungeon(data);
+        this.setState({dungeon: this.sortDungeon(data)});
+      });
+    }
+  }
+  
+  checkCombat(){
+    if(!this.state.combat && this.state.pc.location === "Dungeon" && this.state.dungeon && this.state.dungeon.floors && this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters && this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters.length){
+      this.combat();
+    }
+  }
+
+  checkQuest(){
+    return this.state.dungeon.floors.find(floor => floor.rooms.find(room => room.monsters && room.monsters.length > 0))
+      ? false
+      : true;
+  }
+
+  sortDungeon(dungeon){     
+    for(let floor of dungeon.floors){
+      floor.rooms.sort((a,b) => a.count - b.count);
+    }
+    dungeon.floors.sort((a,b) => a.level - b.level);
+    return dungeon;
+  }
+
+  sortPC(pc){
+    pc.abilities.sort((a,b) => a.level - b.level);
+    return pc;
+  }
+
+  async save(data, state){
+    for(let key of Object.keys(data)){
+      await fetch('/'+key+'/', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data[key])
+      });
+    }
+    if(state){
+      this.setState(state);
+    }
+    return;
+  }
+
+  updateWidth(){
+    this.setState({widthChange: this.state.widthChange + 1});
+  }
+
+  setState(state){
+    if(this.state.combatUpdates.length > 0 && !state.combatUpdates){
+      state.combatUpdates = []
+    }
+    super.setState(state);
+  }
+
+  getNextPosition(){
+    let nextPosition = null;
+    let i = this.state.position;
+    while(!nextPosition){
+      nextPosition = this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters.find(monster => monster.position === this.c.positions[i])
+      i++
+      if(i >= this.c.positions.length){
+        break;
+      }
+    }
+    return nextPosition ? this.c.positions.indexOf(nextPosition.position) : 0;
+  }
+
+  help(){
+    this.setState({help: this.state.help ? false : true});
+  }
+
+  gameOver(update){
+    this.setState({gameOver: update});
+  }
+
+  endGame(){
+    fetch('/pc/', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        playerId: this.state.playerId, 
+        characterId: this.state.characterId, 
+        metacurrency: this.state.pc.metacurrency
       })
-      .then(fetch('/shop/new/'+ this.state.pc.id)
+    })
+    .then(response => { 
+      document.cookie = "character_id=; Max-Age=-99999999;"
+      this.setState({characterId: null})
+    });
+  }
+
+  quest(index){
+    let pc = {...this.state.pc};
+    let dungeon = {...this.state.dungeon};
+    pc.currency += this.state.dungeon.reward;
+    pc.experience += Math.floor(this.state.dungeon.reward*2.5);
+    this.c.pcServices.updateStats(pc);
+    pc.inventory.push(this.state.dungeon.rewardSet[index]);
+    dungeon.rewardClaimed = true;
+    this.save({pc: pc, dungeon: pc}, {pc:pc, dungeon: dungeon});
+  }
+
+  menu(menu){
+    this.setState({menu: menu === this.state.menu ? null : menu});
+  }
+
+  ability(number){
+    this.setState({
+      abilityAnimation: number,
+      renderAbilityAnimation: true
+    });
+  }
+
+  pcCombat(index){
+    let dungeon = {...this.state.dungeon}
+    document.documentElement.style.setProperty('--animate-duration', '1s');
+    this.c.combatEngine.runRound(this.state.pc.abilities[index]);
+    dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.c.combatEngine.monsters;
+    this.setState({
+      pc: this.c.combatEngine.pc,
+      dungeon: dungeon,
+      combatUpdates: this.c.combatEngine.combatUpdates,
+      position: 1,
+      renderAbilityAnimation: false
+    });
+  }
+
+  nextCombat(){
+    let dungeon = {...this.state.dungeon}
+    let nextPosition = this.getNextPosition();
+    if(!nextPosition){
+      this.c.combatEngine.endRound();
+      let combatTransitions = this.c.combatEngine.monsters.length ? true : false;
+      dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.c.combatEngine.monsters;
+      this.setState({
+        pc: this.c.combatEngine.pc,
+        dungeon: dungeon,
+        combatUpdates: this.c.combatEngine.combatUpdates,
+        combatTransitions: combatTransitions,
+        position: 0
+      });
+    } else {
+      this.c.combatEngine.runRound(null, nextPosition);
+      dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.c.combatEngine.monsters;
+      this.setState({
+        pc: this.c.combatEngine.pc,
+        dungeon: dungeon,
+        combatUpdates: this.c.combatEngine.combatUpdates,
+        position: nextPosition + 1
+      });
+    }
+  }
+
+  combat(){
+    let dungeon = {...this.state.dungeon};
+    if(!this.state.combat){
+      this.c.combatEngine = new CombatEngine(this.c, this.state);
+      dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.c.combatEngine.monsters;
+      this.setState({
+        combat: true,
+        dungeon: dungeon,
+        combatTransitions: true
+      });
+    } else {
+      let pc = {...this.state.pc}
+      this.c.pcServices.clearBuffs(pc);
+      this.c.pcServices.resetTempStats(pc);
+      this.c.pcServices.updateStats(pc);
+      this.c.combatEngine = null;
+      dungeon.questCompleted = this.checkQuest();
+      this.save({pc: pc, dungeon: dungeon}, {pc: pc, dungeon: dungeon, combat: false, position: 0});
+    }    
+  }
+
+  stairs(up){
+    let dungeon = {...this.state.dungeon};
+    dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared = true;
+    if(up){
+      if(dungeon.currentFloor === 0){
+        let pc = {...this.state.pc};
+        pc.location = "Town";
+        this.save({pc: pc, dungeon: dungeon}, {dungeon: dungeon, pc:pc, scene:"Default"});
+      } else {
+        dungeon.currentFloor -= 1;
+        dungeon.currentRoom = dungeon.floors[dungeon.currentFloor].rooms.length-1;
+        this.save({dungeon: dungeon}, {dungeon: dungeon})
+      }
+    } else {
+      dungeon.currentFloor += 1;
+      dungeon.currentRoom = 0;
+      this.save({dungeon: dungeon}, {dungeon: dungeon})
+    }
+  }
+
+  moveRoom(id){
+    let dungeon = {...this.state.dungeon};
+    dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared = true;
+    dungeon.floors[dungeon.currentFloor].rooms.some(room => {
+      if(room.id === id){
+        dungeon.currentRoom = dungeon.floors[dungeon.currentFloor].rooms.indexOf(room);
+        return true;
+      }
+      return false;
+    });
+    if(!dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared){
+      let pc = {...this.state.pc};
+      this.c.pcServices.regenHealth(pc);
+      this.c.pcServices.regenEnergy(pc);
+      this.save({pc: pc, dungeon: dungeon}, {dungeon: dungeon, pc:pc});
+    }else {
+      this.save({dungeon: dungeon}, {dungeon: dungeon});
+    }
+  }
+
+  scene(scene, location){
+    if(this.state.pc.location === location) {
+      this.setState({scene: scene, menu: null});
+    } else {
+      let pc = {...this.state.pc}
+      pc.location = location;
+      this.save({pc: pc}, {pc: pc, scene: scene, menu: null})
+    }
+  }
+
+  toDungeon(){
+    let pc = {...this.state.pc};
+    pc.location = "Dungeon";
+    this.save({pc: pc}, {pc: pc});
+  }
+
+  setDungeon(id){
+    let pc = {...this.state.pc};
+    pc.currentDungeon = id;     
+    this.save({pc: pc}, {pc: pc, generatingDungeon: true});
+  }
+
+  startRest(){
+    let pc = {...this.state.pc};
+    pc.currentHealth = pc.healthTotal;
+    pc.currentEnergy = pc.energyTotal;
+    pc.ate = false;
+    pc.currency -= 250;
+    pc.currency = pc.currency > 0 ? pc.currency : 0;
+    this.toRest = true;
+    this.setState({pc: pc, rested: this.state.rested +1});
+  }
+
+  rest(){
+    let pc = {...this.state.pc};
+    pc.currentDungeon = null;
+    pc.currentFloor = -1;
+    pc.currentRoom = -1;
+    let dungeonData;
+    fetch('/dungeon/new/'+ pc.id)
+    .then(response => response.json())
+    .then(data => {          
+      pc.dungeonBoard = [];
+      data.forEach(dungeon => pc.dungeonBoard.push(dungeon.id))
+      dungeonData = data;
+    })
+    .then(
+      fetch('/shop/new/'+ pc.id)
       .then(response => response.json())
       .then(data => {
         pc.currentShop = data.id;
-        this.save(["pc"], [this.state.pc], {shop: data, dungeonBoard: dungeonData, pc: pc, loadingShop: true, dungeon: null});
-      }));
+        this.save({pc: pc}, {shop: data, dungeonBoard: dungeonData, pc: pc, loadingShop: true, dungeon: null});
+      })
+    );
+  }
+
+  eat(){
+    let pc = {...this.state.pc};
+    pc.currentHealth = pc.healthTotal;
+    pc.currentEnergy = pc.energyTotal;
+    pc.ate = true;
+    pc.currency -= 100;
+    pc.currency = pc.currency > 0 ? pc.currency : 0;
+    this.save({pc: pc}, {pc: pc, eaten: this.state.eaten + 1});
+  }
+
+  lootAll(){
+    let pc = {...this.state.pc};
+    let dungeon = {...this.state.dungeon};
+    let room = dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom];
+    for(let item of room.loot){
+      item.addTo(pc);
     }
+    room.loot = [];
+    this.save({pc: pc, dungeon: dungeon}, {pc: pc, dungeon: dungeon, menu: null});
+  }
 
-    appState(method, key, value){
-      let pc;
-      let dungeon;
-      let shop;
-      let room;
-      let count;
-      let addItem = true;
-      switch(method){
-        case "help":
-          this.setStateCustom({help: this.state.help ? false : true})
-          break;
-        case "game-over":
-          this.setStateCustom({gameOver: key});
-          break;
-        case "end-game":
-          fetch('/pc/', {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              playerId: this.state.playerId, 
-              characterId: this.state.characterId, 
-              metacurrency: this.state.pc.metacurrency
-            })
-          })
-          .then(response => { 
-            document.cookie = "character_id=; Max-Age=-99999999;"
-            this.setStateCustom({characterId: null})
-          });
-          break;
-        case "quest":
-          pc = {...this.state.pc};
-          dungeon = {...this.state.dungeon};
-          pc.currency += this.state.dungeon.reward;
-          pc.experience += Math.floor(this.state.dungeon.reward*2.5);
-          this.pcServices.updateStats(pc);
-          pc.inventory[this.state.dungeon.rewardCache[key].id] = 1;
-          pc.inventoryCache.push(this.state.dungeon.rewardCache[key]);
-          dungeon.rewardClaimed = true;
-          this.save(["pc", "dungeon"], [pc, dungeon], {pc:pc, dungeon: dungeon});
-          break;
-        case "menu":
-          this.setStateCustom({menu: key === this.state.menu ? null : key});
-          break;
-        case "ability":
-          this.setStateCustom({
-            abilityAnimation: key,
-            renderAbilityAnimation: true
-          })
-          break;
-        case "pcCombat":
-          dungeon = {...this.state.dungeon}
-          document.documentElement.style.setProperty('--animate-duration', '1s');
-          this.combatEngine.runRound(this.state.pc.abilities[key]);
-          
-          dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
-          this.setStateCustom({
-            pc: this.combatEngine.pc,
-            dungeon: dungeon,
-            combatUpdates: this.combatEngine.combatUpdates,
-            position: 1,
-            renderAbilityAnimation: false
-          });
-          break;
-        case "nextCombat":
-          dungeon = {...this.state.dungeon}
+  loot(item){
+    let pc = {...this.state.pc};
+    let dungeon = {...this.state.dungeon};
+    let room = dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom];
+    item.addTo(pc);
+    item.removeFrom(room.loot);
+    this.save({pc: pc, dungeon: dungeon}, {pc: pc, dungeon: dungeon});
+  }
 
-          let nextPosition = this.getNextPosition();
-          if(!nextPosition){
-            this.combatEngine.endRound();
-            let combatTransitions = this.combatEngine.monsters.length ? true : false;
-            dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
-            this.setStateCustom({
-              pc: this.combatEngine.pc,
-              dungeon: dungeon,
-              combatUpdates: this.combatEngine.combatUpdates,
-              combatTransitions: combatTransitions,
-              position: 0
-            });
-            break;
-          }
-          this.combatEngine.runRound(null, nextPosition);
-          dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
-          this.setStateCustom({
-            pc: this.combatEngine.pc,
-            dungeon: dungeon,
-            combatUpdates: this.combatEngine.combatUpdates,
-            position: nextPosition + 1
-          });
-          break;
-        case "combat":
-          if(!this.state.combat){
-              dungeon = {...this.state.dungeon}
-              this.combatEngine = new CombatEngine(this.state.pc, this.pcServices, this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].monsters, this.state.dungeon.postFix, this.props.props.positions, this.appState);
-              dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].monsters = this.combatEngine.monsters;
-              this.setStateCustom({
-                combat: true,
-                dungeon: dungeon,
-                combatTransitions: true
-              });
-              break;
-          } else {
-            pc = {...this.state.pc}
-            dungeon = {...this.state.dungeon}
-            this.pcServices.clearBuffs(pc);
-            this.pcServices.resetTempStats(pc);
-            this.pcServices.updateStats(pc);
-            this.combatEngine = null;
-
-            dungeon.questCompleted = this.checkQuest();
-
-            this.save(["pc", "dungeon"], [pc, dungeon], {pc: pc, dungeon: dungeon, combat: false, position: 0});
-            break;
-          }
-          
-        case "stairs":
-          dungeon = {...this.state.dungeon};
-          dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared = true;
-          if(key){
-            if(dungeon.currentFloor === 0){
-              pc = {...this.state.pc};
-              pc.location = "Town";
-              this.save(["pc", "dungeon"], [pc, dungeon], {dungeon: dungeon, pc:pc, scene:"Default"});
-            } else {
-              dungeon.currentFloor -= 1;
-              dungeon.currentRoom = dungeon.floors[dungeon.currentFloor].rooms.length-1;
-              this.save(["dungeon"], [dungeon], {dungeon: dungeon})
-            }
-          } else {
-            dungeon.currentFloor += 1;
-            dungeon.currentRoom = 0;
-            this.save(["dungeon"], [dungeon], {dungeon: dungeon})
-          }
-          break;
-        case "move-room":
-          dungeon = {...this.state.dungeon};
-          dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared = true;
-          dungeon.floors[dungeon.currentFloor].rooms.some(room => {
-            if(room.id === key){
-              dungeon.currentRoom = dungeon.floors[dungeon.currentFloor].rooms.indexOf(room);
-              return true;
-            }
-            return false;
-          });
-          if(!dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom].cleared){
-            pc = {...this.state.pc};
-            this.pcServices.regenHealth(pc);
-            this.pcServices.regenEnergy(pc);
-            this.save(["pc","dungeon"], [pc, dungeon], {dungeon: dungeon, pc:pc})
-          }else {
-            this.save(["dungeon"], [dungeon], {dungeon: dungeon})
-          }
-          break;
-        case "scene":
-          if(this.state.pc.location === value) {
-            this.setStateCustom({scene: key, menu: null})
-          } else {
-            pc = {...this.state.pc}
-            pc.location = value
-            this.save(["pc"], [pc], {pc: pc, scene: key, menu: null})
-          }
-          break;
-        case "to-dungeon":
-          pc = {...this.state.pc};
-          pc.location = "Dungeon";
-          this.save(["pc"], [pc], {pc: pc});
-          break;
-        case "set-dungeon": 
-          pc = {...this.state.pc};
-          pc.currentDungeon = key;     
-          this.save(["pc"], [pc], {pc: pc, generatingDungeon: true});
-          break;
-        case "rest":
-          pc = {...this.state.pc};
-          pc.currentHealth = pc.healthTotal;
-          pc.currentEnergy = pc.energyTotal;
-          pc.ate = false;
-          pc.currency -= 250;
-          pc.currency = pc.currency > 0 ? pc.currency : 0;
-          this.restCheck = true;
-          this.setStateCustom({pc: pc, rested: this.state.rested +1});
-          break;
-        case "eat":
-          pc = {...this.state.pc};
-          pc.currentHealth = pc.healthTotal;
-          pc.currentEnergy = pc.energyTotal;
-          pc.ate = true;
-          pc.currency -= 100;
-          pc.currency = pc.currency > 0 ? pc.currency : 0;
-
-          this.save(["pc"], [pc], {pc: pc, eaten: this.state.eaten + 1});
-          break;
-        case "loot-all":
-          pc = {...this.state.pc};
-          dungeon = {...this.state.dungeon};
-          room = dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom]
-          
-          for(let i = 0; i < room.lootCache.length; i++){
-            count = room.loot[room.lootCache[i].id];
-            
-            if(room.lootCache[i].type !== "currency"){
-              if(pc.inventory[room.lootCache[i].id]){
-                pc.inventory[room.lootCache[i].id] += count;
-              } else {
-                pc.inventory[room.lootCache[i].id] = count;
-              }
-
-              if(!pc.inventoryCache.find(item => item.id === room.lootCache[i].id)){
-                pc.inventoryCache.push(room.lootCache[i]);
-              }
-            } else {
-              if(room.lootCache[i].name === "Gold") {
-                pc.currency += count;
-              }
-              if(room.lootCache[i].name === "Soul") {
-                pc.metacurrency += count;
-              }
-            }
-          }
-          room.loot = {};
-          room.lootCache = [];
-          this.save(["pc", "dungeon"], [pc, dungeon], {pc: pc, dungeon: dungeon, menu: null});
-          break;
-        case "loot":
-          pc = {...this.state.pc};
-          dungeon = {...this.state.dungeon};
-          room = dungeon.floors[dungeon.currentFloor].rooms[dungeon.currentRoom]
-          let index = room.lootCache.indexOf(key);
-          count = room.loot[key.id];
-          if (index !== -1){
-            room.lootCache.splice(index, 1);
-          }
-          
-          if(key.type !== "currency"){
-            if(pc.inventory[key.id]){
-              pc.inventory[key.id] += count;
-            } else {
-              pc.inventory[key.id] = count;
-            }
-
-            if(!pc.inventoryCache.find(item => item.id === key.id)){
-              pc.inventoryCache.push(key);
-            }
-          } else {
-            if(key.name === "Gold") {
-              pc.currency += count;
-            }
-            if(key.name === "Soul") {
-              pc.metacurrency += count;
-            }
-          }
-
-          this.save(["pc", "dungeon"], [pc, dungeon], {pc: pc, dungeon: dungeon});
-          break;
-        case "shop-store":
-          pc = {...this.state.pc};
-          shop = {...this.state.shop};
-          if(key.type !== "potion" && key.type !== "consumable"){
-            let index = shop.inventoryCache.indexOf(key);
-            if (index !== -1)
-              shop.inventoryCache.splice(index, 1);
-          }
-          pc.currency -= key.cost*5;
-          if(pc.currency < 0){
-            pc.currency = 0;
-          }
-
-          if(pc.inventory[key.id]){
-            pc.inventory[key.id] += 1;
-          } else {
-            pc.inventory[key.id] = 1;
-          }
-          for(const item of pc.inventoryCache){
-            if(item.id === key.id){
-              addItem = false;
-            }
-          }
-          if(addItem){
-            pc.inventoryCache.push(key);
-          }
-          this.save(["pc", "shop"], [pc, shop], {pc: pc, shop: shop});
-          break;
-        case "shop-player":
-          pc = {...this.state.pc};
-          shop = {...this.state.shop};
-          if(pc.inventory[key.id] > 1){
-            pc.inventory[key.id] -= 1;
-          }else{
-            delete pc.inventory[key.id]
-            let index = pc.inventoryCache.indexOf(key);
-            if (index !== -1)
-              pc.inventoryCache.splice(index, 1);
-          }
-
-          pc.currency += key.cost;
-          
-          if(key.type !== "potion" && key.type !== "consumable"){
-            shop.inventoryCache.push(key);
-          }
-
-          this.save(["pc", "shop"], [pc, shop], {pc: pc, shop: shop});
-          break;
-        case "inventory":  
-          pc = {...this.state.pc};
-          if(pc.inventory[key.id] > 1){
-            pc.inventory[key.id] -= 1;
-          }else{
-            delete pc.inventory[key.id]
-            let index = pc.inventoryCache.indexOf(key);
-            if (index !== -1)
-              pc.inventoryCache.splice(index, 1);
-          }
-          if(key.actionType === "heal"){
-            if(this.state.combat){
-              this.combatEngine.itemHeal(key.actionValue);
-              this.pcServices.updateStats(this.combatEngine.pc);
-              this.setStateCustom({pc: this.combatEngine.pc});
-              break;
-            } else {
-              pc.currentHealth = (pc.currentHealth + pc.healthTotal*(key.actionValue/100)) > pc.healthTotal
-                ? pc.healthTotal
-                : pc.currentHealth + pc.healthTotal*(key.actionValue/100);
-              this.pcServices.updateStats(pc);
-              this.save(["pc"], [pc], {pc: pc});
-            }
-            break;
-          } else if(key.actionType === "energize"){
-            if(this.state.combat){
-              this.combatEngine.itemEnergize(key.actionValue);
-              this.pcServices.updateStats(this.combatEngine.pc);
-              this.setStateCustom({pc: this.combatEngine.pc});
-              break;
-            } else {
-              pc.currentEnergy = (pc.currentEnergy + pc.energyTotal*(key.actionValue/100)) > pc.energyTotal
-                ? pc.energyTotal
-                : pc.currentEnergy + pc.energyTotal*(key.actionValue/100);
-              this.pcServices.updateStats(pc);
-              this.save(["pc"], [pc], {pc: pc});
-            }
-            break;
-          } else {
-            var slot;
-            if(key.type === "headLight" || key.type === "headMedium" || key.type === "headHeavy"){
-              slot = "Head";
-            } else if (key.type === "bodyLight" || key.type === "bodyMedium" || key.type === "bodyHeavy"){
-              slot = "Body"
-            } else if (key.type === "neck"){
-              slot = "Neck"
-            } else if (key.type === "back"){
-              slot = "Back"
-            } else if (key.type === "bow" || key.type === "staff" || key.type === "sword"){
-              slot = "Primary"
-            } else {
-              slot = "Secondary"
-            }
-            if(pc["equipped" + slot]){
-              pc.inventory[pc["equipped" + slot].id] = 1;
-              pc.inventoryCache.push(pc["equipped" + slot])
-            }
-            pc["equipped" + slot] = key;
-            this.pcServices.updateStats(pc);
-            this.save(["pc"], [pc], {pc: pc});
-            break;
-          }
-        case "unequip":  
-          pc = {...this.state.pc};
-          pc.inventory[key.id] = 1;
-          pc.inventoryCache.push(key);
-          if(key.type === "headLight" || key.type === "headMedium" || key.type === "headHeavy"){
-            pc.equippedHead = {id: "00000000-0000-0000-0000-000000000000"};
-          } else if (key.type === "bodyLight" || key.type === "bodyMedium" || key.type === "bodyHeavy"){
-            pc.equippedBody = {id: "00000000-0000-0000-0000-000000000000"};
-          } else if (key.type === "neck"){
-            pc.equippedNeck = {id: "00000000-0000-0000-0000-000000000000"};
-          } else if (key.type === "back"){
-            pc.equippedBack = {id: "00000000-0000-0000-0000-000000000000"};
-          } else if (key.type === "bow" || key.type === "staff" || key.type === "sword"){
-            pc.equippedPrimary = {id: "00000000-0000-0000-0000-000000000000"};
-          } else {
-            pc.equippedSecondary = {id: "00000000-0000-0000-0000-000000000000"};
-          }
-          this.pcServices.updateStats(pc);
-          this.save(["pc"], [pc], {pc: pc});
-          break;
-        case "pointbuy":
-          pc = {...this.state.pc};
-          pc.attributePoints > 0
-            ? pc.attributePoints -= 1
-            : pc.attributePoints = 0;
-          pc[key] += 1;
-          this.pcServices.updateStats(pc);
-          this.save(["pc"], [pc], {pc: pc});
-          break;
-        default:
-          break;
-      }
+  shopStore(item){
+    let pc = {...this.state.pc};
+    let shop = {...this.state.shop};
+    item.removeFromShop(shop.inventory);
+    pc.currency -= item.cost*5;
+    if(pc.currency < 0){
+      pc.currency = 0;
     }
+    item.addTo(pc);
+    this.save({pc: pc, shop: shop}, {pc: pc, shop: shop});
+  }
+
+  shopPlayer(item){
+    let pc = {...this.state.pc};
+    let shop = {...this.state.shop};
+    pc.currency += item.cost;
+    item.removeFrom(pc.inventory);
+    item.addToShop(shop);
+    this.save({pc: pc, shop: shop}, {pc: pc, shop: shop});
+  }
+
+  inventory(item){
+    let pc = {...this.state.pc};
+    item.removeFrom(pc.inventory);
+    item.doAction(this.c, this.state, pc); 
+  }
+
+  unequip(item){
+    let pc = {...this.state.pc};
+    item.addTo(pc);
+    item.unequip(this.c, pc);
+  }
+  
+  pointbuy(attribute){
+    let pc = {...this.state.pc};
+    pc.attributePoints > 0
+      ? pc.attributePoints -= 1
+      : pc.attributePoints = 0;
+    pc[attribute] += 1;
+    this.c.pcServices.updateStats(pc);
+    this.save({pc: pc}, {pc: pc});
+  }
 
 }
 
-export default App
+export default App;
+
+

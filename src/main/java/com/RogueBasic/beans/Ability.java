@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
-@UserDefinedType(value = "ability")
 public class Ability {
 	private int level;
 	private String name;

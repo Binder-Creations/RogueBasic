@@ -17,23 +17,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Shop {
 	private UUID id;
-	private Set<Item> inventoryCache;
+	private Set<Item> inventory;
 	
 	public Shop () {}
 	
 	public Shop(UUID pcId) {
 		ShopServices services = new ShopServices(CassandraConnector.connect());
 		this.id = UUID.randomUUID();
-		this.inventoryCache = services.genInventoryCache(this.id, pcId);
+		this.inventory = services.genInventory(this.id, pcId);
 	}
 	
 	public Shop(ShopAWS shop) {
 		ObjectMapper mapper = new ObjectMapper();
-		Set<Item> inventoryCache = new HashSet<>();
-		if(shop.getInventoryCache() != null) {
-			for(String item: shop.getInventoryCache()) {
+		Set<Item> inventory = new HashSet<>();
+		if(shop.getInventory() != null) {
+			for(String item: shop.getInventory()) {
 				try {
-					inventoryCache.add(mapper.readValue(item, Item.class));
+					inventory.add(mapper.readValue(item, Item.class));
 				} catch (JsonMappingException e) {
 					e.printStackTrace();
 				} catch (JsonProcessingException e) {
@@ -43,7 +43,7 @@ public class Shop {
 		}
 		
 		this.id = shop.getId();
-		this.inventoryCache = inventoryCache;
+		this.inventory = inventory;
 		
 	}
 	
@@ -55,17 +55,17 @@ public class Shop {
 		this.id = id;
 	}
 
-	public Set<Item> getInventoryCache() {
-		return inventoryCache;
+	public Set<Item> getInventory() {
+		return inventory;
 	}
 
-	public void setInventoryCache(Set<Item> inventoryCache) {
-		this.inventoryCache = inventoryCache;
+	public void setInventory(Set<Item> inventory) {
+		this.inventory = inventory;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, inventoryCache);
+		return Objects.hash(id, inventory);
 	}
 
 	@Override
@@ -77,12 +77,12 @@ public class Shop {
 		if (getClass() != obj.getClass())
 			return false;
 		Shop other = (Shop) obj;
-		return Objects.equals(id, other.id) && Objects.equals(inventoryCache, other.inventoryCache);
+		return Objects.equals(id, other.id) && Objects.equals(inventory, other.inventory);
 	}
 
 	@Override
 	public String toString() {
-		return "Shop [id=" + id + ", inventory=" + inventoryCache + "]";
+		return "Shop [id=" + id + ", inventory=" + inventory + "]";
 	}
 
 	

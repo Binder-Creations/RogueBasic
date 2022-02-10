@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
-@UserDefinedType(value = "buff")
 public class Buff {
 	private String name;
 	private int duration;

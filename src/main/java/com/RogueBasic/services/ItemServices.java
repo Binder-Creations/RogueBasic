@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -65,19 +66,17 @@ public class ItemServices {
 	}
 	
 	private void genLoot(Room room, int lootValue, int challengeRating, String prefixMod, boolean miniboss, boolean boss) {
-		
-		Map<UUID, Integer> loot = new HashMap<>();
-		Set<Item> lootCache = new HashSet<>();
+		Set<Item> loot = new HashSet<>();
 		ItemServices iService =  new ItemServices(CassandraConnector.connect());
 		
-		Item soul = iService.getPremade(1);
 		if(miniboss) {
-			loot.put(soul.getId(), 1);
-			lootCache.add(soul);
+			Item soul = iService.getPremade(1);
+			loot.add(soul);
 		}
 		if(boss) {
-			loot.put(soul.getId(), 3);
-			lootCache.add(soul);
+			Item soul = iService.getPremade(1);
+			soul.setCount(3);
+			loot.add(soul);	
 		}
 		
 		int goldMod = 0;
@@ -94,41 +93,59 @@ public class ItemServices {
 		
 		int averageCost = (int)Math.round(Math.pow(challengeRating*5, 0.65)*10);
 		
-		while(lootValue >= averageCost && lootCache.size() <= 25) {
+		while(lootValue >= averageCost && loot.size() <= 25) {
 			int roll = ThreadLocalRandom.current().nextInt(1, 15);
 			if(roll == 1) {
 				Item healthPotion = iService.getPremade(2);
-				loot.put(healthPotion.getId(), 1);
-				lootCache.add(healthPotion);
-				lootValue -= 50;
+				if(loot.stream().anyMatch(item -> item.getId() == healthPotion.getId())) {
+					continue;
+				} else {
+					loot.add(healthPotion);
+					lootValue -= 50;
+				}	
 			}
 			if(roll == 2) {
 				Item energyPotion = iService.getPremade(3);
-				loot.put(energyPotion.getId(), 1);
-				lootCache.add(energyPotion);
-				lootValue -= 50;
+				if(loot.stream().anyMatch(item -> item.getId() == energyPotion.getId())) {
+					continue;
+				} else {
+					loot.add(energyPotion);
+					lootValue -= 50;
+				}	
 			}
 			if(roll == 3) {
 				Item ration = iService.getPremade(4);
-				loot.put(ration.getId(), 1);
-				lootCache.add(ration);
-				lootValue -= 25;
+				if(loot.stream().anyMatch(item -> item.getId() == ration.getId())) {
+					continue;
+				} else {
+					loot.add(ration);
+					lootValue -= 25;
+				}	
 			}
 			if(roll == 4) {
 				Item wine = iService.getPremade(5);
-				loot.put(wine.getId(), 1);
-				lootCache.add(wine);
-				lootValue -= 25;
+				if(loot.stream().anyMatch(item -> item.getId() == wine.getId())) {
+					continue;
+				} else {
+					loot.add(wine);
+					lootValue -= 25;
+				}	
 			}
 			if(roll >= 5 && roll < 10) {
 				Item gold = iService.getPremade(0);
-				int goldCount = loot.containsKey(gold.getId())
-					? loot.get(gold.getId())
-					: 0;
+				int goldCount = 0;
+				for (Iterator<Item> i = loot.iterator(); i.hasNext();) {
+				    Item item = i.next();
+				    if (item.getId() == gold.getId()) {
+				    	goldCount += item.getCount();
+				    	i.remove();
+				    }
+				}
+				
 				int addedGold = ThreadLocalRandom.current().nextInt(averageCost/2, averageCost*2);
 				lootValue -= addedGold;
-				loot.put(gold.getId(), goldCount+(addedGold*(100+goldMod)/100));
-				lootCache.add(gold);	
+				gold.setCount(goldCount+(addedGold*(100+goldMod)/100));
+				loot.add(gold);
 			}
 			if(roll >= 10) {
 				int equipmentMultiplier = 1;
@@ -140,8 +157,7 @@ public class ItemServices {
 				Item equipment = null;
 				for(int i = 0; i < equipmentMultiplier; i++) {
 					equipment = genEquipment(allTypes, challengeRating);
-					loot.put(equipment.getId(), 1);
-					lootCache.add(equipment);
+					loot.add(equipment);
 				}
 				lootValue -= equipment.getCost();
 			}
@@ -150,7 +166,6 @@ public class ItemServices {
 
 		
 		room.setLoot(loot);
-		room.setLootCache(lootCache);
 	}
 	
 	public Item genEquipment(List<String> types, int challengeRating){		

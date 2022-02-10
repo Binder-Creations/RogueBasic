@@ -14,7 +14,10 @@
     <link th:href="@{/styles/masterWebStyle.css}" rel="stylesheet" />
 </head>
 <body>
-	<img class="bc-logo" th:src="@{/images/bcLogo.png}" alt="logo"/>
+	<picture>
+	  	<source th:srcset='@{/images/logo.png}' media='(min-width: 961px)'>
+   		<img class="bc-logo" th:src="@{/images/logo-small.png}" alt="logo"/>
+  	</picture>
 	<div class="spacer-l"></div>
    	<img class ="title" th:src='@{/images/rogueBasicTitle.png}'>
  	<div class="spacer-xxl"></div>
