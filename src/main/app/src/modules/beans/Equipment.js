@@ -1,6 +1,28 @@
 import Item from "./Item";
 
 class Equipment extends Item {
+  getUsability(pc){
+    if(this.type === "back" || this.type === "neck"){
+      return 1;
+    }
+    if(pc.characterClass === "Wizard"){
+      if(this.type === "staff" || this.type === "spellbook" || this.type === "headLight" || this.type === "bodyLight"){
+        return 1;
+      }
+    }
+    if(pc.characterClass === "Rogue"){
+      if(this.type === "bow" || this.type === "dagger" || this.type === "headMedium" || this.type === "bodyMedium"){
+        return 1;
+      }
+    }
+    if(pc.characterClass === "Warrior"){
+      if(this.type === "sword" || this.type === "shield" || this.type === "headHeavy" || this.type === "bodyHeavy"){
+        return 1;
+      }
+    }
+    return 0;
+  }
+
   addTo(target){
     target.inventory.push(this);
   }

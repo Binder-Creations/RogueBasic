@@ -1,6 +1,13 @@
 import Item from "./Item";
 
 class Consumable extends Item {
+  getUsability(){
+    if(this.type === "potion"){
+      return 0;
+    }
+    return 1;
+  }
+
   addTo(target){
     let item = target.inventory.find(i => i.id === this.id);
     if(item){

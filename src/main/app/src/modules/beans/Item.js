@@ -7,6 +7,9 @@ class Item {
     }
     Binder.bind(this);
   }
+  getUsability(){
+    return 1;
+  }
 
   addTo(target){}
 

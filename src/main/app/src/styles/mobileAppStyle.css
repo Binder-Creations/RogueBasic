@@ -563,6 +563,9 @@
 				background-repeat: no-repeat;
 				background-size: cover;
 			}
+			.shop-box-item:active {
+				z-index: 99;
+			}
 			.shop-box-item td {
 				height: 100%;
 			}

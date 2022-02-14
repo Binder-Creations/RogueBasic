@@ -98,7 +98,7 @@ class AbilityTooltip extends React.Component {
     let valueText = value + hits;
 
     let valueStyle = {
-      fontSize: (valueText.length < 6 ? 128 : (134-valueText.length*6-(valueText.length-6)*5)) + "%",
+      fontSize: (valueText.length < 5 ? 128 : (134-valueText.length*7)) + "%",
       color: valueColor
     }
     

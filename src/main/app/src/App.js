@@ -2,16 +2,16 @@ import React from "react";
 import {Route, BrowserRouter as Router} from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import Ui from "./modules/components/Ui";
-import Binder from "./modules/services/Binder";
+import Dungeon from "./modules/components/Dungeon";
+import LoadScreen from "./modules/components/LoadScreen";
 import ShopMenu from "./modules/components/ShopMenu";
 import InnMenu from "./modules/components/InnMenu";
 import TavernMenu from "./modules/components/TavernMenu";
+import Binder from "./modules/services/Binder";
 import PcServices from "./modules/services/PcServices";
 import ItemServices from "./modules/services/ItemServices";
 import ItemFactory from "./modules/services/ItemFactory";
 import CombatEngine from "./modules/services/CombatEngine";
-import Dungeon from "./modules/components/Dungeon";
-import LoadScreen from "./modules/components/LoadScreen";
 import * as abilities from "./images/abilities" 
 import * as abilitiesSmall from "./images-small/abilities";
 import * as images from "./images" 
@@ -47,19 +47,6 @@ class App extends React.Component {
       abilityAnimation: 0,
       renderAbilityAnimation: false
     };
-    if(this.state.characterId){
-      try {
-        fetch('/pc/'+ this.state.characterId)
-        .then(response => response.json())
-        .then(data => {
-          this.setItemSortOrder(data);
-          ItemFactory.parsePC(data);
-          this.setState({pc: this.sortPC(data)});
-        });
-      } catch(e) {
-        this.setState({characterId: null, playerId: null});
-      } 
-    }
     this.c = {
       positions: ["pc", "frontLeft", "frontCenter", "frontRight", "backLeft", "backCenter", "backRight"],
       colorArmor: {color: "#136f9b"},
@@ -135,9 +122,6 @@ class App extends React.Component {
         return this.routeHome;
       }
     this.sizeWindow();
-    if(!this.state.pc){
-      return <LoadScreen c={this.c} s={this.state}/>
-    }
     if(!this.initialized){
       this.initialize();
     }
@@ -157,11 +141,11 @@ class App extends React.Component {
     let innerElements = [];
     let outerElements = [];
     this.c.disableUiMenus = false;
-    this.c.button = "TownButton";
+    this.c.homeButton = false;
     if (this.state.pc.location === "Town"){
       if(this.state.scene === "Default"){
         this.backgroundSrc = this.c.images.town;
-        this.c.button = "HomeButton";
+        this.c.homeButton = true;
         innerElements.push(this.exteriorBuildings);
         outerElements.push(this.helpButton);
         if(this.state.help){
@@ -222,7 +206,7 @@ class App extends React.Component {
     if(this.state.generatingDungeon){
       setTimeout(() => {
         if(this.state.generatingDungeon){
-          this.setState({barPercent: this.state.barPercent ? this.state.barPercent + 20 : 20})
+          this.setState({barPercent: (this.state.barPercent && this.state.barPercent <= 100 ) ? this.state.barPercent + 20 : 20})
         }
       }, 2000);
     }
@@ -238,11 +222,17 @@ class App extends React.Component {
     });  
   }
 
-  initialize(){
+  async initialize(){
     this.initialized = true;
+    try {
+      this.setState({pc: await this.fetchPc(this.state.characterId)});
+    } catch(e) {
+      this.setState({characterId: null, playerId: null});
+    } 
     this.c.pcServices = new PcServices(this.state.pc.characterClass);
     this.c.pcServices.updateStats(this.state.pc);
     window.addEventListener("resize", this.updateWidth)
+    this.setItemSortOrder();
     this.preloadImages();
     this.genDungeons();
     this.genShop();
@@ -255,13 +245,13 @@ class App extends React.Component {
     document.body.style.fontSize = this.c.appWidth*0.019 + "px";
   }
 
-  setItemSortOrder(pc){
-    if(pc.characterClass === "Rogue"){
-      this.itemSortOrder = ["currency", "potion", "consumable", "bow", "dagger", "headMedium", "bodyMedium", "neck", "back", "staff", "spellbook", "sword", "shield", "headLight", "bodyLight", "headHeavy", "bodyHeavy"];
-    } else if (pc.characterClass === "Wizard"){
-      this.itemSortOrder = ["currency", "potion", "consumable", "staff", "spellbook", "headLight", "bodyLight", "neck", "back", "bow", "dagger", "sword", "shield", "headMedium", "bodyMedium", "headHeavy", "bodyHeavy"];
+  setItemSortOrder(){
+    if(this.state.pc.characterClass === "Rogue"){
+      this.c.itemSortOrder = ["currency", "potion", "consumable", "bow", "dagger", "headMedium", "bodyMedium", "neck", "back", "staff", "spellbook", "sword", "shield", "headLight", "bodyLight", "headHeavy", "bodyHeavy"];
+    } else if (this.state.pc.characterClass === "Wizard"){
+      this.c.itemSortOrder = ["currency", "potion", "consumable", "staff", "spellbook", "headLight", "bodyLight", "neck", "back", "bow", "dagger", "sword", "shield", "headMedium", "bodyMedium", "headHeavy", "bodyHeavy"];
     } else {
-      this.itemSortOrder = ["currency", "potion", "consumable", "sword", "shield", "headHeavy", "bodyHeavy", "neck", "back", "staff", "spellbook", "bow", "dagger", "headLight", "bodyLight", "headMedium", "bodyMedium"];
+      this.c.itemSortOrder = ["currency", "potion", "consumable", "sword", "shield", "headHeavy", "bodyHeavy", "neck", "back", "staff", "spellbook", "bow", "dagger", "headLight", "bodyLight", "headMedium", "bodyMedium"];
     }
   }
 
@@ -291,62 +281,100 @@ class App extends React.Component {
     }
   }
 
-  genDungeons(){
+  async fetchPc(id = this.state.characterId){
+    let pc;
+    await fetch('/pc/'+ id)
+    .then(response => response.json())
+    .then(data => {
+      ItemFactory.parsePC(data);
+      pc = this.sortPC(data);
+    });
+    console.log(pc)
+    return pc;
+  }
+
+  async fetchDungeon(id = this.state.pc.currentDungeon){
+    let dungeon;
+    await fetch('/dungeon/'+ id)
+    .then(response => response.json())
+    .then(data => {
+      ItemFactory.parseDungeon(data);
+      dungeon = this.sortDungeon(data);
+    });
+    return dungeon;
+  }
+
+  async fetchNewDungeonBoard(){
+    let dungeonData;
+    await fetch('/dungeon/new/'+ this.state.pc.id)
+    .then(response => response.json())
+    .then(data => {
+      let pc = {...this.state.pc};
+      pc.dungeonBoard = [];
+      data.forEach(dungeon => pc.dungeonBoard.push(dungeon.id))
+      dungeonData = {pc: pc, dungeonBoard: data};
+    });
+    return dungeonData;
+  }
+
+  async fetchDungeonBoard(){
+    let dungeonBoard;
+    await fetch('/dungeon/getBoard/'+ this.state.pc.id)
+    .then(response => response.json())
+    .then(data => {
+      dungeonBoard = data;
+    });
+    return dungeonBoard;
+  }
+
+  async fetchShop(){
+    let shop;
+    await fetch('/shop/'+ this.state.pc.currentShop)
+    .then(response => response.json())
+    .then(data => {
+      data.inventory = ItemFactory.parseArray(data.inventory);
+      shop = data;
+    });
+    return shop;
+  }
+
+  async fetchNewShop(){
+    let shopData;
+    await fetch('/shop/new/'+ this.state.pc.id)
+    .then(response => response.json())
+    .then(data => {
+      let pc = {...this.state.pc}
+      pc.currentShop = data.id;
+      data.inventory = ItemFactory.parseArray(data.inventory);
+      shopData = {pc: pc, shop: data};
+    });
+    return shopData;
+  }
+
+  async genDungeons(){
     if(this.state.pc.currentDungeon && (!this.state.dungeon || this.state.dungeon.id !== this.state.pc.currentDungeon)){
-      fetch('/dungeon/'+ this.state.pc.currentDungeon)
-      .then(response => response.json())
-      .then(data => {
-        ItemFactory.parseDungeon(data);
-        this.setState({dungeon: this.sortDungeon(data), loadingDungeons: true, generatingDungeon: false, barPercent: 0});
-      });
+      this.setState({dungeon: await this.fetchDungeon(), loadingDungeons: true, generatingDungeon: false, barPercent: 0});
     }
     if(!this.state.pc.dungeonBoard){
-      fetch('/dungeon/new/'+ this.state.pc.id)
-      .then(response => response.json())
-      .then(data => {
-        let pc = {...this.state.pc};
-        pc.dungeonBoard = [];
-        data.forEach(dungeon => pc.dungeonBoard.push(dungeon.id))
-        this.save({pc: pc}, {pc: pc, dungeonBoard: data, loadingDungeons: true});
-      });
+      let data = await this.fetchNewDungeonBoard();
+      this.save({pc: data.pc}, {pc: data.pc, dungeonBoard: data.dungeonBoard, loadingDungeons: true});
     } 
     if(this.state.pc.dungeonBoard && (!this.state.dungeonBoard)){
-      fetch('/dungeon/getBoard/'+ this.state.pc.id)
-        .then(response => response.json())
-        .then(data => {
-          this.setState({dungeonBoard: data, loadingDungeons: true});
-        });
+      this.setState({dungeonBoard: await this.fetchDungeonBoard(), loadingDungeons: true});
     }     
     if(this.state.pc.dungeonBoard && this.state.dungeonBoard && !this.state.loadingDungeons){
       this.setState({loadingDungeons: true});
     }
   }
 
-  genShop(){
+  async genShop(){
     if(this.state.pc.currentShop){
-      if(!this.state.shop){
-        fetch('/shop/'+ this.state.pc.currentShop)
-          .then(response => response.json())
-          .then(data => {
-            data.inventory = ItemFactory.parseArray(data.inventory);
-            this.setState({shop: data, loadingShop: true});
-          });
-      } else if(this.state.shop.id !== this.state.pc.currentShop){
-        fetch('/shop/'+ this.state.pc.currentShop)
-          .then(response => response.json())
-          .then(data => {
-            data.inventory = ItemFactory.parseArray(data.inventory);
-            this.setState({shop: data, loadingShop: true});
-          });
+      if(!this.state.shop || this.state.shop.id !== this.state.pc.currentShop){
+        this.setState({shop: await this.fetchShop(), loadingShop: true});
       }
     } else {
-      fetch('/shop/new/'+ this.state.pc.id)
-        .then(response => response.json())
-        .then(data => {
-          let pc = {...this.state.pc}
-          pc.currentShop = data.id;
-          this.save({pc: pc}, {shop: data, pc: pc, loadingShop: true});
-        });
+      let data = await this.fetchNewShop();
+      this.save({pc: data.pc}, {shop: data.shop, pc: data.pc, loadingShop: true})
     }
   }
 
@@ -384,28 +412,11 @@ class App extends React.Component {
 
   async getDungeon(){
     if(!this.state.dungeon){
-      await fetch('/dungeon/' + this.state.pc.currentDungeon)
-      .then(response => response.json())
-      .then(data => {
-        ItemFactory.parseDungeon(data);
-        this.setState({dungeon: this.sortDungeon(data)});
-      });
+      this.setState({dungeon: await this.fetchDungeon()})
     }
-    if(!this.state.dungeon.floors && !this.state.dungeon.floorIds){
-      await fetch('/dungeon/' + this.state.dungeon.id)
-      .then(response => response.json())
-      .then(data => {
-        ItemFactory.parseDungeon(data);
-        this.setState({dungeon: this.sortDungeon(data)});
-      });
-    } else if(!this.state.dungeon.floors){
-      await fetch('/dungeon/convert/' + this.state.dungeon.id)
-      .then(response => response.json())
-      .then(data => {
-        ItemFactory.parseDungeon(data);
-        this.setState({dungeon: this.sortDungeon(data)});
-      });
-    }
+    if(!this.state.dungeon.floors){
+      this.setState({dungeon: await this.fetchDungeon(this.state.dungeon.id)});
+    } 
   }
   
   checkCombat(){
@@ -655,27 +666,15 @@ class App extends React.Component {
     this.setState({pc: pc, rested: this.state.rested +1});
   }
 
-  rest(){
-    let pc = {...this.state.pc};
+  async rest(){
+    let dungeonData = await this.fetchNewDungeonBoard();
+    let shopData = await this.fetchNewShop();
+    let pc = dungeonData.pc;
     pc.currentDungeon = null;
     pc.currentFloor = -1;
     pc.currentRoom = -1;
-    let dungeonData;
-    fetch('/dungeon/new/'+ pc.id)
-    .then(response => response.json())
-    .then(data => {          
-      pc.dungeonBoard = [];
-      data.forEach(dungeon => pc.dungeonBoard.push(dungeon.id))
-      dungeonData = data;
-    })
-    .then(
-      fetch('/shop/new/'+ pc.id)
-      .then(response => response.json())
-      .then(data => {
-        pc.currentShop = data.id;
-        this.save({pc: pc}, {shop: data, dungeonBoard: dungeonData, pc: pc, loadingShop: true, dungeon: null});
-      })
-    );
+    pc.currentShop = shopData.shop.id;
+    this.save({pc: pc}, {shop: shopData.shop, dungeonBoard: dungeonData.dungeonBoard, pc: pc, loadingShop: true, dungeon: null});
   }
 
   eat(){

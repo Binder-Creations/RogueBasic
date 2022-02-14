@@ -6,23 +6,26 @@ class Inventory extends React.Component {
   
   constructor(props){
     super(props);
-    if(this.props.type && this[this.props.type]){
-      this[this.props.type + "Props"]();
-    }
     Binder.bind(this);
+    if(this.props.type && this[this.props.type + "Props"]){
+      this[this.props.type + "Props"]();
+      this.sort(this.items);
+    }
+    
   }
 
   render(){
     if(!this.itemsMax){
       return <></>
     }
-
-    this.components = [];
-    for(let item of items){
-      this.push(item);
+    let components = [];
+    if(this.props.type && this[this.props.type + "Parse"]){
+      for(let item of this.items){
+        components.push(this[this.props.type + "Parse"](item));
+      }
     }
-    this.fillToMax();
-    return this.components;
+    this.fillToMax(components);
+    return components;
   }
 
   inventoryProps(){
@@ -61,120 +64,80 @@ class Inventory extends React.Component {
     items.sort((a,b) => this.getSortValue(a) - this.getSortValue(b));
   }
 
-  push(item){
-    let count = 
+  getCount(item){
+    return(
       <p className="item-count">
-        {this.items[item.id]}
+        {item.count}
       </p>
+    );
+  }
 
-    if(this.props.type === "shopStore"){
-      if(this.props.s.pc.currency >= item.cost*5){
-        this.pushTableUsable(item);
+  inventoryParse(item){
+    if(item.getUsability(this.props.s.pc) === 0){
+      return this.parseUnusable(item);
+    }
+    if(item.getUsability(this.props.s.pc) === 1){
+      if(this.props.s.combat){
+        return this.parseUnusable(item); 
       } else {
-        this.pushTableUnusable(item);
+        return this.parseUsable(item);
       }
     }
-    
-    if(this.props.type === "shopPlayer" || this.props.type === "loot"){
-      if(this.items[item.id] > 1){
-        this.pushUsable(item, count);
+    if(item.getUsability(this.props.s.pc) === 2){
+      if(this.props.s.position){
+        return this.parseUnusable(item);
       } else {
-        this.pushUsable(item);
-      }
-    }
-
-    if (this.props.type === "inventory"){
-      if(item.type === "potion"){
-        if(this.props.s.position){
-          if(this.items[item.id] > 1){
-            this.pushUnusable(item, count);
-          } else {
-            this.pushUnusable(item);
-          }
-        } else {
-          if(this.items[item.id] > 1){
-            this.pushUsable(item, count);
-          } else {
-            this.pushUsable(item);
-          }
-        }
-      }
-      if(item.type === "consumable"){
-        if(this.props.s.combat){
-          if(this.items[item.id] > 1){
-            this.pushUnusable(item, count);
-          } else {
-            this.pushUnusable(item);
-          }
-        } else {
-          if(this.items[item.id] > 1){
-            this.pushUsable(item, count);
-          } else {
-            this.pushUsable(item);
-          }
-        }
-      }
-      if(item.type === "back" || item.type === "neck"){
-        if(this.props.s.combat){
-          this.pushUnusable(item);
-        } else {
-          this.pushUsable(item);
-        }
-      }
-      if(item.type === "staff" || item.type === "spellbook" || item.type === "headLight" || item.type === "bodyLight"){
-        if(this.props.s.pc.characterClass === "Wizard" && !this.props.s.combat){
-          this.pushUsable(item);
-        } else {
-          this.pushUnusable(item);
-        }
-      }
-      if(item.type === "bow" || item.type === "dagger" || item.type === "headMedium" || item.type === "bodyMedium"){
-        if(this.props.s.pc.characterClass === "Rogue" && !this.props.s.combat){
-          this.pushUsable(item);
-        } else {
-          this.pushUnusable(item);
-        }
-      }
-      if(item.type === "sword" || item.type === "shield" || item.type === "headHeavy" || item.type === "bodyHeavy"){
-        if(this.props.s.pc.characterClass === "Warrior" && !this.props.s.combat){
-          this.pushUsable(item);
-        } else {
-          this.pushUnusable(item);
-        }
+        return this.parseUsable(item);
       }
     }
   }
 
-  pushUsable(item, count){
+  shopPlayerParse(item){
+    return this.parseUsable(item);
+  }
+
+  shopStoreParse(item){
+    if(this.props.s.pc.currency >= item.cost*5){
+      return this.parseTableUsable(item);
+    } else {
+      return this.parseTableUnusable(item);
+    }
+  }
+
+  lootParse(item){
+    return this.parseUsable(item);
+  }
+
+  parseUsable(item){
     let itemProps = this.props.c.itemServices.getProps(item);
-    this.components.push(
+    return(
       <div className={this.itemBoxClass+" item-tooltip"} onClick={()=>{this.props.c[this.props.type](item)}}>
         <div className="absolute-fill hover-saturate" style={{pointerEvents: "auto"}}>
           <img src={itemProps.background} className="absolute-fill" alt=""/>
           <img src={itemProps.image} className="item-image" alt="item"/>
           <img src={itemProps.frame} className="absolute-fill" alt="frame"/>
         </div>
-        {count ? count : <></>}
+        {item.count > 1 ? this.getCount(item) : <></>}
         <ItemTooltip c={this.props.c} s={this.props.s} itemProps={itemProps} item={item} update={this.props.update} qMods={this.qMods} costMult={1}/>
       </div>
     )
   }
 
-  pushUnusable(item, count){
+  parseUnusable(item){
     let itemProps = this.props.c.itemServices.getProps(item);
-    this.components.push(
+    return(
       <div className={this.itemBoxClass+" item-tooltip"}>
         <img src={itemProps.background} className="absolute-fill gray-100" alt=""/>
         <img src={itemProps.image} className="item-image gray-100" alt="item"/>
         <img src={itemProps.frame} className="absolute-fill gray-100" alt="frame"/>
-        {count ? count : <></>}
+        {item.count > 1 ? this.getCount(item) : <></>}
         <ItemTooltip c={this.props.c} s={this.props.s} itemProps={itemProps} item={item} update={this.props.update} qMods={this.qMods} costMult={1}/>
       </div>
     )
   }
-  pushTableUsable(item){
+  parseTableUsable(item){
     let itemProps = this.props.c.itemServices.getProps(item);
-    this.components.push(
+    return(
         <tr className="hover-saturate shop-box-item" onClick={()=>{this.props.c[this.props.type](item)}} style={{backgroundImage: `url(${this.props.c.images.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
           <td className="item-tooltip relative">
             <img src={itemProps.image} className="shop-image" alt="item"/>
@@ -194,9 +157,9 @@ class Inventory extends React.Component {
         </tr>
     )
   }
-  pushTableUnusable(item){
+  parseTableUnusable(item){
     let itemProps = this.props.c.itemServices.getProps(item);
-    this.components.push(
+    return(
         <tr className="shop-box-item" style={{backgroundImage: `url(${this.props.c.images.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
           <td className="item-tooltip relative">
             <img src={itemProps.image} className="shop-image gray-75" alt="item"/>
@@ -217,9 +180,9 @@ class Inventory extends React.Component {
     )
   }
 
-  fillToMax(){
-    while (this.components.length < this.itemsMax){
-      this.components.push(<div className={this.itemBoxClass}><img src={this.props.c.images.frameEmpty} className="absolute-fill" alt="frame"/></div>)
+  fillToMax(components){
+    while (components.length < this.itemsMax){
+      components.push(<div className={this.itemBoxClass}><img src={this.props.c.images.frameEmpty} className="absolute-fill" alt="frame"/></div>)
     }
   }
 }
