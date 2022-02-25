@@ -1,0 +1,76 @@
+[
+  {
+    "name": "Vital Strike", 
+    "modifier": 1.2, 
+    "factor": 10, 
+    "hits": 1, 
+    "target": "pc", 
+    "type": "Attack", 
+    "description": "launches a vicious attack seeking your most vulnerable opening.", 
+    "selfFlags": {
+      "crit": 1
+    }
+  },
+  {
+    "name": "Hasten", 
+    "modifier": 5, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "self", 
+    "type": "Buff", 
+    "description": "concentrates, and their movements speed up.", 
+    "buffs": [{
+      "name": "hasten", 
+      "duration": 4, 
+      "dodgeRating": -1, 
+      "critRating": -1
+    }]
+  },
+  {
+    "name": "Seamseek", 
+    "modifier": 1.5, 
+    "factor": 15, 
+    "hits": 1, 
+    "target": "pc", 
+    "type": "Attack", 
+    "description": "bypasses your armor with a carefully-placed attack.", 
+    "selfFlags": {
+      "fullPen": 1
+    }
+  },
+  {
+    "name": "Lacerate", 
+    "modifier": 0.9, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "pc", 
+    "type": "Debuff", 
+    "description": "opens your artery, causing your to bleed profusely.", 
+    "debuffs": [{
+      "name": "lacerate", 
+      "duration": -1,
+      "bleed": -1
+    }]
+  },
+  {
+    "name": "Flurry", 
+    "modifier": 0.7, 
+    "factor": 25, 
+    "hits": 4, 
+    "target": "pc", 
+    "type": "Attack", 
+    "description": "attacks you four times in a blur of motion."
+  },
+  {
+    "name": "Perfect Dodge", 
+    "modifier": 1, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "self", 
+    "type": "Buff", 
+    "description": "readies themself to dodge your next attack.", 
+    "selfFlags": {
+      "dodge": 2
+    }
+  }
+]

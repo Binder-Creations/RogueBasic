@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -17,29 +18,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.RogueBasic.beans.PlayerCharacter;
 import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.data.PlayerDao;
-import com.RogueBasic.util.CassandraConnector;
 
 @Controller
 public class CharacterSelectController {
+	@Autowired
+	private PlayerDao playerDao;
+	@Autowired
+	private PlayerCharacterDao playerCharacterDao;
 	
 	@GetMapping("/character_select")
-	public String characterSelect(@CookieValue(value="player_id", defaultValue="0") String playerId, Model model) {
-		if (playerId.equals("0")){
+	public String characterSelect(@CookieValue(value="player_id", required=false) String playerId, Model model) {
+		if (playerId == null){
 			return "redirect:/login";
 		}
-		
-		PlayerDao pdao = new PlayerDao(CassandraConnector.getSession());
-		
-		if(pdao.findById(UUID.fromString(playerId)).getCharacterIds() == null) {
+
+		if(playerDao.findById(UUID.fromString(playerId)).getCharacterIds() == null) {
 			return "redirect:/home";
 		}
 		
-		PlayerCharacterDao pcdao = new PlayerCharacterDao(CassandraConnector.getSession());	
 		List<PlayerCharacter> characters = new ArrayList<>();
-		pdao.findById(UUID.fromString(playerId))
+		playerDao.findById(UUID.fromString(playerId))
 			.getCharacterIds()
 			.stream()
-			.forEach((pc)->characters.add(pcdao.findById(pc)));	
+			.forEach((pc)->characters.add(playerCharacterDao.findById(pc)));	
 		model.addAttribute("characters", characters);
 		
 		return "character_select";

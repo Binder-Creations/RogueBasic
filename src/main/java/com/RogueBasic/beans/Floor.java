@@ -4,8 +4,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import org.springframework.data.cassandra.core.mapping.UserDefinedType;
-
 
 public class Floor {
 	private UUID id;

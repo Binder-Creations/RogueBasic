@@ -4,53 +4,50 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.RogueBasic.beans.Player;
 import com.RogueBasic.beans.PlayerCharacter;
 import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.data.PlayerDao;
-import com.RogueBasic.util.CassandraConnector;
-import com.datastax.oss.driver.api.core.CqlSession;
 
 @Controller
 public class NewCharacterController {
+	@Autowired
+	private PlayerDao playerDao;
+	@Autowired
+	private PlayerCharacterDao playerCharacterDao;
 	
 	@GetMapping("/new_character")
-	public String newCharacter(@CookieValue(value="player_id", defaultValue="0") String playerId, Model model) {
-		if(playerId.equals("0")) {
+	public String newCharacter(@CookieValue(value="player_id", required=false) String playerId, Model model) {
+		if(playerId == null) {
 			return "redirect:/login";
 		} else {
-			PlayerDao pdao = new PlayerDao(CassandraConnector.getSession());
-			model.addAttribute("newCharacter", new NewCharacter(pdao.findById(UUID.fromString(playerId))));
+			model.addAttribute("newCharacter", new NewCharacter(playerDao.findById(UUID.fromString(playerId))));
 			return "new_character";
 		}
 	}
 	
 	@PostMapping("/new_character")
-	public String newCharacterSubmit(@CookieValue(value="player_id", defaultValue="0") String playerId, @ModelAttribute NewCharacter newCharacter, Model model) {
-		CqlSession session = CassandraConnector.getSession();
-		PlayerDao pdao = new PlayerDao(session);
-		PlayerCharacterDao pcdao = new PlayerCharacterDao(session);
-		Player player = pdao.findById(UUID.fromString(playerId));
+	public String newCharacterSubmit(@CookieValue(value="player_id", required=false) String playerId, @ModelAttribute NewCharacter newCharacter, Model model) {
+		Player player = playerDao.findById(UUID.fromString(playerId));
 		PlayerCharacter pc = new PlayerCharacter(newCharacter.getName(), newCharacter.getCharacterClass(), Integer.parseInt(newCharacter.getConstitution()) + player.getConstitutionMetabonus(), Integer.parseInt(newCharacter.getStrength()) + player.getStrengthMetabonus(), Integer.parseInt(newCharacter.getDexterity()) + player.getDexterityMetabonus(), Integer.parseInt(newCharacter.getIntelligence()) + player.getIntelligenceMetabonus(), player.getCurrencyMetabonus());
 		Set<UUID> pcIds = player.getCharacterIds() == null
 				? new HashSet<UUID>()
 				: player.getCharacterIds();
 		pcIds.add(pc.getId());
 		player.setCharacterIds(pcIds);
-		pdao.save(player);
-		pcdao.save(pc);
+		playerDao.save(player);
+		playerCharacterDao.save(pc);
 		
 		return "redirect:/character_select";
 	}
-	
 }
 
 class NewCharacter{

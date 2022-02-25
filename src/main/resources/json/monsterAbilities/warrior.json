@@ -1,0 +1,76 @@
+[
+  {
+    "name": "Fortify", 
+    "modifier": 8, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "self", 
+    "type": "Buff", 
+    "description": "enhances their defenses.", 
+    "buffs": [{
+      "name": "fortify", 
+      "duration": -1,
+      "armor": -1
+    }]
+  },
+  {
+    "name": "Rallying Cry", 
+    "modifier": 4, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "allMonsters", 
+    "type": "Buff", 
+    "description": "bolsters the morale of their allies.", 
+    "buffs": [{
+      "name": "rallyingCry", 
+      "duration": 4, 
+      "power": -1
+    }]
+  },
+  {
+    "name": "Sunder", 
+    "modifier": 6, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "pc", 
+    "type": "Debuff", 
+    "description": "pries open your armor, making you vulnerable to further attacks.", 
+    "debuffs": [{
+      "name": "sunder", 
+      "duration": 4,
+      "armor": -1
+    }]
+  },
+  {
+    "name": "Dazing Blow", 
+    "modifier": 7, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "pc", 
+    "type": "Debuff", 
+    "description": "disorients you with a heavy, blunt strike.", 
+    "debuffs": [{
+      "name": "dazingBlow", 
+      "duration": 3,
+      "power": -1
+    }]
+  },
+  {
+    "name": "Inner Reserve", 
+    "modifier": 6, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "self", 
+    "type": "Heal", 
+    "description": "draws deeply from their inner resillence to shrug off wounds."
+  },
+  {
+    "name": "Power Strike", 
+    "modifier": 3, 
+    "factor": 50, 
+    "hits": 1, 
+    "target": "pc", 
+    "type": "Attack", 
+    "description": "makes a shatteringly powerful attack."
+  }
+]

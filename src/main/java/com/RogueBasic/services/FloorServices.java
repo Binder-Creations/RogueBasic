@@ -7,24 +7,20 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.Floor;
-import com.datastax.oss.driver.api.core.CqlSession;
 
+@Component
 public class FloorServices {
-	public CqlSession session;
-	private static final Logger log = LogManager.getLogger(FloorServices.class);
-
-	public FloorServices(CqlSession session) {
-		super();
-		this.session = session;
-	}
+	@Autowired
+	RoomServices roomServices;
+	
+	public FloorServices() {}
 	
 	public Set<Floor> generate(Dungeon dungeon) {
-		RoomServices rs = new RoomServices(session);
 		List<Floor> floors = new ArrayList<>();
 		Set<Floor> floorSet = new HashSet<>();
 		
@@ -48,7 +44,7 @@ public class FloorServices {
 			if(i<floors.size()-1)
 				floor.setNextFloorId(floors.get(i+1).getId());
 			
-			floor.setRooms(rs.generate(dungeon, floor));
+			floor.setRooms(roomServices.generate(dungeon, floor));
 			floorSet.add(floor);
 		}
 		

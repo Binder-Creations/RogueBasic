@@ -1,0 +1,110 @@
+{
+  "equippedBody": {
+    "id": "4013e206-1991-458b-b998-7c8536ad4af3", 
+    "count": 1, 
+    "name": "Knave's Jerkin", 
+    "description": "Basic leathers for the common scoundrel.", 
+    "type": "bodyMedium", 
+    "rarity": "Common", 
+    "image": "1",
+    "cost": 10, 
+    "armorBonus": 20
+  },
+  "equippedPrimary": {
+    "id": "4eff0337-cae1-42c1-b1fe-6ac397f12c09", 
+    "count": 1, 
+    "name": "Knave's Bow", 
+    "description": "Little more than a shorn branch held taut by a string.", 
+    "type": "bow", 
+    "rarity": "Common", 
+    "image": "1",
+    "cost": 10, 
+    "powerBonus": 15
+  },
+  "equippedSecondary": {
+    "id": "5fb043b1-745d-4243-b22a-e8ecc69ddb81", 
+    "count": 1, 
+    "name": "Knave's Stabber", 
+    "description": "Still has flecks of blood on its chipped blade.", 
+    "type": "dagger", 
+    "rarity": "Common", 
+    "image": "1",
+    "cost": 10, 
+    "powerBonus": 8
+  },
+  "equipTypes": ["headMedium", "bodyMedium", "bow", "dagger", "back", "neck"],
+  "abilities": [
+    {
+      "level": 0,
+      "name": "Steady Shot",
+      "cost": 0,
+      "modifier": 1,
+      "factor": 10,
+      "hits": 1,
+      "target": "lowHealth",
+      "type": "Attack",
+      "icon": "Power",
+      "description": "Fire off a basic shot."
+    },
+    {
+      "level": 1,
+      "name": "Deadeye",
+      "cost": 10,
+      "modifier":1.6,
+      "factor": 0,
+      "hits": 1,
+      "target": "backCenter",
+      "type": "Attack",
+      "icon": "Power",
+      "description": "Shoot the back center enemy with unerring precision. This attack cannot be dodged.",
+      "selfFlags": {
+        "hit": 1
+      }
+    },
+    {
+      "level": 2,
+      "name": "Shadowmeld",
+      "cost": 20,
+      "modifier": 8,
+      "factor": 0,
+      "hits": 1,
+      "target": "self",
+      "type": "Buff",
+      "icon": "Armor",
+      "description": "Become one with the shadows, making it harder for enemies to hit you. Dramatically increases your dodge and critical ratings for one round.",
+      "buffs": [{
+        "name": "shadowmeld",
+        "duration": 2,
+        "critRating": -1,
+        "dodgeRating": -1
+      }]
+    },
+    {
+      "level": 4,
+      "name": "Assassinate",
+      "cost": 40,
+      "modifier": 2.6,
+      "factor": 15,
+      "hits": 1,
+      "target": "highHealth",
+      "type": "Attack",
+      "icon": "Power",
+      "description": "Attack an enemy with a deadly strike. Your critical multiplier is doubled for this attack.",
+      "selfFlags": {
+        "critDoubleDamage": 1
+      }
+    },
+    {
+      "level": 6,
+      "name": "Blade Dance",
+      "cost": 80,
+      "modifier": 0.6,
+      "factor": 20,
+      "hits": 8,
+      "target": "lowHealth",
+      "type": "Attack",
+      "icon": "Power",
+      "description": "Unleash a deadly flurry of attacks."
+    }
+  ]  
+}

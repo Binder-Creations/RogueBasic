@@ -3,7 +3,7 @@ import Item from "./Item";
 class Consumable extends Item {
   getUsability(){
     if(this.type === "potion"){
-      return 0;
+      return 2;
     }
     return 1;
   }

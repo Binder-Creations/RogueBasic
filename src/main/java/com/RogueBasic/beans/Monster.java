@@ -3,9 +3,6 @@ package com.RogueBasic.beans;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
-import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 public class Monster {
 	private UUID id;
@@ -25,27 +22,14 @@ public class Monster {
 	private int critRating;
 	private Set<Ability> abilities;
 	
-	public Monster() {};
-	
-	public Monster(String name, String type, String species, String position, boolean boss, boolean miniboss, int level, int variant, int health,
-			int power, int armor, int dodgeRating, int critRating, Set<Ability> abilities) {
-		super();
+	public Monster() {
 		this.id = UUID.randomUUID();
-		this.name = name;
-		this.type = type;
-		this.species = species;
-		this.position = position;
-		this.boss = boss;
-		this.miniboss = miniboss;
-		this.level = level;
-		this.variant = variant;
-		this.health = health;
-		this.power = power;
-		this.armor = armor;
-		this.dodgeRating = dodgeRating;
-		this.critRating = critRating;
-		this.abilities = abilities;
-	}
+		this.health = 10;
+		this.power = 10;
+		this.armor = 20;
+		this.dodgeRating = 8;
+		this.critRating = 8;
+	};
 
 	public UUID getId() {
 		return id;

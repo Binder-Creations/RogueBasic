@@ -9,29 +9,24 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.Floor;
 import com.RogueBasic.beans.Room;
-import com.datastax.oss.driver.api.core.CqlSession;
 
+@Component
 public class RoomServices {
-	private static final Logger log = LogManager.getLogger(RoomServices.class);
-	private CqlSession session;
+	@Autowired
+	private ItemServices itemServices;
 	private Queue<Room> queue;
 	private int roomsQueued;
 	
-	public RoomServices(CqlSession session) {
-		super();
-		this.session = session;
-		this.queue = new LinkedList<>();
-	}
+	public RoomServices() {}
 	
-	public Set<Room> generate (Dungeon dungeon, Floor floor) {
-		ItemServices is = new ItemServices(session);
-		
+	public Set<Room> generate (Dungeon dungeon, Floor floor) {	
+		this.queue = new LinkedList<>();
 		Set<Room> rooms = new HashSet<>();
 		boolean stairsGenerated = false;
 		int xLength = floor.getXLength();
@@ -66,7 +61,7 @@ public class RoomServices {
 				if(containsMonsters(room.isStairsPrevious(), room.isBoss(), room.isMiniboss(), dungeon.getChallengeRating()))
 					room.setMonsters(MonsterServices.generate(dungeon.getChallengeRating(), dungeon.getTheme(), floor.getLevel(), room.isBoss(), room.isMiniboss()));
 				if(containsItems(room.isBoss(), room.isMiniboss(), room.getMonsters() != null, dungeon.getChallengeRating()))
-					is.generate(dungeon, room, floor.getLevel());
+					itemServices.generate(dungeon, room, floor.getLevel());
 				room.setVariant(ThreadLocalRandom.current().nextInt(1,5));
 				room.setCount(count++);
 				rooms.add(room);

@@ -3,62 +3,49 @@ package com.RogueBasic.util;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.RogueBasic.beans.Ability;
+import com.RogueBasic.beans.Item;
+import com.RogueBasic.beans.PlayerCharacter;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class RogueUtilities {
-	private static final Logger log = LogManager.getLogger(RogueUtilities.class);
+	private static final ObjectMapper mapper = new ObjectMapper();
 	
-	public String readFileToString(String name, String type){
-		try{
-			StringBuffer sb = new StringBuffer();
-			Files.readAllLines(Paths.get("src/main/resources/" + name + type))
-				 .forEach((s)->sb.append(s + "\n"));
-			return sb.toString().substring(0, sb.length()-1);
+	public static Item getItem(String itemName) {
+		try {	
+			return mapper.readValue(Files.readString(Paths.get("src/main/resources/json/items/" + itemName + ".json")), Item.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static Item getItem(String itemName, int count) {
+		Item item = RogueUtilities.getItem(itemName);
+		item.setCount(count);
+		return item;
+	}
+
+	public static List<Ability> getMonsterAbilities(String type){
+		try {
+			return mapper.readValue(Files.readString(Paths.get("src/main/resources/json/monsterAbilities/"+type+".json")), new TypeReference<List<Ability>>(){});
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	public List<String[]> readFileToArrays(String path){
+	public static PlayerCharacter getCharacterClass(String characterClass) {
 		try {
-			List<String[]> result = new ArrayList<>();
-			Files.readAllLines(Paths.get("src/main/resources/" + path))
-				 .forEach((s)->result.add(s.split("~")));
-			return result;
-		} catch (Exception e){
+			return mapper.readValue(Files.readString(Paths.get("src/main/resources/json/classes/" + characterClass.toLowerCase() + ".json")), PlayerCharacter.class);
+		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-//	public static boolean writeStringToFile(String string, String name, String type) {
-//		Charset charset = Charset.forName("US-ASCII");
-//		try(BufferedWriter writer = Files.newBufferedWriter(Paths.get("src/main/resources/" + name + type), charset)){
-//			writer.write(string, 0, string.length());
-//			return true;
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//			return false;
-//		}
-//	}
-	
-	public List<String> readFileToList(String path){
-		try {
-			List<String> result = new ArrayList<>();
-			Files.readAllLines(Paths.get("src/main/resources/" + path))
-				 .forEach((s)->result.add(s));
-			return result;
-		} catch (Exception e){
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
 	
 }

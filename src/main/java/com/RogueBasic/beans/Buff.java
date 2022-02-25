@@ -1,10 +1,6 @@
 package com.RogueBasic.beans;
 
-import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-
-import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 public class Buff {
 	private String name;
@@ -28,92 +24,6 @@ public class Buff {
 	private int energyRegen;
 	
 	public Buff() {}
-	
-	public Buff(String name, int duration, Map<String, Integer> stats) {
-		this.name = name;
-		this.duration = duration;
-		stats.forEach((String stat, Integer statValue) -> {
-			assign(stat, statValue);
-		});
-	}
-	
-	public Buff(String name, int duration, String[] stats) {
-		this.name = name;
-		this.duration = duration;
-		for(int i = 0; i < stats.length; i++) {
-			assign(stats[i], -1);
-		}
-	}
-	
-	public Buff(String name, int duration, String stat, int statValue) {
-		this.name = name;
-		this.duration = duration;
-		assign(stat, statValue);
-	}
-	
-	public Buff(String name, String stat) {
-		this(name, -1, stat, -1);
-	}
-	
-	public Buff(String name, int duration, String stat) {
-		this(name, duration, stat, -1);
-	}
-	
-	private void assign(String stat, int statValue) {
-		switch(stat) {
-			case "regenerate":
-				this.regenerate = statValue;
-				break;
-			case "poison":
-				this.poison = statValue;
-				break;
-			case "bleed":
-				this.bleed = statValue;
-				break;
-			case "burn":
-				this.burn = statValue;
-				break;
-			case "constitution":
-				this.constitution = statValue;
-				break;
-			case "strength":
-				this.strength = statValue;
-				break;
-			case "dexterity":
-				this.dexterity = statValue;
-				break;
-			case "intelligence":
-				this.intelligence = statValue;
-				break;
-			case "power":
-				this.power = statValue;
-				break;
-			case "health":
-				this.health = statValue;
-				break;
-			case "healthRegen":
-				this.healthRegen = statValue;
-				break;
-			case "armor":
-				this.armor = statValue;
-				break;
-			case "armorPen":
-				this.armorPen = statValue;
-				break;
-			case "dodgeRating":
-				this.dodgeRating = statValue;
-				break;
-			case "critRating":
-				this.critRating = statValue;
-				break;
-			case "energy":
-				this.energy = statValue;
-				break;
-			case "energyRegen":
-				this.energyRegen = statValue;
-				break;
-		}
-	}
 	
 	public String getName() {
 		return name;

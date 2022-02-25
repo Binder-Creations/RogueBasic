@@ -1,0 +1,112 @@
+{
+  "equippedBody": {
+    "id": "914f823f-2691-4f39-bd8f-27381ccfb556", 
+    "count": 1, 
+    "name": "Footman's Breastplate", 
+    "description": "Basic armor for the common soldier.", 
+    "type": "bodyHeavy", 
+    "rarity": "Common", 
+    "image": "1",
+    "cost": 10, 
+    "armorBonus": 40
+  },
+  "equippedPrimary": {
+    "id": "2d139761-0d80-4be1-88dd-436c2c76c0a0", 
+    "count": 1, 
+    "name": "Footman's Sword", 
+    "description": "A dull blade is better than none.", 
+    "type": "sword", 
+    "rarity": "Common", 
+    "image": "1",
+    "cost": 10, 
+    "powerBonus": 10
+  },
+  "equippedSecondary": {
+    "id": "9413a77b-a76a-4462-8e9e-a05b6a4e479f", 
+    "count": 1, 
+    "name": "Footman's Round", 
+    "description": "A heavy and unwieldy worn round shield.", 
+    "type": "shield", 
+    "rarity": "Common", 
+    "image": "1",
+    "cost": 10, 
+    "armorBonus": 20
+  },
+  "equipTypes": ["headHeavy", "bodyHeavy", "sword", "shield", "back", "neck"],
+  "abilities": [
+    {
+      "level": 0,
+      "name": "Straight Slash",
+      "cost": 0,
+      "modifier": 1,
+      "factor": 25,
+      "hits": 1,
+      "target": "frontCenter",
+      "type": "Attack",
+      "icon": "Power",
+      "description": "Make a basic attack."
+    },
+    {
+      "level": 1,
+      "name": "Heavy Strike",
+      "cost": 8,
+      "modifier":1.8,
+      "factor": 35,
+      "hits": 1,
+      "target": "frontRight",
+      "type": "Attack",
+      "icon": "Power",
+      "description": "Attack with a mighty blow. 150% of Armor Penetration applies.",
+      "selfFlags": {
+        "highPen": 1
+      }
+    },
+    {
+      "level": 2,
+      "name": "Stunning Bash",
+      "cost": 16,
+      "modifier": 1.6,
+      "factor": 20,
+      "hits": 1,
+      "target": "frontLeft",
+      "type": "Attack",
+      "icon": "Power",
+      "description": "Attack with a stunning shield strike. Stuns normal enemies for 1 round.",
+      "targetFlags": {
+        "stun": 1
+      }
+    },
+    {
+      "level": 4,
+      "name": "Wide Sweep",
+      "cost": 32,
+      "modifier": 1.7,
+      "factor": 30,
+      "hits": 1,
+      "target": "frontRow",
+      "type": "Attack",
+      "icon": "Power",
+      "description": "Attack all enemies in a row."
+    },
+    {
+      "level": 6,
+      "name": "Living Fortress",
+      "cost": 64,
+      "modifier": 5,
+      "factor": 0,
+      "hits": 1,
+      "target": "self",
+      "type": "Buff",
+      "icon": "Armor",
+      "description": "Dramatically increases armor and provites immunity to critical hits until end of combat.",
+      "selfFlags": {
+        "fortress": -1
+      },
+      "buffs": [{
+        "name": "livingFortress",
+        "duration": -1,
+        "armor": -1
+      }]
+    }
+  ]  
+}

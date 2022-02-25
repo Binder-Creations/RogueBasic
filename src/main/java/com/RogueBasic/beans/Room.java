@@ -1,11 +1,9 @@
 package com.RogueBasic.beans;
 
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 public class Room {
 	private int count;

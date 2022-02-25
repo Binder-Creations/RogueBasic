@@ -1,0 +1,12 @@
+{
+  "id": "9b5b257d-eeb8-4f10-8016-a95849558574", 
+  "count": 1, 
+  "name": "Energy Potion", 
+  "description": "A lustrous vial. Usable in combat.", 
+  "type": "potion", 
+  "rarity": "Uncommon", 
+  "image": "2", 
+  "cost": 50, 
+  "actionType": "energize", 
+  "actionValue": 25
+}

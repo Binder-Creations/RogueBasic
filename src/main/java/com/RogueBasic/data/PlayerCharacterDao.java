@@ -4,57 +4,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.core.CassandraOperations;
-import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.core.query.Criteria;
 import org.springframework.data.cassandra.core.query.Query;
+import org.springframework.stereotype.Component;
 
 import com.RogueBasic.beans.PlayerCharacter;
 import com.RogueBasic.beans.PlayerCharacterAWS;
 import com.RogueBasic.util.CassandraUtilities;
-import com.datastax.oss.driver.api.core.CqlSession;
 
+@Component
 public class PlayerCharacterDao {
-	private CassandraOperations template;
-	private CassandraUtilities cu;
-	private static final Logger log = LogManager.getLogger(PlayerCharacterDao.class);	
+	@Autowired
+	private CassandraOperations cassandraTemplate;
+	@Autowired
+	private CassandraUtilities cassandraUtilities;	
 	
-	public PlayerCharacterDao(CqlSession session) {
-		super();
-		try {
-			this.template = new CassandraTemplate(session);
-			this.cu = new CassandraUtilities(session);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+	public PlayerCharacterDao() {}
 	
 	public PlayerCharacter findById(UUID id) {
-		log.trace("PlayerCharacterDao.findById() calling CassandraOperations.selectOne() and returning PlayerCharacter");
-		return new PlayerCharacter(this.cu.findById(id, PlayerCharacterAWS.class));
+		return new PlayerCharacter(this.cassandraUtilities.findById(id, PlayerCharacterAWS.class));
 	}
 	
 	public List<PlayerCharacter> getAll() {
-		log.trace("PlayerCharacterDao.findById() calling CassandraOperations.select() and returning List<PlayerCharacter>");
-		try {
-			List<PlayerCharacterAWS> playerCharactersAWS = template.select("select * from playerCharacterAWS", PlayerCharacterAWS.class);
-			List<PlayerCharacter> playerCharacters = new ArrayList<>();
-			for(PlayerCharacterAWS playerCharacterAWS: playerCharactersAWS) {
-				playerCharacters.add(new PlayerCharacter(playerCharacterAWS));
-			}
-			return playerCharacters;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+		List<PlayerCharacterAWS> rawList = cassandraUtilities.getAll(PlayerCharacterAWS.class);
+		List<PlayerCharacter> convertedList = new ArrayList<>();
+		for(PlayerCharacterAWS playerCharacterAWS : rawList) {
+			convertedList.add(new PlayerCharacter(playerCharacterAWS));
 		}
+		return convertedList;
 	}
 	  
 	public boolean save(PlayerCharacter playerCharacter) {
-		log.trace("PlayerCharacterDao.findById() calling CassandraOperations.insert()");
 		try {
-			template.insert(new PlayerCharacterAWS(playerCharacter));
+			cassandraTemplate.insert(new PlayerCharacterAWS(playerCharacter));
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,9 +47,8 @@ public class PlayerCharacterDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("PlayerCharacterDao.deleteById() calling CassandraOperations.delete()");
 		try {
-			template.delete(Query.query(Criteria.where("id").is(id)), PlayerCharacterAWS.class);
+			cassandraTemplate.delete(Query.query(Criteria.where("id").is(id)), PlayerCharacterAWS.class);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,6 +57,6 @@ public class PlayerCharacterDao {
 	}
 	
 	public void truncate() {
-		template.truncate(PlayerCharacterAWS.class);
+		cassandraTemplate.truncate(PlayerCharacterAWS.class);
 	}
 }

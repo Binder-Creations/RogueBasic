@@ -1,0 +1,12 @@
+{
+  "id": "65076593-cc46-4178-aabe-de91550b6233", 
+  "count": 1, 
+  "name": "Wine", 
+  "description": "A goblet of aromatic wine.", 
+  "type": "consumable", 
+  "rarity": "Common", 
+  "image": "2", 
+  "cost": 25, 
+  "actionType": "energize", 
+  "actionValue": 40
+}

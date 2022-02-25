@@ -1,0 +1,12 @@
+{
+  "id": "ab0d75df-8457-4dde-adfe-77c9b37d262d", 
+  "count": 1, 
+  "name": "Rations", 
+  "description": "A tightly-wrapped bundle of preserved food.", 
+  "type": "consumable", 
+  "rarity": "Common", 
+  "image": "1", 
+  "cost": 25, 
+  "actionType": "heal", 
+  "actionValue": 40
+}

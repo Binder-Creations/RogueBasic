@@ -1,69 +1,40 @@
 package com.RogueBasic.controllers;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.RogueBasic.beans.Player;
-import com.RogueBasic.beans.PlayerCharacter;
-import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.data.PlayerDao;
-import com.RogueBasic.util.CassandraConnector;
-import com.datastax.oss.driver.api.core.CqlSession;
-import com.fasterxml.jackson.databind.ser.std.NumberSerializers.IntegerSerializer;
+import com.RogueBasic.enums.MetacurrencyPurchase;
 
 @Controller
 public class SpendSoulsController {
+	@Autowired
+	private PlayerDao playerDao;
 	
 	@GetMapping("/spend_souls")
-	public String newCharacter(@CookieValue(value="player_id", defaultValue="0") String playerId, Model model) {
-		PlayerDao pdao = new PlayerDao(CassandraConnector.getSession());
-		if(playerId.equals("0")) {
+	public String newCharacter(@CookieValue(value="player_id", required=false) String playerId, Model model) {
+		if(playerId == null) {
 			return "redirect:/login";
 		} else {
-			model.addAttribute("spendSouls", new SpendSouls(pdao.findById(UUID.fromString(playerId))));
+			model.addAttribute("spendSouls", new SpendSouls(playerDao.findById(UUID.fromString(playerId))));
 			return "spend_souls";
 		}
 	}
 	
 	@PostMapping("/spend_souls")
-	public void newCharacterSubmit(@CookieValue(value="player_id", defaultValue="0") String playerId, @RequestParam("purchase") String purchase,  @RequestParam("cost") String cost, Model model) {
-		PlayerDao pdao = new PlayerDao(CassandraConnector.getSession());
-		Player player = pdao.findById(UUID.fromString(playerId));
-		switch(purchase) {
-			case "Constitution":
-				player.setMetacurrency(player.getMetacurrency() - Integer.parseInt(cost));
-				player.setConstitutionMetabonus(player.getConstitutionMetabonus()+1);
-				break;
-			case "Strength":
-				player.setMetacurrency(player.getMetacurrency() - Integer.parseInt(cost));
-				player.setStrengthMetabonus(player.getStrengthMetabonus()+1);
-				break;
-			case "Dexterity":
-				player.setMetacurrency(player.getMetacurrency() - Integer.parseInt(cost));
-				player.setDexterityMetabonus(player.getDexterityMetabonus()+1);
-				break;
-			case "Intelligence":
-				player.setMetacurrency(player.getMetacurrency() - Integer.parseInt(cost));
-				player.setIntelligenceMetabonus(player.getIntelligenceMetabonus()+1);
-				break;
-			case "Currency":
-				player.setMetacurrency(player.getMetacurrency() - Integer.parseInt(cost));
-				player.setCurrencyMetabonus(player.getCurrencyMetabonus()+25);
-				break;
-		}
-		
-		pdao.save(player);		
-		model.addAttribute("spendSouls", new SpendSouls(pdao.findById(UUID.fromString(playerId))));
+	public void newCharacterSubmit(@CookieValue(value="player_id", required=false) String playerId, @RequestParam("purchase") String purchase,  @RequestParam("cost") String cost, Model model) {
+		Player player = playerDao.findById(UUID.fromString(playerId));
+		MetacurrencyPurchase.fromString(purchase).purchase(player, cost);
+		playerDao.save(player);		
+		model.addAttribute("spendSouls", new SpendSouls(playerDao.findById(UUID.fromString(playerId))));
 		return;
 	}
 	

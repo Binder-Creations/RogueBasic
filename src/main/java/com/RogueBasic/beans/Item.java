@@ -3,10 +3,6 @@ package com.RogueBasic.beans;
 import java.util.Objects;
 import java.util.UUID;
 
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
-import org.springframework.data.cassandra.core.mapping.UserDefinedType;
-
 public class Item {	
 	private UUID id;
 	private int count;
@@ -34,35 +30,7 @@ public class Item {
 	
 	public Item() {}
 	
-	public Item(int count, String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue) {
-		super();
-		this.id = UUID.randomUUID();
-		this.count = count;
-		this.name = name;
-		this.description = description;
-		this.type = type;
-		this.rarity = rarity;
-		this.image = image;
-		this.cost = cost;
-		this.actionType = actionType;
-		this.actionValue = actionValue;
-	}
-	
-	public Item(UUID id, int count, String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue) {
-		super();
-		this.id = id;
-		this.count = count;
-		this.name = name;
-		this.description = description;
-		this.type = type;
-		this.rarity = rarity;
-		this.image = image;
-		this.cost = cost;
-		this.actionType = actionType;
-		this.actionValue = actionValue;
-	}
-	
-	public Item(String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue, int constitutionBonus, int strengthBonus, int dexterityBonus, int intelligenceBonus, int powerBonus, int healthBonus, int healthRegenBonus, int armorBonus, int armorPenBonus, int dodgeRatingBonus, int critRatingBonus, int energyBonus, int energyRegenBonus) {
+	public Item(String name, String description, String type, String rarity, String image, int cost) {
 		super();
 		this.id = UUID.randomUUID();
 		this.count = 1;
@@ -72,48 +40,6 @@ public class Item {
 		this.rarity = rarity;
 		this.image = image;
 		this.cost = cost;
-		this.actionType = actionType;
-		this.actionValue = actionValue;
-		this.constitutionBonus = constitutionBonus;
-		this.strengthBonus = strengthBonus;
-		this.dexterityBonus = dexterityBonus;
-		this.intelligenceBonus = intelligenceBonus;
-		this.powerBonus = powerBonus;
-		this.healthBonus = healthBonus;
-		this.healthRegenBonus = healthRegenBonus;
-		this.dodgeRatingBonus = dodgeRatingBonus;
-		this.critRatingBonus = critRatingBonus;
-		this.energyBonus = energyBonus;
-		this.energyRegenBonus = energyRegenBonus;
-		this.armorBonus = armorBonus;
-		this.armorPenBonus = armorPenBonus;
-	}
-	
-	public Item(UUID id, String name, String description, String type, String rarity, String image, int cost, String actionType, int actionValue, int constitutionBonus, int strengthBonus, int dexterityBonus, int intelligenceBonus, int powerBonus, int healthBonus, int healthRegenBonus, int armorBonus, int armorPenBonus, int dodgeRatingBonus, int critRatingBonus, int energyBonus, int energyRegenBonus) {
-		super();
-		this.id = id;
-		this.count = 1;
-		this.name = name;
-		this.description = description;
-		this.type = type;
-		this.rarity = rarity;
-		this.image = image;
-		this.cost = cost;
-		this.actionType = actionType;
-		this.actionValue = actionValue;
-		this.constitutionBonus = constitutionBonus;
-		this.strengthBonus = strengthBonus;
-		this.dexterityBonus = dexterityBonus;
-		this.intelligenceBonus = intelligenceBonus;
-		this.powerBonus = powerBonus;
-		this.healthBonus = healthBonus;
-		this.healthRegenBonus = healthRegenBonus;
-		this.dodgeRatingBonus = dodgeRatingBonus;
-		this.critRatingBonus = critRatingBonus;
-		this.energyBonus = energyBonus;
-		this.energyRegenBonus = energyRegenBonus;
-		this.armorBonus = armorBonus;
-		this.armorPenBonus = armorPenBonus;
 	}
 	
 	public UUID getId() {

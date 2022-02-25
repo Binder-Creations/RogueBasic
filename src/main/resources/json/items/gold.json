@@ -1,0 +1,10 @@
+{
+  "id": "ce0c5d64-a685-4c0e-97d4-56d4a83edf08", 
+  "count": 1, 
+  "name": "Gold", 
+  "description": "A handful of assorted currency.", 
+  "type": "currency", 
+  "rarity": "Common", 
+  "image": "1", 
+  "cost": 1
+}

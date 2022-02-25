@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Precise Shot", 
+    "modifier": 2.6, 
+    "factor": 10, 
+    "hits": 1, 
+    "target": "pc", 
+    "type": "Attack", 
+    "description": "shoots you with unerring accuracy.", 
+    "selfFlags": {
+      "hit": 1
+    }
+    
+  },
+  {
+    "name": "Envenomed Strike", 
+    "modifier": 0.8, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "pc", 
+    "type": "Debuff", 
+    "description": "inflicts you with a long-lasting poison.", 
+    "debuffs": [{
+      "name": "envenomedStrike", 
+      "duration": -1, 
+      "poison": -1
+    }]
+  },
+  {
+    "name": "Take Aim", 
+    "modifier": 3, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "self", 
+    "type": "Buff", 
+    "description": "locks you in their sights.", 
+    "selfFlags": {
+      "hit": -1
+     },
+    "buffs": [{
+      "name": "takeAim", 
+      "duration": -1, 
+      "critRating": -1
+    }]
+  },
+  {
+    "name": "Triple Shot", 
+    "modifier": 0.9, 
+    "factor": 30, 
+    "hits": 3, 
+    "target": "pc", 
+    "type": "Attack", 
+    "description": "fires three quick shots at you."
+  },
+  {
+    "name": "Soul Sight", 
+    "modifier": 3, 
+    "factor": 20, 
+    "hits": 1, 
+    "target": "pc", 
+    "type": "Attack", 
+    "description": "launches an ephemeral attack upon your soul directly.", 
+    "selfFlags": {
+      "attackEnergy": 1
+    }
+  },
+  {
+    "name": "Pin Down", 
+    "modifier": 5, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "pc", 
+    "type": "Debuff", 
+    "description": "shoots at your feet, pinning you to the ground.", 
+    "debuffs": [{
+      "name": "pinDown", 
+      "duration": 3, 
+      "dodgeRating": -1,
+      "critRating": -1
+    }]
+  }
+]

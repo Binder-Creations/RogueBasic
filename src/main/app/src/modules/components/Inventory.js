@@ -66,9 +66,11 @@ class Inventory extends React.Component {
 
   getCount(item){
     return(
-      <p className="item-count">
-        {item.count}
-      </p>
+      <div className="item-count">
+        <div className="v-h-centered">
+          {item.count}
+        </div>
+      </div>
     );
   }
 

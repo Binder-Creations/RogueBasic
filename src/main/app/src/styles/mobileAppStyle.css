@@ -1107,11 +1107,13 @@
 			}
 			.item-count {
 				position: absolute;
-				bottom:20%;
-				left:4%;
-				width: 10%;
-				height: 10%;
+				bottom:8%;
+				left:6%;
+				width: 20%;
+				height: 20%;
 				color:white;
+				background-color: rgb(36, 35, 35);
+				border-radius: 100%;
 				font-size: 75%;
 			}
 			.item-equipped {

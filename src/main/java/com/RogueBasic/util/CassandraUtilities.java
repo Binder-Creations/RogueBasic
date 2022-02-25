@@ -1,75 +1,87 @@
 package com.RogueBasic.util;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.data.cassandra.core.CassandraTemplate;
-import org.springframework.data.cassandra.core.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.cassandra.core.CassandraOperations;
+import org.springframework.stereotype.Component;
 
-import com.RogueBasic.beans.Ability;
-import com.RogueBasic.beans.Item;
+import com.RogueBasic.enums.CassandraConstant;
+import com.RogueBasic.enums.CassandraTable;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.querybuilder.QueryBuilder;
 import com.datastax.oss.driver.api.querybuilder.select.Select;
 import com.datastax.oss.driver.api.querybuilder.select.Selector;
-import com.datastax.oss.driver.shaded.guava.common.base.Optional;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Component
 public class CassandraUtilities {
+	@Autowired
 	private CqlSession session;
-	private RogueUtilities ru;
+	@Autowired
+	private CassandraOperations cassandraTemplate;
+	private ObjectMapper mapper = new ObjectMapper();
 	private static final Logger log = LogManager.getLogger(CassandraUtilities.class);
-	private String keyspace;
 	
-	public CassandraUtilities (CqlSession session){
-		super();
-		this.session = session;
-		this.ru = new RogueUtilities();
-		this.keyspace = "rogue";
-	}
+	public CassandraUtilities (){}
 	
 	public void initialize() {
-		//creates the tables required for our database, from the Tables.rbt document
-		log.trace("CassandraUtilities.initialize() calling RogueUtilities.readFileToList() for Tables.rbt");
-		ru.readFileToList("source/tables.rbt")
-		  .forEach((s)->session.execute("CREATE TABLE IF NOT EXISTS " + this.keyspace + "." + s));
-		log.debug("Database tables created");
+		for(CassandraTable table: CassandraTable.values()) {
+			String tableName = CassandraConstant.KEYSPACE.constant() + "." + table.name();
+			session.execute("CREATE TABLE IF NOT EXISTS "  + tableName + table.statement());
+			log.debug("Table created: " + tableName);
+		}
+		log.info("All tables created");
 	}
 
 	public void dropAllTables() {
-		//drops all of our database's tables, as listed in TableList.rbt
-		Pattern name = Pattern.compile("(\\w+)\\s+");
-		log.trace("CassandraUtilities.dropAllTables() calling RogueUtilities.readFileToList()");
-		ru.readFileToList("source/tables.rbt")
-		  .forEach((s)->{
-			  Matcher m = name.matcher(s);
-			  if(m.find())
-				  session.execute("DROP TABLE IF EXISTS "  + this.keyspace + "." + m.group(1));});
-		log.debug("Database tables dropped");
+		for(CassandraTable table: CassandraTable.values()) {
+			String tableName = CassandraConstant.KEYSPACE.constant() + "." + table.name();
+			session.execute("DROP TABLE IF EXISTS "  + tableName);
+			log.debug("Table dropped: " + tableName);
+		}
+		log.info("All tables dropped");
 	}
 	
 	public <T> T findById(UUID id, Class<T> entityClass){
-		CassandraTemplate template = new CassandraTemplate(this.session);
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+		this.mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
 		Select select = QueryBuilder.selectFrom(entityClass.getSimpleName())
 			.json().selector(Selector.all())
 			.whereColumn("id").isEqualTo(QueryBuilder.literal(id));
+			String rawEntity = cassandraTemplate.selectOne(select.build(), String.class);
 			T entity = null;
 			try {
-				entity = mapper.readValue(template.selectOne(select.build(), String.class), entityClass);
+				if(rawEntity != null) {
+					entity = this.mapper.readValue(rawEntity, entityClass);
+				}
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 			}
 		return entity;
 	}
+	
+	public <T> List<T> getAll(Class<T> entityClass){
+		this.mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+		Select select = QueryBuilder.selectFrom(entityClass.getSimpleName())
+			.json().selector(Selector.all());
+			List<String> rawEntityList = cassandraTemplate.select(select.build(), String.class);
+			List<T> entityList = new ArrayList<>();
+			try {
+				if(rawEntityList != null) {
+					for(String rawEntity : rawEntityList) {
+						entityList.add(this.mapper.readValue(rawEntity, entityClass));
+					}
+				}
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+		return entityList;
+	}	
 	
 }

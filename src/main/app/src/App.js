@@ -206,7 +206,7 @@ class App extends React.Component {
     if(this.state.generatingDungeon){
       setTimeout(() => {
         if(this.state.generatingDungeon){
-          this.setState({barPercent: (this.state.barPercent && this.state.barPercent <= 100 ) ? this.state.barPercent + 20 : 20})
+          this.setState({barPercent: (this.state.barPercent && this.state.barPercent < 100 ) ? this.state.barPercent + 20 : 20})
         }
       }, 2000);
     }

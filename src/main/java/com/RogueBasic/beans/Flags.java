@@ -2,8 +2,6 @@ package com.RogueBasic.beans;
 
 import java.util.Objects;
 
-import org.springframework.data.cassandra.core.mapping.UserDefinedType;
-
 public class Flags {
 	private int attackEnergy;
 	private int critDoubleDamage;
@@ -17,43 +15,7 @@ public class Flags {
 	private int magic;
 	
 	public Flags() {}
-	
-	public Flags(String flag, int value){
-		switch(flag) {
-			case "magic":
-				this.magic = value;
-				break;
-			case "attackEnergy":
-				this.attackEnergy = value;
-				break;
-			case "critDoubleDamage":
-				this.critDoubleDamage = value;
-				break;
-			case "crit":
-				this.crit = value;
-				break;
-			case "dodge":
-				this.dodge = value;
-				break;
-			case "highPen":
-				this.highPen = value;
-				break;
-			case "hit":
-				this.hit = value;
-				break;
-			case "fullPen":
-				this.fullPen = value;
-				break;
-			case "stun":
-				this.stun = value;
-				break;
-		}
-	}
-	
-	public Flags(String flag) {
-		this(flag, 1);
-	}
-	
+
 	public int getAttackEnergy() {
 		return attackEnergy;
 	}

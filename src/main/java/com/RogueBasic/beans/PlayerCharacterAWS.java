@@ -19,7 +19,6 @@ public class PlayerCharacterAWS {
 	private Set<UUID> dungeonBoard;
 	private UUID currentDungeon;
 	private UUID currentShop;
-	private int day;
 	private boolean ate;
 	private String name;
 	private String characterClass;
@@ -41,19 +40,6 @@ public class PlayerCharacterAWS {
 	private int strength;
 	private int dexterity;
 	private int intelligence;
-	private int constitutionBonus;
-	private int strengthBonus;
-	private int dexterityBonus;
-	private int intelligenceBonus;
-	private int powerBonus;
-	private int healthBonus;
-	private int healthRegenBonus;
-	private int armorPenBonus;
-	private int armorBonus;
-	private int dodgeRatingBonus;
-	private int critRatingBonus;
-	private int energyBonus;
-	private int energyRegenBonus;
 	private int currentHealth;
 	private int currentEnergy;
 	
@@ -81,13 +67,11 @@ public class PlayerCharacterAWS {
 				}
 			}
 		}
-		
 		this.id = pc.getId();
 		this.location = pc.getLocation();
 		this.dungeonBoard = pc.getDungeonBoard();
 		this.currentDungeon = pc.getCurrentDungeon();
 		this.currentShop = pc.getCurrentShop();
-		this.day = pc.getDay();
 		this.ate = pc.isAte();
 		this.name = pc.getName();
 		this.characterClass = pc.getCharacterClass();
@@ -133,19 +117,6 @@ public class PlayerCharacterAWS {
 		this.strength = pc.getStrength();
 		this.dexterity = pc.getDexterity();
 		this.intelligence = pc.getIntelligence();
-		this.constitutionBonus = pc.getConstitutionBonus();
-		this.strengthBonus = pc.getStrengthBonus();
-		this.dexterityBonus = pc.getDexterityBonus();
-		this.intelligenceBonus = pc.getIntelligenceBonus();
-		this.powerBonus = pc.getPowerBonus();
-		this.healthBonus = pc.getHealthBonus();
-		this.healthRegenBonus = pc.getHealthRegenBonus();
-		this.armorPenBonus = pc.getArmorPenBonus();
-		this.armorBonus = pc.getArmorBonus();
-		this.dodgeRatingBonus = pc.getDodgeRatingBonus();
-		this.critRatingBonus = pc.getCritRatingBonus();
-		this.energyBonus = pc.getEnergyBonus();
-		this.energyRegenBonus = pc.getEnergyRegenBonus();
 		this.currentHealth = pc.getCurrentHealth();
 		this.currentEnergy = pc.getCurrentEnergy();
 	}
@@ -188,14 +159,6 @@ public class PlayerCharacterAWS {
 
 	public void setCurrentShop(UUID currentShop) {
 		this.currentShop = currentShop;
-	}
-
-	public int getDay() {
-		return day;
-	}
-
-	public void setDay(int day) {
-		this.day = day;
 	}
 
 	public boolean isAte() {
@@ -366,110 +329,6 @@ public class PlayerCharacterAWS {
 		this.intelligence = intelligence;
 	}
 
-	public int getConstitutionBonus() {
-		return constitutionBonus;
-	}
-
-	public void setConstitutionBonus(int constitutionBonus) {
-		this.constitutionBonus = constitutionBonus;
-	}
-
-	public int getStrengthBonus() {
-		return strengthBonus;
-	}
-
-	public void setStrengthBonus(int strengthBonus) {
-		this.strengthBonus = strengthBonus;
-	}
-
-	public int getDexterityBonus() {
-		return dexterityBonus;
-	}
-
-	public void setDexterityBonus(int dexterityBonus) {
-		this.dexterityBonus = dexterityBonus;
-	}
-
-	public int getIntelligenceBonus() {
-		return intelligenceBonus;
-	}
-
-	public void setIntelligenceBonus(int intelligenceBonus) {
-		this.intelligenceBonus = intelligenceBonus;
-	}
-
-	public int getPowerBonus() {
-		return powerBonus;
-	}
-
-	public void setPowerBonus(int powerBonus) {
-		this.powerBonus = powerBonus;
-	}
-
-	public int getHealthBonus() {
-		return healthBonus;
-	}
-
-	public void setHealthBonus(int healthBonus) {
-		this.healthBonus = healthBonus;
-	}
-
-	public int getHealthRegenBonus() {
-		return healthRegenBonus;
-	}
-
-	public void setHealthRegenBonus(int healthRegenBonus) {
-		this.healthRegenBonus = healthRegenBonus;
-	}
-
-	public int getArmorPenBonus() {
-		return armorPenBonus;
-	}
-
-	public void setArmorPenBonus(int armorPenBonus) {
-		this.armorPenBonus = armorPenBonus;
-	}
-
-	public int getArmorBonus() {
-		return armorBonus;
-	}
-
-	public void setArmorBonus(int armorBonus) {
-		this.armorBonus = armorBonus;
-	}
-
-	public int getDodgeRatingBonus() {
-		return dodgeRatingBonus;
-	}
-
-	public void setDodgeRatingBonus(int dodgeRatingBonus) {
-		this.dodgeRatingBonus = dodgeRatingBonus;
-	}
-
-	public int getCritRatingBonus() {
-		return critRatingBonus;
-	}
-
-	public void setCritRatingBonus(int critRatingBonus) {
-		this.critRatingBonus = critRatingBonus;
-	}
-
-	public int getEnergyBonus() {
-		return energyBonus;
-	}
-
-	public void setEnergyBonus(int energyBonus) {
-		this.energyBonus = energyBonus;
-	}
-
-	public int getEnergyRegenBonus() {
-		return energyRegenBonus;
-	}
-
-	public void setEnergyRegenBonus(int energyRegenBonus) {
-		this.energyRegenBonus = energyRegenBonus;
-	}
-
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
@@ -488,12 +347,10 @@ public class PlayerCharacterAWS {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(abilities, armorBonus, armorPenBonus, ate, attributePoints, characterClass, constitution,
-				constitutionBonus, critRatingBonus, currency, currentDungeon, currentEnergy, currentHealth, currentShop,
-				day, dexterity, dexterityBonus, dodgeRatingBonus, dungeonBoard, energyBonus, energyRegenBonus,
-				equipTypes, equippedBack, equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary,
-				experience, healthBonus, healthRegenBonus, id, intelligence, intelligenceBonus, inventory, level,
-				location, metacurrency, name, powerBonus, strength, strengthBonus);
+		return Objects.hash(abilities, ate, attributePoints, characterClass, constitution, currency, currentDungeon,
+				currentEnergy, currentHealth, currentShop, dexterity, dungeonBoard, equipTypes, equippedBack,
+				equippedBody, equippedHead, equippedNeck, equippedPrimary, equippedSecondary, experience, id,
+				intelligence, inventory, level, location, metacurrency, name, strength);
 	}
 
 	@Override
@@ -505,45 +362,35 @@ public class PlayerCharacterAWS {
 		if (getClass() != obj.getClass())
 			return false;
 		PlayerCharacterAWS other = (PlayerCharacterAWS) obj;
-		return Objects.equals(abilities, other.abilities) && armorBonus == other.armorBonus
-				&& armorPenBonus == other.armorPenBonus && ate == other.ate && attributePoints == other.attributePoints
-				&& Objects.equals(characterClass, other.characterClass) && constitution == other.constitution
-				&& constitutionBonus == other.constitutionBonus && critRatingBonus == other.critRatingBonus
-				&& currency == other.currency && Objects.equals(currentDungeon, other.currentDungeon)
-				&& currentEnergy == other.currentEnergy && currentHealth == other.currentHealth
-				&& Objects.equals(currentShop, other.currentShop) && day == other.day && dexterity == other.dexterity
-				&& dexterityBonus == other.dexterityBonus && dodgeRatingBonus == other.dodgeRatingBonus
-				&& Objects.equals(dungeonBoard, other.dungeonBoard) && energyBonus == other.energyBonus
-				&& energyRegenBonus == other.energyRegenBonus && Objects.equals(equipTypes, other.equipTypes)
-				&& Objects.equals(equippedBack, other.equippedBack) && Objects.equals(equippedBody, other.equippedBody)
-				&& Objects.equals(equippedHead, other.equippedHead) && Objects.equals(equippedNeck, other.equippedNeck)
+		return Objects.equals(abilities, other.abilities) && ate == other.ate
+				&& attributePoints == other.attributePoints && Objects.equals(characterClass, other.characterClass)
+				&& constitution == other.constitution && currency == other.currency
+				&& Objects.equals(currentDungeon, other.currentDungeon) && currentEnergy == other.currentEnergy
+				&& currentHealth == other.currentHealth && Objects.equals(currentShop, other.currentShop)
+				&& dexterity == other.dexterity && Objects.equals(dungeonBoard, other.dungeonBoard)
+				&& Objects.equals(equipTypes, other.equipTypes) && Objects.equals(equippedBack, other.equippedBack)
+				&& Objects.equals(equippedBody, other.equippedBody) && Objects.equals(equippedHead, other.equippedHead)
+				&& Objects.equals(equippedNeck, other.equippedNeck)
 				&& Objects.equals(equippedPrimary, other.equippedPrimary)
 				&& Objects.equals(equippedSecondary, other.equippedSecondary) && experience == other.experience
-				&& healthBonus == other.healthBonus && healthRegenBonus == other.healthRegenBonus
 				&& Objects.equals(id, other.id) && intelligence == other.intelligence
-				&& intelligenceBonus == other.intelligenceBonus && Objects.equals(inventory, other.inventory)
-				&& level == other.level && Objects.equals(location, other.location)
-				&& metacurrency == other.metacurrency && Objects.equals(name, other.name)
-				&& powerBonus == other.powerBonus && strength == other.strength && strengthBonus == other.strengthBonus;
+				&& Objects.equals(inventory, other.inventory) && level == other.level
+				&& Objects.equals(location, other.location) && metacurrency == other.metacurrency
+				&& Objects.equals(name, other.name) && strength == other.strength;
 	}
 
 	@Override
 	public String toString() {
 		return "PlayerCharacterAWS [id=" + id + ", location=" + location + ", dungeonBoard=" + dungeonBoard
-				+ ", currentDungeon=" + currentDungeon + ", currentShop=" + currentShop + ", day=" + day + ", ate="
-				+ ate + ", name=" + name + ", characterClass=" + characterClass + ", experience=" + experience
-				+ ", level=" + level + ", attributePoints=" + attributePoints + ", currency=" + currency
-				+ ", metacurrency=" + metacurrency + ", abilities=" + abilities + ", inventory=" + inventory
-				+ ", equipTypes=" + equipTypes + ", equippedHead=" + equippedHead + ", equippedBody=" + equippedBody
-				+ ", equippedBack=" + equippedBack + ", equippedNeck=" + equippedNeck + ", equippedPrimary="
-				+ equippedPrimary + ", equippedSecondary=" + equippedSecondary + ", constitution=" + constitution
-				+ ", strength=" + strength + ", dexterity=" + dexterity + ", intelligence=" + intelligence
-				+ ", constitutionBonus=" + constitutionBonus + ", strengthBonus=" + strengthBonus + ", dexterityBonus="
-				+ dexterityBonus + ", intelligenceBonus=" + intelligenceBonus + ", powerBonus=" + powerBonus
-				+ ", healthBonus=" + healthBonus + ", healthRegenBonus=" + healthRegenBonus + ", armorPenBonus="
-				+ armorPenBonus + ", armorBonus=" + armorBonus + ", dodgeRatingBonus=" + dodgeRatingBonus
-				+ ", critRatingBonus=" + critRatingBonus + ", energyBonus=" + energyBonus + ", energyRegenBonus="
-				+ energyRegenBonus + ", currentHealth=" + currentHealth + ", currentEnergy=" + currentEnergy + "]";
+				+ ", currentDungeon=" + currentDungeon + ", currentShop=" + currentShop + ", ate=" + ate + ", name="
+				+ name + ", characterClass=" + characterClass + ", experience=" + experience + ", level=" + level
+				+ ", attributePoints=" + attributePoints + ", currency=" + currency + ", metacurrency=" + metacurrency
+				+ ", abilities=" + abilities + ", inventory=" + inventory + ", equipTypes=" + equipTypes
+				+ ", equippedHead=" + equippedHead + ", equippedBody=" + equippedBody + ", equippedBack=" + equippedBack
+				+ ", equippedNeck=" + equippedNeck + ", equippedPrimary=" + equippedPrimary + ", equippedSecondary="
+				+ equippedSecondary + ", constitution=" + constitution + ", strength=" + strength + ", dexterity="
+				+ dexterity + ", intelligence=" + intelligence + ", currentHealth=" + currentHealth + ", currentEnergy="
+				+ currentEnergy + "]";
 	}
 	
 }

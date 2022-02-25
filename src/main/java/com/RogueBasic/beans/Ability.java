@@ -1,10 +1,7 @@
 package com.RogueBasic.beans;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 public class Ability {
 	private int level;
@@ -20,117 +17,9 @@ public class Ability {
 	private Flags selfFlags;
 	private Flags targetFlags;
 	private Set<Buff> buffs;
-	private Set<Buff> debuffs;;
+	private Set<Buff> debuffs;
 	
 	public Ability() {}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description) {
-		super();
-		this.level = level;
-		this.name = name;
-		this.cost = cost;
-		this.modifier = modifier;
-		this.factor = factor;
-		this.hits = hits;
-		this.target = target;
-		this.type = type;
-		this.icon = icon;
-		this.description = description;
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description);
-		this.selfFlags = selfFlags;
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Flags targetFlags) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags);
-		this.targetFlags = targetFlags;
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Set<Buff> buffs) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description);
-		this.buffs = buffs;
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Buff buff) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description);
-		if(buff != null) {
-			Set<Buff> buffs = new HashSet<>();
-			buffs.add(buff);
-			this.buffs = buffs;
-		}
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Set<Buff> buffs, Set<Buff> debuffs) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description, buffs);
-		this.debuffs = debuffs;
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Buff buff, Buff debuff) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description, buff);
-		if(debuff != null) {
-			Set<Buff> debuffs = new HashSet<>();
-			debuffs.add(debuff);
-			this.debuffs = debuffs;
-		}
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Set<Buff> buffs) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags);
-		this.buffs = buffs;
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Buff buff) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags);
-		if(buff != null) {
-			Set<Buff> buffs = new HashSet<>();
-			buffs.add(buff);
-			this.buffs = buffs;
-		}
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Flags targetFlags, Set<Buff> buffs) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags, targetFlags);
-		this.buffs = buffs;
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Flags targetFlags, Buff buff) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags, targetFlags);
-		if(buff != null) {
-			Set<Buff> buffs = new HashSet<>();
-			buffs.add(buff);
-			this.buffs = buffs;
-		}
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Set<Buff> buffs, Set<Buff> debuffs) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags, buffs);
-		this.debuffs = debuffs;
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Buff buff, Buff debuff) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags, buff);
-		if(debuff != null) {
-			Set<Buff> debuffs = new HashSet<>();
-			debuffs.add(debuff);
-			this.debuffs = debuffs;
-		}
-	}
-	
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Flags targetFlags, Set<Buff> buffs, Set<Buff> debuffs) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags, targetFlags, buffs);
-		this.debuffs = debuffs;
-	}
-
-	public Ability(int level, String name, int cost, float modifier, int factor, int hits, String target, String type, String icon, String description, Flags selfFlags, Flags targetFlags, Buff buff, Buff debuff) {
-		this(level, name, cost, modifier, factor, hits, target, type, icon, description, selfFlags, targetFlags, buff);
-		if(debuff != null) {
-			Set<Buff> debuffs = new HashSet<>();
-			debuffs.add(debuff);
-			this.debuffs = debuffs;
-		}
-	}
 
 	public int getLevel() {
 		return level;

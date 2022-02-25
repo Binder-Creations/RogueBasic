@@ -1,0 +1,80 @@
+[
+  {
+    "name": "Gather Power", 
+    "modifier": 15, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "self", 
+    "type": "Buff", 
+    "description": "gathers magical energy in preparation for a powerful spell.", 
+    "buffs": [{
+      "name": "gatherPower", 
+      "duration": 2, 
+      "power": -1
+    }]
+  },
+  {
+    "name": "Fireball", 
+    "modifier": 1.8, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "pc", 
+    "type": "Debuff", 
+    "description": "throws a ball of sticky, long-burning flame at you.", 
+    "debuffs": [{
+      "name": "fireball", 
+      "duration": 3, 
+      "burn": -1
+    }]
+  },
+  {
+    "name": "Knit Together", 
+    "modifier": 2.5, 
+    "factor": 15, 
+    "hits": 1, 
+    "target": "allMonsters", 
+    "type": "Heal", 
+    "description": "releases a wave of rapid-healing magic."
+  },
+  {
+    "name": "Regeneration", 
+    "modifier": 0.8, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "allMonsters", 
+    "type": "Buff", 
+    "description": "wraps their allies in long-lasting healing magic.", 
+    "buffs": [{
+      "name": "regeneration", 
+      "duration": 4, 
+      "regenerate": -1
+    }]
+  },
+  {
+    "name": "Arcane Barrage", 
+    "modifier": 1.2, 
+    "factor": 25, 
+    "hits": 3, 
+    "target": "pc", 
+    "type": "Attack", 
+    "description": "conjures three unavoidable missles to magically seek you out.", 
+    "selfFlags": {
+      "magic": 1
+    }
+  },
+  {
+    "name": "Deep Chill", 
+    "modifier": 2, 
+    "factor": 0, 
+    "hits": 1, 
+    "target": "pc", 
+    "type": "Debuff", 
+    "description": "blasts you with bone-penetrating cold.", 
+    "debuffs": [{
+      "name": "deepChill", 
+      "duration": 4,
+      "strength": -1,
+      "dexterity": -1
+    }]
+  }
+]

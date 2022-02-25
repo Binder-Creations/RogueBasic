@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.RogueBasic.beans.Dungeon;
 import com.RogueBasic.beans.Player;
@@ -14,14 +16,24 @@ import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.data.PlayerDao;
 import com.RogueBasic.data.ShopDao;
 
+@Component
 public class CassandraGC implements Runnable{
+	@Autowired
+	private PlayerDao playerDao;
+	@Autowired
+	private PlayerCharacterDao playerCharacterDao;
+	@Autowired
+	private ShopDao shopDao;
+	@Autowired
+	private DungeonDao dungeonDao;
 	private Thread t;
 	private boolean collect;
 	private static final Logger log = LogManager.getLogger(CassandraGC.class);
 	
+	public CassandraGC(){}
+	
 	public void run() {
  	    Boolean initialized = false;
-	    
  	    log.debug("Running CassandraGC thread");
 	    try {
 	        while(true) {
@@ -30,14 +42,10 @@ public class CassandraGC implements Runnable{
 	        	}
 	        	
 	        	initialized = true;
-	    		DungeonDao dDao = new DungeonDao(CassandraConnector.connect());
-	     	    PlayerCharacterDao pcDao = new PlayerCharacterDao(CassandraConnector.connect());
-	     	    PlayerDao pDao = new PlayerDao(CassandraConnector.connect());
-	     	    ShopDao sDao = new ShopDao(CassandraConnector.connect());
-	    	    List<Dungeon> dungeons = dDao.getAll();
-	    	    List<PlayerCharacter> characters = pcDao.getAll();
-	    	    List<Player> players = pDao.getAll();
-	    	    List<Shop> shops = sDao.getAll();
+	    	    List<Dungeon> dungeons = dungeonDao.getAll();
+	    	    List<PlayerCharacter> characters = playerCharacterDao.getAll();
+	    	    List<Player> players = playerDao.getAll();
+	    	    List<Shop> shops = shopDao.getAll();
 	    	    
 	    	    int counter = 0;
 	    	    for(PlayerCharacter character : characters) {
@@ -47,13 +55,13 @@ public class CassandraGC implements Runnable{
 		    				this.collect = false;
     	    		}
     	    		if(this.collect) {
-    	    			pcDao.deleteById(character.getId());
+    	    			playerCharacterDao.deleteById(character.getId());
     	    			counter++;
     	    		}
 	    	    }
 	    	    log.debug(counter > 0 ? "CassandraGC removed " + counter + " unused PlayerCharacters" : "CassandraGC found no unused PlayerCharacters to remove");
 	    	    
-	    	    List<PlayerCharacter> charactersPostGC = pcDao.getAll();
+	    	    List<PlayerCharacter> charactersPostGC = playerCharacterDao.getAll();
 	    	    
 	    	    counter = 0;
 	    	    for(Dungeon dungeon : dungeons) {
@@ -70,7 +78,7 @@ public class CassandraGC implements Runnable{
     	    			};
     	    		}
     	    		if(this.collect) {
-    	    			dDao.deleteById(dungeon.getId());
+    	    			dungeonDao.deleteById(dungeon.getId());
     	    			counter++;
     	    		}
 	    	    }
@@ -84,7 +92,7 @@ public class CassandraGC implements Runnable{
     	    				this.collect = false;
     	    		}
     	    		if(this.collect) {
-    	    			sDao.deleteById(shop.getId());
+    	    			shopDao.deleteById(shop.getId());
     	    			counter++;
     	    		}
 	    	    }
@@ -100,7 +108,7 @@ public class CassandraGC implements Runnable{
 		log.debug("Starting CassandraGC thread");
 	    if (t == null) {
 	          t = new Thread (this, "CassandraGC");
-	          t.start ();
+	          t.start();
 	       }
 		}
 }

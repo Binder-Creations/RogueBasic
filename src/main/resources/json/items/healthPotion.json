@@ -1,0 +1,12 @@
+{
+  "id": "d822106a-e753-40db-898d-d438d1592baa", 
+  "count": 1, 
+  "name": "Health Potion", 
+  "description": "A faintly shimmering flask. Usable in combat.", 
+  "type": "potion", 
+  "rarity": "Uncommon", 
+  "image": "1", 
+  "cost": 50, 
+  "actionType": "heal", 
+  "actionValue": 25
+}

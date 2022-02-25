@@ -1,47 +1,42 @@
 package com.RogueBasic.services;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.PlayerCharacter;
 import com.RogueBasic.data.PlayerCharacterDao;
-import com.RogueBasic.data.ShopDao;
-import com.RogueBasic.util.CassandraConnector;
-import com.datastax.oss.driver.api.core.CqlSession;
+import com.RogueBasic.enums.EquipmentType;
+import com.RogueBasic.util.RogueUtilities;
 
+@Component
 public class ShopServices {
-	public ShopDao dao;
-	private static final Logger log = LogManager.getLogger(ShopServices.class);
-
-	public ShopServices(CqlSession session) {
-		super();
-		dao = new ShopDao(session);
-	}
+	@Autowired
+	private PlayerCharacterDao playerCharacterDao;
+	@Autowired
+	private ItemServices itemServices;
+	
+	
+	public ShopServices() {}
 	
 	public Set<Item> genInventory(UUID shopID, UUID pcId) {
 		Set<Item> inventory = new HashSet<>();
-		CqlSession session = CassandraConnector.getSession();
-		PlayerCharacterDao pcDao = new PlayerCharacterDao(session);
-		ItemServices iService = new ItemServices(session);
-		PlayerCharacter pc = pcDao.findById(pcId);
+		PlayerCharacter pc = playerCharacterDao.findById(pcId);
 		
 		pc.setCurrentShop(shopID);
-		pcDao.save(pc);
+		playerCharacterDao.save(pc);
 
+		inventory.add(RogueUtilities.getItem("healthPotion"));
+		inventory.add(RogueUtilities.getItem("energyPotion"));
+		inventory.add(RogueUtilities.getItem("rations"));
+		inventory.add(RogueUtilities.getItem("wine"));
 		for(int i = 0; i < 23; i++) {
-			Item item = iService.genEquipment(pc.getEquipTypes(), pc.getLevel());
+			Item item = itemServices.genEquipment(EquipmentType.fromStrings(pc.getEquipTypes()), pc.getLevel());
 			inventory.add(item);
-		}
-		for(int i = 2; i < 6 ;i++) {
-			inventory.add(iService.getPremade(i));
 		}
 		
 		return inventory;

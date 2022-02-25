@@ -4,34 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.core.CassandraOperations;
-import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.core.query.Criteria;
 import org.springframework.data.cassandra.core.query.Query;
+import org.springframework.stereotype.Component;
 
 import com.RogueBasic.beans.Shop;
 import com.RogueBasic.beans.ShopAWS;
-import com.datastax.oss.driver.api.core.CqlSession;
 
+@Component
 public class ShopDao {
-	private CassandraOperations template;
-	private static final Logger log = LogManager.getLogger(ShopDao.class);	
+	@Autowired
+	private CassandraOperations cassandraTemplate;	
 	
-	public ShopDao(CqlSession session) {
-		super();
-		try {
-			this.template = new CassandraTemplate(session);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+	public ShopDao() {}
 	
 	public Shop findById(UUID id) {
-		log.trace("ShopDao.findById() calling CassandraOperations.selectOne() and returning Shop");
 		try {
-			return new Shop(template.selectOne(Query.query(Criteria.where("id").is(id)), ShopAWS.class));
+			return new Shop(cassandraTemplate.selectOne(Query.query(Criteria.where("id").is(id)), ShopAWS.class));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -39,9 +30,8 @@ public class ShopDao {
 	}
 	
 	public List<Shop> getAll() {
-		log.trace("ShopDao.findById() calling CassandraOperations.select() and returning List<Shop>");
 		try {
-			List<ShopAWS> shopsAWS = template.select("select * from shopAWS", ShopAWS.class);
+			List<ShopAWS> shopsAWS = cassandraTemplate.select("select * from shopAWS", ShopAWS.class);
 			List<Shop> shops = new ArrayList<>();
 			for(ShopAWS shopAWS: shopsAWS) {
 				shops.add(new Shop(shopAWS));
@@ -54,9 +44,8 @@ public class ShopDao {
 	}
 	  
 	public boolean save(Shop shop) {
-		log.trace("ShopDao.findById() calling CassandraOperations.insert()");
 		try {
-			template.insert(new ShopAWS(shop));
+			cassandraTemplate.insert(new ShopAWS(shop));
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,9 +54,8 @@ public class ShopDao {
 	}
 	 
 	public boolean deleteById(UUID id) {
-		log.trace("ShopDao.save() calling CassandraOperations.delete()");
 		try {
-			template.delete(Query.query(Criteria.where("id").is(id)), ShopAWS.class);
+			cassandraTemplate.delete(Query.query(Criteria.where("id").is(id)), ShopAWS.class);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,6 +64,6 @@ public class ShopDao {
 	}
 	
 	public void truncate() {
-		template.truncate(ShopAWS.class);
+		cassandraTemplate.truncate(ShopAWS.class);
 	}
 }
