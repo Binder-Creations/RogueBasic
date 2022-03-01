@@ -105,11 +105,19 @@ class App extends React.Component {
         <input className="inn" type="image" src={this.c.images.innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
         <input className="shop" type="image" src={this.c.images.shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
       </>
+    this.tempScreen = 
+      <div className="app-container v-h-centered" 
+        style={{backgroundImage: "url("+this.c.images.loadingBackground+")", 
+        height: this.c.appHeight + "px", width: this.c.appWidth + "px"}}>
+      </div>
   }
 
   render(){
     if(this.state.routeHome){
       return this.routeHome;
+    }
+    if(this.showTempScreen){
+      return this.tempScreen;
     }
     if (!this.state.characterId || !this.state.playerId){
       if(!this.returningUser){
@@ -213,10 +221,11 @@ class App extends React.Component {
   }
 
   assignTempAccount(){
+    this.showTempScreen = true;
     document.cookie = "returning_user=true;max-age=99999999";
     let tempUUID = uuidv4();
     document.cookie = "player_id="+tempUUID+";max-age=99999999";
-    fetch('/register/'+ tempUUID, {method: 'POST'})
+    fetch('/register/temp/'+ tempUUID, {method: 'POST'})
     .then(response => {
       this.setState({routeHome: true});
     });  

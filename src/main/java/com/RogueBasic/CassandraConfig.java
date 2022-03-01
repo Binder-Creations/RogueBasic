@@ -21,7 +21,7 @@ import org.springframework.data.cassandra.core.mapping.SimpleUserTypeResolver;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 
 import com.RogueBasic.enums.CassandraConstant;
-import com.RogueBasic.enums.SystemConstant;
+import com.RogueBasic.enums.SystemEnv;
 import com.datastax.oss.driver.api.core.CqlSession;
 
 @Configuration
@@ -34,7 +34,7 @@ public class CassandraConfig {
 	public CqlSession session() throws NoSuchAlgorithmException {
 		return CqlSession.builder().
 	            withConfigLoader(DriverConfigLoader.fromFile(driverConfig)).
-	            withAuthCredentials(SystemConstant.USERNAME.constant(), SystemConstant.PASSWORD.constant()).
+	            withAuthCredentials(SystemEnv.USERNAME.env(), SystemEnv.PASSWORD.env()).
 	            withSslContext(SSLContext.getDefault()).
 	            withKeyspace(CassandraConstant.KEYSPACE.constant()).
 	            build();

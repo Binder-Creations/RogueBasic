@@ -32,9 +32,6 @@ public class HomeController {
 				playerId = null;
 			}
 		}
-		if(playerName == null) {
-			model.addAttribute("temp", true);
-		}
 		return playerId == null 
 				? "redirect:/login"
 				: "home";

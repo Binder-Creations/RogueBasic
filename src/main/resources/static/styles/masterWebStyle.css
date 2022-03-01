@@ -84,7 +84,6 @@
 	    	left: 5%;
 	    	height: 15%;
 	    	width: auto;
-	    	pointer-events: none;
 	    }
 	    .inline-block {
 	    	display:inline-block;

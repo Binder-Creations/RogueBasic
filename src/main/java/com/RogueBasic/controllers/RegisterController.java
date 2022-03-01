@@ -56,10 +56,11 @@ public class RegisterController {
 		}
 	}
 	
-	@PostMapping("/register/{id}")
+	@PostMapping("/register/temp/{id}")
     public ResponseEntity<String> newPlayer(@PathVariable String id) {
     	Player tempPlayer = new Player(id);
     	playerByNameDao.save(tempPlayer);
+    	playerDao.save(tempPlayer);
     	return ResponseEntity.ok().build();
     }
 	

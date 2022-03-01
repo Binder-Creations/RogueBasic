@@ -1,17 +1,21 @@
 package com.RogueBasic.beans;
 
 import java.util.Set;
+import java.nio.ByteBuffer;
 import java.util.Objects;
 import java.util.UUID;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
+
+import com.RogueBasic.util.PasswordUtilities;
 
 @Table
 public class Player {
 
 	@PrimaryKey private UUID id;
 	private String name;
-	private String password;
+	private ByteBuffer passwordHash;
+	private ByteBuffer salt;
 	private Set<UUID> characterIds;
 	private int metacurrency;
 	private int constitutionMetabonus;
@@ -26,14 +30,16 @@ public class Player {
 		super();
 		this.id = UUID.randomUUID();
 		this.name = name;
-		this.password = password;
+		this.salt = PasswordUtilities.getSalt();
+		this.passwordHash = PasswordUtilities.hash(password, this.salt);
 	}
 	
 	public Player(String id) {
 		super ();
 		this.setId(UUID.fromString(id));
 		this.setName("Temporary User");
-		this.setPassword(id);	
+		this.salt = PasswordUtilities.getSalt();
+		this.passwordHash = PasswordUtilities.hash(id, this.salt);	
 	}
 	
 	public Player(String name, String password, Player tempPlayer) {
@@ -50,27 +56,43 @@ public class Player {
 	public UUID getId() {
 		return id;
 	}
-	
+
 	public void setId(UUID id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public String getPassword() {
-		return password;
+
+	public ByteBuffer getPasswordHash() {
+		return passwordHash;
 	}
-	
-	public void setPassword(String password) {
-		this.password = password;
+
+	public void setPasswordHash(ByteBuffer passwordHash) {
+		this.passwordHash = passwordHash;
 	}
-	
+
+	public ByteBuffer getSalt() {
+		return salt;
+	}
+
+	public void setSalt(ByteBuffer salt) {
+		this.salt = salt;
+	}
+
+	public Set<UUID> getCharacterIds() {
+		return characterIds;
+	}
+
+	public void setCharacterIds(Set<UUID> characterIds) {
+		this.characterIds = characterIds;
+	}
+
 	public int getMetacurrency() {
 		return metacurrency;
 	}
@@ -79,14 +101,6 @@ public class Player {
 		this.metacurrency = metacurrency;
 	}
 
-	public Set<UUID> getCharacterIds() {
-		return characterIds;
-	}
-	
-	public void setCharacterIds(Set<UUID> characterIds) {
-		this.characterIds = characterIds;
-	}
-	
 	public int getConstitutionMetabonus() {
 		return constitutionMetabonus;
 	}
@@ -130,9 +144,9 @@ public class Player {
 	@Override
 	public int hashCode() {
 		return Objects.hash(characterIds, constitutionMetabonus, currencyMetabonus, dexterityMetabonus, id,
-				intelligenceMetabonus, metacurrency, password, strengthMetabonus, name);
+				intelligenceMetabonus, metacurrency, name, passwordHash, salt, strengthMetabonus);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -144,17 +158,20 @@ public class Player {
 		Player other = (Player) obj;
 		return Objects.equals(characterIds, other.characterIds) && constitutionMetabonus == other.constitutionMetabonus
 				&& currencyMetabonus == other.currencyMetabonus && dexterityMetabonus == other.dexterityMetabonus
-				&& Objects.equals(id,other.id) && intelligenceMetabonus == other.intelligenceMetabonus
-				&& metacurrency == other.metacurrency && Objects.equals(password, other.password)
-				&& strengthMetabonus == other.strengthMetabonus && Objects.equals(name, other.name);
+				&& Objects.equals(id, other.id) && intelligenceMetabonus == other.intelligenceMetabonus
+				&& metacurrency == other.metacurrency && Objects.equals(name, other.name)
+				&& Objects.equals(passwordHash, other.passwordHash) && Objects.equals(salt, other.salt)
+				&& strengthMetabonus == other.strengthMetabonus;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Player [id=" + id + ", name=" + name + ", password=" + password + ", metacurrency="
-				+ metacurrency + ", characterIds=" + characterIds + ", constitutionMetabonus=" + constitutionMetabonus
-				+ ", strengthMetabonus=" + strengthMetabonus + ", intelligenceMetabonus=" + intelligenceMetabonus
-				+ ", dexterityMetabonus=" + dexterityMetabonus + ", currencyMetabonus=" + currencyMetabonus + "]";
+		return "Player [id=" + id + ", name=" + name + ", passwordHash=" + passwordHash + ", salt=" + salt
+				+ ", characterIds=" + characterIds + ", metacurrency=" + metacurrency + ", constitutionMetabonus="
+				+ constitutionMetabonus + ", strengthMetabonus=" + strengthMetabonus + ", intelligenceMetabonus="
+				+ intelligenceMetabonus + ", dexterityMetabonus=" + dexterityMetabonus + ", currencyMetabonus="
+				+ currencyMetabonus + "]";
 	}
-	
+
+
 }

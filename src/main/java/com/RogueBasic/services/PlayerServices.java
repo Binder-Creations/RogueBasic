@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.RogueBasic.beans.Player;
 import com.RogueBasic.data.PlayerDao;
+import com.RogueBasic.util.PasswordUtilities;
 
 @Component
 public class PlayerServices {
@@ -23,7 +24,7 @@ public class PlayerServices {
 		//or null if none found
 		Player p = playerDao.getAll()
 				.stream()
-				.filter(x -> x.getName()==name&&x.getPassword()==password)
+				.filter(x -> x.getName() == name && PasswordUtilities.isExpectedPassword(password, x.getPasswordHash(), x.getSalt()))
 				.findFirst()
 				.orElse(null);
 		

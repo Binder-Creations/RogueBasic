@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.RogueBasic.beans.Player;
 import com.RogueBasic.data.PlayerByNameDao;
+import com.RogueBasic.util.PasswordUtilities;
 
 @Controller
 public class LoginController {
@@ -46,7 +47,7 @@ public class LoginController {
 	@PostMapping("/login")
 	public String loginSubmit(@ModelAttribute Login login, Model model, HttpServletResponse response) {
 		Player player = playerByNameDao.findByName(login.getName());
-		if(player != null && player.getPassword().equals(login.getPassword())) {
+		if(player != null && PasswordUtilities.isExpectedPassword(login.getPassword(), player.getSalt(), player.getPasswordHash())) {
 			Cookie nameCookie = new Cookie("player_name", player.getName());
 			Cookie idCookie = new Cookie("player_id", player.getId().toString());
 			nameCookie.setPath("/");
