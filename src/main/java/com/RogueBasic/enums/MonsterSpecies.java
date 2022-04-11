@@ -103,31 +103,31 @@ public enum MonsterSpecies {
 		this.namesByType = namesByType;
 	}
 	
-	public String species() {
+	public String getSpecies() {
 		return this.species;
 	}
 	
-	public MonsterType bossType() {
+	public MonsterType getBossType() {
 		return this.bossType;
 	}
 	
-	public String bossName() {
+	public String getBossName() {
 		return this.bossName;
 	}
 	
-	public MonsterType minibossType() {
+	public MonsterType getMinibossType() {
 		return this.minibossType;
 	}
 	
-	public String minibossName() {
+	public String getMinibossName() {
 		return this.minibossName;
 	}
 	
-	public Monster adjustStats(Monster monster) {
+	public Monster modifyStats(Monster monster) {
 		return this.adjustStats.apply(monster);
 	}
 	
-	public String nameByType(MonsterType type) {
+	public String getNameByType(MonsterType type) {
 		return this.namesByType.get(type);
 	}
 }

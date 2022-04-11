@@ -33,8 +33,8 @@ public class CassandraUtilities {
 	
 	public void initialize() {
 		for(CassandraTable table: CassandraTable.values()) {
-			String tableName = CassandraConstant.KEYSPACE.constant() + "." + table.name();
-			session.execute("CREATE TABLE IF NOT EXISTS "  + tableName + table.statement());
+			String tableName = CassandraConstant.KEYSPACE.get() + "." + table.name();
+			session.execute("CREATE TABLE IF NOT EXISTS "  + tableName + table.getStatement());
 			log.debug("Table created: " + tableName);
 		}
 		log.info("All tables created");
@@ -42,7 +42,7 @@ public class CassandraUtilities {
 
 	public void dropAllTables() {
 		for(CassandraTable table: CassandraTable.values()) {
-			String tableName = CassandraConstant.KEYSPACE.constant() + "." + table.name();
+			String tableName = CassandraConstant.KEYSPACE.get() + "." + table.name();
 			session.execute("DROP TABLE IF EXISTS "  + tableName);
 			log.debug("Table dropped: " + tableName);
 		}

@@ -12,7 +12,7 @@ import com.RogueBasic.enums.MonsterModifier;
 import com.RogueBasic.enums.MonsterSpecies;
 import com.RogueBasic.enums.MonsterType;
 import com.RogueBasic.enums.Position;
-import com.RogueBasic.util.RogueUtilities;
+import com.RogueBasic.util.JsonUtilities;
 
 public class MonsterServices {
 	
@@ -23,57 +23,57 @@ public class MonsterServices {
 		int encounterValue = Math.round((6f+(float)challengeRating*3f)*(0.9f + (float)level/10f)*(boss ? 1.2f : 1f)*(miniboss ? 1.1f : 1f));
 		int encounterBase = encounterValue;
 		int monsterMinimum = Math.round((float)encounterValue/6f);
-		List<Position> frontPositions = Position.allFront();
-		List<Position> backPositions = Position.allBack();
+		List<Position> frontPositions = Position.getAllFront();
+		List<Position> backPositions = Position.getAllBack();
 		boolean bossGenerated = false;
 		boolean minibossGenerated = false;
 		
 		while (encounterValue >= monsterMinimum) {
 			Monster monster = new Monster();
-			MonsterSpecies species = DungeonTheme.fromString(theme).randomSpecies();
-			MonsterModifier modifier = MonsterModifier.randomModifier();
-			String name = modifier.modifier();
+			MonsterSpecies species = DungeonTheme.fromString(theme).getRandomSpecies();
+			MonsterModifier modifier = MonsterModifier.getRandomModifier();
+			String name = modifier.getModifier();
 			MonsterType type = null;
 			Position position = null;
-			monster.setSpecies(species.species());
+			monster.setSpecies(species.getSpecies());
 			
 			if(boss && !bossGenerated) {
 				monster.setBoss(true);
 				bossGenerated = true;
-				type = species.bossType();
-				position = type.defaultPosition();
+				type = species.getBossType();
+				position = type.getDefaultPosition();
 			}
 			
 			if(miniboss && !minibossGenerated) {
 				monster.setMiniboss(true);
 				minibossGenerated = true;
-				monster.setType(type.type());
-				position = type.defaultPosition();
+				type = species.getMinibossType();
+				position = type.getDefaultPosition();
 			}
 			
 			if(!monster.isBoss() && !monster.isMiniboss()) {
 				if(frontPositions.size() == 0) {
-					type = MonsterType.randomBackType();
+					type = MonsterType.getRandomBackType();
 					position = backPositions.get(ThreadLocalRandom.current().nextInt(backPositions.size()));
 				} else if (backPositions.size() == 0) {
-					type = MonsterType.randomFrontType();
+					type = MonsterType.getRandomFrontType();
 					position = frontPositions.get(ThreadLocalRandom.current().nextInt(frontPositions.size()));
 				} else {
-					type = MonsterType.randomType();
-					if(type.defaultPosition().front()) {
+					type = MonsterType.getRandomType();
+					if(type.getDefaultPosition().isFront()) {
 						position = frontPositions.get(ThreadLocalRandom.current().nextInt(frontPositions.size()));
 					} else {
 						position = backPositions.get(ThreadLocalRandom.current().nextInt(backPositions.size()));
 					}
 				}
 			}
-			if(position.front()) {
+			if(position.isFront()) {
 				frontPositions.remove(position);
 			} else {
 				backPositions.remove(position);
 			}
-			monster.setType(type.type());
-			monster.setPosition(position.position());
+			monster.setType(type.getType());
+			monster.setPosition(position.getPosition());
 			monster.setVariant(monster.isBoss() ? 1 : ThreadLocalRandom.current().nextInt(1,3));
 			int monsterValue = monster.isBoss()
 					? ThreadLocalRandom.current().nextInt(monsterMinimum*3, encounterBase+1)
@@ -93,16 +93,16 @@ public class MonsterServices {
 			monster.setDodgeRating(monster.getDodgeRating()*monsterValue);
 			monster.setCritRating(monster.getCritRating()*monsterValue);
 			
-			modifier.adjustStats(type.adjustStats(species.adjustStats(monster)));
+			modifier.modifyStats(type.modifyStats(species.modifyStats(monster)));
 			
 			encounterValue -= monsterValue;
 			
 			if(monster.isBoss()) {
-				name += species.bossName();
+				name += species.getBossName();
 			} else if (monster.isMiniboss()) {
-				name += species.minibossName();
+				name += species.getMinibossName();
 			} else {
-				name += species.nameByType(type);
+				name += species.getNameByType(type);
 			}
 			monster.setName(name);
 			genAbilities(monster);
@@ -114,7 +114,7 @@ public class MonsterServices {
 	
 	private static void genAbilities(Monster monster) {
 		Set<Ability> abilities = new HashSet<>();
-		List<Ability> abilityPool = RogueUtilities.getMonsterAbilities(monster.getType());
+		List<Ability> abilityPool = JsonUtilities.getMonsterAbilities(monster.getType());
 		for(int i = 0; i < (monster.isBoss() ? 3 : monster.isMiniboss() ? 2 : 1); i++) {
 			Ability ability = abilityPool.get(ThreadLocalRandom.current().nextInt(abilityPool.size()));
 			abilityPool.remove(ability);

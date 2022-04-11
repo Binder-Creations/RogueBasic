@@ -16,6 +16,7 @@ import com.RogueBasic.beans.Player;
 import com.RogueBasic.beans.PlayerCharacter;
 import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.data.PlayerDao;
+import com.RogueBasic.enums.CharacterClass;
 
 @Controller
 public class NewCharacterController {
@@ -37,7 +38,7 @@ public class NewCharacterController {
 	@PostMapping("/new_character")
 	public String newCharacterSubmit(@CookieValue(value="player_id", required=false) String playerId, @ModelAttribute NewCharacter newCharacter, Model model) {
 		Player player = playerDao.findById(UUID.fromString(playerId));
-		PlayerCharacter pc = new PlayerCharacter(newCharacter.getName(), newCharacter.getCharacterClass(), Integer.parseInt(newCharacter.getConstitution()) + player.getConstitutionMetabonus(), Integer.parseInt(newCharacter.getStrength()) + player.getStrengthMetabonus(), Integer.parseInt(newCharacter.getDexterity()) + player.getDexterityMetabonus(), Integer.parseInt(newCharacter.getIntelligence()) + player.getIntelligenceMetabonus(), player.getCurrencyMetabonus());
+		PlayerCharacter pc = new PlayerCharacter(newCharacter.getName(), CharacterClass.fromString(newCharacter.getCharacterClass()), Integer.parseInt(newCharacter.getConstitution()) + player.getConstitutionMetabonus(), Integer.parseInt(newCharacter.getStrength()) + player.getStrengthMetabonus(), Integer.parseInt(newCharacter.getDexterity()) + player.getDexterityMetabonus(), Integer.parseInt(newCharacter.getIntelligence()) + player.getIntelligenceMetabonus(), player.getCurrencyMetabonus());
 		Set<UUID> pcIds = player.getCharacterIds() == null
 				? new HashSet<UUID>()
 				: player.getCharacterIds();

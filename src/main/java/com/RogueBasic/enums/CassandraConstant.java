@@ -9,7 +9,7 @@ public enum CassandraConstant {
 		this.constant = constant;
 	}
 	
-	public String constant() {
+	public String get() {
 		return this.constant;
 	}
 }

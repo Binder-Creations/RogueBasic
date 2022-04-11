@@ -22,7 +22,7 @@ public class LoginController {
 	private PlayerByNameDao playerByNameDao;
 	
 	@GetMapping("/login")
-	public String dungeon(@CookieValue(value="player_id", required=false) String playerId, @CookieValue(value="player_name", required=false) String playerName, @RequestParam(name="logout", required=false) String logout, Model model, HttpServletResponse response) {
+	public String login(@CookieValue(value="player_id", required=false) String playerId, @CookieValue(value="player_name", required=false) String playerName, @RequestParam(name="logout", required=false) String logout, Model model, HttpServletResponse response) {
 		if(logout != null || (playerId != null && playerName == null)) {
 			Cookie nameCookie = new Cookie("player_name", null);
 			Cookie idCookie = new Cookie("player_id", null);

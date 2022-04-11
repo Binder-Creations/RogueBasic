@@ -35,7 +35,7 @@ public enum MetacurrencyPurchase {
 		this.purchase = purchase;
 	}
 	
-	public String type() {
+	public String getType() {
 		return this.type;
 	}
 	
@@ -45,7 +45,7 @@ public enum MetacurrencyPurchase {
 	
 	public static MetacurrencyPurchase fromString(String purchaseType) {
 		return Stream.of(MetacurrencyPurchase.values())
-		.filter(purchase -> purchase.type().equals(purchaseType))
+		.filter(purchase -> purchase.getType().equals(purchaseType))
 		.findFirst().orElse(null);
 	}
 }

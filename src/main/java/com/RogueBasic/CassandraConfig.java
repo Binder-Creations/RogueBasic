@@ -34,36 +34,36 @@ public class CassandraConfig {
 	public CqlSession session() throws NoSuchAlgorithmException {
 		return CqlSession.builder().
 	            withConfigLoader(DriverConfigLoader.fromFile(driverConfig)).
-	            withAuthCredentials(SystemEnv.USERNAME.env(), SystemEnv.PASSWORD.env()).
+	            withAuthCredentials(SystemEnv.USERNAME.get(), SystemEnv.PASSWORD.get()).
 	            withSslContext(SSLContext.getDefault()).
-	            withKeyspace(CassandraConstant.KEYSPACE.constant()).
+	            withKeyspace(CassandraConstant.KEYSPACE.get()).
 	            build();
 	}
-    
-  @Bean
-  public SessionFactoryFactoryBean sessionFactory(CqlSession session, CassandraConverter converter) {
-    SessionFactoryFactoryBean sessionFactory = new SessionFactoryFactoryBean();
-    sessionFactory.setSession(session);
-    sessionFactory.setConverter(converter);
-    sessionFactory.setSchemaAction(SchemaAction.NONE);
-    return sessionFactory;
-  }
+	
+    @Bean
+	public SessionFactoryFactoryBean sessionFactory(CqlSession session, CassandraConverter converter) {
+	    SessionFactoryFactoryBean sessionFactory = new SessionFactoryFactoryBean();
+	    sessionFactory.setSession(session);
+	    sessionFactory.setConverter(converter);
+	    sessionFactory.setSchemaAction(SchemaAction.NONE);
+	    return sessionFactory;
+    }
 
-  @SuppressWarnings("deprecation")
-  @Bean
-  public CassandraMappingContext mappingContext(CqlSession cqlSession) {
-    CassandraMappingContext mappingContext = new CassandraMappingContext();
-    mappingContext.setUserTypeResolver(new SimpleUserTypeResolver(cqlSession));
-    return mappingContext;
-  }
+	@SuppressWarnings("deprecation")
+	@Bean
+	public CassandraMappingContext mappingContext(CqlSession cqlSession) {
+		CassandraMappingContext mappingContext = new CassandraMappingContext();
+		mappingContext.setUserTypeResolver(new SimpleUserTypeResolver(cqlSession));
+		return mappingContext;
+	}
 
-  @Bean
-  public CassandraConverter converter(CassandraMappingContext mappingContext) {
-    return new MappingCassandraConverter(mappingContext);
-  }
+	@Bean
+	public CassandraConverter converter(CassandraMappingContext mappingContext) {
+			return new MappingCassandraConverter(mappingContext);
+	}
 
-  @Bean
-  public CassandraOperations cassandraTemplate(SessionFactory sessionFactory, CassandraConverter converter) {
-    return new CassandraTemplate(sessionFactory, converter);
-  }
+	@Bean
+	public CassandraOperations cassandraTemplate(SessionFactory sessionFactory, CassandraConverter converter) {
+		return new CassandraTemplate(sessionFactory, converter);
+	}
 }

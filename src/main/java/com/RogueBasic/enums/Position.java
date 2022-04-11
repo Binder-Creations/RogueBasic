@@ -19,28 +19,28 @@ public enum Position {
 		this.front = front;
 	}
 	
-	public String position() {
+	public String getPosition() {
 		return this.position;
 	}
 	
-	public boolean front() {
+	public boolean isFront() {
 		return this.front;
 	}
 	
-	public static List<Position> allFront(){
+	public static List<Position> getAllFront(){
 		List<Position> frontPositions = new ArrayList<>();
 		for(Position position: Position.values()) {
-			if(position.front()) {
+			if(position.isFront()) {
 				frontPositions.add(position);
 			}
 		}
 		return frontPositions;
 	}
 	
-	public static List<Position> allBack(){
+	public static List<Position> getAllBack(){
 		List<Position> backPositions = new ArrayList<>();
 		for(Position position: Position.values()) {
-			if(!position.front()) {
+			if(!position.isFront()) {
 				backPositions.add(position);
 			}
 		}

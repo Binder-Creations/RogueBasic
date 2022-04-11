@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.RogueBasic</groupId>
 	<artifactId>RogueBasic</artifactId>
-	<version>0.9.4-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>RogueBasic</name>
 	<description>Portfolio project</description>
 	<properties>

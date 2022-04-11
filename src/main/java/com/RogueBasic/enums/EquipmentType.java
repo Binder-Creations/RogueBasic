@@ -256,71 +256,71 @@ public enum EquipmentType {
 		this.descriptionsEpic = descriptionsEpic;
 	}
 	
-	public String type() {
+	public String getType() {
 		return this.type;
 	}
 	
-	public boolean offense(){
+	public boolean isOffense(){
 		return this.offense;
 	}
 	
-	public boolean defense() {
+	public boolean isDefense() {
 		return this.defense;
 	}
 	
-	public int imageCount() {
+	public int getImageCount() {
 		return this.imageCount;
 	}
 	
-	public String randomPrefixCommon() {
+	public String getRandomPrefixCommon() {
 		return this.prefixesCommon[ThreadLocalRandom.current().nextInt(this.prefixesCommon.length)];
 	}
 	
-	public String randomPrefixUncommon() {
+	public String getRandomPrefixUncommon() {
 		return this.prefixesUncommon[ThreadLocalRandom.current().nextInt(this.prefixesUncommon.length)];
 	}
 	
-	public String randomPrefixRare() {
+	public String getRandomPrefixRare() {
 		return this.prefixesRare[ThreadLocalRandom.current().nextInt(this.prefixesRare.length)];
 	}
 	
-	public String randomPrefixEpic() {
+	public String getRandomPrefixEpic() {
 		return this.prefixesEpic[ThreadLocalRandom.current().nextInt(this.prefixesEpic.length)];
 	}
 	
-	public String randomNoun() {
+	public String getRandomNoun() {
 		return this.nouns[ThreadLocalRandom.current().nextInt(this.nouns.length)];
 	}
 	
-	public String randomDescriptionCommon() {
+	public String getRandomDescriptionCommon() {
 		return this.descriptionsCommon[ThreadLocalRandom.current().nextInt(this.descriptionsCommon.length)];
 	}
 	
-	public String randomDescriptionUncommon() {
+	public String getRandomDescriptionUncommon() {
 		return this.descriptionsUncommon[ThreadLocalRandom.current().nextInt(this.descriptionsUncommon.length)];
 	}
 	
-	public String randomDescriptionRare() {
+	public String getRandomDescriptionRare() {
 		return this.descriptionsRare[ThreadLocalRandom.current().nextInt(this.descriptionsRare.length)];
 	}
 	
-	public String randomDescriptionEpic() {
+	public String getRandomDescriptionEpic() {
 		return this.descriptionsEpic[ThreadLocalRandom.current().nextInt(this.descriptionsEpic.length)];
 	}
 	
-	public Item statAdjust(Item item, Integer statSum) {
+	public Item modifyStats(Item item, Integer statSum) {
 		return this.statAdjust.apply(item, statSum);
 	}
 	
-	public String randomImage() {
+	public String getRandomImage() {
 		return Integer.toString(ThreadLocalRandom.current().nextInt(1, this.imageCount + 1));
 	}
 	
-	public EquipmentModifier randomModifier() {
+	public EquipmentModifier getRandomModifier() {
 		return this.offense
-			? EquipmentModifier.randomOffense()
+			? EquipmentModifier.getRandomOffense()
 			: this.defense
-				? EquipmentModifier.randomDefense()
+				? EquipmentModifier.getRandomDefense()
 				: null;
 	}
 	
@@ -333,7 +333,7 @@ public enum EquipmentType {
 		for(String string: strings) {
 			enums.add(
 				Stream.of(EquipmentType.values())
-				.filter((el) -> el.type().equals(string))
+				.filter((el) -> el.getType().equals(string))
 				.findFirst().orElse(null)
 			);
 		}

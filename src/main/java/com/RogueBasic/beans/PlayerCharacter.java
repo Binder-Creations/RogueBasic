@@ -6,7 +6,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import com.RogueBasic.util.RogueUtilities;
+import com.RogueBasic.enums.CharacterClass;
+import com.RogueBasic.enums.StaticItem;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,13 +44,13 @@ public class PlayerCharacter {
 	
 	public PlayerCharacter() {}
 
-	public PlayerCharacter(String name, String characterClass, int constitution, int strength, int dexterity, int intelligence, int currencyMetabonus) {
+	public PlayerCharacter(String name, CharacterClass characterClass, int constitution, int strength, int dexterity, int intelligence, int currencyMetabonus) {
 		super();
-		PlayerCharacter classBase = RogueUtilities.getCharacterClass(characterClass);
+		PlayerCharacter classBase = characterClass.getBase();
 		this.id = UUID.randomUUID();
 		this.location = "Town";
 		this.name = name;
-		this.characterClass = characterClass;
+		this.characterClass = characterClass.getName();
 		this.currency = 150 + currencyMetabonus;
 		this.constitution = constitution;
 		this.strength = strength;
@@ -59,10 +60,10 @@ public class PlayerCharacter {
 		this.currentHealth = -1;
 		this.currentEnergy = -1;
 		this.inventory = new HashSet<>();
-		this.inventory.add(RogueUtilities.getItem("healthPotion"));
-		this.inventory.add(RogueUtilities.getItem("energyPotion"));
-		this.inventory.add(RogueUtilities.getItem("rations", 2));
-		this.inventory.add(RogueUtilities.getItem("wine", 2));
+		this.inventory.add(StaticItem.HEALTH_POTION.getItem());
+		this.inventory.add(StaticItem.ENERGY_POTION.getItem());
+		this.inventory.add(StaticItem.RATIONS.getItem(2));
+		this.inventory.add(StaticItem.WINE.getItem(2));
 		this.equippedBody = classBase.getEquippedBody();
 		this.equippedPrimary = classBase.getEquippedPrimary();
 		this.equippedSecondary = classBase.getEquippedSecondary();

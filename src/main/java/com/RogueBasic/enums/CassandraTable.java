@@ -13,7 +13,7 @@ public enum CassandraTable {
 		this.statement = statement;
 	}
 	
-	public String statement() {
+	public String getStatement() {
 		return this.statement;
 	}
 }

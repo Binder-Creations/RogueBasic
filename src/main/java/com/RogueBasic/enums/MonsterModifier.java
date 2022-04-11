@@ -104,15 +104,15 @@ public enum MonsterModifier {
 		this.adjustStats = adjustStats;
 	}
 	
-	public String modifier() {
+	public String getModifier() {
 		return this.modifier;
 	}
 	
-	public Monster adjustStats(Monster monster) {
+	public Monster modifyStats(Monster monster) {
 		return this.adjustStats.apply(monster);
 	}
 	
-	public static MonsterModifier randomModifier() {
+	public static MonsterModifier getRandomModifier() {
 		if(ThreadLocalRandom.current().nextInt(9) >= 4) {
 			return MonsterModifier.NONE;
 		} else {

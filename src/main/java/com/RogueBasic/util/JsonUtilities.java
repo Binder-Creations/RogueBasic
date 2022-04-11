@@ -12,7 +12,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-public class RogueUtilities {
+public class JsonUtilities {
 	private static final ObjectMapper mapper = new ObjectMapper();
 	
 	public static Item getItem(String itemName) {
@@ -22,12 +22,6 @@ public class RogueUtilities {
 			e.printStackTrace();
 			return null;
 		}
-	}
-	
-	public static Item getItem(String itemName, int count) {
-		Item item = RogueUtilities.getItem(itemName);
-		item.setCount(count);
-		return item;
 	}
 
 	public static List<Ability> getMonsterAbilities(String type){
@@ -39,7 +33,7 @@ public class RogueUtilities {
 		}
 	}
 	
-	public static PlayerCharacter getCharacterClass(String characterClass) {
+	public static PlayerCharacter getBasePlayerCharacter(String characterClass) {
 		try {
 			return mapper.readValue(Files.readString(Paths.get("src/main/resources/json/classes/" + characterClass.toLowerCase() + ".json")), PlayerCharacter.class);
 		} catch (IOException e) {

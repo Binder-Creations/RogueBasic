@@ -292,36 +292,36 @@ public enum EquipmentModifier {
 		this.statAdjust = statAdjust;
 	}
 	
-	public boolean offense() {
+	public boolean isOffense() {
 		return this.offense;
 	}
 	
-	public boolean defense() {
+	public boolean isDefense() {
 		return this.defense;
 	}
 	
-	public String suffix() {
+	public String getSuffix() {
 		return this.suffix;
 	}
 	
-	public Item statAdjust(Item item, Integer statSum) {
+	public Item modifyStats(Item item, Integer statSum) {
 		return this.statAdjust.apply(item, statSum);
 	}
 	
-	public static EquipmentModifier randomOffense(){
+	public static EquipmentModifier getRandomOffense(){
 		List<EquipmentModifier> offenseModifiers = new ArrayList<>();
 		for(EquipmentModifier modifier: EquipmentModifier.values()) {
-			if(modifier.offense()) {
+			if(modifier.isOffense()) {
 				offenseModifiers.add(modifier);
 			}
 		}
 		return offenseModifiers.get(ThreadLocalRandom.current().nextInt(offenseModifiers.size()));
 	}
 	
-	public static EquipmentModifier randomDefense(){
+	public static EquipmentModifier getRandomDefense(){
 		List<EquipmentModifier> defenseModifiers = new ArrayList<>();
 		for(EquipmentModifier modifier: EquipmentModifier.values()) {
-			if(modifier.defense()) {
+			if(modifier.isDefense()) {
 				defenseModifiers.add(modifier);
 			}
 		}

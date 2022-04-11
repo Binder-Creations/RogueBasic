@@ -42,8 +42,8 @@ public class DungeonServices {
 		
 		PlayerCharacter pc = playerCharacterDao.findById(pcId);
 		Dungeon dungeon = new Dungeon();
-		DungeonTheme theme = DungeonTheme.randomTheme();
-		dungeon.setTheme(theme.theme());
+		DungeonTheme theme = DungeonTheme.getRandomTheme();
+		dungeon.setTheme(theme.getTheme());
 		dungeon.setId(UUID.randomUUID());
 		dungeon.setChallengeRating(genChallengeRating(pc.getLevel()));
 		dungeon.setFloorCount(genFloorCount(dungeon.getChallengeRating()));		
@@ -66,7 +66,7 @@ public class DungeonServices {
 		return dungeon;
 	}
 	
-	public int genChallengeRating(int level) {
+	private int genChallengeRating(int level) {
 		//Calculates a pseudorandom challengeRating based on PC level, which should be 0 or greater
 		int modifier = 1+2*level/5;
 		modifier = modifier > 0 ? modifier : 1;
@@ -76,7 +76,7 @@ public class DungeonServices {
 		return challengeRating > 0 ? challengeRating :1;
 	}
 	
-	public int genFloorCount(int challengeRating) {
+	private int genFloorCount(int challengeRating) {
 		//Calculates a pseudorandom floorCount based on challengeRating, which should be between 1 and 6
 		int modifier = 1+(challengeRating/4);
 		modifier = modifier > 4 ? 4 : modifier;
@@ -90,7 +90,7 @@ public class DungeonServices {
 				: 1;
 	}
 	
-	public void genBossMiniboss(Dungeon dungeon) {
+	private void genBossMiniboss(Dungeon dungeon) {
 		int modifier = dungeon.getChallengeRating() + ThreadLocalRandom.current().nextInt(12);
 		
 		//Generates a boss if modifier > 15 to avoid boss encounters at the lowest levels
@@ -106,25 +106,25 @@ public class DungeonServices {
 							  : false);
 	}
 	
-	public void genNameModsDescription(Dungeon dungeon, DungeonTheme theme) {	
+	private void genNameModsDescription(Dungeon dungeon, DungeonTheme theme) {	
 		StringBuffer name = new StringBuffer();
 		StringBuffer description = new StringBuffer();
-		DungeonModifier prefix = DungeonModifier.randomPrefix();
-		DungeonModifier postfix = DungeonModifier.randomPostfix();
-		String noun = theme.randomNoun();
+		DungeonModifier prefix = DungeonModifier.getRandomPrefix();
+		DungeonModifier postfix = DungeonModifier.getRandomPostfix();
+		String noun = theme.getRandomNoun();
 
-		name.append(prefix.nameModifier(theme));
-		name.append(theme.randomAdjective());
+		name.append(prefix.getNameModifier(theme));
+		name.append(theme.getRandomAdjective());
 		name.append(noun);
-		name.append(postfix.nameModifier(theme));
+		name.append(postfix.getNameModifier(theme));
 		
-		description.append(prefix.descriptionModifier(theme));
-		description.append(String.format(theme.randomBaseDescription(), noun.toLowerCase()));
+		description.append(prefix.getDescriptionModifier(theme));
+		description.append(String.format(theme.getRandomBaseDescription(), noun.toLowerCase()));
 		char c = description.charAt(1);
 		description.insert(0, c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U'
 				         ? "An"
 				         : "A");
-		description.append(postfix.descriptionModifier(theme));
+		description.append(postfix.getDescriptionModifier(theme));
 		
 		dungeon.setName(name.toString());
 		dungeon.setDescription(description.toString());

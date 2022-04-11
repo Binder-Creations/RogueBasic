@@ -10,7 +10,7 @@ public enum SystemEnv {
 		this.constant = constant;
 	}
 	
-	public String env() {
+	public String get() {
 		return System.getenv(this.constant);
 	}
 }

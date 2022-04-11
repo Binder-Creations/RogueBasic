@@ -13,7 +13,7 @@ import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.Room;
 import com.RogueBasic.enums.EquipmentModifier;
 import com.RogueBasic.enums.EquipmentType;
-import com.RogueBasic.util.RogueUtilities;
+import com.RogueBasic.enums.StaticItem;
 
 @Component
 public class ItemServices {
@@ -53,10 +53,10 @@ public class ItemServices {
 		};
 		
 		if(miniboss) {
-			loot.add(RogueUtilities.getItem("soul"));
+			loot.add(StaticItem.SOUL.getItem());
 		}
 		if(boss) {
-			loot.add(RogueUtilities.getItem("soul", 3));	
+			loot.add(StaticItem.SOUL.getItem(3));	
 		}
 		
 		int goldMod = 0;
@@ -76,19 +76,19 @@ public class ItemServices {
 		while(lootValue >= averageCost && loot.size() <= 25) {
 			int roll = ThreadLocalRandom.current().nextInt(1, 15);
 			if(roll == 1) {
-				lootValue -= addConsumable.apply(RogueUtilities.getItem("healthPotion"));
+				lootValue -= addConsumable.apply(StaticItem.HEALTH_POTION.getItem());
 			}
 			if(roll == 2) {
-				lootValue -= addConsumable.apply(RogueUtilities.getItem("energyPotion"));
+				lootValue -= addConsumable.apply(StaticItem.ENERGY_POTION.getItem());
 			}
 			if(roll == 3) {
-				lootValue -= addConsumable.apply(RogueUtilities.getItem("rations"));
+				lootValue -= addConsumable.apply(StaticItem.RATIONS.getItem());
 			}
 			if(roll == 4) {
-				lootValue -= addConsumable.apply(RogueUtilities.getItem("wine"));
+				lootValue -= addConsumable.apply(StaticItem.WINE.getItem());
 			}
 			if(roll >= 5 && roll < 10) {
-				lootValue -= addConsumable.apply(RogueUtilities.getItem("gold", ThreadLocalRandom.current().nextInt(averageCost/2, averageCost*2)*(100+goldMod)/100));
+				lootValue -= addConsumable.apply(StaticItem.GOLD.getItem(ThreadLocalRandom.current().nextInt(averageCost/2, averageCost*2)*(100+goldMod)/100));
 			}
 			if(roll >= 10) {
 				int equipmentMultiplier = 1;
@@ -113,8 +113,8 @@ public class ItemServices {
 	
 	public Item genEquipment(List<EquipmentType> equipmentTypes, int challengeRating){		
 		EquipmentType equipmentType = equipmentTypes.get(ThreadLocalRandom.current().nextInt(equipmentTypes.size()));
-		EquipmentModifier modifier = equipmentType.randomModifier();
-		String noun = equipmentType.randomNoun();
+		EquipmentModifier modifier = equipmentType.getRandomModifier();
+		String noun = equipmentType.getRandomNoun();
 		int rarityRoll = ThreadLocalRandom.current().nextInt(0, 51) + challengeRating;
 		
 		StringBuffer nameBuffer = new StringBuffer();
@@ -123,32 +123,32 @@ public class ItemServices {
 		double rarityMultiplier = 1;
 		if(rarityRoll <= 10) {
 			rarity = "Common";
-			nameBuffer.append(equipmentType.randomPrefixCommon());
-			descriptionBuffer.append(String.format(equipmentType.randomDescriptionCommon(), noun.toLowerCase()));
+			nameBuffer.append(equipmentType.getRandomPrefixCommon());
+			descriptionBuffer.append(String.format(equipmentType.getRandomDescriptionCommon(), noun.toLowerCase()));
 		}
 		if(rarityRoll > 10 && rarityRoll <= 35) {
 			rarity = "Uncommon";
 			rarityMultiplier = 1.4;
-			nameBuffer.append(equipmentType.randomPrefixUncommon());
-			descriptionBuffer.append(String.format(equipmentType.randomDescriptionUncommon(), noun.toLowerCase()));
+			nameBuffer.append(equipmentType.getRandomPrefixUncommon());
+			descriptionBuffer.append(String.format(equipmentType.getRandomDescriptionUncommon(), noun.toLowerCase()));
 		}
 		if(rarityRoll > 35 && rarityRoll <= 50) {
 			rarity = "Rare";
 			rarityMultiplier = 1.8;
-			nameBuffer.append(equipmentType.randomPrefixRare());
-			descriptionBuffer.append(String.format(equipmentType.randomDescriptionRare(), noun.toLowerCase()));
+			nameBuffer.append(equipmentType.getRandomPrefixRare());
+			descriptionBuffer.append(String.format(equipmentType.getRandomDescriptionRare(), noun.toLowerCase()));
 		}
 		if(rarityRoll > 50) {
 			rarity = "Epic";
 			rarityMultiplier = 2.5;
-			nameBuffer.append(equipmentType.randomPrefixEpic());
-			descriptionBuffer.append(String.format(equipmentType.randomDescriptionEpic(), noun.toLowerCase()));
+			nameBuffer.append(equipmentType.getRandomPrefixEpic());
+			descriptionBuffer.append(String.format(equipmentType.getRandomDescriptionEpic(), noun.toLowerCase()));
 		}
 		int statSum = (int)Math.round(Math.pow(((challengeRating*4)/3+2)*5, 0.65)*rarityMultiplier);		
 		int cost = ThreadLocalRandom.current().nextInt(statSum*9, statSum*11);
 		
 		nameBuffer.append(noun);
-		nameBuffer.append(modifier.suffix());
+		nameBuffer.append(modifier.getSuffix());
 		String name = nameBuffer.toString();
 				
 		char c = descriptionBuffer.charAt(1);
@@ -157,7 +157,7 @@ public class ItemServices {
 				         : "A");
 		String description = descriptionBuffer.toString();
 		
-		Item item = new Item(name, description, equipmentType.type(), rarity, equipmentType.randomImage(), cost);
-		return equipmentType.statAdjust(modifier.statAdjust(item, statSum), statSum);
+		Item item = new Item(name, description, equipmentType.getType(), rarity, equipmentType.getRandomImage(), cost);
+		return equipmentType.modifyStats(modifier.modifyStats(item, statSum), statSum);
 	}
 }

@@ -51,39 +51,39 @@ public enum MonsterType {
 		this.adjustStats = adjustStats;
 	}
 	
-	public String type() {
+	public String getType() {
 		return this.type;
 	}
 	
-	public Position defaultPosition() {
+	public Position getDefaultPosition() {
 		return this.defaultPosition;
 	}
 	
-	public Monster adjustStats(Monster monster) {
+	public Monster modifyStats(Monster monster) {
 		return this.adjustStats.apply(monster);
 	}
 	
-	public static MonsterType randomFrontType() {
+	public static MonsterType getRandomFrontType() {
 		List<MonsterType> frontTypes = new ArrayList<>();
 		for(MonsterType type: MonsterType.values()) {
-			if(type.defaultPosition().front()) {
+			if(type.getDefaultPosition().isFront()) {
 				frontTypes.add(type);
 			}
 		}
 		return frontTypes.get(ThreadLocalRandom.current().nextInt(frontTypes.size()));
 	}
 	
-	public static MonsterType randomBackType() {
+	public static MonsterType getRandomBackType() {
 		List<MonsterType> backTypes = new ArrayList<>();
 		for(MonsterType type: MonsterType.values()) {
-			if(!type.defaultPosition().front()) {
+			if(!type.getDefaultPosition().isFront()) {
 				backTypes.add(type);
 			}
 		}
 		return backTypes.get(ThreadLocalRandom.current().nextInt(backTypes.size()));
 	}
 	
-	public static MonsterType randomType() {	
+	public static MonsterType getRandomType() {	
 		return MonsterType.values()[ThreadLocalRandom.current().nextInt(MonsterType.values().length)];
 	}
 }

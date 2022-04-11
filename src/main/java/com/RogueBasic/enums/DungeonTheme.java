@@ -81,65 +81,65 @@ public enum DungeonTheme {
 		this.damageDescriptions = damageDescriptions;
 	}
 	
-	public String theme() {
+	public String getTheme() {
 		return this.theme;
 	}
 	
-	public MonsterSpecies randomSpecies() {
+	public MonsterSpecies getRandomSpecies() {
 		return this.species[ThreadLocalRandom.current().nextInt(this.species.length)];
 	}
 	
-	public String randomGoldPrefix() {
+	public String getRandomGoldPrefix() {
 		return this.goldPrefixes[ThreadLocalRandom.current().nextInt(this.goldPrefixes.length)];
 	}
 	
-	public String randomEquipmentPrefix() {
+	public String getRandomEquipmentPrefix() {
 		return this.equipmentPrefixes[ThreadLocalRandom.current().nextInt(this.equipmentPrefixes.length)];
 	}
 	
-	public String randomAdjective() {
+	public String getRandomAdjective() {
 		return this.adjectives[ThreadLocalRandom.current().nextInt(this.adjectives.length)];
 	}
 	
-	public String randomNoun() {
+	public String getRandomNoun() {
 		return this.nouns[ThreadLocalRandom.current().nextInt(this.nouns.length)];
 	}
 	
-	public String randomHealthPostfix() {
+	public String getRandomHealthPostfix() {
 		return this.healthPostfixes[ThreadLocalRandom.current().nextInt(this.healthPostfixes.length)];
 	}
 	
-	public String randomDamagePostfix() {
+	public String getRandomDamagePostfix() {
 		return this.damagePostfixes[ThreadLocalRandom.current().nextInt(this.damagePostfixes.length)];
 	}
 	
-	public String randomGoldDescription() {
+	public String getRandomGoldDescription() {
 		return this.goldDescriptions[ThreadLocalRandom.current().nextInt(this.goldDescriptions.length)];
 	}
 	
-	public String randomEquipmentDescription() {
+	public String getRandomEquipmentDescription() {
 		return this.equipmentDescriptions[ThreadLocalRandom.current().nextInt(this.equipmentDescriptions.length)];
 	}
 	
-	public String randomBaseDescription() {
+	public String getRandomBaseDescription() {
 		return this.baseDescriptions[ThreadLocalRandom.current().nextInt(this.baseDescriptions.length)];
 	}
 	
-	public String randomHealthDescription() {
+	public String getRandomHealthDescription() {
 		return this.healthDescriptions[ThreadLocalRandom.current().nextInt(this.healthDescriptions.length)];
 	}
 	
-	public String randomDamageDescription() {
+	public String getRandomDamageDescription() {
 		return this.damageDescriptions[ThreadLocalRandom.current().nextInt(this.damageDescriptions.length)];
 	}
 	
 	public static DungeonTheme fromString(String string) {
 		return Stream.of(DungeonTheme.values())
-				.filter(theme -> theme.theme().equals(string))
+				.filter(theme -> theme.getTheme().equals(string))
 				.findFirst().orElse(null);
 	}
 	
-	public static DungeonTheme randomTheme() {
+	public static DungeonTheme getRandomTheme() {
 		return DungeonTheme.values()[ThreadLocalRandom.current().nextInt(DungeonTheme.values().length)];
 	}
 }

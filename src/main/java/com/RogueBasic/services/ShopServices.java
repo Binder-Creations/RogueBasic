@@ -11,7 +11,7 @@ import com.RogueBasic.beans.Item;
 import com.RogueBasic.beans.PlayerCharacter;
 import com.RogueBasic.data.PlayerCharacterDao;
 import com.RogueBasic.enums.EquipmentType;
-import com.RogueBasic.util.RogueUtilities;
+import com.RogueBasic.enums.StaticItem;
 
 @Component
 public class ShopServices {
@@ -30,10 +30,10 @@ public class ShopServices {
 		pc.setCurrentShop(shopID);
 		playerCharacterDao.save(pc);
 
-		inventory.add(RogueUtilities.getItem("healthPotion"));
-		inventory.add(RogueUtilities.getItem("energyPotion"));
-		inventory.add(RogueUtilities.getItem("rations"));
-		inventory.add(RogueUtilities.getItem("wine"));
+		inventory.add(StaticItem.HEALTH_POTION.getItem());
+		inventory.add(StaticItem.ENERGY_POTION.getItem());
+		inventory.add(StaticItem.RATIONS.getItem());
+		inventory.add(StaticItem.WINE.getItem());
 		for(int i = 0; i < 23; i++) {
 			Item item = itemServices.genEquipment(EquipmentType.fromStrings(pc.getEquipTypes()), pc.getLevel());
 			inventory.add(item);
