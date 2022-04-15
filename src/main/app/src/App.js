@@ -89,14 +89,14 @@ class App extends React.Component {
       <Router>
         <Route path='/' component={() => { 
           window.location.href = '/home'; 
-          return this.tempScreen;
+          return null;
         }}/>
       </Router>
     this.routeLogin = 
       <Router>
         <Route path='/' component={() => { 
           window.location.href = '/login'; 
-          return this.tempScreen;
+          return null;
         }}/>
       </Router>
     this.exteriorBuildings =
