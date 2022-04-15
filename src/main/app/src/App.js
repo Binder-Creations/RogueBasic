@@ -123,6 +123,9 @@ class App extends React.Component {
       if(!this.returningUser){
         this.assignTempAccount();   
       } else {
+        if(this.state.playerId){
+          return this.routeHome;
+        }
         return this.routeLogin;
       }
     }

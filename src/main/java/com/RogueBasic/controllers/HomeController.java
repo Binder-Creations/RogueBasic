@@ -28,8 +28,8 @@ public class HomeController {
 			Player player = playerDao.findById(UUID.fromString(playerId));
 			if(player != null) {
 				model.addAttribute("has_characters", player.getCharacterIds() != null);
-			} else {
-				playerId = null;
+			} else if (playerName != null) {
+				return "redirect:/login";
 			}
 		}
 		return playerId == null 
