@@ -1,6 +1,7 @@
 package com.RogueBasic;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import javax.net.ssl.SSLContext;
 
@@ -27,11 +28,11 @@ import com.datastax.oss.driver.api.core.CqlSession;
 @Configuration
 @EnableCassandraRepositories(basePackages = {"com.RogueBasic"})
 public class CassandraConfig {
-    File driverConfig = new File(System.getProperty("user.dir")+"/application.conf");
-
 	@Primary
 	@Bean
 	public CqlSession session() throws NoSuchAlgorithmException {
+		File driverConfig = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "datastax.conf").toFile();
+		driverConfig = driverConfig.exists() ? driverConfig : Paths.get(System.getProperty("user.dir"), "classes", "datastax.conf").toFile();
 		return CqlSession.builder().
 	            withConfigLoader(DriverConfigLoader.fromFile(driverConfig)).
 	            withAuthCredentials(SystemEnv.USERNAME.get(), SystemEnv.PASSWORD.get()).
