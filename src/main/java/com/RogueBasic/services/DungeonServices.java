@@ -126,6 +126,8 @@ public class DungeonServices {
 				         : "A");
 		description.append(postfix.getDescriptionModifier(theme));
 		
+		dungeon.setPrefixMod(prefix.getModifier());
+		dungeon.setPostfixMod(postfix.getModifier());
 		dungeon.setName(name.toString());
 		dungeon.setDescription(description.toString());
 	}

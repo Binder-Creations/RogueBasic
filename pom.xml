@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>com.RogueBasic</groupId>
 	<artifactId>RogueBasic</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<name>RogueBasic</name>
-	<description>Portfolio project</description>
+	<description>A simple loot-filled dungeon-diving RPG. But mostly a project for building Java/JavaScript experience.</description>
 	<properties>
 		<java.version>11</java.version>
 		<frontend-src-dir>${project.basedir}/src/main/app</frontend-src-dir>

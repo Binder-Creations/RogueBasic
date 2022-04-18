@@ -1,9 +1,9 @@
 package com.RogueBasic.util;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
+
+import org.springframework.core.io.ClassPathResource;
 
 import com.RogueBasic.beans.Ability;
 import com.RogueBasic.beans.Item;
@@ -17,7 +17,7 @@ public class JsonUtilities {
 	
 	public static Item getItem(String itemName) {
 		try {	
-			return mapper.readValue(Files.readString(Paths.get("src/main/resources/json/items/" + itemName + ".json")), Item.class);
+			return mapper.readValue(new ClassPathResource("json/items/"+itemName+".json").getInputStream(), Item.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -26,7 +26,7 @@ public class JsonUtilities {
 
 	public static List<Ability> getMonsterAbilities(String type){
 		try {
-			return mapper.readValue(Files.readString(Paths.get("src/main/resources/json/monsterAbilities/"+type+".json")), new TypeReference<List<Ability>>(){});
+			return mapper.readValue(new ClassPathResource("json/monsterAbilities/"+type+".json").getInputStream(), new TypeReference<List<Ability>>(){});
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -35,7 +35,7 @@ public class JsonUtilities {
 	
 	public static PlayerCharacter getBasePlayerCharacter(String characterClass) {
 		try {
-			return mapper.readValue(Files.readString(Paths.get("src/main/resources/json/classes/" + characterClass.toLowerCase() + ".json")), PlayerCharacter.class);
+			return mapper.readValue(new ClassPathResource("json/classes/"+characterClass.toLowerCase()+".json").getInputStream(), PlayerCharacter.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
