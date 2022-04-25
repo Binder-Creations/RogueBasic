@@ -43,7 +43,7 @@ public class ItemServices {
 		Set<Item> loot = new HashSet<>();
 		Function<Item, Integer> addConsumable = (item) -> {
 			for(Item i: loot) {
-				if(i.getId() == item.getId()) {
+				if(i.getId().equals(item.getId())) {
 					i.setCount(i.getCount() + item.getCount());
 					return item.getCost()*item.getCount();
 				}

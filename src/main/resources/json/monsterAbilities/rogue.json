@@ -71,6 +71,11 @@
     "description": "readies themself to dodge your next attack.", 
     "selfFlags": {
       "dodge": 2
-    }
+    },
+      "buffs": [{
+      "name": "perfect dodge", 
+      "duration": 2, 
+      "dodgeRating": 9999
+    }]
   }
 ]
