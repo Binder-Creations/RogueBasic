@@ -36,6 +36,7 @@ public class MonsterServices {
 			MonsterType type = null;
 			Position position = null;
 			monster.setSpecies(species.getSpecies());
+			monster.setAb(species.getAb());
 			
 			if(boss && !bossGenerated) {
 				monster.setBoss(true);

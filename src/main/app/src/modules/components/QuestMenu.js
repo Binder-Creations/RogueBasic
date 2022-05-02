@@ -23,7 +23,7 @@ class QuestMenu extends React.Component {
   render(){
       return(
         <div className="quest-menu">
-          <img className="background" src={this.props.c.images.questMenu} alt="Quest Screen"/>
+          <img className="background" src={this.props.c.images.common.questMenu} alt="Quest Screen"/>
           <p className="quest-gold">{this.props.s.dungeon.reward}</p>
           <p className="quest-exp">{Math.floor(this.props.s.dungeon.reward*2.5)}</p>
           {this.QuestItem(0)}

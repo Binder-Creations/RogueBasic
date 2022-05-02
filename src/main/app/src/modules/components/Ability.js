@@ -24,7 +24,7 @@ class Ability extends React.Component {
         }
       }
     }>
-      <img className="absolute-fill nopointer" src={this.props.c.abilities[camelCase(this.props.s.pc.abilities[this.props.number].name)]} alt="Ability"/>
+      <img className="absolute-fill nopointer" src={this.props.c.images.abilities[camelCase(this.props.s.pc.abilities[this.props.number].name)]} alt="Ability"/>
       <AbilityTooltip c={this.props.c} s={this.props.s} number={this.props.number}/>
     </div>
   )

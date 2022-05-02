@@ -6,7 +6,7 @@ import java.util.function.Function;
 import com.RogueBasic.beans.Monster;
 
 public enum MonsterSpecies {
-	GOBLIN("goblin", MonsterType.ARCHER, "Bigboss", MonsterType.WIZARD, "Skulldancer", 
+	GOBLIN("goblin", 'a', MonsterType.ARCHER, "Bigboss", MonsterType.WIZARD, "Skulldancer", 
 			monster -> {
 				monster.setHealth(Math.round((float)monster.getHealth()*0.7f));
 				monster.setPower(Math.round((float)monster.getPower()*1.2f));
@@ -21,7 +21,7 @@ public enum MonsterSpecies {
 				MonsterType.WARRIOR, "Tallgob",
 				MonsterType.WIZARD, "Speltinger"
 			)),
-	GOLEM("golem", MonsterType.WARRIOR, "Multi-Defense Platform", MonsterType.ARCHER, "Retrofitted Borer", 
+	GOLEM("golem", 'a', MonsterType.WARRIOR, "Multi-Defense Platform", MonsterType.ARCHER, "Retrofitted Borer", 
 			monster -> {
 				monster.setHealth(Math.round((float)monster.getHealth()*1.3f));
 				monster.setPower(Math.round((float)monster.getPower()*0.7f));
@@ -35,7 +35,7 @@ public enum MonsterSpecies {
 				MonsterType.WARRIOR, "Compactor",
 				MonsterType.WIZARD, "Atmokineter"
 			)),
-	HUMAN1("human1", MonsterType.WIZARD, "Ascended One", MonsterType.WARRIOR, "Royal Guard",
+	HUMAN1("human1", 'a', MonsterType.WIZARD, "Ascended One", MonsterType.WARRIOR, "Royal Guard",
 			monster -> {
 				return monster;
 			},
@@ -45,7 +45,7 @@ public enum MonsterSpecies {
 				MonsterType.WARRIOR, "Knight",
 				MonsterType.WIZARD, "Stoic"
 			)),
-	HUMAN2("human2", MonsterType.ROGUE, "True Master", MonsterType.WIZARD, "Archmage",
+	HUMAN2("human2", 'b', MonsterType.ROGUE, "True Master", MonsterType.WIZARD, "Archmage",
 			monster -> {
 				return monster;
 			},
@@ -55,7 +55,7 @@ public enum MonsterSpecies {
 				MonsterType.WARRIOR, "Paladin",
 				MonsterType.WIZARD, "Mage"
 			)),
-	OGRE("ogre", MonsterType.WARRIOR, "Crystal-Fused", MonsterType.ROGUE, "Shadow-Stolen", 
+	OGRE("ogre", 'b', MonsterType.WARRIOR, "Crystal-Fused", MonsterType.ROGUE, "Shadow-Stolen", 
 			monster -> {
 				monster.setHealth(Math.round((float)monster.getHealth()*1.5f));
 				monster.setPower(Math.round((float)monster.getPower()*1.3f));
@@ -69,7 +69,7 @@ public enum MonsterSpecies {
 				MonsterType.WARRIOR, "Ogre Heavy",
 				MonsterType.WIZARD, "Crysogre"
 			)),
-	SKELETON("skeleton", MonsterType.WIZARD, "Hellflame Scion", MonsterType.WARRIOR, "Immortal",
+	SKELETON("skeleton", 'b', MonsterType.WIZARD, "Hellflame Scion", MonsterType.WARRIOR, "Immortal",
 			monster -> {
 				monster.setHealth(Math.round((float)monster.getHealth()*0.8f));
 				monster.setPower(Math.round((float)monster.getPower()*1.4f));
@@ -85,6 +85,7 @@ public enum MonsterSpecies {
 			));
 	
 	private final String species;
+	private final char ab;
 	private final MonsterType bossType;
 	private final String bossName;
 	private final MonsterType minibossType;
@@ -92,9 +93,10 @@ public enum MonsterSpecies {
 	private final Function<Monster, Monster> adjustStats;
 	private final Map<MonsterType, String> namesByType;
 	
-	MonsterSpecies(String species, MonsterType bossType, String bossName, MonsterType minibossType, 
+	MonsterSpecies(String species, char ab, MonsterType bossType, String bossName, MonsterType minibossType, 
 			String minibossName, Function<Monster, Monster> adjustStats, Map<MonsterType, String> namesByType){
 		this.species = species;
+		this.ab = ab;
 		this.bossType = bossType;
 		this.bossName = bossName;
 		this.minibossType = minibossType;
@@ -105,6 +107,10 @@ public enum MonsterSpecies {
 	
 	public String getSpecies() {
 		return this.species;
+	}
+	
+	public char getAb() {
+		return this.ab;
 	}
 	
 	public MonsterType getBossType() {

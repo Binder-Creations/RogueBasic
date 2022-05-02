@@ -3,17 +3,6 @@ import AttributeBuyButtons from "./AttributeBuyButtons";
 
 class CharacterMenu extends React.Component {
 
-  constructor(props){
-    super(props);
-    if(this.props.s.pc.characterClass === "Rogue"){
-      this.badge = this.props.c.images.badgeRogue;
-    } else if(this.props.s.pc.characterClass === "Wizard"){
-      this.badge = this.props.c.images.badgeWizard;
-    } else {
-      this.badge = this.props.c.images.badgeWarrior;
-    }
-  }
-
   render(){
     this.experienceStyle = {
       width: 43.8984*(this.props.s.pc.experience/this.props.s.pc.experienceNeeded) + "%"
@@ -21,9 +10,9 @@ class CharacterMenu extends React.Component {
     this.experienceHover = this.props.s.pc.experience + "/" + this.props.s.pc.experienceNeeded;
     return(
       <div key="menu" className="menu">
-        <img className="background" src={this.props.c.images.characterMenu} alt="Character Information Screen"/>
-        <img className="badge" src={this.badge} alt={this.props.s.pc.characterClass}/>
-        <input className="btn-close hover-saturate" type="image" src={this.props.c.images.buttonClose} alt="Close" onClick={() => this.props.c.menu("character")}/>
+        <img className="background" src={this.props.c.images.common.characterMenu} alt="Character Information Screen"/>
+        <img className="badge" src={this.props.c.images.class.badge} alt={this.props.s.pc.characterClass}/>
+        <input className="btn-close hover-saturate" type="image" src={this.props.c.images.common.buttonClose} alt="Close" onClick={() => this.props.c.menu("character")}/>
         <AttributeBuyButtons c={this.props.c} s={this.props.s}/>
         <div className="character-name">
           <p className="v-h-centered">{this.props.s.pc.name}</p>
@@ -31,9 +20,9 @@ class CharacterMenu extends React.Component {
         <div className="character-points">
           <p className="v-h-centered">{"Points: "+this.props.s.pc.attributePoints}</p>
         </div>
-        <img className="bar-experience" src={this.props.c.images.barExperience} alt="Experience" title={this.experienceHover} style={this.experienceStyle}/>
-        <img className="bar-experience-frame" src={this.props.c.images.barFrame} alt="Experience" title={this.experienceHover}/>
-        <img className="character-level-background" src={this.props.c.images.characterLevelBackground} alt=""></img>
+        <img className="bar-experience" src={this.props.c.images.common.barExperience} alt="Experience" title={this.experienceHover} style={this.experienceStyle}/>
+        <img className="bar-experience-frame" src={this.props.c.images.common.barFrame} alt="Experience" title={this.experienceHover}/>
+        <img className="character-level-background" src={this.props.c.images.common.characterLevelBackground} alt=""></img>
         <div className="character-level">
           <p className="v-h-centered">{this.props.s.pc.level}</p>
         </div>

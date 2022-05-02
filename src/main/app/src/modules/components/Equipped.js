@@ -24,7 +24,7 @@ class Equipped extends React.Component {
       <div className={"hover-saturate item-tooltip item-equipped equipped-" + this.props.slot.toLowerCase()} onClick={() => {this.unequip()}}>
         <img src={this.itemProps.background} className="absolute-fill" alt=""/>
         <img src={this.itemProps.image} className="item-image" alt="item"/>
-        <img src={this.props.c.images.equippedFrame} className="absolute-fill" alt="frame"/>
+        <img src={this.props.c.images.common.equippedFrame} className="absolute-fill" alt="frame"/>
         <ItemTooltip c={this.props.c} s={this.props.s} itemProps={this.itemProps} item={this.item} qMods={[0.45, 0.6, 0.2]} costMult={1}/>
       </div>
     );

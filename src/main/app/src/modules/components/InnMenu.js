@@ -26,16 +26,16 @@ class InnMenu extends React.Component {
         this.setState({food: true,  eaten: this.props.s.eaten})
       }
       let rest = this.props.s.pc.currency < 250
-        ? <input className="rest gray-75" type="image" src={this.props.c.images.rest} alt="Rest"/>
-        : <input className="rest hover-saturate" type="image" src={this.props.c.images.rest} alt="Rest" onClick={this.props.c.startRest}/>
+        ? <input className="rest gray-75" type="image" src={this.props.c.images.common.rest} alt="Rest"/>
+        : <input className="rest hover-saturate" type="image" src={this.props.c.images.common.rest} alt="Rest" onClick={this.props.c.startRest}/>
       let eat = (this.props.s.pc.ate || this.props.s.pc.currency < 100)
-        ? <input className="eat gray-75" type="image" src={this.props.c.images.eat} alt="Eat"/>
-        : <input className="eat hover-saturate" type="image" src={this.props.c.images.eat} alt="Eat" onClick={this.props.c.eat}/>
+        ? <input className="eat gray-75" type="image" src={this.props.c.images.common.eat} alt="Eat"/>
+        : <input className="eat hover-saturate" type="image" src={this.props.c.images.common.eat} alt="Eat" onClick={this.props.c.eat}/>
       
       return(
         <>
           <div className="inn-menu">
-            <img className="background" src={this.props.c.images.innMenu} alt="Inn Menu"/>
+            <img className="background" src={this.props.c.images.common.innMenu} alt="Inn Menu"/>
             {rest}
             {eat}
             <p>{this.props.s.pc.currency}</p>
@@ -46,7 +46,7 @@ class InnMenu extends React.Component {
               onEntered={() => setTimeout(() =>this.setState({moonIn:false}), 700)}
               onExited={() =>this.setState({sun:true, moon: false})}
             >
-              <img className="inn-float" src={this.props.c.images.moon} alt="moon"/>
+              <img className="inn-float" src={this.props.c.images.common.moon} alt="moon"/>
             </Fade>
           )}
           {this.state.sun && (
@@ -55,7 +55,7 @@ class InnMenu extends React.Component {
               onEntered={() => setTimeout(() =>this.setState({sunIn: false}), 700)}            
               onExited={() =>this.setState({sun:false})}
             >
-              <img className="inn-float" src={this.props.c.images.sun} alt="sun"/>
+              <img className="inn-float" src={this.props.c.images.common.sun} alt="sun"/>
             </Fade>
           )}
           {this.state.food && (
@@ -64,7 +64,7 @@ class InnMenu extends React.Component {
               onEntered={() => setTimeout(() =>this.setState({foodIn: false}), 700)}
               onExited={() =>this.setState({food: false})}
             >
-              <img className="inn-float" src={this.props.c.images.food} alt="food"/>
+              <img className="inn-float" src={this.props.c.images.common.food} alt="food"/>
             </Fade>
           )}
         </>

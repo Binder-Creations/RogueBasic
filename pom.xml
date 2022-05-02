@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.RogueBasic</groupId>
 	<artifactId>RogueBasic</artifactId>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
 	<name>RogueBasic</name>
 	<description>A simple loot-filled dungeon-diving RPG. But mostly a project for building Java/JavaScript experience.</description>
 	<properties>

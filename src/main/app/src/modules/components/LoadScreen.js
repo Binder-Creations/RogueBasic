@@ -9,18 +9,18 @@ class LoadScreen extends React.Component {
 
   render(){
     return(
-      <div className="app-container v-h-centered" style={{backgroundImage: "url("+this.props.c.images.loadingBackground+")", height: this.props.c.appHeight + "px", width: this.props.c.appWidth + "px"}}>
+      <div className="app-container v-h-centered" style={{backgroundImage: "url("+this.props.c.images.common.loadingBackground+")", height: this.props.c.appHeight + "px", width: this.props.c.appWidth + "px"}}>
         <div className="loading-bar v-h-centered">
-          <img className="background" src={this.props.c.images.barBackgroundLoading} alt="background"/>
-          <img className="bar" src={this.props.c.images.barLoading} style={{width: this.barPercent() + "%"}} alt="load bar"/>
-          <img className="background v-h-centered" src={this.props.c.images.barFrame} alt="load bar"/>
+          <img className="background" src={this.props.c.images.common.barBackgroundLoading} alt="background"/>
+          <img className="bar" src={this.props.c.images.common.barLoading} style={{width: this.barPercent() + "%"}} alt="load bar"/>
+          <img className="background v-h-centered" src={this.props.c.images.common.barFrame} alt="load bar"/>
           <p className="v-h-centered" style={{fontSize: "100%"}}>
             {
               this.props.s.loadingShop
                 ? this.props.s.loadingDungeons 
-                  ? this.props.s.loadingImages >= this.props.c.imageMax
+                  ? this.props.s.loadedImages >= this.props.c.imageMax
                     ? "Loading..."
-                    : "Loading Images (" + this.props.s.loadingImages + "/" + this.props.c.imageMax + ")..."
+                    : "Loading Images (" + this.props.s.loadedImages + "/" + this.props.c.imageMax + ")..."
                   : "Populating Dungeon Options..."    
                 : "Generating Shop Inventory..."
             }
@@ -32,7 +32,7 @@ class LoadScreen extends React.Component {
 
   barPercent(){
     let percent = 0;
-    percent += (this.props.s.loadingImages/this.props.c.imageMax)*30;
+    percent += (this.props.s.loadedImages/this.props.c.imageMax)*30;
     if(this.props.s.loadingDungeons){
       percent += 40;
     }

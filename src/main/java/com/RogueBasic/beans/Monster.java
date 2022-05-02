@@ -9,6 +9,7 @@ public class Monster {
 	private String name;
 	private String type;
 	private String species;
+	private char ab;
 	private String position;
 	private boolean boss;
 	private boolean miniboss;
@@ -55,6 +56,14 @@ public class Monster {
 		this.type = type;
 	}
 	
+	public char getAb() {
+		return ab;
+	}
+
+	public void setAb(char ab) {
+		this.ab = ab;
+	}
+
 	public String getSpecies() {
 		return species;
 	}
@@ -161,8 +170,8 @@ public class Monster {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(abilities, armor, boss, critRating, currentHealth, dodgeRating, health, id, level, miniboss,
-				name, position, power, species, type, variant);
+		return Objects.hash(ab, abilities, armor, boss, critRating, currentHealth, dodgeRating, health, id, level,
+				miniboss, name, position, power, species, type, variant);
 	}
 
 	@Override
@@ -174,8 +183,8 @@ public class Monster {
 		if (getClass() != obj.getClass())
 			return false;
 		Monster other = (Monster) obj;
-		return Objects.equals(abilities, other.abilities) && armor == other.armor && boss == other.boss
-				&& critRating == other.critRating && currentHealth == other.currentHealth
+		return ab == other.ab && Objects.equals(abilities, other.abilities) && armor == other.armor
+				&& boss == other.boss && critRating == other.critRating && currentHealth == other.currentHealth
 				&& dodgeRating == other.dodgeRating && health == other.health && Objects.equals(id, other.id)
 				&& level == other.level && miniboss == other.miniboss && Objects.equals(name, other.name)
 				&& Objects.equals(position, other.position) && power == other.power
@@ -185,10 +194,11 @@ public class Monster {
 
 	@Override
 	public String toString() {
-		return "Monster [id=" + id + ", name=" + name + ", type=" + type + ", species=" + species + ", position="
-				+ position + ", boss=" + boss + ", miniboss=" + miniboss + ", variant=" + variant + ", level=" + level
-				+ ", health=" + health + ", currentHealth=" + currentHealth + ", power=" + power + ", armor=" + armor
-				+ ", dodgeRating=" + dodgeRating + ", critRating=" + critRating + ", abilities=" + abilities + "]";
+		return "Monster [id=" + id + ", name=" + name + ", type=" + type + ", species=" + species + ", ab=" + ab
+				+ ", position=" + position + ", boss=" + boss + ", miniboss=" + miniboss + ", variant=" + variant
+				+ ", level=" + level + ", health=" + health + ", currentHealth=" + currentHealth + ", power=" + power
+				+ ", armor=" + armor + ", dodgeRating=" + dodgeRating + ", critRating=" + critRating + ", abilities="
+				+ abilities + "]";
 	}
 	
 	

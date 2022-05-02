@@ -41,7 +41,7 @@ class AbilityTooltip extends React.Component {
     }
 
     if(ability.type === "Attack") {
-      targetImage = this.props.c.images["target"+ability.target[0].toUpperCase() + ability.target.substring(1)];
+      targetImage = this.props.c.images.common["target"+ability.target[0].toUpperCase() + ability.target.substring(1)];
       switch(ability.target) {
         case "random":
           targetText = "Targets enemies at random";
@@ -72,19 +72,19 @@ class AbilityTooltip extends React.Component {
           break;
       }
     } else if (ability.type === "Chain") {
-      targetImage = this.props.c.images.targetChain;
+      targetImage = this.props.c.images.common.targetChain;
       targetText = "Prioritizes the back center enemy before bouncing to random targets"
     } else if (ability.type === "Buff") {
-      targetImage = this.props.c.images.targetSelf;
+      targetImage = this.props.c.images.common.targetSelf;
       targetText = "Self-targeted"
     }
 
     if(ability.icon === "Power"){
-      icon = this.props.c.images.iconPower
+      icon = this.props.c.images.common.iconPower
       iconClass = "item-tooltip-icon-power"
       valueColor = this.props.c.colorPower.color
     } else {
-      icon = this.props.c.images.iconArmor
+      icon = this.props.c.images.common.iconArmor
       iconClass = "item-tooltip-icon-armor"
       valueColor = this.props.c.colorArmor.color
     }
@@ -104,10 +104,10 @@ class AbilityTooltip extends React.Component {
     
     return (
       <div className={"ability-tooltip-box"+is0} style={this.style}>
-        <img className="absolute-fill" src={this.props.c.images.tooltipSkill} alt="background"/>
-        <img className="item-tooltip-image" src={this.props.c.abilities[camelCase(this.props.s.pc.abilities[this.props.number].name)]} alt="Skill"/>
+        <img className="absolute-fill" src={this.props.c.images.common.tooltipSkill} alt="background"/>
+        <img className="item-tooltip-image" src={this.props.c.images.abilities[camelCase(this.props.s.pc.abilities[this.props.number].name)]} alt="Skill"/>
         <img className="ability-tooltip-target" src={targetImage} style={{pointerEvents: "auto"}} title={targetText} alt="Target"/>
-        <img className={"item-tooltip-badge-"+this.props.s.pc.characterClass.toLowerCase()} src={this.props.c.images["badge"+this.props.s.pc.characterClass+"Small"]} alt="class"/>
+        <img className={"item-tooltip-badge-"+this.props.s.pc.characterClass.toLowerCase()} src={this.props.c.images.common["badge"+this.props.s.pc.characterClass+"Small"]} alt="class"/>
         <img className={iconClass} src={icon} alt="icon"/>
         <p className="item-tooltip-icon-value" style={valueStyle}>{valueText}</p>
         <p className="item-tooltip-name" style={ability.name.length > 13 ? {fontSize: (139 - ability.name.length*3) + "%" } : {}}>{ability.name}</p>

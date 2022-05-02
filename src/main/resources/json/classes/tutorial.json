@@ -1,0 +1,174 @@
+{
+  "location": "Town",
+  "name": "Tutoriella",
+  "characterClass": "Wizard",
+  "currency": 500,
+  "constitution": 18,
+  "strength": 12,
+  "dexterity": 16,
+  "intelligence": 22,
+  "level": 2,
+  "currentHealth": -1,
+  "currentEnergy": -1,
+  "inventory": [
+    {
+      "id": "d822106a-e753-40db-898d-d438d1592baa", 
+      "count": 2, 
+      "name": "Health Potion", 
+      "description": "A faintly shimmering flask. Usable in combat.", 
+      "type": "potion", 
+      "rarity": "Uncommon", 
+      "image": "1", 
+      "cost": 50, 
+      "actionType": "heal", 
+      "actionValue": 25
+    },
+    {
+      "id": "9b5b257d-eeb8-4f10-8016-a95849558574", 
+      "count": 2, 
+      "name": "Energy Potion", 
+      "description": "A lustrous vial. Usable in combat.", 
+      "type": "potion", 
+      "rarity": "Uncommon", 
+      "image": "2", 
+      "cost": 50, 
+      "actionType": "energize", 
+      "actionValue": 25
+    },
+    {
+      "id": "ab0d75df-8457-4dde-adfe-77c9b37d262d", 
+      "count": 3, 
+      "name": "Rations", 
+      "description": "A tightly-wrapped bundle of preserved food.", 
+      "type": "consumable", 
+      "rarity": "Common", 
+      "image": "1", 
+      "cost": 25, 
+      "actionType": "heal", 
+      "actionValue": 40
+    },
+    {
+      "id": "65076593-cc46-4178-aabe-de91550b6233", 
+      "count": 3, 
+      "name": "Wine", 
+      "description": "A goblet of aromatic wine.", 
+      "type": "consumable", 
+      "rarity": "Common", 
+      "image": "2", 
+      "cost": 25, 
+      "actionType": "energize", 
+      "actionValue": 40
+    }
+  ],
+  "equippedBody": {
+      "id": "111e072e-0c47-49b3-8cd6-7ddbffd025ea", 
+      "count": 1, 
+      "name": "Tutoriella's Robe", 
+      "description": "The tattered robes of a magical initiate just starting to learn the ways of things.", 
+      "type": "bodyLight", 
+      "rarity": "Common", 
+      "image": "1",
+      "cost": 100, 
+      "armorBonus": 20
+    },
+  "equippedPrimary": {
+      "id": "a3fc0e39-2baf-4729-9b14-28b6a8528d53", 
+      "count": 1, 
+      "name": "Tutoriella's Staff", 
+      "description": "A worn wooden staff holding the faint magic of a beginner's pure spirit.", 
+      "type": "staff", 
+      "rarity": "Common", 
+      "image": "1",
+      "cost": 100, 
+      "powerBonus": 30
+    },
+  "equippedSecondary": {
+      "id": "d32c3382-3752-4244-9bf0-78d7a93946a5", 
+      "count": 1, 
+      "name": "Tutoriella's Spellbook", 
+      "description": "A common tome titled 'Four Principles of Arcana'. Written inside the front cover: 'Try your best out there, Tutie! --Mom'",
+      "type": "spellbook", 
+      "rarity": "Common", 
+      "image": "1",
+      "cost": 100, 
+      "powerBonus": 15
+    },
+  "equipTypes": ["headLight", "bodyLight", "staff", "spellbook", "back", "neck"],
+  "abilities": [
+      {
+        "level": 0,
+        "name": "Zap",
+        "cost": 0,
+        "modifier": 1.25,
+        "factor": 55,
+        "hits": 1,
+        "target": "random",
+        "type": "Attack",
+        "icon": "Power",
+        "description": "Cast a basic spell.",
+        "selfFlags": {
+          "magic": 1
+        }
+      },
+      {
+        "level": 1,
+        "name": "Ice Shards",
+        "cost": 16,
+        "modifier":0.75,
+        "factor": 15,
+        "hits": 3,
+        "target": "random",
+        "type": "Attack",
+        "icon": "Power",
+        "description": "Conjure and launch 3 frozen knives.",
+        "selfFlags": {
+          "magic": 1
+        }
+      },
+      {
+        "level": 2,
+        "name": "Flame Cone",
+        "cost": 40,
+        "modifier": 1.25,
+        "factor": 30,
+        "hits": 1,
+        "target": "cone",
+        "type": "Attack",
+        "icon": "Power",
+        "description": "Blast outward with a spreading cone of fire.",
+        "selfFlags": {
+          "magic": 1
+        }
+      },
+      {
+        "level": 4,
+        "name": "Death Circuit",
+        "cost": 100,
+        "modifier": 1.65,
+        "factor": 70,
+        "hits": 5,
+        "target": "backCenter",
+        "type": "Chain",
+        "icon": "Power",
+        "description": "Shock the back center enemy with a bolt of lightning that then jumps 4 more times.",
+        "selfFlags": {
+          "magic": 1
+        }
+      },
+    {
+      "level": 6,
+      "name": "Extinction Event",
+      "cost": 250,
+      "modifier": 0.7,
+      "factor": 30,
+      "hits": 20,
+      "target": "random",
+      "type": "Attack",
+      "icon": "Power",
+      "description": "Call down a cataclysmic rain of 20 meteorites.",
+      "selfFlags": {
+        "magic": 1
+      }
+    }
+  ]
+}

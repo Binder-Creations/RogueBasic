@@ -42,7 +42,7 @@ class Equipment extends Item {
     } else {
       slot = "Secondary"
     }
-    if(pc["equipped" + slot]){
+    if(pc["equipped" + slot] && pc["equipped" + slot].id !== c.zeroId.id){
       pc["equipped"+slot].addTo(pc);
     }
     pc["equipped" + slot] = this;

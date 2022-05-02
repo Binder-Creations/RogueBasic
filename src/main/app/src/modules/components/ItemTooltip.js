@@ -26,7 +26,7 @@ class ItemTooltip extends React.Component {
 
     return (
       <div className={"item-tooltip-box " + this.tooltipQuadrant} style={this.style} ref={this.tooltipBox}>
-        <img className="absolute-fill" src={this.props.c.images.tooltipItem} alt=""/>
+        <img className="absolute-fill" src={this.props.c.images.common.tooltipItem} alt=""/>
         <img className="item-tooltip-image" src={this.props.itemProps.image} alt="item"/>
         <img className={"item-tooltip-"+this.props.itemProps.badgeClass} src={this.props.itemProps.badge} alt="badge"/>
         <img className={"item-tooltip-"+this.props.itemProps.iconClass} src={this.props.itemProps.icon} alt="icon"/>

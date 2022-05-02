@@ -36,21 +36,21 @@ public class Player {
 	
 	public Player(String id) {
 		super ();
-		this.setId(UUID.fromString(id));
-		this.setName("Temporary User");
+		this.id = UUID.fromString(id);
+		this.name = "Temporary User";
 		this.salt = PasswordUtilities.getSalt();
 		this.passwordHash = PasswordUtilities.hash(id, this.salt);	
 	}
 	
 	public Player(String name, String password, Player tempPlayer) {
 		this(name, password);
-		this.setCharacterIds(tempPlayer.getCharacterIds());
-		this.setMetacurrency(tempPlayer.getMetacurrency());
-		this.setConstitutionMetabonus(tempPlayer.getConstitutionMetabonus());
-		this.setStrengthMetabonus(tempPlayer.getStrengthMetabonus());
-		this.setDexterityMetabonus(tempPlayer.getDexterityMetabonus());
-		this.setIntelligenceMetabonus(tempPlayer.getIntelligenceMetabonus());
-		this.setCurrencyMetabonus(tempPlayer.getCurrencyMetabonus());
+		this.characterIds = tempPlayer.getCharacterIds();
+		this.metacurrency = tempPlayer.getMetacurrency();
+		this.constitutionMetabonus = tempPlayer.getConstitutionMetabonus();
+		this.strengthMetabonus = tempPlayer.getStrengthMetabonus();
+		this.dexterityMetabonus = tempPlayer.getDexterityMetabonus();
+		this.intelligenceMetabonus = tempPlayer.getIntelligenceMetabonus();
+		this.currencyMetabonus = tempPlayer.getCurrencyMetabonus();
 	}
 
 	public UUID getId() {

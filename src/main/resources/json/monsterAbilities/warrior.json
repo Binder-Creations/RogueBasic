@@ -57,7 +57,7 @@
   },
   {
     "name": "Inner Reserve", 
-    "modifier": 6, 
+    "modifier": 2, 
     "factor": 0, 
     "hits": 1, 
     "target": "self", 

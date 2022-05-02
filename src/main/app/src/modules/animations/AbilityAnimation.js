@@ -20,7 +20,7 @@ class AbilityAnimation extends React.Component {
         onEntered={() => setTimeout(() => this.setState({in: false}), 250)}
         onExited={() => setTimeout(() => this.props.c.pcCombat(this.ability), 150)}
       >
-        <img src={this.props.c.abilities[camelCase(this.props.s.pc.abilities[this.ability].name)]} alt="ability"/>
+        <img src={this.props.c.images.abilities[camelCase(this.props.s.pc.abilities[this.ability].name)]} alt="ability"/>
       </Pulse>
     );
   }

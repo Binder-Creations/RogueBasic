@@ -1,0 +1,6 @@
+export {default as background1} from './background-1.png'
+export {default as background2} from './background-2.png'
+export {default as background3} from './background-3.png'
+export {default as background4} from './background-4.png'
+export {default as arena} from './arena.png'
+export {default as dungeonStairs} from './dungeon-stairs.png'

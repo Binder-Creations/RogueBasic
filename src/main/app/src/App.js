@@ -10,25 +10,29 @@ import TavernMenu from "./modules/components/TavernMenu";
 import Binder from "./modules/services/Binder";
 import PcServices from "./modules/services/PcServices";
 import ItemServices from "./modules/services/ItemServices";
+import ImageServices from "./modules/services/ImageServices";
 import ItemFactory from "./modules/services/ItemFactory";
 import CombatEngine from "./modules/services/CombatEngine";
-import * as abilities from "./images/abilities" 
+import * as abilities from "./images/abilities"; 
 import * as abilitiesSmall from "./images-small/abilities";
-import * as images from "./images" 
-import * as imagesSmall from "./images-small";
-import * as items from "./images/items" 
+import * as common from "./images/common";
+import * as commonSmall from "./images-small/common";
+import * as environments from "./images/environments";
+import * as environmentsSmall from "./images-small/environments";
+import * as classes from "./images/classes";
+import * as classesSmall from "./images-small/classes";
+import * as items from "./images/items";
 import * as itemsSmall from "./images-small/items";
-import * as monsters from "./images/monsters" 
+import * as monsters from "./images/monsters";
 import * as monstersSmall from "./images-small/monsters";
 
 class App extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       pc: null,
       loading: true,
-      loadingImages: 0,
+      loadedImages: 0,
       loadingDungeons: false,
       loadingShop: false,
       scene: "Default",
@@ -54,18 +58,23 @@ class App extends React.Component {
       colorHeal: {color: "#ce6eb9"},
       colorEnergize: {color: "#2a52be"},
       zeroId: {id: "00000000-0000-0000-0000-000000000000"},
-      imageMax: 498,
       disableUiMenus: false,
-      images: window.innerWidth > 960 ? images : imagesSmall,
-      abilities: window.innerWidth > 960 ? abilities : abilitiesSmall,
-      items: window.innerWidth > 960 ? items : itemsSmall,
-      monsters: window.innerWidth > 960 ? monsters : monstersSmall,
+      imageMax: 250,
+      images: {
+        common: window.innerWidth > 960 ? common : commonSmall,
+        environments: window.innerWidth > 960 ? environments : environmentsSmall,
+        classes: window.innerWidth > 960 ? classes : classesSmall,
+        abilities: window.innerWidth > 960 ? abilities : abilitiesSmall,
+        items: window.innerWidth > 960 ? items : itemsSmall,
+        monsters: window.innerWidth > 960 ? monsters : monstersSmall
+      }
     }
     Binder.bindAndC(this);
     this.c.itemServices = new ItemServices({
-      images: this.c.images, 
-      items: this.c.items, 
-      monsters: this.c.monsters,
+      images: {
+        common: this.c.images.common, 
+        items: this.c.images.items
+      },
       colorArmor: this.c.colorArmor,
       colorPower: this.c.colorPower,
       colorHeal: this.c.colorHeal,
@@ -83,7 +92,7 @@ class App extends React.Component {
     this.backgroundSrc = "";
     this.helpButton = 
       <button className="btn-help" onClick={this.help}>
-        <img src={this.c.images.helpIcon} alt="Help"/>
+        <img src={this.c.images.common.helpIcon} alt="Help"/>
       </button>
     this.routeHome = 
       <Router>
@@ -101,13 +110,13 @@ class App extends React.Component {
       </Router>
     this.exteriorBuildings =
       <>
-        <input className="tavern" type="image" src={this.c.images.tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
-        <input className="inn" type="image" src={this.c.images.innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
-        <input className="shop" type="image" src={this.c.images.shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
+        <input className="tavern" type="image" src={this.c.images.common.tavernExterior} alt="Tavern" onClick={ () => { this.setState({scene:"Tavern"})} }/>
+        <input className="inn" type="image" src={this.c.images.common.innExterior} alt="Inn" onClick={ () => { this.setState({scene:"Inn"})} }/>
+        <input className="shop" type="image" src={this.c.images.common.shopExterior} alt="Shop" onClick={ () => { this.setState({scene:"Shop"})} }/>
       </>
     this.tempScreen = 
       <div className="app-container v-h-centered" 
-        style={{backgroundImage: "url("+this.c.images.loadingBackground+")", 
+        style={{backgroundImage: "url("+this.c.images.common.loadingBackground+")", 
         height: this.c.appHeight + "px", width: this.c.appWidth + "px"}}>
       </div>
   }
@@ -131,79 +140,34 @@ class App extends React.Component {
     }
     if(this.state.scene==="Home"){
         return this.routeHome;
-      }
+    }
+
     this.sizeWindow();
     if(!this.initialized){
-      this.initialize();
+      this.initialize(); 
+    }
+    if(!this.imagesInitialized && this.state.startImageInitialization){
+      this.initializeImages();
     }
     if(this.toRest){
-      this.toRest = false;
       this.rest()
-    } 
+    }
+
     if(this.state.loading){
-      if(this.state.loadingImages >= this.c.imageMax && this.state.loadingDungeons && this.state.loadingShop) {
-        this.setState({loading: false, loadingImages: 0, loadingDungeons: false, loadingShop: false})
+      if(this.state.loadedImages >= this.c.imageMax && this.state.loadingDungeons && this.state.loadingShop) {
+        this.setState({loading: false, loadingDungeons: false, loadingShop: false})
       } else {
         return <LoadScreen c={this.c} s={this.state}/>;
       }
     }
     this.checkCombat();
-
-    let innerElements = [];
-    let outerElements = [];
-    this.c.disableUiMenus = false;
-    this.c.homeButton = false;
-    if (this.state.pc.location === "Town"){
-      if(this.state.scene === "Default"){
-        this.backgroundSrc = this.c.images.town;
-        this.c.homeButton = true;
-        innerElements.push(this.exteriorBuildings);
-        outerElements.push(this.helpButton);
-        if(this.state.help){
-          outerElements.push(this.helpMenu(this.c.images.helpTown));
-        }
-      } else if(this.state.scene === "Tavern"){
-        this.genDungeons();
-        this.c.disableUiMenus = true;
-        this.backgroundSrc = this.c.images.tavern;
-        outerElements.push(<TavernMenu c={this.c} s={this.state}/>);
-        if(this.state.generatingDungeon){
-          outerElements.push(this.loadingBar())
-        }
-        outerElements.push(this.helpButton);
-        if(this.state.help){
-          outerElements.push(this.helpMenu(this.c.images.helpTavern, "tavern"));
-        }
-      } else if(this.state.scene==="Inn"){
-        this.c.disableUiMenus = true;
-        this.backgroundSrc = this.c.images.inn;
-        outerElements.push(<InnMenu c={this.c} s={this.state}/>);
-      } else if(this.state.scene==="Shop"){
-        this.c.disableUiMenus = true;
-        this.backgroundSrc = this.c.images.shop;
-        outerElements.push(<ShopMenu c={this.c} s={this.state}/>);
-      }
-    } else if(this.state.pc.location === "Dungeon") {
-      this.getDungeon();
-      if(this.state.dungeon && this.state.dungeon.floors){
-        this.backgroundSrc = this.c.images[this.state.dungeon.theme.toLowerCase() + this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].variant];
-        innerElements.push(<Dungeon c={this.c} s={this.state}/>);
-        outerElements.push(this.helpButton);
-        if(this.state.help){
-          outerElements.push( this.state.combat ? this.helpMenu(this.c.images.helpCombat, "combat") : this.helpMenu(this.c.images.helpDungeon));
-        }
-      } else {
-        this.backgroundSrc = this.c.images.tavern
-      }
-    } else {
-      this.backgroundSrc = this.c.images.town
-    }
+    this.setElements();
     
     return(
       <div className="app-container v-h-centered" style={{backgroundImage: "url("+this.backgroundSrc+")", height: this.c.appHeight + "px", width: this.c.appWidth + "px"}}>
-        {innerElements}
+        {this.innerElements}
         <Ui c={this.c} s={this.state}/>
-        {outerElements}
+        {this.outerElements}
       </div>
     );
   }
@@ -211,7 +175,7 @@ class App extends React.Component {
   componentDidUpdate(){
     if(this.state.loading){
       setTimeout(() => {
-        this.setState({loadingImages: this.imagesLoaded})
+        this.setState({loadedImages: ImageServices.loadedImages})
       }, 33);
     }
     if(this.state.generatingDungeon){
@@ -236,8 +200,18 @@ class App extends React.Component {
 
   async initialize(){
     this.initialized = true;
+    
     try {
-      this.setState({pc: await this.fetchPc(this.state.characterId)});
+      let pc = await this.fetchPc(this.state.characterId);
+      let dungeon = pc.currentDungeon ? await this.fetchDungeon(pc.currentDungeon) : null;
+      let shop = pc.currentShop ? await this.fetchShop(pc.currentShop) : null;
+      this.setState({
+        pc: pc, 
+        dungeon:dungeon,
+        loadingDungeons: dungeon ? true : false,
+        shop: shop,
+        loadingShop: shop ? true : false, 
+        startImageInitialization: true});
     } catch(e) {
       this.setState({characterId: null, playerId: null});
     } 
@@ -245,7 +219,6 @@ class App extends React.Component {
     this.c.pcServices.updateStats(this.state.pc);
     window.addEventListener("resize", this.updateWidth)
     this.setItemSortOrder();
-    this.preloadImages();
     this.genDungeons();
     this.genShop();
   }
@@ -267,29 +240,86 @@ class App extends React.Component {
     }
   }
 
-  preloadImages() {
-    this.imagesLoaded = 0;
-    let increment = () => this.imagesLoaded++
-    let createElement = (src) => {
-      let i = new Image();
-      i.src = src;
-      i.onload = increment;
-    }
-    for (let image of Object.keys(this.c.images)) {
-      createElement(this.c.images[image]);
-    }
-    for (let image of Object.keys(this.c.abilities)) {
-      createElement(this.c.abilities[image]);
-    }
-    for (let type of Object.keys(this.c.items)){
-      for (let image of Object.keys(this.c.items[type])) {
-        createElement(this.c.items[type][image]);
+  initializeImages(){
+    this.imagesInitialized = true;
+    this.setClassImages();
+    this.setEnvironmentImages();
+    this.setMonsterImages();
+    this.c.imageMax = ImageServices.countImages(this.state, this.c.images);
+    ImageServices.loadCommonImages(this.c.images);
+    ImageServices.loadCheckedImages(this.c.images.environment);
+    ImageServices.loadCheckedImages(this.c.images.monster);
+    ImageServices.loadPcImages(this.state.pc, this.c.images.items);
+    ImageServices.loadShopImages(this.state.shop, this.c.images.items);
+    ImageServices.loadDungeonItemImages(this.state.dungeon, this.c.images.items);
+  }
+
+  setClassImages(pc = this.state.pc){
+    this.c.images.class = pc
+      ? this.c.images.classes[pc.characterClass.toLowerCase()]
+      : [];
+  }
+
+  setEnvironmentImages(dungeon = this.state.dungeon){
+    this.c.images.environment = dungeon
+      ? this.c.images.environments[dungeon.theme.toLowerCase()]
+      : [];
+  }
+
+  setMonsterImages(dungeon = this.state.dungeon){
+    this.c.images.monster = dungeon
+      ? this.c.images.monsters[dungeon.theme.toLowerCase()]
+      : [];
+  }
+
+  setElements(){
+    this.innerElements = [];
+    this.outerElements = [];
+    this.c.disableUiMenus = false;
+    this.c.homeButton = false;
+    if (this.state.pc.location === "Town"){
+      if(this.state.scene === "Default"){
+        this.backgroundSrc = this.c.images.common.town;
+        this.c.homeButton = true;
+        this.innerElements.push(this.exteriorBuildings);
+        this.outerElements.push(this.helpButton);
+        if(this.state.help){
+          this.outerElements.push(this.helpMenu(this.c.images.common.helpTown));
+        }
+      } else if(this.state.scene === "Tavern"){
+        this.genDungeons();
+        this.c.disableUiMenus = true;
+        this.backgroundSrc = this.c.images.common.tavern;
+        this.outerElements.push(<TavernMenu c={this.c} s={this.state}/>);
+        if(this.state.generatingDungeon){
+          this.outerElements.push(this.loadingBar())
+        }
+        this.outerElements.push(this.helpButton);
+        if(this.state.help){
+          this.outerElements.push(this.helpMenu(this.c.images.common.helpTavern, "tavern"));
+        }
+      } else if(this.state.scene==="Inn"){
+        this.c.disableUiMenus = true;
+        this.backgroundSrc = this.c.images.common.inn;
+        this.outerElements.push(<InnMenu c={this.c} s={this.state}/>);
+      } else if(this.state.scene==="Shop"){
+        this.c.disableUiMenus = true;
+        this.backgroundSrc = this.c.images.common.shop;
+        this.outerElements.push(<ShopMenu c={this.c} s={this.state}/>);
       }
-    }
-    for (let type of Object.keys(this.c.monsters)) {
-      for (let image of Object.keys(this.c.monsters[type])) {
-        createElement(this.c.monsters[type][image]);
+    } else if(this.state.pc.location === "Dungeon") {
+      if(this.state.dungeon && this.state.dungeon.floors){
+        this.backgroundSrc = this.c.images.environment["background" + this.state.dungeon.floors[this.state.dungeon.currentFloor].rooms[this.state.dungeon.currentRoom].variant];
+        this.innerElements.push(<Dungeon c={this.c} s={this.state}/>);
+        this.outerElements.push(this.helpButton);
+        if(this.state.help){
+          this.outerElements.push( this.state.combat ? this.helpMenu(this.c.images.common.helpCombat, "combat") : this.helpMenu(this.c.images.common.helpDungeon));
+        }
+      } else {
+        this.backgroundSrc = this.c.images.common.tavern
       }
+    } else {
+      this.backgroundSrc = this.c.images.common.town
     }
   }
 
@@ -301,7 +331,6 @@ class App extends React.Component {
       ItemFactory.parsePC(data);
       pc = this.sortPC(data);
     });
-    console.log(pc)
     return pc;
   }
 
@@ -339,9 +368,9 @@ class App extends React.Component {
     return dungeonBoard;
   }
 
-  async fetchShop(){
+  async fetchShop(id = this.state.pc.currentShop){
     let shop;
-    await fetch('/shop/'+ this.state.pc.currentShop)
+    await fetch('/shop/'+ id)
     .then(response => response.json())
     .then(data => {
       data.inventory = ItemFactory.parseArray(data.inventory);
@@ -365,7 +394,15 @@ class App extends React.Component {
 
   async genDungeons(){
     if(this.state.pc.currentDungeon && (!this.state.dungeon || this.state.dungeon.id !== this.state.pc.currentDungeon)){
-      this.setState({dungeon: await this.fetchDungeon(), loadingDungeons: true, generatingDungeon: false, barPercent: 0});
+      let dungeon = await this.fetchDungeon();
+      if(this.imagesInitialized){
+        this.setEnvironmentImages(dungeon);
+        this.setMonsterImages(dungeon);
+        ImageServices.loadCheckedImages(this.c.images.environment);
+        ImageServices.loadCheckedImages(this.c.images.monster);
+        ImageServices.loadDungeonItemImages(dungeon, this.c.images.items);
+      }
+      this.setState({dungeon: dungeon, loadingDungeons: true, generatingDungeon: false, barPercent: 0});
     }
     if(!this.state.pc.dungeonBoard){
       let data = await this.fetchNewDungeonBoard();
@@ -382,7 +419,11 @@ class App extends React.Component {
   async genShop(){
     if(this.state.pc.currentShop){
       if(!this.state.shop || this.state.shop.id !== this.state.pc.currentShop){
-        this.setState({shop: await this.fetchShop(), loadingShop: true});
+        let shop = await this.fetchShop();
+        if(this.imagesInitialized){
+          ImageServices.loadShopImages(shop, this.c.images.items);
+        }
+        this.setState({shop: shop, loadingShop: true});
       }
     } else {
       let data = await this.fetchNewShop();
@@ -393,9 +434,9 @@ class App extends React.Component {
   loadingBar(){
     return(
       <div className="loading-bar v-h-centered">
-        <img className="background" src={this.c.images.barBackgroundLoading} alt="background"/>
-        <img className="bar" src={this.c.images.barLoading} style={{width: (this.state.barPercent ? this.state.barPercent : 5) + "%"}} alt="load bar"/>
-        <img className="background v-h-centered" src={this.c.images.barFrame} alt="load bar"/>
+        <img className="background" src={this.c.images.common.barBackgroundLoading} alt="background"/>
+        <img className="bar" src={this.c.images.common.barLoading} style={{width: (this.state.barPercent ? this.state.barPercent : 5) + "%"}} alt="load bar"/>
+        <img className="background v-h-centered" src={this.c.images.common.barFrame} alt="load bar"/>
         <p className="v-h-centered">
           {"Generating Dungeon" + this.elipsis()}
         </p>
@@ -407,7 +448,7 @@ class App extends React.Component {
     return(
       <div className={"help-menu-" + classExtension}>
         <img src={src} className="background" alt="Help Menu"/>
-        <img className="close hover-saturate" src={this.c.images.buttonClose} alt="Close" onClick={this.help}/>
+        <img className="close hover-saturate" src={this.c.images.common.buttonClose} alt="Close" onClick={this.help}/>
       </div>
     );
   }
@@ -420,15 +461,6 @@ class App extends React.Component {
       }
     }
     return elipsis
-  }
-
-  async getDungeon(){
-    if(!this.state.dungeon){
-      this.setState({dungeon: await this.fetchDungeon()})
-    }
-    if(!this.state.dungeon.floors){
-      this.setState({dungeon: await this.fetchDungeon(this.state.dungeon.id)});
-    } 
   }
   
   checkCombat(){
@@ -679,6 +711,7 @@ class App extends React.Component {
   }
 
   async rest(){
+    this.toRest = false;
     let dungeonData = await this.fetchNewDungeonBoard();
     let shopData = await this.fetchNewShop();
     let pc = dungeonData.pc;
@@ -746,10 +779,12 @@ class App extends React.Component {
     item.doAction(this.c, this.state, pc); 
   }
 
-  unequip(item){
-    let pc = {...this.state.pc};
-    item.addTo(pc);
-    item.unequip(this.c, pc);
+  unequip(item){  
+    if(item.id !== this.c.zeroId.id){
+      let pc = {...this.state.pc};
+      item.addTo(pc);
+      item.unequip(this.c, pc);
+    }
   }
   
   pointbuy(attribute){

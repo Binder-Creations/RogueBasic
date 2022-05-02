@@ -17,7 +17,7 @@ class ShopMenu extends React.Component {
     if(this.props.s.shop){
       return(
         <div className="menu">
-          <img className="background" src={this.props.c.images.shopMenu} alt="Shop Screen"/>
+          <img className="background" src={this.props.c.images.common.shopMenu} alt="Shop Screen"/>
           <p className="gold-count">{this.props.s.pc.currency}</p>
           <div className="inventory-box-wrapper" ref={this.scrollable}>
             <div className="inventory-box">

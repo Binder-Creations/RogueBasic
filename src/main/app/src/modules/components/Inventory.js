@@ -140,7 +140,7 @@ class Inventory extends React.Component {
   parseTableUsable(item){
     let itemProps = this.props.c.itemServices.getProps(item);
     return(
-        <tr className="hover-saturate shop-box-item" onClick={()=>{this.props.c[this.props.type](item)}} style={{backgroundImage: `url(${this.props.c.images.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
+        <tr className="hover-saturate shop-box-item" onClick={()=>{this.props.c[this.props.type](item)}} style={{backgroundImage: `url(${this.props.c.images.common.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
           <td className="item-tooltip relative">
             <img src={itemProps.image} className="shop-image" alt="item"/>
             <ItemTooltip c={this.props.c} s={this.props.s} itemProps={itemProps} item={item} update={this.props.update} qMods={this.qMods} costMult={5}/>
@@ -153,7 +153,7 @@ class Inventory extends React.Component {
             <p style={itemProps.iconValueColor} className="inline-block">{itemProps.iconValue}</p>
           </td>
           <td>
-            <img src={this.props.c.items.currency.i1} className="shop-coin" alt="coin"/>
+            <img src={this.props.c.images.items.currency.i1} className="shop-coin" alt="coin"/>
             <p className="inline-block">{item.cost*5} </p>
           </td>
         </tr>
@@ -162,7 +162,7 @@ class Inventory extends React.Component {
   parseTableUnusable(item){
     let itemProps = this.props.c.itemServices.getProps(item);
     return(
-        <tr className="shop-box-item" style={{backgroundImage: `url(${this.props.c.images.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
+        <tr className="shop-box-item" style={{backgroundImage: `url(${this.props.c.images.common.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
           <td className="item-tooltip relative">
             <img src={itemProps.image} className="shop-image gray-75" alt="item"/>
             <ItemTooltip c={this.props.c} s={this.props.s} itemProps={itemProps} item={item} update={this.props.update} qMods={this.qMods} costMult={5}/>
@@ -175,7 +175,7 @@ class Inventory extends React.Component {
             <p style={itemProps.iconValueColor} className="inline-block gray-75">{itemProps.iconValue}</p>
           </td>
           <td>
-            <img src={this.props.c.items.currency.i1} className="shop-coin gray-75" alt="coin"/>
+            <img src={this.props.c.images.items.currency.i1} className="shop-coin gray-75" alt="coin"/>
             <p className="inline-block gray-75">{item.cost*5} </p>
           </td>
         </tr>
@@ -184,7 +184,7 @@ class Inventory extends React.Component {
 
   fillToMax(components){
     while (components.length < this.itemsMax){
-      components.push(<div className={this.itemBoxClass}><img src={this.props.c.images.frameEmpty} className="absolute-fill" alt="frame"/></div>)
+      components.push(<div className={this.itemBoxClass}><img src={this.props.c.images.common.frameEmpty} className="absolute-fill" alt="frame"/></div>)
     }
   }
 }

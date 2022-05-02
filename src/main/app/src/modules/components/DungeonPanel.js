@@ -8,9 +8,9 @@ class DungeonPanel extends React.Component {
 
     this.boss = "";
     this.miniboss = "";
-    this.bossTrue = <img className="dungeon-panel-boss" title="This dungeon includes a deadly boss encounter" src={this.props.c.images.dungeonBoss} alt="Boss"/>;
+    this.bossTrue = <img className="dungeon-panel-boss" title="This dungeon includes a deadly boss encounter" src={this.props.c.images.common.dungeonBoss} alt="Boss"/>;
     this.bossFalse = <></>;
-    this.minibossTrue = <img className="dungeon-panel-miniboss" title="This dungeon includes a dangerous miniboss encounter" src={this.props.c.images.dungeonMiniboss} alt="Miniboss"/>;
+    this.minibossTrue = <img className="dungeon-panel-miniboss" title="This dungeon includes a dangerous miniboss encounter" src={this.props.c.images.common.dungeonMiniboss} alt="Miniboss"/>;
     this.minibossFalse = <></>;
     
     this.Boss = () => {
@@ -44,13 +44,13 @@ class DungeonPanel extends React.Component {
 
     switch(this.props.s.dungeonBoard[this.props.number-1].theme){
       case "Arcane":
-        dungeonSmall = this.props.c.images.dungeonArcaneSmall;
+        dungeonSmall = this.props.c.images.common.dungeonArcaneSmall;
         break;
       case "Castle":
-        dungeonSmall = this.props.c.images.dungeonCastleSmall;
+        dungeonSmall = this.props.c.images.common.dungeonCastleSmall;
         break;
       case "Cave":
-        dungeonSmall = this.props.c.images.dungeonCaveSmall;
+        dungeonSmall = this.props.c.images.common.dungeonCaveSmall;
         break;
       default:
         break;
@@ -61,13 +61,13 @@ class DungeonPanel extends React.Component {
     
     return(
       <div className={"dungeon-panel " + saturate + " d" + this.props.number} onClick={this.onClick} title={this.props.s.dungeonBoard[this.props.number-1].description}>
-        <img className="background" src={this.props.c.images.dungeonPanel} alt="Dungeon Panel"/>
+        <img className="background" src={this.props.c.images.common.dungeonPanel} alt="Dungeon Panel"/>
         <img className="dungeon-small" src={dungeonSmall} alt="Dungeon"/>
         <p className="dungeon-panel-name" style={{fontSize: fontSize}}>{this.props.s.dungeonBoard[this.props.number-1].name}</p>
         <p className="dungeon-panel-theme">{this.props.s.dungeonBoard[this.props.number-1].theme}</p>
         <p className="dungeon-panel-cr" title={"This dungeon is expected to be an average challenge for adventurers of level "+this.props.s.dungeonBoard[this.props.number-1].challengeRating}>{"CR: "+this.props.s.dungeonBoard[this.props.number-1].challengeRating}</p>
         <p className="dungeon-panel-floorcount" title={"This dungeon has " + this.props.s.dungeonBoard[this.props.number-1].floorCount + " floor" + s}>{this.props.s.dungeonBoard[this.props.number-1].floorCount}</p>
-        <img className="dungeon-panel-floors" title={"This dungeon has " + this.props.s.dungeonBoard[this.props.number-1].floorCount + " floor" + s} src={this.props.c.images.dungeonFloors} alt="Floors"/>
+        <img className="dungeon-panel-floors" title={"This dungeon has " + this.props.s.dungeonBoard[this.props.number-1].floorCount + " floor" + s} src={this.props.c.images.common.dungeonFloors} alt="Floors"/>
         <this.Miniboss/>
         <this.Boss/>
         <Prefix/>
@@ -82,7 +82,7 @@ class DungeonPanel extends React.Component {
     let type = this.props.s.dungeonBoard[this.props.number-1].prefixMod.match(/([a-z]+)/)[1]
     let modifier = this.props.s.dungeonBoard[this.props.number-1].prefixMod.match(/(\d+)/)[1]
     return(
-      <img className="dungeon-panel-prefix" title={"This dungeon has " + modifier + "% more " + type} src={this.props.c.images["dungeon" + type[0].toUpperCase()+type.substring(1)]} alt="Dungeon Modifier"/>
+      <img className="dungeon-panel-prefix" title={"This dungeon has " + modifier + "% more " + type} src={this.props.c.images.common["dungeon" + type[0].toUpperCase()+type.substring(1)]} alt="Dungeon Modifier"/>
     );
   }
 
@@ -90,7 +90,7 @@ class DungeonPanel extends React.Component {
     let type = this.props.s.dungeonBoard[this.props.number-1].postfixMod.match(/([a-z]+)/)[1]
     let modifier = this.props.s.dungeonBoard[this.props.number-1].postfixMod.match(/(\d+)/)[1]
     return(
-      <img className="dungeon-panel-postfix" title={"Enemies in this dungeon have " + modifier + "% more " + type} src={this.props.c.images["dungeon" + type[0].toUpperCase()+type.substring(1)]} alt="Enemy Modifier"/>
+      <img className="dungeon-panel-postfix" title={"Enemies in this dungeon have " + modifier + "% more " + type} src={this.props.c.images.common["dungeon" + type[0].toUpperCase()+type.substring(1)]} alt="Enemy Modifier"/>
     );
   }
 

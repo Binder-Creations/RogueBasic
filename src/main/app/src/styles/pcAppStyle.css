@@ -26,6 +26,7 @@
       body {
     	  background-color: #101010;
 				color:#ffcc66;
+				overflow: hidden;
 				-webkit-touch-callout: none;
 				-webkit-user-select: none;
 				-khtml-user-select: none;

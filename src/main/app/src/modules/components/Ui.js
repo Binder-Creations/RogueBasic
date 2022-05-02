@@ -21,13 +21,13 @@ class Ui extends React.Component {
 
     this.townButton =
       <button className="btn-home" onClick={() => {this.props.c.scene("Default", "Town")} }>
-        <img src={this.props.c.images.townIcon} alt="Town"/>
+        <img src={this.props.c.images.common.townIcon} alt="Town"/>
       </button>
 
 
     this.homeButton = 
       <button className="btn-home" onClick={() => {this.props.c.scene("Home", "Town")} }>
-        <img src={this.props.c.images.scrollIcon} alt="Home"/>
+        <img src={this.props.c.images.common.scrollIcon} alt="Home"/>
       </button>
 
     this.noButton = <></>;
@@ -43,7 +43,7 @@ class Ui extends React.Component {
         }
       }
     }>
-      <img className="absolute-fill nopointer" src={this.props.c.images["buttonAttack"+this.props.s.pc.characterClass]} alt="Attack"/>
+      <img className="absolute-fill nopointer" src={this.props.c.images.class.buttonAttack} alt="Attack"/>
       <AbilityTooltip c={this.props.c} s={this.props.s} number={0}/>
     </div>
     this.returnButton = (this.props.s.combat || this.props.s.gameOver) 
@@ -63,22 +63,22 @@ class Ui extends React.Component {
 
     components.push(
       <>
-          <img className="bar-health-background" src={this.props.c.images.barBackground} alt="Health" title={this.healthHover}/>
-          <img className="bar-health" src={this.props.c.images.barHealth} alt="Health" title={this.healthHover} style={this.healthStyle}/>
-          <img className="bar-health-frame" src={this.props.c.images.barFrame} alt="Health" title={this.healthHover}/>
-          <img className="heart" src={this.props.c.images.heart} alt="Health" title={this.healthHover}/>
-          <img className="bar-energy-background" src={this.props.c.images.barBackground} alt="Energy" title={this.energyHover}/>
-          <img className="bar-energy" src={this.props.c.images.barEnergy} alt="Energy" title={this.energyHover} style={this.energyStyle}/>
-          <img className="bar-energy-frame" src={this.props.c.images.barFrame} alt="Energy" title={this.energyHover}/>
-          <img className="swirl" src={this.props.c.images.swirl} alt="Energy" title={this.energyHover}/>
+          <img className="bar-health-background" src={this.props.c.images.common.barBackground} alt="Health" title={this.healthHover}/>
+          <img className="bar-health" src={this.props.c.images.common.barHealth} alt="Health" title={this.healthHover} style={this.healthStyle}/>
+          <img className="bar-health-frame" src={this.props.c.images.common.barFrame} alt="Health" title={this.healthHover}/>
+          <img className="heart" src={this.props.c.images.common.heart} alt="Health" title={this.healthHover}/>
+          <img className="bar-energy-background" src={this.props.c.images.common.barBackground} alt="Energy" title={this.energyHover}/>
+          <img className="bar-energy" src={this.props.c.images.common.barEnergy} alt="Energy" title={this.energyHover} style={this.energyStyle}/>
+          <img className="bar-energy-frame" src={this.props.c.images.common.barFrame} alt="Energy" title={this.energyHover}/>
+          <img className="swirl" src={this.props.c.images.common.swirl} alt="Energy" title={this.energyHover}/>
           <Ability c={this.props.c} s={this.props.s} number={1}/>
           <Ability c={this.props.c} s={this.props.s} number={2}/>
           <Ability c={this.props.c} s={this.props.s} number={3}/>
           <Ability c={this.props.c} s={this.props.s} number={4}/>  
           <Minimap c={this.props.c} s={this.props.s} dungeon={this.props.s.dungeon}/>
           {attackButton}
-          <input class="btn-character hover-saturate-250" type="image" src={this.props.c.images.buttonCharacter} alt="Character" onClick={() => this.props.c.menu("character")}/>
-          <input class="btn-inventory hover-saturate-250" type="image" src={this.props.c.images.buttonInventory} alt="Inventory" onClick={() => this.props.c.menu("inventory")}/>
+          <input class="btn-character hover-saturate-250" type="image" src={this.props.c.images.common.buttonCharacter} alt="Character" onClick={() => this.props.c.menu("character")}/>
+          <input class="btn-inventory hover-saturate-250" type="image" src={this.props.c.images.common.buttonInventory} alt="Inventory" onClick={() => this.props.c.menu("inventory")}/>
           {this.returnButton}
       </>
     );
@@ -102,7 +102,7 @@ class Ui extends React.Component {
       }
       
       if(this.props.s.pc.attributePoints && this.props.s.menu !== "character" && this.props.s.menu !== "inventory"){
-        components.push(<img className="unspent-points noclick" src={this.props.c.images.unspentPoints} alt="unspent points"/>);
+        components.push(<img className="unspent-points noclick" src={this.props.c.images.common.unspentPoints} alt="unspent points"/>);
       }
       
       components.push((this.props.s.pc.level > this.state.level) && (
@@ -114,7 +114,7 @@ class Ui extends React.Component {
             this.setState({level: this.props.s.pc.level})
           }}
           >
-            <img src={this.props.c.images.levelUp} alt="level up"/>
+            <img src={this.props.c.images.common.levelUp} alt="level up"/>
           </FadeUp>
         </div>
       ));

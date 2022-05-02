@@ -30,7 +30,7 @@ class Combat extends React.Component {
               <tr className="nowrap">
                 <td>
                   <div className="right-align combat-div">
-                    <img className="combat-ability-image" src={this.props.c.abilities[camelCase(combatUpdate.abilityName)]} alt="ability"/>
+                    <img className="combat-ability-image" src={this.props.c.images.abilities[camelCase(combatUpdate.abilityName)]} alt="ability"/>
                   </div>
                 </td>
                 <td>

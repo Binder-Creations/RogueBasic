@@ -87,12 +87,12 @@ class PcServices {
       this.pc.attributePoints = this.pc.attributePoints*1 + 4;
     }
     
-    let head = this.pc.equippedHead ? this.pc.equippedHead : this.emptySlot
-    let body = this.pc.equippedBody ? this.pc.equippedBody : this.emptySlot
-    let back = this.pc.equippedBack ? this.pc.equippedBack : this.emptySlot
-    let neck = this.pc.equippedNeck ? this.pc.equippedNeck : this.emptySlot
-    let primary = this.pc.equippedPrimary ? this.pc.equippedPrimary : this.emptySlot
-    let secondary = this.pc.equippedSecondary ? this.pc.equippedSecondary : this.emptySlot
+    let head = this.pc.equippedHead && this.pc.equippedHead.type ? this.pc.equippedHead : this.emptySlot
+    let body = this.pc.equippedBody && this.pc.equippedBody.type ? this.pc.equippedBody : this.emptySlot
+    let back = this.pc.equippedBack && this.pc.equippedBack.type ? this.pc.equippedBack : this.emptySlot
+    let neck = this.pc.equippedNeck && this.pc.equippedNeck.type ? this.pc.equippedNeck : this.emptySlot
+    let primary = this.pc.equippedPrimary && this.pc.equippedPrimary.type ? this.pc.equippedPrimary : this.emptySlot
+    let secondary = this.pc.equippedSecondary && this.pc.equippedSecondary.type ? this.pc.equippedSecondary : this.emptySlot
     let equipped = [this.baseStats, head, body, back, neck, primary, secondary];
 
     for(const bonus of this.bonuses){

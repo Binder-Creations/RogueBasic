@@ -44,19 +44,19 @@ class Minimap extends React.Component {
       if(room.cleared || room.id === this.props.s.dungeon.floors[this.props.s.dungeon.currentFloor].rooms[this.props.s.dungeon.currentRoom].id){
         if(room.id === this.props.s.dungeon.floors[this.props.s.dungeon.currentFloor].rooms[this.props.s.dungeon.currentRoom].id){
           if(room.stairsPrevious){
-            src = this.props.c.images.minimapCurrentStairsPrevious
+            src = this.props.c.images.common.minimapCurrentStairsPrevious
           }else if(room.stairsNext && (this.props.s.dungeon.currentFloor + 1 < this.props.s.dungeon.floorCount) && !this.props.s.combat){
-            src = this.props.c.images.minimapCurrentStairsNext
+            src = this.props.c.images.common.minimapCurrentStairsNext
           }else{
-            src = this.props.c.images.minimapCurrent
+            src = this.props.c.images.common.minimapCurrent
           }
         }else if (room.cleared){
           if(room.stairsPrevious){
-            src = this.props.c.images.minimapClearedStairsPrevious
+            src = this.props.c.images.common.minimapClearedStairsPrevious
           }else if(room.stairsNext && (this.props.s.dungeon.currentFloor + 1 < this.props.s.dungeon.floorCount)){
-            src = this.props.c.images.minimapClearedStairsNext
+            src = this.props.c.images.common.minimapClearedStairsNext
           }else{
-            src = this.props.c.images.minimapCleared
+            src = this.props.c.images.common.minimapCleared
           }
         }
 
@@ -83,11 +83,11 @@ class Minimap extends React.Component {
 
     return (
       <>
-        <img className="minimap-underlay" src={this.props.c.images.mapUnderlay} alt="Minimap"/>
+        <img className="minimap-underlay" src={this.props.c.images.common.mapUnderlay} alt="Minimap"/>
         <div className="minimap-room-box">
           <this.Components/>
         </div>
-        <img className="minimap-overlay" src={this.props.c.images.mapOverlay} alt="Minimap"/>
+        <img className="minimap-overlay" src={this.props.c.images.common.mapOverlay} alt="Minimap"/>
         <this.Arrows/>
       </>
     );
@@ -106,7 +106,7 @@ class Minimap extends React.Component {
           style = {position: "absolute", width: roomsize/2 + "%", height: (roomsize*7)/32 + "%", left: ((roomsize+2)*(xCoord-1))-(1+roomsize/4)+"%", bottom: ((roomsize+2)*(yCoord-1)+((roomsize/2)-(roomsize*7)/64))+"%"}
         }
 
-      this.connectors.push(<img src={this.props.c.images["minimapConnector"+orientation]} style={style} alt=""/>)
+      this.connectors.push(<img src={this.props.c.images.common["minimapConnector"+orientation]} style={style} alt=""/>)
     } 
   }
 
@@ -118,22 +118,22 @@ class Minimap extends React.Component {
     } else {
       if(room.northRoomId){
         arrows.push(
-          <img src={this.props.c.images.minimapNorth} className="minimap-north hover-saturate" onClick={()=>this.props.c.moveRoom(room.northRoomId)} alt="North"/>
+          <img src={this.props.c.images.common.minimapNorth} className="minimap-north hover-saturate" onClick={()=>this.props.c.moveRoom(room.northRoomId)} alt="North"/>
         )
       }
       if(room.southRoomId){
         arrows.push(
-          <img src={this.props.c.images.minimapNorth} className="minimap-south hover-saturate y-flip" onClick={()=>this.props.c.moveRoom(room.southRoomId)} alt="South"/>
+          <img src={this.props.c.images.common.minimapNorth} className="minimap-south hover-saturate y-flip" onClick={()=>this.props.c.moveRoom(room.southRoomId)} alt="South"/>
         )
       }
       if(room.eastRoomId){
         arrows.push(
-          <img src={this.props.c.images.minimapEast} className="minimap-east hover-saturate" onClick={()=>this.props.c.moveRoom(room.eastRoomId)} alt="East"/>
+          <img src={this.props.c.images.common.minimapEast} className="minimap-east hover-saturate" onClick={()=>this.props.c.moveRoom(room.eastRoomId)} alt="East"/>
         )
       }
       if(room.westRoomId){
         arrows.push(
-          <img src={this.props.c.images.minimapEast} className="minimap-west hover-saturate x-flip" onClick={()=>this.props.c.moveRoom(room.westRoomId)} alt="West"/>
+          <img src={this.props.c.images.common.minimapEast} className="minimap-west hover-saturate x-flip" onClick={()=>this.props.c.moveRoom(room.westRoomId)} alt="West"/>
         )
       }
     }
