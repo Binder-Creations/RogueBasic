@@ -1,0 +1,22 @@
+export default {
+  pc: null,
+  loading: true,
+  loadedImages: 0,
+  loadingDungeons: false,
+  loadingShop: false,
+  scene: "Default",
+  combat: false,
+  combatUpdates: [], 
+  characterId: document.cookie.replace(/(?:(?:^|.*;\s*)character_id\s*=\s*([^;]*).*$)|^.*$/, "$1"),
+  playerId: document.cookie.replace(/(?:(?:^|.*;\s*)player_id\s*=\s*([^;]*).*$)|^.*$/, "$1"),
+  combatTransitions: false,
+  questComplete: false,
+  menu: null,
+  help: false,
+  widthChange: 0,
+  eaten: 0,
+  rested: 0,
+  position: 0,
+  abilityAnimation: 0,
+  renderAbilityAnimation: false
+}

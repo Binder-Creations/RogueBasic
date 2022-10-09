@@ -1,4 +1,5 @@
 import React from "react";
+import c from "../../data/CommonProperties";
 import {camelCase} from "../services/GeneralUtilities";
 import {TransitionGroup} from 'react-transition-group';
 import Fade from "../animations/Fade";
@@ -21,7 +22,7 @@ class Combat extends React.Component {
     this.previousUpdates = this.props.s.combatUpdates;
     if(!this.props.s.gameOver){
       let key = 0;
-      for(let position of this.props.c.positions){
+      for(let position of c.positions){
         let updates = [];
 
         for(let combatUpdate of this.props.s.combatUpdates){
@@ -30,7 +31,7 @@ class Combat extends React.Component {
               <tr className="nowrap">
                 <td>
                   <div className="right-align combat-div">
-                    <img className="combat-ability-image" src={this.props.c.images.abilities[camelCase(combatUpdate.abilityName)]} alt="ability"/>
+                    <img className="combat-ability-image" src={c.images.abilities[camelCase(combatUpdate.abilityName)]} alt="ability"/>
                   </div>
                 </td>
                 <td>
@@ -46,7 +47,7 @@ class Combat extends React.Component {
         if(updates.length){
           let onExited = null;
           if(!key){
-            onExited = () => setTimeout(() =>this.props.c.nextCombat(), 100);
+            onExited = () => setTimeout(() =>c.nextCombat(), 100);
           }
           
           components.push(  

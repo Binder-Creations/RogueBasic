@@ -1,6 +1,7 @@
 import React from "react";
 import Pulse from "./Pulse";
 import {camelCase} from "../services/GeneralUtilities";
+import c from "../../data/CommonProperties";
 
 class AbilityAnimation extends React.Component {
  constructor(props){
@@ -18,9 +19,9 @@ class AbilityAnimation extends React.Component {
         key="n"
         className="popup nopointer"
         onEntered={() => setTimeout(() => this.setState({in: false}), 250)}
-        onExited={() => setTimeout(() => this.props.c.pcCombat(this.ability), 150)}
+        onExited={() => setTimeout(() => c.pcCombat(this.ability), 150)}
       >
-        <img src={this.props.c.images.abilities[camelCase(this.props.s.pc.abilities[this.ability].name)]} alt="ability"/>
+        <img src={c.images.abilities[camelCase(this.props.s.pc.abilities[this.ability].name)]} alt="ability"/>
       </Pulse>
     );
   }

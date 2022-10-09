@@ -1,13 +1,13 @@
+import c from "../../data/CommonProperties";
 import AbilityServices from "./AbilityServices";
 import MonsterServices from "./MonsterServices";
 import CombatUpdate from "../beans/CombatUpdate";
 
 class CombatEngine {
-  constructor(c, s){
+  constructor(s){
     this.pc = {...s.pc}
     this.monsters = JSON.parse(JSON.stringify(s.dungeon.floors[s.dungeon.currentFloor].rooms[s.dungeon.currentRoom].monsters));
     this.monsterServices = new MonsterServices(s.dungeon.postFix);
-    this.c = c;
     this.combatUpdates = [];
     this.updateMonsterStats();
   }
@@ -19,16 +19,16 @@ class CombatEngine {
       this.pc.currentEnergy = (this.pc.currentEnergy - ability.cost) < 0 ? 0 : this.pc.currentEnergy - ability.cost;
       this.damageOverTime(this.pc);
     } else {
-      let monster = this.monsters.find(monster => monster.position === this.c.positions[position]);
+      let monster = this.monsters.find(monster => monster.position === c.positions[position]);
       if(monster.boss || monster.miniboss || !monster.flags.stun){
         let monsterAbility = this.selectAbility(monster);
-        AbilityServices["monster"+monsterAbility.type](monsterAbility, this.pc, monster, this.monsters, this.combatUpdates, this.c);
+        AbilityServices["monster"+monsterAbility.type](monsterAbility, this.pc, monster, this.monsters, this.combatUpdates);
       } else {
         this.combatUpdates.push(new CombatUpdate("stun", "stun", monster.position, monster.name));
       }
       this.damageOverTime(monster);  
     }
-    this.c.pcServices.updateStats(this.pc);
+    c.pcServices.updateStats(this.pc);
     this.updateMonsterStats();
   }
 
@@ -43,7 +43,7 @@ class CombatEngine {
       this.decrementBuffs(monster.debuffs);
     } 
 
-    this.c.pcServices.updateStats(this.pc);
+    c.pcServices.updateStats(this.pc);
     this.updateMonsterStats();
     AbilityServices.corpseCollector(this.pc, this.monsters, this.combatUpdates);
   }
@@ -57,7 +57,7 @@ class CombatEngine {
       entity.currentHealth = Math.max((entity.currentHealth + entity.tempStats.bleed), 0);
       this.combatUpdates.push(new CombatUpdate("Attack", "bleed", entity.position ? entity.position : "pc", "Bleed", entity.tempStats.bleed));
       if(!entity.position){
-        AbilityServices.pcCorpseCollector(entity, "bleed", "bleed", entity.tempStats.bleed, false, this.c);
+        AbilityServices.pcCorpseCollector(entity, "bleed", "bleed", entity.tempStats.bleed, false);
       }
     }
     if(entity.tempStats.burn){

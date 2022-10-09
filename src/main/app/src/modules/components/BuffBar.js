@@ -1,4 +1,5 @@
 import React from "react";
+import c from "../../data/CommonProperties";
 import {TransitionGroup} from 'react-transition-group';
 import Fade from "../animations/Fade";
 
@@ -49,7 +50,7 @@ class BuffBar extends React.Component {
           key={key++} 
           in
         >
-          <img className="buff-icon" src={this.props.c.images.abilities[buff.name]} title={statsLine + duration} alt="buff"/>
+          <img className="buff-icon" src={c.images.abilities[buff.name]} title={statsLine + duration} alt="buff"/>
         </Fade>
       ));
     }

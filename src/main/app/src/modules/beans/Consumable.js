@@ -1,3 +1,4 @@
+import c from "../../data/CommonProperties";
 import Item from "./Item";
 
 class Consumable extends Item {
@@ -29,7 +30,7 @@ class Consumable extends Item {
 
   addToShop(target){}
 
-  doAction(c, s, pc){
+  doAction(s, pc){
     if(this.actionType === "heal"){
       if(s.combat){
         c.combatEngine.itemHeal(this.actionValue);

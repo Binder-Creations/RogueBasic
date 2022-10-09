@@ -1,4 +1,5 @@
 import React from "react";
+import c from "../../data/CommonProperties";
 
 class ItemTooltip extends React.Component {
   
@@ -26,7 +27,7 @@ class ItemTooltip extends React.Component {
 
     return (
       <div className={"item-tooltip-box " + this.tooltipQuadrant} style={this.style} ref={this.tooltipBox}>
-        <img className="absolute-fill" src={this.props.c.images.common.tooltipItem} alt=""/>
+        <img className="absolute-fill" src={c.images.common.tooltipItem} alt=""/>
         <img className="item-tooltip-image" src={this.props.itemProps.image} alt="item"/>
         <img className={"item-tooltip-"+this.props.itemProps.badgeClass} src={this.props.itemProps.badge} alt="badge"/>
         <img className={"item-tooltip-"+this.props.itemProps.iconClass} src={this.props.itemProps.icon} alt="icon"/>
@@ -118,7 +119,7 @@ class ItemTooltip extends React.Component {
   }
 
   setStyle(){
-    this.style = {height: this.props.c.appWidth*0.25 + "px", width: this.props.c.appWidth*0.1667 + "px"}
+    this.style = {height: c.appWidth*0.25 + "px", width: c.appWidth*0.1667 + "px"}
   }
 
   usableByClass(){

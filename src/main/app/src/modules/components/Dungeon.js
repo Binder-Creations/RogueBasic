@@ -1,5 +1,6 @@
 import React from "react";
 import {TransitionGroup} from 'react-transition-group';
+import c from "../../data/CommonProperties";
 import BuffBar from "./BuffBar";
 import LootMenu from "./LootMenu";
 import QuestMenu from "./QuestMenu";
@@ -23,7 +24,7 @@ class Dungeon extends React.Component {
     if(((this.currentRoom.stairsPrevious || (this.currentRoom.stairsNext && (this.props.s.dungeon.currentFloor + 1 < this.props.s.dungeon.floorCount))) && (!this.currentRoom.monsters || this.currentRoom.monsters.length === 0))){
       components.push(
         <FadeIn in key='s'>
-          <img src={this.props.c.images.environment.dungeonStairs} className="dungeon-stairs hover-saturate" alt="Stairs" onClick={() => this.props.c.stairs(this.currentRoom.stairsPrevious)}/>
+          <img src={c.images.environment.dungeonStairs} className="dungeon-stairs hover-saturate" alt="Stairs" onClick={() => c.stairs(this.currentRoom.stairsPrevious)}/>
         </FadeIn>
       );
     }
@@ -32,13 +33,13 @@ class Dungeon extends React.Component {
       if((this.currentRoom.stairsPrevious || (this.currentRoom.stairsNext && (this.props.s.dungeon.currentFloor + 1 < this.props.s.dungeon.floorCount)))){
         components.push(        
           <FadeIn in key='c'>
-            <img src={this.props.c.images.common.chest} className="dungeon-chest-left hover-saturate" alt="chest" onClick={() => this.props.c.menu("loot")}/>
+            <img src={c.images.common.chest} className="dungeon-chest-left hover-saturate" alt="chest" onClick={() => c.menu("loot")}/>
           </FadeIn>
         );
       } else {
         components.push(        
           <FadeIn in key='c'>
-            <img src={this.props.c.images.common.chest} className="dungeon-chest hover-saturate" alt="chest" onClick={() => this.props.c.menu("loot")}/>
+            <img src={c.images.common.chest} className="dungeon-chest hover-saturate" alt="chest" onClick={() => c.menu("loot")}/>
           </FadeIn>
         );
       }
@@ -49,11 +50,11 @@ class Dungeon extends React.Component {
             key='l'
             onExited={()=>{
               if(this.props.s.menu === "loot"){
-                this.props.c.menu();
+                c.menu();
               }
             }}
           >
-            <LootMenu c={this.props.c} s={this.props.s} room={this.currentRoom}/>
+            <LootMenu s={this.props.s} room={this.currentRoom}/>
           </Fade>
         );
       }
@@ -64,26 +65,26 @@ class Dungeon extends React.Component {
         <Fade 
           key='a' 
           in
-          onExited={() => this.props.c.combat()}
+          onExited={() => c.combat()}
         >
-          <img src={this.props.c.images.environment.arena} className="dungeon-arena" alt="Arena"/>
+          <img src={c.images.environment.arena} className="dungeon-arena" alt="Arena"/>
         </Fade>
       ));
       this.pushMonstersByPosition(components, 'b');
       this.pushMonstersByPosition(components, 'f');
-      components.push(<Combat key='c' c={this.props.c} s={this.props.s} monsters={this.currentRoom.monsters}/>)
+      components.push(<Combat key='c' s={this.props.s} monsters={this.currentRoom.monsters}/>)
 
       if(this.props.s.pc.buffs && this.props.s.pc.buffs.length > 0){
         components.push(
           <Fade in key="pc-buffs">
-            <BuffBar c={this.props.c} s={this.props.s} entity={this.props.s.pc} type={"buffs"}/>
+            <BuffBar s={this.props.s} entity={this.props.s.pc} type={"buffs"}/>
           </Fade>
         );
       }
       if(this.props.s.pc.debuffs && this.props.s.pc.debuffs.length > 0){
         components.push(
           <Fade in key="pc-debuffs">
-            <BuffBar c={this.props.c} s={this.props.s} entity={this.props.s.pc} type={"debuffs"}/>
+            <BuffBar s={this.props.s} entity={this.props.s.pc} type={"debuffs"}/>
           </Fade>
         );
       }
@@ -91,28 +92,28 @@ class Dungeon extends React.Component {
         if(monster.buffs && monster.buffs.length > 0){
           components.push(
             <Fade in key={monster.position+"-buffs"}>
-              <BuffBar c={this.props.c} s={this.props.s} entity={monster} type={"buffs"}/>
+              <BuffBar s={this.props.s} entity={monster} type={"buffs"}/>
             </Fade>
           );
         }
         if(monster.debuffs && monster.debuffs.length > 0){
           components.push(
             <Fade in key={monster.position+"pc-debuffs"}>
-              <BuffBar c={this.props.c} s={this.props.s} entity={monster} type={"debuffs"}/>
+              <BuffBar s={this.props.s} entity={monster} type={"debuffs"}/>
             </Fade>
           );
         }
       }
 
       if(this.props.s.renderAbilityAnimation){
-        components.push(<AbilityAnimation c={this.props.c} s={this.props.s} key={"aa" + this.abilityAnimationKey++}/>);
+        components.push(<AbilityAnimation s={this.props.s} key={"aa" + this.abilityAnimationKey++}/>);
       }   
     }
     
     if(this.props.s.dungeon.questCompleted && !this.props.s.dungeon.rewardClaimed){
       components.push(
         <Fade in key='q'>
-          <QuestMenu c={this.props.c} s={this.props.s}/>
+          <QuestMenu s={this.props.s}/>
        </Fade>
       );
     }
@@ -145,17 +146,17 @@ class Dungeon extends React.Component {
         let nameStyle = {
           fontSize: fontSize
         }
-        let animation = (monster.position === this.props.c.positions[Math.max(this.props.s.position - 1, 0)]) ? " animate__animated animate__bounce" : ""
+        let animation = (monster.position === c.positions[Math.max(this.props.s.position - 1, 0)]) ? " animate__animated animate__bounce" : ""
         components.push(
           <Fade 
             key={monster.position}
             in={true} 
           >
             <>
-              <img src={this.props.c.images.monster[(monster.boss ? "boss" : monster.miniboss ? "miniboss" : monster.type) + monster.variant + monster.ab]} className={"monster "+monster.position+animation} alt={monster.name}/>
-              <img src={this.props.c.images.common.barBackground} className={"monster-bar "+monster.position} alt="Health"/>
-              <img src={this.props.c.images.common.barHealth} className={"monster-bar "+monster.position} alt="Health" style={healthStyle}/>
-              <img src={this.props.c.images.common.barFrame} className={"monster-bar "+monster.position} alt="Health"/>
+              <img src={c.images.monster[(monster.boss ? "boss" : monster.miniboss ? "miniboss" : monster.type) + monster.variant + monster.ab]} className={"monster "+monster.position+animation} alt={monster.name}/>
+              <img src={c.images.common.barBackground} className={"monster-bar "+monster.position} alt="Health"/>
+              <img src={c.images.common.barHealth} className={"monster-bar "+monster.position} alt="Health" style={healthStyle}/>
+              <img src={c.images.common.barFrame} className={"monster-bar "+monster.position} alt="Health"/>
               <div className={"monster-bar "+monster.position} title={monster.currentHealth + "/" + monster.healthTotal}><p className="nowrap v-h-centered" style={nameStyle}>{"lv." + monster.level + " " + monster.name}</p></div>
             </>
           </Fade>

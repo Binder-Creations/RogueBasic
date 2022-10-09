@@ -1,3 +1,4 @@
+import c from "../../data/CommonProperties";
 import Item from "./Item";
 
 class Equipment extends Item {
@@ -27,7 +28,7 @@ class Equipment extends Item {
     target.inventory.push(this);
   }
 
-  doAction(c, s, pc){
+  doAction(s, pc){
     var slot;
     if(this.type === "headLight" || this.type === "headMedium" || this.type === "headHeavy"){
       slot = "Head";
@@ -50,7 +51,7 @@ class Equipment extends Item {
     c.save({pc: pc}, {pc: pc});
   }
 
-  unequip(c, pc){
+  unequip(pc){
     if(this.type === "headLight" || this.type === "headMedium" || this.type === "headHeavy"){
       pc.equippedHead = c.zeroId;
     } else if (this.type === "bodyLight" || this.type === "bodyMedium" || this.type === "bodyHeavy"){

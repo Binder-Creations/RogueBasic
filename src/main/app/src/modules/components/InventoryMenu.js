@@ -1,4 +1,5 @@
 import React from "react";
+import c from "../../data/CommonProperties";
 import Inventory from "./Inventory";
 import Equipped from "./Equipped";
 
@@ -22,20 +23,20 @@ class InventoryMenu extends React.Component {
   render(){
     return(
       <div key="menu" className="menu">
-        <img className="background" src={this.props.c.images.common.inventoryMenu} alt="Inventory Screen"/>
-        <img className={this.silhouetteClass} src={this.props.c.images.class.silhouette} alt={this.props.s.pc.characterClass}/>
-        <input className="btn-close hover-saturate" type="image" src={this.props.c.images.common.buttonClose} alt="Close" onClick={() => this.props.c.menu("inventory")}/>
+        <img className="background" src={c.images.common.inventoryMenu} alt="Inventory Screen"/>
+        <img className={this.silhouetteClass} src={c.images.class.silhouette} alt={this.props.s.pc.characterClass}/>
+        <input className="btn-close hover-saturate" type="image" src={c.images.common.buttonClose} alt="Close" onClick={() => c.menu("inventory")}/>
         <p className="gold-count">{this.props.s.pc.currency}</p>
         <p className="soul-count">{this.props.s.pc.metacurrency}</p>
-        <Equipped c={this.props.c} s={this.props.s} slot="Head"/>
-        <Equipped c={this.props.c} s={this.props.s} slot="Body"/>
-        <Equipped c={this.props.c} s={this.props.s} slot="Back"/>
-        <Equipped c={this.props.c} s={this.props.s} slot="Neck"/>
-        <Equipped c={this.props.c} s={this.props.s} slot="Primary"/>
-        <Equipped c={this.props.c} s={this.props.s} slot="Secondary"/>
+        <Equipped s={this.props.s} slot="Head"/>
+        <Equipped s={this.props.s} slot="Body"/>
+        <Equipped s={this.props.s} slot="Back"/>
+        <Equipped s={this.props.s} slot="Neck"/>
+        <Equipped s={this.props.s} slot="Primary"/>
+        <Equipped s={this.props.s} slot="Secondary"/>
         <div className="inventory-box-wrapper" ref={this.scrollable}>
           <div className="inventory-box">
-            <Inventory c={this.props.c} s={this.props.s} update={this.state.update} type="inventory"/>
+            <Inventory s={this.props.s} update={this.state.update} type="inventory"/>
           </div>
         </div>
       </div>

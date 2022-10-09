@@ -1,3 +1,5 @@
+import c from "../../data/CommonProperties";
+
 class Binder {
 
   static getAllMethods(instance) {
@@ -16,7 +18,7 @@ class Binder {
   static bindAndC(instance) {
     for(let mtd of Binder.getAllMethods(instance)){
       instance[mtd] = instance[mtd].bind(instance);
-      instance.c[mtd] = instance[mtd];
+      c[mtd] = instance[mtd];
     }
   }
 }

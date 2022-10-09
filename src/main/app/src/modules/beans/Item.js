@@ -28,9 +28,9 @@ class Item {
     this.removeFrom(source);
   }
 
-  doAction(c, s, pc){}
+  doAction(s, pc){}
 
-  unequip(c, pc){}
+  unequip(pc){}
 }
 
 export default Item;

@@ -1,4 +1,5 @@
 import React from "react";
+import c from "../../data/CommonProperties";
 import Inventory from "./Inventory";
 
 
@@ -17,16 +18,16 @@ class ShopMenu extends React.Component {
     if(this.props.s.shop){
       return(
         <div className="menu">
-          <img className="background" src={this.props.c.images.common.shopMenu} alt="Shop Screen"/>
+          <img className="background" src={c.images.common.shopMenu} alt="Shop Screen"/>
           <p className="gold-count">{this.props.s.pc.currency}</p>
           <div className="inventory-box-wrapper" ref={this.scrollable}>
             <div className="inventory-box">
-              <Inventory c={this.props.c} s={this.props.s} update={this.state.update} type="shopPlayer"/>
+              <Inventory s={this.props.s} update={this.state.update} type="shopPlayer"/>
             </div>
           </div>
           <div className="shop-box-wrapper" ref={this.scrollableShop}>
             <table className="shop-box">
-              <Inventory c={this.props.c} s={this.props.s} update={this.state.updateShop} type="shopStore"/>
+              <Inventory s={this.props.s} update={this.state.updateShop} type="shopStore"/>
             </table>
           </div>
         </div>
