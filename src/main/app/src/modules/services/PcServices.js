@@ -1,78 +1,85 @@
 class PcServices {
-  constructor(characterClass){
-    this.pc = null;
+  static #rogueBase = {
+    armorBonus: 0,
+    armorPenBonus: 0,
+    constitutionBonus: 0,
+    critRatingBonus: 10,
+    dexterityBonus: 0,
+    dodgeRatingBonus: 10,
+    energyBonus: 20,
+    energyRegenBonus: 2,
+    healthBonus: 20,
+    healthRegenBonus: 2,
+    powerBonus: 20,
+    intelligenceBonus: 0,
+    strengthBonus: 0
+  };
+  static #wizardBase = {
+    armorBonus: 0,
+    armorPenBonus: 0,
+    constitutionBonus: 0,
+    critRatingBonus: 0,
+    dexterityBonus: 0,
+    dodgeRatingBonus: 5,
+    energyBonus: 50,
+    energyRegenBonus: 8,
+    healthBonus: 10,
+    healthRegenBonus: 1,
+    intelligenceBonus: 0,
+    powerBonus: 15,
+    strengthBonus: 0
+  };
+  static #warriorBase = {
+    armorBonus: 10,
+    armorPenBonus: 10,
+    constitutionBonus: 0,
+    critRatingBonus: 5,
+    dexterityBonus: 0,
+    dodgeRatingBonus: 0,
+    energyBonus: 0,
+    energyRegenBonus: 0,
+    healthBonus: 30,
+    healthRegenBonus: 5,
+    intelligenceBonus: 0,
+    powerBonus: 10,
+    strengthBonus: 0
+  };
+  static #emptySlot = {
+    armorBonus: 0,
+    armorPenBonus: 0,
+    constitutionBonus: 0,
+    critRatingBonus: 0,
+    dexterityBonus: 0,
+    dodgeRatingBonus: 0,
+    energyBonus: 0,
+    energyRegenBonus: 0,
+    healthBonus: 0,
+    healthRegenBonus: 0,
+    intelligenceBonus: 0,
+    powerBonus: 0,
+    strengthBonus: 0
+  };
+  static #bonuses = ["constitution", "strength", "dexterity", "intelligence", "power", "health", "healthRegen", "armor", "armorPen", "critRating", "dodgeRating", "energy", "energyRegen"];
+  
+  constructor(pc){
+    this.pc = pc;
+    
     this.healthTotalPrevious = null;
     this.energyTotalPrevious = null;
-    this.emptySlot = {
-      armorBonus: 0,
-      armorPenBonus: 0,
-      constitutionBonus: 0,
-      critRatingBonus: 0,
-      dexterityBonus: 0,
-      dodgeRatingBonus: 0,
-      energyBonus: 0,
-      energyRegenBonus: 0,
-      healthBonus: 0,
-      healthRegenBonus: 0,
-      intelligenceBonus: 0,
-      powerBonus: 0,
-      strengthBonus: 0}
-    this.bonuses = ["constitution", "strength", "dexterity", "intelligence", "power", "health", "healthRegen", "armor", "armorPen", "critRating", "dodgeRating", "energy", "energyRegen"];
-    this.baseStats = characterClass === "Rogue" 
-    ? {
-      armorBonus: 0,
-      armorPenBonus: 0,
-      constitutionBonus: 0,
-      critRatingBonus: 10,
-      dexterityBonus: 0,
-      dodgeRatingBonus: 10,
-      energyBonus: 20,
-      energyRegenBonus: 2,
-      healthBonus: 20,
-      healthRegenBonus: 2,
-      powerBonus: 20,
-      intelligenceBonus: 0,
-      strengthBonus: 0
-    }
-    : characterClass === "Wizard"
-      ? {
-        armorBonus: 0,
-        armorPenBonus: 0,
-        constitutionBonus: 0,
-        critRatingBonus: 0,
-        dexterityBonus: 0,
-        dodgeRatingBonus: 5,
-        energyBonus: 50,
-        energyRegenBonus: 8,
-        healthBonus: 10,
-        healthRegenBonus: 1,
-        intelligenceBonus: 0,
-        powerBonus: 15,
-        strengthBonus: 0
-      }
-      : {
-        armorBonus: 10,
-        armorPenBonus: 10,
-        constitutionBonus: 0,
-        critRatingBonus: 5,
-        dexterityBonus: 0,
-        dodgeRatingBonus: 0,
-        energyBonus: 0,
-        energyRegenBonus: 0,
-        healthBonus: 30,
-        healthRegenBonus: 5,
-        intelligenceBonus: 0,
-        powerBonus: 10,
-        strengthBonus: 0
-      };
 
-  } 
-  updateStats(pc){
-    this.pc = pc;
-    if(!this.pc.hasOwnProperty('flags')){
-      this.clearBuffs(this.pc);
-    }
-    this.resetTempStats(this.pc);
+    if(this.pc.flags === undefined) this.pc.flags = {};
+    if(this.pc.buffs === undefined) this.pc.buffs = [];
+    if(this.pc.debuffs === undefined) this.pc.debuffs = [];
+
+    this.baseStats = pc.characterClass === "Rogue" 
+    ? PcServices.#rogueBase
+    : pc.characterClass === "Wizard"
+      ? PcServices.#wizardBase
+      : PcServices.#warriorBase
+  }
+
+  updateStats(){
+    this.resetTempStats();
     if(this.pc.buffs.length){
       this.parseBuffs();
     }
@@ -87,15 +94,15 @@ class PcServices {
       this.pc.attributePoints = this.pc.attributePoints*1 + 4;
     }
     
-    let head = this.pc.equippedHead && this.pc.equippedHead.type ? this.pc.equippedHead : this.emptySlot
-    let body = this.pc.equippedBody && this.pc.equippedBody.type ? this.pc.equippedBody : this.emptySlot
-    let back = this.pc.equippedBack && this.pc.equippedBack.type ? this.pc.equippedBack : this.emptySlot
-    let neck = this.pc.equippedNeck && this.pc.equippedNeck.type ? this.pc.equippedNeck : this.emptySlot
-    let primary = this.pc.equippedPrimary && this.pc.equippedPrimary.type ? this.pc.equippedPrimary : this.emptySlot
-    let secondary = this.pc.equippedSecondary && this.pc.equippedSecondary.type ? this.pc.equippedSecondary : this.emptySlot
+    let head = this.pc.equippedHead && this.pc.equippedHead.type ? this.pc.equippedHead : PcServices.#emptySlot
+    let body = this.pc.equippedBody && this.pc.equippedBody.type ? this.pc.equippedBody : PcServices.#emptySlot
+    let back = this.pc.equippedBack && this.pc.equippedBack.type ? this.pc.equippedBack : PcServices.#emptySlot
+    let neck = this.pc.equippedNeck && this.pc.equippedNeck.type ? this.pc.equippedNeck : PcServices.#emptySlot
+    let primary = this.pc.equippedPrimary && this.pc.equippedPrimary.type ? this.pc.equippedPrimary : PcServices.#emptySlot
+    let secondary = this.pc.equippedSecondary && this.pc.equippedSecondary.type ? this.pc.equippedSecondary : PcServices.#emptySlot
     let equipped = [this.baseStats, head, body, back, neck, primary, secondary];
 
-    for(const bonus of this.bonuses){
+    for(const bonus of PcServices.#bonuses){
       let tempValue = 0;
       for(const slot of equipped){
         tempValue += slot[bonus+"Bonus"];
@@ -166,14 +173,14 @@ class PcServices {
     this.energyTotalPrevious = this.energyTotal();
   }
 
-  clearBuffs(pc){
-    pc.flags = {};
-    pc.buffs = [];
-    pc.debuffs = [];
+  clearBuffs(){
+    this.pc.flags = {};
+    this.pc.buffs = [];
+    this.pc.debuffs = [];
   }
 
-  resetTempStats(pc){
-    pc.tempStats = {
+  resetTempStats(){
+    this.pc.tempStats = {
       regenerate: 0,
       poison: 0,
       bleed: 0,
@@ -273,11 +280,11 @@ class PcServices {
   baseDamageCalc(){
     return 8+this.pc.level*2
   }
-  regenHealth(pc){
-    pc.currentHealth = Math.round(((pc.currentHealth + pc.healthRegenTotal) > pc.healthTotal ? pc.healthTotal : pc.currentHealth + pc.healthRegenTotal) + Number.EPSILON);
+  regenHealth(){
+    this.pc.currentHealth = Math.round(((this.pc.currentHealth + this.pc.healthRegenTotal) > this.pc.healthTotal ? this.pc.healthTotal : this.pc.currentHealth + this.pc.healthRegenTotal) + Number.EPSILON);
   }
-  regenEnergy(pc){
-    pc.currentEnergy = Math.round(((pc.currentEnergy + pc.energyRegenTotal) > pc.energyTotal ? pc.energyTotal : pc.currentEnergy + pc.energyRegenTotal) + Number.EPSILON);
+  regenEnergy(){
+    this.pc.currentEnergy = Math.round(((this.pc.currentEnergy + this.pc.energyRegenTotal) > this.pc.energyTotal ? this.pc.energyTotal : this.pc.currentEnergy + this.pc.energyRegenTotal) + Number.EPSILON);
   }
 }
 

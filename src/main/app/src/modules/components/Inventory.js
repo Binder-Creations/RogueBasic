@@ -2,12 +2,16 @@ import React from "react";
 import c from "../../data/CommonProperties";
 import Binder from "../services/Binder";
 import ItemTooltip from "./ItemTooltip";
+import ItemServices from "../services/ItemServices";
+import AppServices from "../services/AppServices";
 
 class Inventory extends React.Component {
   
   constructor(props){
     super(props);
+    this.appServices = AppServices.getInstance();
     Binder.bind(this);
+
     if(this.props.type && this[this.props.type + "Props"]){
       this[this.props.type + "Props"]();
       this.sort(this.items);
@@ -112,9 +116,9 @@ class Inventory extends React.Component {
   }
 
   parseUsable(item){
-    let itemProps = c.itemServices.getProps(item);
+    let itemProps = ItemServices.getProps(item);
     return(
-      <div className={this.itemBoxClass+" item-tooltip"} onClick={()=>{c[this.props.type](item)}}>
+      <div className={this.itemBoxClass+" item-tooltip"} onClick={()=>{this.appServices[this.props.type](item)}}>
         <div className="absolute-fill hover-saturate" style={{pointerEvents: "auto"}}>
           <img src={itemProps.background} className="absolute-fill" alt=""/>
           <img src={itemProps.image} className="item-image" alt="item"/>
@@ -127,7 +131,7 @@ class Inventory extends React.Component {
   }
 
   parseUnusable(item){
-    let itemProps = c.itemServices.getProps(item);
+    let itemProps = ItemServices.getProps(item);
     return(
       <div className={this.itemBoxClass+" item-tooltip"}>
         <img src={itemProps.background} className="absolute-fill gray-100" alt=""/>
@@ -139,9 +143,9 @@ class Inventory extends React.Component {
     )
   }
   parseTableUsable(item){
-    let itemProps = c.itemServices.getProps(item);
+    let itemProps = ItemServices.getProps(item);
     return(
-        <tr className="hover-saturate shop-box-item" onClick={()=>{c[this.props.type](item)}} style={{backgroundImage: `url(${c.images.common.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
+        <tr className="hover-saturate shop-box-item" onClick={()=>{this.appServices[this.props.type](item)}} style={{backgroundImage: `url(${c.images.common.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
           <td className="item-tooltip relative">
             <img src={itemProps.image} className="shop-image" alt="item"/>
             <ItemTooltip s={this.props.s} itemProps={itemProps} item={item} update={this.props.update} qMods={this.qMods} costMult={5}/>
@@ -161,7 +165,7 @@ class Inventory extends React.Component {
     )
   }
   parseTableUnusable(item){
-    let itemProps = c.itemServices.getProps(item);
+    let itemProps = ItemServices.getProps(item);
     return(
         <tr className="shop-box-item" style={{backgroundImage: `url(${c.images.common.tableBackground})`, height: window.innerWidth*0.0631 + "px"}}>
           <td className="item-tooltip relative">

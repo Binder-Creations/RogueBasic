@@ -1,11 +1,13 @@
 import React from "react";
 import c from "../../data/CommonProperties";
 import Fade from "../animations/Fade";
+import AppServices from "../services/AppServices";
 
 class InnMenu extends React.Component {
 
   constructor(props){
     super(props);
+    this.appServices = AppServices.getInstance();
 
     this.state = {
       moon: false,
@@ -28,10 +30,10 @@ class InnMenu extends React.Component {
       }
       let rest = this.props.s.pc.currency < 250
         ? <input className="rest gray-75" type="image" src={c.images.common.rest} alt="Rest"/>
-        : <input className="rest hover-saturate" type="image" src={c.images.common.rest} alt="Rest" onClick={c.startRest}/>
+        : <input className="rest hover-saturate" type="image" src={c.images.common.rest} alt="Rest" onClick={this.appServices.startRest}/>
       let eat = (this.props.s.pc.ate || this.props.s.pc.currency < 100)
         ? <input className="eat gray-75" type="image" src={c.images.common.eat} alt="Eat"/>
-        : <input className="eat hover-saturate" type="image" src={c.images.common.eat} alt="Eat" onClick={c.eat}/>
+        : <input className="eat hover-saturate" type="image" src={c.images.common.eat} alt="Eat" onClick={this.appServices.eat}/>
       
       return(
         <>

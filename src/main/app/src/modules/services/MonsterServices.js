@@ -1,8 +1,8 @@
 class MonsterServices {
-  constructor(dungeonMod){
+  constructor(postFix){
     this.monster = null;
-    this.healthMod = dungeonMod ? (dungeonMod[0]==='h' ? 1 + dungeonMod.match(/(\d+)/)[1]/100 : 1) : 1;
-    this.damageMod = dungeonMod ? (dungeonMod[0]==='d' ? 1 + dungeonMod.match(/(\d+)/)[1]/100 : 1) : 1;
+    this.healthMod = postFix ? (postFix[0]==='h' ? 1 + postFix.match(/(\d+)/)[1]/100 : 1) : 1;
+    this.damageMod = postFix ? (postFix[0]==='d' ? 1 + postFix.match(/(\d+)/)[1]/100 : 1) : 1;
   }
 
   updateStats(monster){

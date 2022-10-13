@@ -1,11 +1,13 @@
 import React from "react";
 import c from "../../data/CommonProperties";
+import AppServices from "../services/AppServices";
 
 
 class DungeonPanel extends React.Component {
 
   constructor(props){
     super(props);
+    this.appServices = AppServices.getInstance();
 
     this.boss = "";
     this.miniboss = "";
@@ -97,7 +99,7 @@ class DungeonPanel extends React.Component {
 
   onClick(){
     if(this.props.s.dungeonBoard[this.props.number-1].id !== this.props.s.pc.currentDungeon){
-      c.setDungeon(this.props.s.dungeonBoard[this.props.number-1].id);
+      this.appServices.setDungeon(this.props.s.dungeonBoard[this.props.number-1].id);
     }
   }
 }

@@ -1,15 +1,19 @@
 import React from "react";
 import c from "../../data/CommonProperties";
 import ItemTooltip from "./ItemTooltip";
+import ItemServices from "../services/ItemServices";
+import AppServices from "../services/AppServices";
 
 class QuestMenu extends React.Component {
   constructor(props){
     super(props);
+    this.appServices = AppServices.getInstance();
+
     this.QuestItem = (i) =>{
       let item = this.props.s.dungeon.rewardSet[i];
-      let itemProps = c.itemServices.getProps(item);
+      let itemProps = ItemServices.getProps(item);
       return(
-        <div className={"quest-item-"+i+" item-tooltip"} onClick={()=>{c.quest(i)}}>
+        <div className={"quest-item-"+i+" item-tooltip"} onClick={()=>{this.appServices.quest(i)}}>
           <div className="absolute-fill hover-saturate nopointer">
             <img src={itemProps.background} className="absolute-fill" alt=""/>
             <img src={itemProps.image} className="item-image" alt="item"/>

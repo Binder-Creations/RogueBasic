@@ -2,8 +2,14 @@ import c from "../../data/CommonProperties";
 import React from "react";
 import AbilityTooltip from "./AbilityTooltip";
 import {camelCase} from "../services/GeneralUtilities";
+import AppServices from "../services/AppServices";
 
 class Ability extends React.Component {
+  constructor(props){
+    super(props);
+    this.appServices = AppServices.getInstance();
+  }
+
  render(){
   let className = "gray-100";
   if(this.props.s.pc.level >= this.props.s.pc.abilities[this.props.number].level){
@@ -21,7 +27,7 @@ class Ability extends React.Component {
     <div className={className+" ability-tooltip ability a-" + this.props.number} 
       onClick={() => {
         if(this.props.s.combat && !this.props.s.position && this.props.s.pc.currentEnergy >= this.props.s.pc.abilities[this.props.number].cost){
-          c.ability(this.props.number)
+          this.appServices.ability(this.props.number)
         }
       }
     }>

@@ -1,4 +1,6 @@
 import c from "../../data/CommonProperties";
+import AppServices from "../services/AppServices";
+import PcServices from "../services/PcServices";
 import Item from "./Item";
 
 class Equipment extends Item {
@@ -29,7 +31,7 @@ class Equipment extends Item {
   }
 
   doAction(s, pc){
-    var slot;
+    let slot;
     if(this.type === "headLight" || this.type === "headMedium" || this.type === "headHeavy"){
       slot = "Head";
     } else if (this.type === "bodyLight" || this.type === "bodyMedium" || this.type === "bodyHeavy"){
@@ -47,8 +49,8 @@ class Equipment extends Item {
       pc["equipped"+slot].addTo(pc);
     }
     pc["equipped" + slot] = this;
-    c.pcServices.updateStats(pc);
-    c.save({pc: pc}, {pc: pc});
+    new PcServices(pc).updateStats();
+    AppServices.getInstance().save({pc: pc}, {pc: pc});
   }
 
   unequip(pc){
@@ -65,8 +67,8 @@ class Equipment extends Item {
     } else {
       pc.equippedSecondary = c.zeroId;
     }
-    c.pcServices.updateStats(pc);
-    c.save({pc: pc}, {pc: pc});
+    new PcServices(pc).updateStats();
+    AppServices.getInstance().save({pc: pc}, {pc: pc});
   }
 
 }

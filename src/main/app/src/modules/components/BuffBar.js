@@ -42,7 +42,6 @@ class BuffBar extends React.Component {
       statsLine = statsLine[0].toUpperCase() + statsLine.substring(1);
       statsLine = statsLine.substring(0, statsLine.length - 2);
       statsLine += "."
-      console.log(buff.name)
 
       components.push(
         this.props.s.combatTransitions && (

@@ -1,9 +1,13 @@
 import React from "react";
 import AttributeBuyButtons from "./AttributeBuyButtons";
 import c from "../../data/CommonProperties";
+import AppServices from "../services/AppServices";
 
 class CharacterMenu extends React.Component {
-
+  constructor(props){
+    super(props);
+    this.appServices = AppServices.getInstance();
+  }
   render(){
     this.experienceStyle = {
       width: 43.8984*(this.props.s.pc.experience/this.props.s.pc.experienceNeeded) + "%"
@@ -13,7 +17,7 @@ class CharacterMenu extends React.Component {
       <div key="menu" className="menu">
         <img className="background" src={c.images.common.characterMenu} alt="Character Information Screen"/>
         <img className="badge" src={c.images.class.badge} alt={this.props.s.pc.characterClass}/>
-        <input className="btn-close hover-saturate" type="image" src={c.images.common.buttonClose} alt="Close" onClick={() => c.menu("character")}/>
+        <input className="btn-close hover-saturate" type="image" src={c.images.common.buttonClose} alt="Close" onClick={() => this.appServices.menu("character")}/>
         <AttributeBuyButtons s={this.props.s}/>
         <div className="character-name">
           <p className="v-h-centered">{this.props.s.pc.name}</p>

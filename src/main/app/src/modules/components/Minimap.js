@@ -1,10 +1,12 @@
 import React from "react";
 import c from "../../data/CommonProperties";
+import AppServices from "../services/AppServices";
 
 class Minimap extends React.Component {
 
   constructor(props){
     super(props);
+    this.appServices = AppServices.getInstance();
 
     this.rooms = [];
     this.connectors = [];
@@ -119,22 +121,22 @@ class Minimap extends React.Component {
     } else {
       if(room.northRoomId){
         arrows.push(
-          <img src={c.images.common.minimapNorth} className="minimap-north hover-saturate" onClick={()=>c.moveRoom(room.northRoomId)} alt="North"/>
+          <img src={c.images.common.minimapNorth} className="minimap-north hover-saturate" onClick={()=>this.appServices.moveRoom(room.northRoomId)} alt="North"/>
         )
       }
       if(room.southRoomId){
         arrows.push(
-          <img src={c.images.common.minimapNorth} className="minimap-south hover-saturate y-flip" onClick={()=>c.moveRoom(room.southRoomId)} alt="South"/>
+          <img src={c.images.common.minimapNorth} className="minimap-south hover-saturate y-flip" onClick={()=>this.appServices.moveRoom(room.southRoomId)} alt="South"/>
         )
       }
       if(room.eastRoomId){
         arrows.push(
-          <img src={c.images.common.minimapEast} className="minimap-east hover-saturate" onClick={()=>c.moveRoom(room.eastRoomId)} alt="East"/>
+          <img src={c.images.common.minimapEast} className="minimap-east hover-saturate" onClick={()=>this.appServices.moveRoom(room.eastRoomId)} alt="East"/>
         )
       }
       if(room.westRoomId){
         arrows.push(
-          <img src={c.images.common.minimapEast} className="minimap-west hover-saturate x-flip" onClick={()=>c.moveRoom(room.westRoomId)} alt="West"/>
+          <img src={c.images.common.minimapEast} className="minimap-west hover-saturate x-flip" onClick={()=>this.appServices.moveRoom(room.westRoomId)} alt="West"/>
         )
       }
     }

@@ -8,12 +8,15 @@ import Minimap from "./Minimap";
 import GameOver from "./GameOver";
 import FadeUp from "../animations/FadeUp";
 import Fade from "../animations/Fade";
+import AppServices from "../services/AppServices";
 
 
 class Ui extends React.Component {
 
   constructor(props){
     super(props);
+    this.appServices = AppServices.getInstance();
+
     this.state = {
       characterMenu: false,
       inventoryMenu: false,
@@ -21,13 +24,13 @@ class Ui extends React.Component {
     };
 
     this.townButton =
-      <button className="btn-home" onClick={() => {c.scene("Default", "Town")} }>
+      <button className="btn-home" onClick={() => {this.appServices.scene("Default", "Town")} }>
         <img src={c.images.common.townIcon} alt="Town"/>
       </button>
 
 
     this.homeButton = 
-      <button className="btn-home" onClick={() => {c.scene("Home", "Town")} }>
+      <button className="btn-home" onClick={() => {this.appServices.scene("Home", "Town")} }>
         <img src={c.images.common.scrollIcon} alt="Home"/>
       </button>
 
@@ -40,7 +43,7 @@ class Ui extends React.Component {
     <div className={"btn-attack hover-saturate ability-tooltip"} 
       onClick={() => {
         if(this.props.s.combat && !this.props.s.position){
-          c.ability(0)
+          this.appServices.ability(0)
         }
       }
     }>
@@ -78,8 +81,8 @@ class Ui extends React.Component {
           <Ability s={this.props.s} number={4}/>  
           <Minimap s={this.props.s} dungeon={this.props.s.dungeon}/>
           {attackButton}
-          <input class="btn-character hover-saturate-250" type="image" src={c.images.common.buttonCharacter} alt="Character" onClick={() => c.menu("character")}/>
-          <input class="btn-inventory hover-saturate-250" type="image" src={c.images.common.buttonInventory} alt="Inventory" onClick={() => c.menu("inventory")}/>
+          <input class="btn-character hover-saturate-250" type="image" src={c.images.common.buttonCharacter} alt="Character" onClick={() => this.appServices.menu("character")}/>
+          <input class="btn-inventory hover-saturate-250" type="image" src={c.images.common.buttonInventory} alt="Inventory" onClick={() => this.appServices.menu("inventory")}/>
           {this.returnButton}
       </>
     );

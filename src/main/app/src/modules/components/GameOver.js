@@ -1,7 +1,12 @@
 import React from "react";
 import c from "../../data/CommonProperties";
+import AppServices from "../services/AppServices";
 
 class GameOver extends React.Component {
+  constructor(props){
+    super(props);
+    this.appServices = AppServices.getInstance();
+  }
 
   render(){
     let update = this.props.s.gameOver;
@@ -15,7 +20,7 @@ class GameOver extends React.Component {
           </div>
           <p className="death-souls">{this.props.s.pc.metacurrency}</p>
           <div className="btn-death hover-saturate">
-            <input className="background" type="image" src={c.images.common.buttonDeath} alt="Accept Fate" onClick={() => c.endGame()}/>
+            <input className="background" type="image" src={c.images.common.buttonDeath} alt="Accept Fate" onClick={() => this.appServices.endGame()}/>
             <p className="v-h-centered nopointer">
               Accept Fate
             </p>

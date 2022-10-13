@@ -1,9 +1,14 @@
 import React from "react";
 import c from "../../data/CommonProperties";
 import DungeonPanel from "./DungeonPanel";
+import AppServices from "../services/AppServices";
 
 
 class TavernMenu extends React.Component {
+  constructor(props){
+    super(props);
+    this.appServices = AppServices.getInstance();
+  }
 
   render(){
     let dungeon = c.images.common.dungeonEmpty;
@@ -12,7 +17,7 @@ class TavernMenu extends React.Component {
     if(this.props.s.dungeonBoard) {
       if(this.props.s.dungeon){
         className = "dungeon-portal-active hover-saturate";
-        onClick = () => c.toDungeon()
+        onClick = () => this.appServices.toDungeon()
         switch(this.props.s.dungeon.theme){
           case "Arcane":
             dungeon = c.images.common.dungeonArcane;

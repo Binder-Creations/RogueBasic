@@ -1,11 +1,11 @@
-import Binder from "../services/Binder";
+import {bindAll} from "../services/Binder";
 
 class Item {
   constructor(item){
     for(let property in item){
       this[property] = item[property];
     }
-    Binder.bind(this);
+    bindAll(this);
   }
   getUsability(){
     return 1;

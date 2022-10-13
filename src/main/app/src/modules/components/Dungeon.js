@@ -8,10 +8,13 @@ import Combat from "./Combat";
 import Fade from "../animations/Fade";
 import FadeIn from "../animations/FadeIn";
 import AbilityAnimation from "../animations/AbilityAnimation";
+import AppServices from "../services/AppServices";
 
 class Dungeon extends React.Component {
   constructor(props){
     super(props);
+    this.appServices = AppServices.getInstance();
+
     this.currentRoom = null;
     this.abilityAnimationKey = 0;
     this.pushMonstersByPosition = this.pushMonstersByPosition.bind(this);
@@ -24,7 +27,7 @@ class Dungeon extends React.Component {
     if(((this.currentRoom.stairsPrevious || (this.currentRoom.stairsNext && (this.props.s.dungeon.currentFloor + 1 < this.props.s.dungeon.floorCount))) && (!this.currentRoom.monsters || this.currentRoom.monsters.length === 0))){
       components.push(
         <FadeIn in key='s'>
-          <img src={c.images.environment.dungeonStairs} className="dungeon-stairs hover-saturate" alt="Stairs" onClick={() => c.stairs(this.currentRoom.stairsPrevious)}/>
+          <img src={c.images.environment.dungeonStairs} className="dungeon-stairs hover-saturate" alt="Stairs" onClick={() => this.appServices.stairs(this.currentRoom.stairsPrevious)}/>
         </FadeIn>
       );
     }
@@ -33,13 +36,13 @@ class Dungeon extends React.Component {
       if((this.currentRoom.stairsPrevious || (this.currentRoom.stairsNext && (this.props.s.dungeon.currentFloor + 1 < this.props.s.dungeon.floorCount)))){
         components.push(        
           <FadeIn in key='c'>
-            <img src={c.images.common.chest} className="dungeon-chest-left hover-saturate" alt="chest" onClick={() => c.menu("loot")}/>
+            <img src={c.images.common.chest} className="dungeon-chest-left hover-saturate" alt="chest" onClick={() => this.appServices.menu("loot")}/>
           </FadeIn>
         );
       } else {
         components.push(        
           <FadeIn in key='c'>
-            <img src={c.images.common.chest} className="dungeon-chest hover-saturate" alt="chest" onClick={() => c.menu("loot")}/>
+            <img src={c.images.common.chest} className="dungeon-chest hover-saturate" alt="chest" onClick={() => this.appServices.menu("loot")}/>
           </FadeIn>
         );
       }
@@ -50,7 +53,7 @@ class Dungeon extends React.Component {
             key='l'
             onExited={()=>{
               if(this.props.s.menu === "loot"){
-                c.menu();
+                this.appServices.menu();
               }
             }}
           >
@@ -65,7 +68,7 @@ class Dungeon extends React.Component {
         <Fade 
           key='a' 
           in
-          onExited={() => c.combat()}
+          onExited={() => this.appServices.combat()}
         >
           <img src={c.images.environment.arena} className="dungeon-arena" alt="Arena"/>
         </Fade>

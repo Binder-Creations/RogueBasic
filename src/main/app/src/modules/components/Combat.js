@@ -3,10 +3,13 @@ import c from "../../data/CommonProperties";
 import {camelCase} from "../services/GeneralUtilities";
 import {TransitionGroup} from 'react-transition-group';
 import Fade from "../animations/Fade";
+import AppServices from "../services/AppServices";
 
 class Combat extends React.Component {
   constructor(props){
     super(props);
+    this.appServices = AppServices.getInstance();
+
     this.state = {
       showUpdate: true
     }
@@ -47,7 +50,7 @@ class Combat extends React.Component {
         if(updates.length){
           let onExited = null;
           if(!key){
-            onExited = () => setTimeout(() =>c.nextCombat(), 100);
+            onExited = () => setTimeout(() => this.appServices.nextCombat(), 100);
           }
           
           components.push(  

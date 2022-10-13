@@ -1,8 +1,23 @@
 class ImageServices {
-  static loadedImages = 0;
-  static loadedImageNameArray = [];
+  static #instance;
+  static #isInternalConstructing = false;
+  constructor(){
+    if(!ImageServices.#isInternalConstructing) throw TypeError("ImageServices is not constructable");
+    
+    this.loadedImages = 0;
+    this.loadedImageNameArray = [];
+  }
 
-  static countImages(s, images) {
+  static getInstance(){
+    if(this.#instance) return this.#instance;
+    
+    this.#isInternalConstructing = true;
+    this.#instance = new ImageServices();
+    this.#isInternalConstructing = false;
+    return this.#instance;
+  }
+
+  countImages(s, images) {
     let dungeonImageCount = 0;
     if(s.dungeon){
       for(let floor of s.dungeon.floors){
@@ -26,7 +41,7 @@ class ImageServices {
       + dungeonImageCount;
   }
 
-  static loadCommonImages(images){
+  loadCommonImages(images){
     for (let image of Object.keys(images.common)) {
       this.loadImage(images.common[image]);
     }
@@ -39,13 +54,13 @@ class ImageServices {
     this.loadCheckedImage(images.items.currency.i1);
   }
 
-  static loadCheckedImages(imageSet){
+  loadCheckedImages(imageSet){
     for (let image of Object.keys(imageSet)) {
       this.loadCheckedImage(imageSet[image]);
     }
   }
 
-  static loadPcImages(pc, items){
+  loadPcImages(pc, items){
     if(pc){
       for(let item of [pc.equippedHead, pc.equippedBody, pc.equippedBack, 
       pc.equippedNeck, pc.equippedPrimay, pc.equippedSecondary]){
@@ -63,13 +78,13 @@ class ImageServices {
     }
   }
 
-  static loadShopImages(shop, items){
+  loadShopImages(shop, items){
     if(shop){
       this.loadItemImages(shop.inventory, items);
     }
   }
 
-  static loadItemImages(inventory, items){
+  loadItemImages(inventory, items){
     if(inventory){
       for(let item of inventory){
         this.loadCheckedImage(items[item.type]["i"+item.image]);
@@ -77,7 +92,7 @@ class ImageServices {
     }
   }
 
-  static loadDungeonItemImages(dungeon, items){
+  loadDungeonItemImages(dungeon, items){
     if(dungeon && dungeon.floors){
       for(let floor of dungeon.floors){
         for(let room of floor.rooms){
@@ -89,13 +104,13 @@ class ImageServices {
     }
   }
 
-  static loadImage(src) {
+  loadImage(src) {
     let i = new Image();
     i.onload = () => this.loadedImages++;
     i.src = src;
   }
 
-  static loadCheckedImage(src){
+  loadCheckedImage(src){
     if(this.loadedImageNameArray.includes(src)){
       this.loadedImages++;
     } else {

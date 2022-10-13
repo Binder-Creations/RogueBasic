@@ -1,10 +1,7 @@
 import c from "../../data/CommonProperties";
-class ItemServices {
-  constructor(){
-    this.getProps = this.getProps.bind(this);
-  }
 
-  getProps(item, isShop){
+export default {
+  getProps: (item, isShop) => {
     let itemProps = {};
     let fontSize = item.name.length > 32 
       ? "50%"
@@ -251,4 +248,3 @@ class ItemServices {
     return itemProps
   }
 }
-export default ItemServices;

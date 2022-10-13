@@ -1,5 +1,3 @@
-import c from "../../data/CommonProperties";
-
 class Binder {
 
   static getAllMethods(instance) {
@@ -9,17 +7,11 @@ class Binder {
       });
   }
 
-  static bind(instance) {
+  static bindAll(instance) {
     for(let mtd of Binder.getAllMethods(instance)){
       instance[mtd] = instance[mtd].bind(instance);
-    }
-  }
-
-  static bindAndC(instance) {
-    for(let mtd of Binder.getAllMethods(instance)){
-      instance[mtd] = instance[mtd].bind(instance);
-      c[mtd] = instance[mtd];
     }
   }
 }
 export default Binder;
+export const bindAll = Binder.bindAll;

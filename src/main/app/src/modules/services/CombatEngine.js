@@ -1,15 +1,35 @@
 import c from "../../data/CommonProperties";
-import AbilityServices from "./AbilityServices";
+import * as AbilityServices from "./AbilityServices";
 import MonsterServices from "./MonsterServices";
 import CombatUpdate from "../beans/CombatUpdate";
+import PcServices from "./PcServices";
 
 class CombatEngine {
+  static #instance;
+  static #isInternalConstructing = false;
+
   constructor(s){
+    if(!CombatEngine.#isInternalConstructing) throw new TypeError("CombatEngine is not constructable");
+
     this.pc = {...s.pc}
+    this.pcServices = new PcServices(this.pc);
     this.monsters = JSON.parse(JSON.stringify(s.dungeon.floors[s.dungeon.currentFloor].rooms[s.dungeon.currentRoom].monsters));
     this.monsterServices = new MonsterServices(s.dungeon.postFix);
     this.combatUpdates = [];
     this.updateMonsterStats();
+  }
+
+  static getInstance(s){
+    if(this.#instance) return this.#instance;
+
+    this.#isInternalConstructing = true;
+    this.#instance = new CombatEngine(s);
+    this.#isInternalConstructing = false;
+    return this.#instance;
+  }
+
+  static clearInstance(){
+    this.#instance = null;
   }
 
   runRound(ability, position){
@@ -28,7 +48,7 @@ class CombatEngine {
       }
       this.damageOverTime(monster);  
     }
-    c.pcServices.updateStats(this.pc);
+    this.pcServices.updateStats();
     this.updateMonsterStats();
   }
 
@@ -43,7 +63,7 @@ class CombatEngine {
       this.decrementBuffs(monster.debuffs);
     } 
 
-    c.pcServices.updateStats(this.pc);
+    this.pcServices.updateStats(this.pc);
     this.updateMonsterStats();
     AbilityServices.corpseCollector(this.pc, this.monsters, this.combatUpdates);
   }

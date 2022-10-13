@@ -1,11 +1,15 @@
 import React from "react";
 import c from "../../data/CommonProperties";
 import ItemTooltip from "./ItemTooltip";
+import AppServices from "../services/AppServices";
+import ItemServices from "../services/ItemServices";
 
 class Equipped extends React.Component {
   
   constructor(props){
     super(props);
+    this.appServices = AppServices.getInstance();
+
     this.item = "";
     this.itemProps = "";
     this.background = "";
@@ -16,7 +20,7 @@ class Equipped extends React.Component {
   render(){
     if (this.props.s.pc["equipped"+this.props.slot] && this.props.s.pc["equipped"+this.props.slot].id !== "00000000-0000-0000-0000-000000000000"){
       this.item = this.props.s.pc["equipped"+this.props.slot];
-      this.itemProps = c.itemServices.getProps(this.item);
+      this.itemProps = ItemServices.getProps(this.item);
     } else {
       return <></>
     }
@@ -33,7 +37,7 @@ class Equipped extends React.Component {
 
   unequip(){
     if (!this.props.s.combat)
-      c.unequip(this.item)   
+      this.appServices.unequip(this.item)   
   }
 }
 
