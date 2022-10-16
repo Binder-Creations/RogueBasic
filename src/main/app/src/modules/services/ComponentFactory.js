@@ -29,7 +29,7 @@ export default class ComponentFactory {
     return this.#instance;
   }
 
-  createComponent (componentName, state) {    
+  createComponent (componentName, state) {   
     switch(componentName){
       case "firstUser":
         this.appServices.assignTempAccount();

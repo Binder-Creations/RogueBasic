@@ -37,7 +37,7 @@ export default class AppServices {
   static startingPage(state){
     if(!state.returningUser) return "firstUser";
     if(state.characterId) return "game";
-    if(state.playerId) return "menu";
+    if(state.playerId) return "home";
     return "login";
   }
 
