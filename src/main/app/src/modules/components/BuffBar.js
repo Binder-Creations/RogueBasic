@@ -3,7 +3,7 @@ import c from "../../data/CommonProperties";
 import {TransitionGroup} from 'react-transition-group';
 import Fade from "../animations/Fade";
 
-class BuffBar extends React.Component {
+export default class BuffBar extends React.Component {
   
   render(){
     let components = [];
@@ -55,5 +55,3 @@ class BuffBar extends React.Component {
     }
   }
 }
-
-export default BuffBar;

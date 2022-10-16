@@ -1,7 +1,7 @@
 import React from "react";
 import {CSSTransition} from "react-transition-group";
 
-class FadeUp extends React.Component {
+export default class FadeUp extends React.Component {
   render(){
     document.documentElement.style.setProperty('--animate-duration', '2s')
       return(
@@ -20,4 +20,3 @@ class FadeUp extends React.Component {
     );
   }
 }
-export default FadeUp

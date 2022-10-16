@@ -3,7 +3,7 @@ import c from "../../data/CommonProperties";
 import Inventory from "./Inventory";
 import AppServices from "../services/AppServices";
 
-class LootMenu extends React.Component {
+export default class LootMenu extends React.Component {
   constructor(props){
     super(props);
     this.appServices = AppServices.getInstance();
@@ -26,5 +26,3 @@ class LootMenu extends React.Component {
       )  
     }
 }
-
-export default LootMenu;

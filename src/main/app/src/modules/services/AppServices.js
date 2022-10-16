@@ -8,9 +8,9 @@ import PcServices from "../services/PcServices";
 import ImageServices from "../services/ImageServices";
 import * as ItemFactory from "../services/ItemFactory";
 import CombatEngine from "../services/CombatEngine";
-import {buildComponent} from "../services/ComponentFactory";
+import ComponentFactory from "../services/ComponentFactory";
 
-class AppServices {
+export default class AppServices {
   static #instance;
   static #isInternalConstructing = false;
 
@@ -27,28 +27,51 @@ class AppServices {
     this.#isInternalConstructing = true;
     this.#instance = new AppServices(app);
     this.#isInternalConstructing = false;
+
+    this.#instance.componentFactory = ComponentFactory.getInstance();
     return this.#instance;
   }
 
+  static startingPage(state){
+    if(!state.returningUser) return "firstUser";
+    if(state.characterId) return "game";
+    if(state.playerId) return "menu";
+    return "login";
+  }
+
+  gameInitialization(){
+    if(!this.isDataInitialized){
+      this.initializeGameData(); 
+    }
+
+    if(!this.isImagesInitialized && this.app.state.startImageInitialization){
+      this.initializeImages();
+    }
+  }
+
+  gamePreRender(){
+    if(this.isResting){
+      this.appServices.rest()
+    }
+
+    this.checkCombat();
+    this.setElements();
+  }
+
   assignTempAccount(){
-    this.app.showTempScreen = true;
     document.cookie = "returning_user=true;max-age=99999999";
     let tempUUID = uuidv4();
     document.cookie = "player_id="+tempUUID+";max-age=99999999";
-    fetch('/register/temp/'+ tempUUID, {method: 'POST'})
-    .then(response => {
-      this.setState({routeHome: true});
-    });  
+    fetch('/register/temp/'+ tempUUID, {method: 'POST'});
   }
 
-  async initialize(){
-    this.app.initialized = true;
-    
+  async initializeGameData(){
     try {
       let pc = await this.fetchPc(this.app.state.characterId);
       let dungeon = pc.currentDungeon ? await this.fetchDungeon(pc.currentDungeon) : null;
       let shop = pc.currentShop ? await this.fetchShop(pc.currentShop) : null;
       new PcServices(pc).updateStats();
+      this.isDataInitialized = true;
       this.setState({
         pc: pc, 
         dungeon:dungeon,
@@ -73,6 +96,32 @@ class AppServices {
     document.body.style.fontSize = c.appWidth*0.019 + "px";
   }
 
+  isLoading(){
+    if(this.app.state.loading){
+      if(this.app.state.loadedImages >= c.imageMax && this.app.state.loadingDungeons && this.app.state.loadingShop) {
+        this.setState({loading: false, loadingDungeons: false, loadingShop: false})
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  updateTimeouts(){
+    if(this.app.state.loading){
+      setTimeout(() => {
+        this.setState({loadedImages: ImageServices.getInstance().loadedImages})
+      }, 33);
+    }
+    if(this.app.state.generatingDungeon){
+      setTimeout(() => {
+        if(this.app.state.generatingDungeon){
+          this.setState({barPercent: (this.app.state.barPercent && this.app.state.barPercent < 100 ) ? this.app.state.barPercent + 20 : 20})
+        }
+      }, 2000);
+    }
+  }
+
   setItemSortOrder(){
     if(this.app.state.pc.characterClass === "Rogue"){
       c.itemSortOrder = ["currency", "potion", "consumable", "bow", "dagger", "headMedium", "bodyMedium", "neck", "back", "staff", "spellbook", "sword", "shield", "headLight", "bodyLight", "headHeavy", "bodyHeavy"];
@@ -84,7 +133,7 @@ class AppServices {
   }
 
   initializeImages(){
-    this.app.imagesInitialized = true;
+    this.isImagesInitialized = true;
     this.setClassImages();
     this.setEnvironmentImages();
     this.setMonsterImages();
@@ -118,42 +167,42 @@ class AppServices {
   }
 
   setElements(){
-    this.app.innerElements = [];
-    this.app.outerElements = [];
+    this.innerElements = [];
+    this.outerElements = [];
     c.disableUiMenus = false;
     c.homeButton = false;
     if (this.app.state.pc.location === "Town"){
       if(this.app.state.scene === "Default"){
         c.homeButton = true;
-        this.app.innerElements.push(buildComponent("exteriorBuildings"));
-        this.app.outerElements.push(buildComponent("helpButton"));
+        this.innerElements.push(this.componentFactory.createComponent("exteriorBuildings"));
+        this.outerElements.push(this.componentFactory.createComponent("helpButton"));
         if(this.app.state.help){
-          this.app.outerElements.push(this.helpMenu(c.images.common.helpTown));
+          this.outerElements.push(this.helpMenu(c.images.common.helpTown));
         }
       } else if(this.app.state.scene === "Tavern"){
         this.genDungeons();
         c.disableUiMenus = true;
-        this.app.outerElements.push(<TavernMenu s={this.app.state}/>);
+        this.outerElements.push(<TavernMenu s={this.app.state}/>);
         if(this.app.state.generatingDungeon){
-          this.app.outerElements.push(this.loadingBar())
+          this.outerElements.push(this.loadingBar())
         }
-        this.app.outerElements.push(buildComponent("helpButton"));
+        this.outerElements.push(this.componentFactory.createComponent("helpButton"));
         if(this.app.state.help){
-          this.app.outerElements.push(this.helpMenu(c.images.common.helpTavern, "tavern"));
+          this.outerElements.push(this.helpMenu(c.images.common.helpTavern, "tavern"));
         }
       } else if(this.app.state.scene==="Inn"){
         c.disableUiMenus = true;
-        this.app.outerElements.push(<InnMenu s={this.app.state}/>);
+        this.outerElements.push(<InnMenu s={this.app.state}/>);
       } else if(this.app.state.scene==="Shop"){
         c.disableUiMenus = true;
-        this.app.outerElements.push(<ShopMenu s={this.app.state}/>);
+        this.outerElements.push(<ShopMenu s={this.app.state}/>);
       }
     } else if(this.app.state.pc.location === "Dungeon") {
       if(this.app.state.dungeon && this.app.state.dungeon.floors){
-        this.app.innerElements.push(<Dungeon s={this.app.state}/>);
-        this.app.outerElements.push(buildComponent("helpButton"));
+        this.innerElements.push(<Dungeon s={this.app.state}/>);
+        this.outerElements.push(this.componentFactory.createComponent("helpButton"));
         if(this.app.state.help){
-          this.app.outerElements.push( this.app.state.combat ? this.helpMenu(c.images.common.helpCombat, "combat") : this.helpMenu(c.images.common.helpDungeon));
+          this.outerElements.push( this.app.state.combat ? this.helpMenu(c.images.common.helpCombat, "combat") : this.helpMenu(c.images.common.helpDungeon));
         }
       }
     }
@@ -231,7 +280,7 @@ class AppServices {
   async genDungeons(){
     if(this.app.state.pc.currentDungeon && (!this.app.state.dungeon || this.app.state.dungeon.id !== this.app.state.pc.currentDungeon)){
       let dungeon = await this.fetchDungeon();
-      if(this.app.imagesInitialized){
+      if(this.isImagesInitialized){
         this.setEnvironmentImages(dungeon);
         this.setMonsterImages(dungeon);
 
@@ -258,7 +307,7 @@ class AppServices {
     if(this.app.state.pc.currentShop){
       if(!this.app.state.shop || this.app.state.shop.id !== this.app.state.pc.currentShop){
         let shop = await this.fetchShop();
-        if(this.app.imagesInitialized){
+        if(this.isImagesInitialized){
           ImageServices.getInstance().loadShopImages(shop, c.images.items);
         }
         this.setState({shop: shop, loadingShop: true});
@@ -555,12 +604,12 @@ class AppServices {
     pc.ate = false;
     pc.currency -= 250;
     pc.currency = pc.currency > 0 ? pc.currency : 0;
-    this.app.toRest = true;
+    this.isResting = true;
     this.setState({pc: pc, rested: this.app.state.rested +1});
   }
 
   async rest(){
-    this.app.toRest = false;
+    this.isResting = false;
     let dungeonData = await this.fetchNewDungeonBoard();
     let shopData = await this.fetchNewShop();
     let pc = dungeonData.pc;
@@ -647,5 +696,3 @@ class AppServices {
   }
 
 }
-
-export default AppServices;

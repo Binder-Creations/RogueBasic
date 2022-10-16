@@ -2,7 +2,7 @@ import React from "react";
 import c from "../../data/CommonProperties";
 import AppServices from "../services/AppServices";
 
-class AttributeBuyButtons extends React.Component {
+export default class AttributeBuyButtons extends React.Component {
   constructor(props){
     super(props);
     this.appServices = AppServices.getInstance();
@@ -70,5 +70,3 @@ class AttributeBuyButtons extends React.Component {
     }
   }
 }
-
-export default AttributeBuyButtons;

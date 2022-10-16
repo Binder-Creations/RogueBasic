@@ -1,7 +1,7 @@
 import React from "react";
 import {CSSTransition} from "react-transition-group";
 
-class FadeIn extends React.Component {
+export default class FadeIn extends React.Component {
   render(){
       return(
         <CSSTransition
@@ -14,4 +14,3 @@ class FadeIn extends React.Component {
     );
   }
 }
-export default FadeIn

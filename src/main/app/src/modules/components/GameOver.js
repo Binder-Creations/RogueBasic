@@ -2,7 +2,7 @@ import React from "react";
 import c from "../../data/CommonProperties";
 import AppServices from "../services/AppServices";
 
-class GameOver extends React.Component {
+export default class GameOver extends React.Component {
   constructor(props){
     super(props);
     this.appServices = AppServices.getInstance();
@@ -29,5 +29,3 @@ class GameOver extends React.Component {
       )  
     }
 }
-
-export default GameOver;

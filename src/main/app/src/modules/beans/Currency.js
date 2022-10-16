@@ -1,6 +1,6 @@
 import Item from "./Item";
 
-class Currency extends Item {
+export default class Currency extends Item {
   addTo(target){
     if(this.name === "Gold") {
       target.currency += this.count;
@@ -10,5 +10,3 @@ class Currency extends Item {
     }
   }
 }
-
-export default Currency;

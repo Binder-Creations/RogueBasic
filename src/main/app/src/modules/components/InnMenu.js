@@ -3,7 +3,7 @@ import c from "../../data/CommonProperties";
 import Fade from "../animations/Fade";
 import AppServices from "../services/AppServices";
 
-class InnMenu extends React.Component {
+export default class InnMenu extends React.Component {
 
   constructor(props){
     super(props);
@@ -74,5 +74,3 @@ class InnMenu extends React.Component {
       );  
   }
 }
-
-export default InnMenu

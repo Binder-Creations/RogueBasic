@@ -4,7 +4,7 @@ import AbilityTooltip from "./AbilityTooltip";
 import {camelCase} from "../services/GeneralUtilities";
 import AppServices from "../services/AppServices";
 
-class Ability extends React.Component {
+export default class Ability extends React.Component {
   constructor(props){
     super(props);
     this.appServices = AppServices.getInstance();
@@ -37,5 +37,3 @@ class Ability extends React.Component {
   )
  }
 }
-
-export default Ability;

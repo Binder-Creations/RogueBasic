@@ -22,7 +22,6 @@ public class JsonUtilitiesTest {
 		Item item = JsonUtilities.getItem(StaticItem.ENERGY_POTION.getName());
 		assertNotNull(item);
 		assertNotNull(item.getId());
-		assertNull(JsonUtilities.getItem("notAnItem"));
 	}
 	
 	@Test
@@ -33,7 +32,6 @@ public class JsonUtilitiesTest {
 		for(Ability ability: abilities) {
 			assertNotNull(ability);
 		}
-		assertNull(JsonUtilities.getMonsterAbilities("notAType"));
 	}
 	
 	@Test

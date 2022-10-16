@@ -3,7 +3,7 @@ import AppServices from "../services/AppServices";
 import PcServices from "../services/PcServices";
 import Item from "./Item";
 
-class Equipment extends Item {
+export default class Equipment extends Item {
   getUsability(pc){
     if(this.type === "back" || this.type === "neck"){
       return 1;
@@ -72,5 +72,3 @@ class Equipment extends Item {
   }
 
 }
-
-export default Equipment;

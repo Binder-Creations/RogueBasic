@@ -1,6 +1,6 @@
 import {bindAll} from "../services/Binder";
 
-class Item {
+export default class Item {
   constructor(item){
     for(let property in item){
       this[property] = item[property];
@@ -32,5 +32,3 @@ class Item {
 
   unequip(pc){}
 }
-
-export default Item;

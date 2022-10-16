@@ -10,7 +10,7 @@ import FadeIn from "../animations/FadeIn";
 import AbilityAnimation from "../animations/AbilityAnimation";
 import AppServices from "../services/AppServices";
 
-class Dungeon extends React.Component {
+export default class Dungeon extends React.Component {
   constructor(props){
     super(props);
     this.appServices = AppServices.getInstance();
@@ -169,5 +169,3 @@ class Dungeon extends React.Component {
   }
 
 }
-
-export default Dungeon;

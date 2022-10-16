@@ -4,7 +4,7 @@ import {camelCase} from "../services/GeneralUtilities";
 import c from "../../data/CommonProperties";
 import AppServices from "../services/AppServices";
 
-class AbilityAnimation extends React.Component {
+export default class AbilityAnimation extends React.Component {
  constructor(props){
    super(props);
    this.appServices = AppServices.getInstance();
@@ -30,5 +30,3 @@ class AbilityAnimation extends React.Component {
   }
 
 }
-
-export default AbilityAnimation;

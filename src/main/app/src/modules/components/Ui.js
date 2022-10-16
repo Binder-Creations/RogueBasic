@@ -11,7 +11,7 @@ import Fade from "../animations/Fade";
 import AppServices from "../services/AppServices";
 
 
-class Ui extends React.Component {
+export default class Ui extends React.Component {
 
   constructor(props){
     super(props);
@@ -30,7 +30,7 @@ class Ui extends React.Component {
 
 
     this.homeButton = 
-      <button className="btn-home" onClick={() => {this.appServices.scene("Home", "Town")} }>
+      <button className="btn-home" onClick={() => {this.appServices.setState({page: "home", menu: null})} }>
         <img src={c.images.common.scrollIcon} alt="Home"/>
       </button>
 
@@ -127,5 +127,3 @@ class Ui extends React.Component {
     return components;
   }
 }
-
-export default Ui

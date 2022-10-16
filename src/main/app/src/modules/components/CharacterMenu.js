@@ -3,7 +3,7 @@ import AttributeBuyButtons from "./AttributeBuyButtons";
 import c from "../../data/CommonProperties";
 import AppServices from "../services/AppServices";
 
-class CharacterMenu extends React.Component {
+export default class CharacterMenu extends React.Component {
   constructor(props){
     super(props);
     this.appServices = AppServices.getInstance();
@@ -131,5 +131,3 @@ class CharacterMenu extends React.Component {
   }
 
 }
-
-export default CharacterMenu

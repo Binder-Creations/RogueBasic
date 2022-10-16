@@ -5,7 +5,7 @@ import {TransitionGroup} from 'react-transition-group';
 import Fade from "../animations/Fade";
 import AppServices from "../services/AppServices";
 
-class Combat extends React.Component {
+export default class Combat extends React.Component {
   constructor(props){
     super(props);
     this.appServices = AppServices.getInstance();
@@ -80,5 +80,3 @@ class Combat extends React.Component {
     );
   }
 }
-
-export default Combat;

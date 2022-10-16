@@ -1,7 +1,7 @@
 import React from "react";
 import {CSSTransition} from "react-transition-group";
 
-class Pulse extends React.Component {
+export default class Pulse extends React.Component {
   render(){
     document.documentElement.style.setProperty('--animate-duration', '.4s');
       return(
@@ -22,4 +22,3 @@ class Pulse extends React.Component {
     );
   }
 }
-export default Pulse

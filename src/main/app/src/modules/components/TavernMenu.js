@@ -4,7 +4,7 @@ import DungeonPanel from "./DungeonPanel";
 import AppServices from "../services/AppServices";
 
 
-class TavernMenu extends React.Component {
+export default class TavernMenu extends React.Component {
   constructor(props){
     super(props);
     this.appServices = AppServices.getInstance();
@@ -48,5 +48,3 @@ class TavernMenu extends React.Component {
     }
   }
 }
-
-export default TavernMenu

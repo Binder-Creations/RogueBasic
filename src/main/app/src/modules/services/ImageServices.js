@@ -1,4 +1,4 @@
-class ImageServices {
+export default class ImageServices {
   static #instance;
   static #isInternalConstructing = false;
   constructor(){
@@ -119,5 +119,3 @@ class ImageServices {
     }
   }
 }
-
-export default ImageServices;

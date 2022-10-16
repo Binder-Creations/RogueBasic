@@ -2,7 +2,7 @@ import React from "react";
 import c from "../../data/CommonProperties";
 import AppServices from "../services/AppServices";
 
-class Minimap extends React.Component {
+export default class Minimap extends React.Component {
 
   constructor(props){
     super(props);
@@ -143,5 +143,3 @@ class Minimap extends React.Component {
     return arrows;
   }
 }
-
-export default Minimap;

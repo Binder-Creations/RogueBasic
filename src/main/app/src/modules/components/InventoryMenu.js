@@ -5,7 +5,7 @@ import Equipped from "./Equipped";
 import AppServices from "../services/AppServices";
 
 
-class InventoryMenu extends React.Component {
+export default class InventoryMenu extends React.Component {
 
   constructor(props){
     super(props);
@@ -59,5 +59,3 @@ class InventoryMenu extends React.Component {
     this.setState({update: this.state.update + 1});
   }
 }
-
-export default InventoryMenu

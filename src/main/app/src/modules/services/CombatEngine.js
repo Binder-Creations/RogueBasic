@@ -4,7 +4,7 @@ import MonsterServices from "./MonsterServices";
 import CombatUpdate from "../beans/CombatUpdate";
 import PcServices from "./PcServices";
 
-class CombatEngine {
+export default class CombatEngine {
   static #instance;
   static #isInternalConstructing = false;
 
@@ -146,5 +146,3 @@ class CombatEngine {
   }
 
 }
-
-export default CombatEngine;

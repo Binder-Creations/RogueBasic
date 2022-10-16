@@ -1,4 +1,4 @@
-class MonsterServices {
+export default class MonsterServices {
   constructor(postFix){
     this.monster = null;
     this.healthMod = postFix ? (postFix[0]==='h' ? 1 + postFix.match(/(\d+)/)[1]/100 : 1) : 1;
@@ -104,5 +104,3 @@ class MonsterServices {
   }
 
 }
-
-export default MonsterServices;

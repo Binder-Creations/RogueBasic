@@ -3,7 +3,7 @@ import CombatEngine from "../services/CombatEngine";
 import PcServices from "../services/PcServices";
 import Item from "./Item";
 
-class Consumable extends Item {
+export default class Consumable extends Item {
   getUsability(){
     if(this.type === "potion"){
       return 2;
@@ -65,5 +65,3 @@ class Consumable extends Item {
   }
   
 }
-
-export default Consumable;

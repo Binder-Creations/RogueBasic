@@ -4,7 +4,7 @@ import ItemTooltip from "./ItemTooltip";
 import AppServices from "../services/AppServices";
 import ItemServices from "../services/ItemServices";
 
-class Equipped extends React.Component {
+export default class Equipped extends React.Component {
   
   constructor(props){
     super(props);
@@ -40,5 +40,3 @@ class Equipped extends React.Component {
       this.appServices.unequip(this.item)   
   }
 }
-
-export default Equipped

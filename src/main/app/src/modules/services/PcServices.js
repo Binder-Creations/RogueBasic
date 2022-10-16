@@ -1,4 +1,4 @@
-class PcServices {
+export default class PcServices {
   static #rogueBase = {
     armorBonus: 0,
     armorPenBonus: 0,
@@ -287,5 +287,3 @@ class PcServices {
     this.pc.currentEnergy = Math.round(((this.pc.currentEnergy + this.pc.energyRegenTotal) > this.pc.energyTotal ? this.pc.energyTotal : this.pc.currentEnergy + this.pc.energyRegenTotal) + Number.EPSILON);
   }
 }
-
-export default PcServices;

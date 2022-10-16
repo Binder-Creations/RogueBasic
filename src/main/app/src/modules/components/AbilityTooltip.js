@@ -3,7 +3,7 @@ import c from "../../data/CommonProperties";
 import {min, max, round} from "../services/AbilityServices";
 import {camelCase} from "../services/GeneralUtilities";
 
-class AbilityTooltip extends React.Component {
+export default class AbilityTooltip extends React.Component {
   
   constructor(props){
     super(props);
@@ -126,5 +126,3 @@ class AbilityTooltip extends React.Component {
   }
 
 }
-
-export default AbilityTooltip;

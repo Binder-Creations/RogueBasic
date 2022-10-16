@@ -3,7 +3,7 @@ import c from "../../data/CommonProperties";
 import AppServices from "../services/AppServices";
 
 
-class DungeonPanel extends React.Component {
+export default class DungeonPanel extends React.Component {
 
   constructor(props){
     super(props);
@@ -103,5 +103,3 @@ class DungeonPanel extends React.Component {
     }
   }
 }
-
-export default DungeonPanel

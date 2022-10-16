@@ -4,7 +4,7 @@ import ItemTooltip from "./ItemTooltip";
 import ItemServices from "../services/ItemServices";
 import AppServices from "../services/AppServices";
 
-class QuestMenu extends React.Component {
+export default class QuestMenu extends React.Component {
   constructor(props){
     super(props);
     this.appServices = AppServices.getInstance();
@@ -38,5 +38,3 @@ class QuestMenu extends React.Component {
       )  
     }
 }
-
-export default QuestMenu;

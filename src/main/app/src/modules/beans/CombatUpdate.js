@@ -1,4 +1,4 @@
-class CombatUpdate{
+export default class CombatUpdate{
   constructor(updateType, abilityName, target, source, value, crit, attackEnergy){
     this.type = updateType;
     this.abilityName = abilityName ? abilityName : null;
@@ -65,5 +65,3 @@ class CombatUpdate{
     }
   }
 }
-
-export default CombatUpdate;

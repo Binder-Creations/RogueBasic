@@ -1,7 +1,7 @@
 import React from "react";
 import c from "../../data/CommonProperties";
 
-class LoadScreen extends React.Component {
+export default class LoadScreen extends React.Component {
   
   constructor(props){
     super(props);
@@ -43,5 +43,3 @@ class LoadScreen extends React.Component {
     return percent;
   }
 }
-
-export default LoadScreen;

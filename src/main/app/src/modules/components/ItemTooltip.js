@@ -1,7 +1,7 @@
 import React from "react";
 import c from "../../data/CommonProperties";
 
-class ItemTooltip extends React.Component {
+export default class ItemTooltip extends React.Component {
   
   constructor(props){
     super(props);
@@ -135,5 +135,3 @@ class ItemTooltip extends React.Component {
     }
   }
 }
-
-export default ItemTooltip;

@@ -3,7 +3,7 @@ import c from "../../data/CommonProperties";
 import Inventory from "./Inventory";
 
 
-class ShopMenu extends React.Component {
+export default class ShopMenu extends React.Component {
 
   constructor(props){
     super(props);
@@ -65,5 +65,3 @@ class ShopMenu extends React.Component {
     this.setState({updateShop: this.state.updateShop + 1});
   }
 }
-
-export default ShopMenu

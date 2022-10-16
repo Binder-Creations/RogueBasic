@@ -1,16 +1,16 @@
 import React from "react";
 import c from "../../data/CommonProperties";
-import Binder from "../services/Binder";
+import {bindAll} from "../services/Binder";
 import ItemTooltip from "./ItemTooltip";
 import ItemServices from "../services/ItemServices";
 import AppServices from "../services/AppServices";
 
-class Inventory extends React.Component {
+export default class Inventory extends React.Component {
   
   constructor(props){
     super(props);
     this.appServices = AppServices.getInstance();
-    Binder.bind(this);
+    bindAll(this);
 
     if(this.props.type && this[this.props.type + "Props"]){
       this[this.props.type + "Props"]();
@@ -193,5 +193,3 @@ class Inventory extends React.Component {
     }
   }
 }
-
-export default Inventory

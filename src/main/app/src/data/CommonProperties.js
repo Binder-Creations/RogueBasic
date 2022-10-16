@@ -10,8 +10,10 @@ import * as items from "../images/items";
 import * as itemsSmall from "../images-small/items";
 import * as monsters from "../images/monsters";
 import * as monstersSmall from "../images-small/monsters";
+import * as menu from "../images/menu";
+import * as menuSmall from "../images-small/menu";
 
-let largeWindow = window.innerWidth > 960 ? true : false;
+let isLargeWindow = window.innerWidth > 960;
 
 export default {
   positions: ["pc", "frontLeft", "frontCenter", "frontRight", "backLeft", "backCenter", "backRight"],
@@ -30,13 +32,14 @@ export default {
   zeroId: {id: "00000000-0000-0000-0000-000000000000"},
   disableUiMenus: false,
   imageMax: 250,
-  largeWindow: largeWindow,
+  isLargeWindow: isLargeWindow,
   images: {
-    common: largeWindow ? common : commonSmall,
-    environments: largeWindow ? environments : environmentsSmall,
-    classes: largeWindow ? classes : classesSmall,
-    abilities: largeWindow > 960 ? abilities : abilitiesSmall,
-    items: largeWindow > 960 ? items : itemsSmall,
-    monsters: largeWindow > 960 ? monsters : monstersSmall
+    common: isLargeWindow ? common : commonSmall,
+    environments: isLargeWindow ? environments : environmentsSmall,
+    classes: isLargeWindow ? classes : classesSmall,
+    abilities: isLargeWindow ? abilities : abilitiesSmall,
+    items: isLargeWindow ? items : itemsSmall,
+    monsters: isLargeWindow ? monsters : monstersSmall,
+    menu: isLargeWindow ? menu : menuSmall
   }
 };
