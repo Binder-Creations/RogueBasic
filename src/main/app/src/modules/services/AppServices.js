@@ -9,6 +9,7 @@ import ImageServices from "../services/ImageServices";
 import * as ItemFactory from "../services/ItemFactory";
 import CombatEngine from "../services/CombatEngine";
 import ComponentFactory from "../services/ComponentFactory";
+import { bindAll } from './Binder';
 
 export default class AppServices {
   static #instance;
@@ -16,6 +17,7 @@ export default class AppServices {
 
   constructor(app){
     if(!AppServices.#isInternalConstructing) throw new TypeError("AppServices is not constructable");
+    bindAll(this);
     this.app = app;
   }
 
@@ -441,7 +443,7 @@ export default class AppServices {
     })
     .then(response => { 
       document.cookie = "character_id=; Max-Age=-99999999;"
-      this.setState({characterId: null})
+      this.setState({characterId: null, page: "home"})
     });
   }
 
